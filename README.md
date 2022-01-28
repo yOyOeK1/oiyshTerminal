@@ -18,6 +18,19 @@ Legend:
 
 List:
 
+[ ] - episode installation of termux is a first step 1 to oiyshTerminal
+
+[+] - oiyshTerminal installation from vanilla Wiki
+
+[+] - oiyshTerminal installation node-red, termux-services, nodejs, mosquitto as mqtt broker
+
+check wiki: https://github.com/yOyOeK1/oiyshTerminal/wiki
+
+[ ] - oiyshTerminal topology graph
+
+[ ] - ySensorsService make simple case use example for opencpn
+
 [+] - make first episode
 
 [+] - release ySensorsService
+
