@@ -9,10 +9,15 @@ Collection of action from your site to make it happen d. Android is your base
 There is no Pi corner in the next shop to you. 
 
 Legend:
+
 [ ] - open
+
 [+] - done
+
 [?] - question
 
 List:
-[ ] - make first episode
-[ ] - release ySensorsServer
+
+[+] - make first episode
+
+[+] - release ySensorsService
