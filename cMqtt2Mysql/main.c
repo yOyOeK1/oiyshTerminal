@@ -7,6 +7,8 @@
  *
  */
 
+#define VER 2022.02.09
+
 #include <stdio.h>
 #include <mysql.h>
 #include <mosquitto.h>
@@ -40,16 +42,54 @@ int msgsCount = 0;
 
 struct topic{
 	int id;
-	char topic[BUFMAX];	
+	char topic[BUFMAX];
 };
 int topicsCount = 0;
 
+struct topic * topics;
 
 struct msg msgs[BUFMAX];
 int msgInStack = 0;
 
 MYSQL *con;
 struct mosquitto *mosq1;
+
+
+
+int topicIdIs( char *topic ){
+	for(int t=0;t<topicsCount;t++)
+		if( strcmp(topics[t].topic, topic ) == 0 )
+			return topics[t].id;
+
+	return NULL;
+}
+
+void topicPut( int id, char *topic){
+	//printf("topicPut id:%i topic:%s\n",id,topic);
+
+	struct topic tmp[topicsCount];
+	for(int t=0;t<topicsCount;t++){
+		tmp[t] = topics[t];
+	}
+
+	topics = malloc( (topicsCount+1)*sizeof(struct topic) );
+
+	for(int t=0;t<topicsCount;t++){
+		topics[t] = tmp[t];
+	}
+
+
+	topics[ topicsCount ].id = id;
+	strcpy( topics[topicsCount].topic, topic );
+
+	topicsCount++;
+	//free(tmp);
+
+	//for(int t=0;t<topicsCount;t++)
+	//	printf("top: %i id[%i] -> %s\n",t,topics[t].id, topics[t].topic);
+
+}
+
 
 
 int putMsg( char *topic, char *msg){
@@ -72,24 +112,36 @@ int putMsg( char *topic, char *msg){
 char qbuf[1024];
 
 int getTopicId(char *topic){
+	int id = topicIdIs( topic );
+	if( id != NULL ){
+		//printf("topic from cashe\n");
+		return id;
+	}
+
 	snprintf( qbuf, 1024, "select id from topics where topic like \"%s%s\";", sufixTest, topic );
-	int id = sqlGetOneInt( qbuf );
+	id = sqlGetOneInt( qbuf );
 
 	if( id == NULL ){
 		printf("no topic in db add it...[%s]\n",topic);
-		snprintf( qbuf, 1024, 
+		snprintf( qbuf, 1024,
 			"insert into topics ( topic, entryDate ) values ( \"%s%s\", %i );",
 			sufixTest,
 			topic,
-			(int)time(NULL) 
+			(int)time(NULL)
 			);
-	
-		int id = sqlInsert( qbuf);
-	
-	}
-	
 
-	
+		id = sqlInsert( qbuf);
+		topicPut( id, topic );
+		printf("topic from insert\n");
+
+	}else{
+		topicPut( id, topic );
+		printf("topic from select\n");
+
+	}
+
+
+
 	return id;
 }
 
@@ -104,7 +156,7 @@ bool sqlConnect(){
 		return false;
 	}
 	printf("sql - connected :) \n");
-	
+
 	return true;
 }
 
@@ -117,7 +169,7 @@ int sqlInsert( char *query ){
 	}else{
 		return (long) mysql_insert_id(con);
 	}
-	
+
 	return NULL;
 }
 
@@ -129,11 +181,11 @@ MYSQL_RES * sqlQuery( char *query ){
 		printf("%s\n", mysql_error(con));
 	}else{
 		//printf("The auto-generated ID is: %ld\n", (long) mysql_insert_id(con));
-		
-		
+
+
 		return mysql_store_result( con );
 	}
-	
+
 	return NULL;
 }
 
@@ -142,7 +194,7 @@ int sqlGetOneInt( char *query ){
 	MYSQL_ROW row = mysql_fetch_row( res );
 	if( mysql_fetch_lengths(res) == 0 )
 		return NULL;
-	
+
 	if( row[0] )
 		return atoi( row[0] );
 	else
@@ -153,27 +205,27 @@ int sqlGetOneInt( char *query ){
 
 int sqlGetTopicsCount(){
 	printf("sql - get topics count\n");
-	
+
 	char *q = "select count(id) from topics";
 	MYSQL_RES *res = sqlQuery( q );
 	MYSQL_ROW row = mysql_fetch_row( res );
-	
+
 	/*
 	printf("one line query %i\n",
 		sqlGetOneInt( "select count(id) from msgs;" )
 	);
 	*/
-	
-	
+
+
 	printf("one line query one match [%i]\n",
 		sqlGetOneInt( "select id from topics where topic like \"e01Mux/C\";" )
 	);
-	
+
 	printf("one line query no match [%i]\n",
 		sqlGetOneInt( "select id from topics where topic like \"ala ma kota\";" )
 	);
-	
-	
+
+
 }
 
 
@@ -196,7 +248,7 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 {
 	//printf("mqtt msg\t%s --> [%i] %s\n", message->topic, message->payloadlen, message->payload);
 	putMsg( message->topic, message->payload );
-		
+
 }
 
 void mqttInit(){
@@ -213,7 +265,7 @@ void mqttDoIt(){
 	mosquitto_loop_forever(mosq1, -1, 1);
 	mosquitto_destroy(mosq1);
     mosquitto_lib_cleanup();
-    
+
 }
 
 int add = 0;
@@ -224,42 +276,42 @@ void *myThread( void *vargp){
 		sleep(1);
 		if( msgInStack ){
 			add = 0;
-			
+
 			strcpy( qbufB, "insert into msgs ( idTopic, msg, idUser, entryDate ) values ");
-			
+
 			for(int m=0;m<BUFMAX;m++){
 				if( msgs[m].inDb == 1 ){
 					msgs[m].topicId = getTopicId( msgs[m].topic );
-					
+
 					//insert into msgs ( idTopic, msg, idUser, entryDate ) values ( 127, "10158", 999, 1644411965 ),( 127, "10158", 999, 1644411965 ),( 127, "10158", 999, 1644411965 );
-					
+
 					//printf("add msg ...[%s] -> [%s]\n",msgs[m].topic,msgs[m].msg);
-					/*snprintf( qbuf, 1024, 
+					/*snprintf( qbuf, 1024,
 						"insert into msgs \
 							( idTopic, msg, idUser, entryDate ) values \
-							( %i, \"%s\", 0, %i );", 
+							( %i, \"%s\", 0, %i );",
 						msgs[m].topicId, msgs[m].msg, msgs[m].entryDate
 						);
 						*/
-						
+
 					if( add == 0 )
-						snprintf( qbuf, 1024, 
-							" ( %i, \"%s\", 999, %i ) ", 
+						snprintf( qbuf, 1024,
+							" ( %i, \"%s\", 999, %i ) ",
 							msgs[m].topicId, msgs[m].msg, msgs[m].entryDate
 							);
-					else 
-						snprintf( qbuf, 1024, 
-							", ( %i, \"%s\", 999, %i ) ", 
+					else
+						snprintf( qbuf, 1024,
+							", ( %i, \"%s\", 999, %i ) ",
 							msgs[m].topicId, msgs[m].msg, msgs[m].entryDate
 							);
-							
+
 					strcat(qbufB, qbuf);
-					
+
 					msgs[m].inDb = 0;
-					msgInStack--;		
+					msgInStack--;
 					add++;
-				} 
-			
+				}
+
 			}
 			if( add > 0 ){
 				strcat(qbufB,";");
@@ -268,30 +320,48 @@ void *myThread( void *vargp){
 				printf("added %i\n",add);
 			}
 		}
-		
+
 	}
 
 }
 
+
 int main(){
 
 	printf("hello it's a c mqtt 2 mysql demon!\n");
-	
+
 	//msgs[0].inDb = 10;
 	//strcpy(msgs[0].topic, "ala ma kota");
 	//printf("[0] of inDB %i\n", msgs[0].inDb);
 	//printf("[0] of topic %s\n", msgs[0].topic);
-	
-	sqlConnect();	
+
+
+	if( 0 ){ // topic casher tests
+		printf("topics size %i\n",topicsCount );
+
+		topicPut(1, "abc1");
+		printf("topics size %i\n",topicsCount );
+
+		//printf("topic[0].id %i 1: %i\n", topics[0].id, topics[1].id);
+
+		topicPut(2, "abc2");
+		topicPut(21, "abc/abc");
+		printf("topics size %i\n",topicsCount );
+
+
+		printf("get id of abc2: %i",topicIdIs("abc2"));
+
+		exit(0);
+	}
+
+	sqlConnect();
 	sqlGetTopicsCount();
-	
+
 	pthread_t thread_id;
 	pthread_create( &thread_id, NULL, myThread, NULL );
 	//pthread_join( thread_id, NULL );
-	
+
 	mqttInit();
 	mqttDoIt();
 
 }
-
-
