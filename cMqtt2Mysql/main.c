@@ -5,6 +5,28 @@
  * check mysql* and mqtt* variables to your needs
  * sufixTest - is a sufix for topic for testing on production it should be ""
  *
+
+ CREATE TABLE `topics` (
+     `id` int(11) NOT NULL AUTO_INCREMENT,
+     `topic` varchar(255) COLLATE utf8_bin NOT NULL,
+     `entryDate` int(11) NOT NULL,
+     PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
+ AUTO_INCREMENT=1 ;
+
+ CREATE TABLE `msgs` (
+     `id` int(11) NOT NULL AUTO_INCREMENT,
+
+     `idTopic` int(11) NOT NULL,
+     `idUser` int(11) NOT NULL,
+
+     `msg` varchar(255) COLLATE utf8_bin NOT NULL,
+     `entryDate` int(11) NOT NULL,
+     PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
+ AUTO_INCREMENT=1 ;
+
+
  */
 
 #define VER 2022.02.09
