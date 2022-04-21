@@ -1,0 +1,192 @@
+<html>
+
+<script src="jquery.min.js"></script>
+<link rel="stylesheet" href="jquery-ui.css">
+<script src="jquery-ui.js"></script>
+
+<script>
+
+function rotateImage(obj, degree) {
+	obj.css({
+            '-webkit-transform':'rotate('+degree+'deg)',
+            '-moz-transform':'rotate('+degree+'deg)',
+            'transform':'rotate('+degree+'deg)'
+        });
+
+}
+
+
+
+var socket1 = new  WebSocket("ws://192.168.43.1:1880/ws/accel/oriCal");
+
+socket1.onopen = function(){
+	console.log("on open");
+}
+
+socket1.onclose = function(){
+	console.log("on close");
+}
+
+socket1.onerror = function(e){
+	console.log("on error:"+e);
+}
+
+socket1.onmessage = function(m){
+	//console.log("on message:"+m);
+	r = JSON.parse(m.data);
+	//console.log("on message r.payload:"+r.payload);
+
+	if( r.topic == "and/mag" ){
+		$("#bearingV").text( Math.round(r.payload) );
+
+	}else if( r.topic == "and/orient/heel" ){
+		var h = Math.round( r.payload );
+		$("#heelV").text( h );
+		rotateImage( $('#heelI'), h );
+
+	}else if( r.topic == "and/orient/pitch" ){
+		var p = Math.round( r.payload );
+		$("#pitchV").text( p );
+		rotateImage( $('#pitchI'), -p );
+
+	}else if( r.topic == "and/stat/accelCorrect" ){
+		console.log("got accel correct");
+		$("#accCorrV").text( r.payload );
+		var cor = r.payload.split(",");
+    $("#sliX").slider( 'value', cor[0] );
+		$("#sliY").slider( 'value', cor[1] );
+		$("#sliZ").slider( 'value', cor[2] );
+
+
+
+	}
+
+	console.log("on message .data:"+m.data);
+
+
+}
+
+var socketOut = new  WebSocket("ws://192.168.43.1:1880/ws/accel/oriCal_In");
+
+socketOut.onopen = function(){
+	console.log("Out on open");
+}
+
+socketOut.onclose = function(){
+	console.log("Out on close");
+}
+
+socketOut.onerror = function(e){
+	console.log("Out on error:"+e);
+}
+
+function sOutSend( msg ){
+	socketOut.send(msg);
+}
+
+
+function sendSetAccCor(){
+  var ts = $("#sliX").slider('value')+","+
+    $("#sliY").slider('value')+","+
+    $("#sliZ").slider('value');
+  console.log("ts:"+ts);
+  sOutSend("action:setAccCor:"+ts);
+  $("#accCorrV").text( ts );
+
+}
+
+function initSlider( sliderObj ){
+	$( sliderObj ).slider({
+    	slide: function( event, ui ) {
+      		/*console.log( ui.value );
+
+      		var ts = $("#sliX").slider('value')+","+
+      			$("#sliY").slider('value')+","+
+      			$("#sliZ").slider('value');
+      		console.log("ts:"+ts);
+      		sOutSend("action:setAccCor:"+ts);
+      		$("#accCorrV").text( ts );
+          */
+          sendSetAccCor();
+      		},
+      	min:-180,
+      	max:180,
+      	value:10
+      });
+
+}
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    initSlider( $("#sliX") );
+    initSlider( $("#sliY") );
+    initSlider( $("#sliZ") );
+
+
+});
+
+
+</script>
+
+
+<body>
+test start: <br>
+<input type="button" value="heel 0" onclick="rotateImage($('#heelI'),0.1)" >
+<input type="button" value="heel 90" onclick="rotateImage($('#heelI'),90)" >
+<input type="button" value="send ws msg" onclick="sOutSend(1)" >
+
+<br>test end<br>
+
+ySensorServer:<br>
+<input type="button" value="send On" onclick="sOutSend('action:on')" >
+<input type="button" value="send Off" onclick="sOutSend('action:off')" >
+<input type="button" value="getCorrection" onclick="sOutSend('action:getAccelCorrect')" >
+
+
+<table border="1">
+	<tr>
+		<td>
+			Accel correction:
+				<b><div id="accCorrV">accCorrV</div></b>
+				x:
+        <input type="button" value="-" onclick="$('#sliX').slider('value',$('#sliX').slider('value')-1);sendSetAccCor();"/>
+        <input type="button" value="+" onclick="$('#sliX').slider('value',$('#sliX').slider('value')+1);sendSetAccCor();"/>
+        <div id="sliX"></div>
+
+        y:
+        <input type="button" value="-" onclick="$('#sliY').slider('value',$('#sliY').slider('value')-1);sendSetAccCor();"/>
+        <input type="button" value="+" onclick="$('#sliY').slider('value',$('#sliY').slider('value')+1);sendSetAccCor();"/>
+        <div id="sliY"></div>
+
+        z:
+        <input type="button" value="-" onclick="$('#sliZ').slider('value',$('#sliZ').slider('value')-1);sendSetAccCor();"/>
+        <input type="button" value="+" onclick="$('#sliZ').slider('value',$('#sliZ').slider('value')+1);sendSetAccCor();"/>
+        <div id="sliZ"></div>
+
+		</td>
+		<td>Bearing:<b><div id="bearingV">bieringV</div></b>
+		</td>
+
+	</tr>
+	<tr>
+		<td>
+			<img id="heelI" src="./boat_heel_256.png">
+		</td>
+		<td>heel:<b><div id="heelV">heelV</div></b>
+		</td>
+
+	</tr>
+	<tr>
+		<td>
+			<img id="pitchI" src="./boat_pitch_256.png">
+		</td>
+		<td>pitch:<b><div id="pitchV">pitchV</div></b>
+		</td>
+
+	</tr>
+</table>
+
+
+</body>
+
+</html>

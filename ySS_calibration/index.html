@@ -1,0 +1,275 @@
+<html>
+
+<script src="jquery.min.js"></script>
+<link rel="stylesheet" href="jquery-ui.css">
+<script src="jquery-ui.js"></script>
+<script src="svg.min.js"></script>
+
+<script src="s_calibration.js"></script>
+<link rel="stylesheet" href="main.css">
+
+
+<script>
+
+function toDegrees (angle) {
+  return angle * (180 / Math.PI);
+}
+
+function toRad (angle) {
+  return angle * (Math.PI / 180);
+}
+
+function getDist( x1, y1, x2, y2 ){
+  var a = x1 - x2;
+  var b = y1 - y2;
+  return Math.sqrt( a*a + b*b );
+}
+
+function rotateImage(obj, degree) {
+	obj.css({
+            '-webkit-transform':'rotate('+degree+'deg)',
+            '-moz-transform':'rotate('+degree+'deg)',
+            'transform':'rotate('+degree+'deg)'
+        });
+
+}
+
+
+
+var lAngels = {}
+
+function rotateSvg( objName, haveRotateCenter, ang ){
+  lAng = lAngels[objName];
+
+  if( lAng == undefined ){
+    console.log("new entry");
+		lAngels[objName] = {
+			'ang': 0,
+			'obj': SVG.find("#"+objName),
+			'objRC': haveRotateCenter ? SVG.find("#"+objName+"RC") : null
+		}
+	}
+
+  if( haveRotateCenter ){
+    lAngels[objName]['obj'].rotate( ang - lAngels[objName]['ang'],
+			lAngels[objName]['objRC'].x()[0],
+			lAngels[objName]['objRC'].y()[0]
+			);
+  }else{
+    lAngels[objName]['obj'].rotate( ang - lAngels[objName]['ang'] );
+  }
+
+  lAngels[objName]['ang'] = ang;
+
+}
+
+var socketIn = null;
+function wsConnectIn(){
+	socketIn = new  WebSocket("ws://192.168.43.1:1880/ws/accel/oriCal");
+
+	socketIn.onopen = function(){
+		console.log("on open");
+		$("#wsInStat").text("OK");
+	}
+
+	socketIn.onclose = function(){
+		console.log("on close");
+		console.log("will try to recconnect...");
+		setTimeout( wsConnectIn(), 1000 );
+		$("#wsInStat").text("X");
+	}
+
+	socketIn.onerror = function(e){
+		console.log("on error:"+e);
+	}
+
+	socketIn.onmessage = function(m){
+		//console.log("on message:"+m);
+		r = JSON.parse(m.data);
+		//console.log("on message r.payload:"+r.payload);
+
+		if( r.topic == "and/mag" ){
+			var mag = Math.round( r.payload );
+			//$("#bearingV").text( Math.round(r.payload) );
+			$("#boatHDG").text( mag );
+			$("#boatHDGShadow").text( mag );
+	    rotateSvg( "rosetta", true, -mag );
+
+		}else if( r.topic == "and/orient/heel" ){
+			var h = Math.round( r.payload );
+			$("#boatHeelVal").text( h );
+			//rotateImage( $('#heelI'), h );
+	    rotateSvg( "boatHeel", true, h );
+
+		}else if( r.topic == "and/orient/pitch" ){
+			var p = Math.round( r.payload );
+			$("#boatPitchVal").text( p );
+			//rotateImage( $('#pitchI'), -p );
+	    rotateSvg( "boatPitch", true, p );
+
+		}else if( r.topic == "and/stat/accelCorrect" ){
+			console.log("got accel correct");
+			$("#accCorrV").text( r.payload );
+			var cor = r.payload.split(",");
+	    $("#sliX").slider( 'value', cor[0] );
+			$("#sliY").slider( 'value', cor[1] );
+			$("#sliZ").slider( 'value', cor[2] );
+
+
+
+		}
+
+		console.log("on message .data:"+m.data);
+
+
+	}
+}
+
+var socketOut = null;
+function wsConnectOut(){
+	socketOut = new  WebSocket("ws://192.168.43.1:1880/ws/accel/oriCal_In");
+
+	socketOut.onopen = function(){
+		console.log("Out on open");
+		$("#wsOutStat").text("OK");
+	}
+
+	socketOut.onclose = function(){
+		console.log("Out on close");
+		$("#wsOutStat").text("x");
+		setTimeout( wsConnectOut(), 1000 );
+	}
+
+	socketOut.onerror = function(e){
+		console.log("Out on error:"+e);
+	}
+
+}
+
+function sOutSend( msg ){
+	socketOut.send(msg);
+}
+
+
+function sendSetAccCor(){
+  var ts = $("#sliX").slider('value')+","+
+    $("#sliY").slider('value')+","+
+    $("#sliZ").slider('value');
+  console.log("ts:"+ts);
+  sOutSend("action:setAccCor:"+ts);
+  $("#accCorrV").text( ts );
+
+}
+
+function initSlider( sliderObj ){
+	$( sliderObj ).slider({
+    	slide: function( event, ui ) {
+      		/*console.log( ui.value );
+
+      		var ts = $("#sliX").slider('value')+","+
+      			$("#sliY").slider('value')+","+
+      			$("#sliZ").slider('value');
+      		console.log("ts:"+ts);
+      		sOutSend("action:setAccCor:"+ts);
+      		$("#accCorrV").text( ts );
+          */
+          sendSetAccCor();
+      		},
+      	min:-180,
+      	max:180,
+      	value:10
+      });
+
+}
+
+
+
+function svgTests(  ){
+
+  var tt = SVG.find("#textTest");
+  tt.text("");
+
+
+}
+
+
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    initSlider( $("#sliX") );
+    initSlider( $("#sliY") );
+    initSlider( $("#sliZ") );
+
+    $("#svgDyno").html(s_calibration);
+
+    svgTests();
+
+    $( "#sliRotTest" ).slider({
+      	slide: function( event, ui ) {
+          console.log(ui.value);
+          rotateSvg( "boatHeel", true, ui.value );
+        		},
+        	min:-180,
+        	max:180,
+        	value:10
+        });
+
+		wsConnectIn();
+		wsConnectOut();
+
+});
+
+
+</script>
+
+
+<body>
+<div style="display:none;">
+test start: <br>
+<input type="button" value="heel 0" onclick="rotateImage($('#heelI'),0.1)" >
+<input type="button" value="heel 90" onclick="rotateImage($('#heelI'),90)" >
+<input type="button" value="send ws msg" onclick="sOutSend(1)" >
+<div id="sliRotTest" width="200" height="50"></div>
+test end<br>
+</div>
+
+
+<div id="svgDyno">--</div>
+
+<div style="z-index:2;position:absolute;top:0;left:0;">
+ySensorServer:
+ws in:[<div id="wsInStat" style="display:inline;">?</div>] out
+[<div id="wsOutStat" style="display:inline;">out?</div>]<br>
+<input type="button" value="send On" onclick="sOutSend('action:on')" >
+<input type="button" value="send Off" onclick="sOutSend('action:off')" >
+<input type="button" value="getCorrection" onclick="sOutSend('action:getAccelCorrect')" >
+
+<table border="1" width="300">
+	<tr>
+		<td>
+			Accel correction:
+				<b><div id="accCorrV" style="display:inline;">accCorrV</div></b><br>
+				x:
+        <input type="button" value="-" onclick="$('#sliX').slider('value',$('#sliX').slider('value')-1);sendSetAccCor();"/>
+        <input type="button" value="+" onclick="$('#sliX').slider('value',$('#sliX').slider('value')+1);sendSetAccCor();"/>
+        <div id="sliX"></div>
+
+        y:
+        <input type="button" value="-" onclick="$('#sliY').slider('value',$('#sliY').slider('value')-1);sendSetAccCor();"/>
+        <input type="button" value="+" onclick="$('#sliY').slider('value',$('#sliY').slider('value')+1);sendSetAccCor();"/>
+        <div id="sliY"></div>
+
+        z:
+        <input type="button" value="-" onclick="$('#sliZ').slider('value',$('#sliZ').slider('value')-1);sendSetAccCor();"/>
+        <input type="button" value="+" onclick="$('#sliZ').slider('value',$('#sliZ').slider('value')+1);sendSetAccCor();"/>
+        <div id="sliZ"></div>
+
+		</td>
+	</tr>
+
+</table>
+</div>
+
+</body>
+
+</html>
