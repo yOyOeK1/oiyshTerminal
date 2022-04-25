@@ -1,35 +1,18 @@
 <html>
 
-<script src="sPager.js"></script>
-
-<script src="s_calibration.js"></script>
-<script src="s_calibrationPage.js"></script>
-
-<script src="s_fitscreen.js"></script>
-<script src="s_blankPage.js"></script>
-
-<script src="s_testFuncs.js"></script>
-<script src="s_testFuncsPage.js"></script>
-
 <script src="jquery.min.js"></script>
 <script src="jquery-ui.js"></script>
 <script src="svg.min.js"></script>
 <script src="mMath.js"></script>
 <script src="mOperation.js"></script>
 <script src="mWebSockets.js"></script>
-
-
+<script src="s_testFuncs.js"></script>
 
 <link rel="stylesheet" href="jquery-ui.css">
 <link rel="stylesheet" href="main.css">
 
 
 <script>
-
-const pager = new sPager();
-pager.addPage( new s_calibrationPage() );
-pager.addPage( new s_testFuncsPage() );
-pager.addPage( new s_blankPage() );
 
 
 
@@ -43,7 +26,27 @@ function sendSetAccCor(){
 
 }
 
-// for tests
+function initSlider( sliderObj ){
+	$( sliderObj ).slider({
+    	slide: function( event, ui ) {
+      		/*console.log( ui.value );
+
+      		var ts = $("#sliX").slider('value')+","+
+      			$("#sliY").slider('value')+","+
+      			$("#sliZ").slider('value');
+      		console.log("ts:"+ts);
+      		sOutSend("action:setAccCor:"+ts);
+      		$("#accCorrV").text( ts );
+          */
+          sendSetAccCor();
+      		},
+      	min:-180,
+      	max:180,
+      	value:10
+      });
+
+}
+
 
 
 function svgTests(  ){
@@ -53,8 +56,10 @@ function svgTests(  ){
 
 	$( "#sliRotTest" ).slider({
 			slide: function( event, ui ) {
-				console.log(ui.value);
-				rotateSvg( "boatHeel", true, ui.value );
+				console.log("sliRotTest"+ui.value);
+
+				
+
 					},
 				min:-180,
 				max:180,
@@ -63,18 +68,33 @@ function svgTests(  ){
 
 }
 
+function ystfpCallBack( r ){
+	/*
+	if( r.topic == "and/mag" ){
+		var mag = Math.round( r.payload );
+		//$("#bearingV").text( Math.round(r.payload) );
+		$("#boatHDG").text( mag );
+		$("#boatHDGShadow").text( mag );
+		rotateSvg( "rosetta", true, -mag );
+
+	}else if( r.topic == "and/orient/heel" ){
+		var h = Math.round( r.payload );
+		$("#boatHeelVal").text( h );
+		//rotateImage( $('#heelI'), h );
+		rotateSvg( "boatHeel", true, h );
+
+	}*/
+
+}
 
 $( document ).ready(function() {
-	console.log( "ready!" );
-	//
+    console.log( "ready!" );
+    $("#svgDyno").html(s_testFuncs);
 
-	svgTests();
+    svgTests();
 
-	wsConnectIn( pager );
-	wsConnectOut();
-
-	pager.getPage( -1 );
-	pager.setPage(1);
+		//wsConnectIn( yssCalCallBack );
+		//wsConnectOut();
 
 });
 
@@ -83,7 +103,7 @@ $( document ).ready(function() {
 
 
 <body>
-<div style="display:none;position:absolute;top:200;">
+<div style="display:inline;position:absolute;top:200;">
 test start: <br>
 <input type="button" value="heel 0" onclick="rotateImage($('#heelI'),0.1)" >
 <input type="button" value="heel 90" onclick="rotateImage($('#heelI'),90)" >
@@ -94,13 +114,15 @@ test end<br>
 
 
 <div id="svgDyno">--</div>
-<div id="htmlDyno" style="z-index:2;position:absolute;top:0;left:0;"></div>
-<div style="z-index:2;position:absolute;bottom:0;left:0;">
+
+<div style="z-index:2;position:absolute;top:0;left:0;">
 ws in:[<div id="wsInStat" style="display:inline;">?</div>] out
 [<div id="wsOutStat" style="display:inline;">out?</div>]
 <input type="button" value="On" onclick="sOutSend('action:on')" >
 <input type="button" value="Off" onclick="sOutSend('action:off')" >
-<input type="button" value="Menu" onclick="pager.setPage(-1)" >
+<input type="button" value="getCorrection" onclick="sOutSend('action:getAccelCorrect')" >
+
+
 </div>
 
 </body>
