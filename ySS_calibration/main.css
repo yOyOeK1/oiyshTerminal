@@ -1,3 +1,27 @@
+
+@font-face {
+    font-family: 'LCDDotMatrix5x8';
+    src: url('./LCDDotMatrix5x8.ttf') format('truetype');
+		font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Uroob';
+    src: url('./Uroob-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*@font-face {
+    font-family: 'Uroob-Regular';
+    src: url('./Uroob-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+*/
+
 body{
 	height:100%;
 	width:100%;

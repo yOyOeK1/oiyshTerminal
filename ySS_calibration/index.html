@@ -5,11 +5,17 @@
 <script src="s_calibration.js"></script>
 <script src="s_calibrationPage.js"></script>
 
+<script src="s_basicSail.js"></script>
+<script src="s_basicSailPage.js"></script>
+
+
 <script src="s_fitscreen.js"></script>
 <script src="s_blankPage.js"></script>
 
 <script src="s_testFuncs.js"></script>
 <script src="s_testFuncsPage.js"></script>
+
+
 
 <script src="jquery.min.js"></script>
 <script src="jquery-ui.js"></script>
@@ -28,6 +34,7 @@
 
 const pager = new sPager();
 pager.addPage( new s_calibrationPage() );
+pager.addPage( new s_basicSailPage() );
 pager.addPage( new s_testFuncsPage() );
 pager.addPage( new s_blankPage() );
 
@@ -74,10 +81,90 @@ $( document ).ready(function() {
 	wsConnectOut();
 
 	pager.getPage( -1 );
-	pager.setPage(1);
+	pager.setPage( 2 );
 
 });
 
+
+function mkfullscreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen =
+    docEl.requestFullscreen ||
+    docEl.mozRequestFullScreen ||
+    docEl.webkitRequestFullScreen ||
+    docEl.msRequestFullscreen;
+  var cancelFullScreen =
+    doc.exitFullscreen ||
+    doc.mozCancelFullScreen ||
+    doc.webkitExitFullscreen ||
+    doc.msExitFullscreen;
+
+  if (
+    !doc.fullscreenElement &&
+    !doc.mozFullScreenElement &&
+    !doc.webkitFullscreenElement &&
+    !doc.msFullscreenElement
+  ) {
+    requestFullScreen.call(docEl);
+  } else {
+    cancelFullScreen.call(doc);
+  }
+}
+
+if( 0 ){
+  console.log("shoud be: -90: "+ mMapVal( 0, 0, 180, -90,90 ));
+  console.log("shoud be: 0: "+ mMapVal( 90, 0, 180, -90,90 ));
+  console.log("shoud be: 90: "+ mMapVal( 180, 0, 180, -90,90 ));
+
+  console.log("shoud be: 90: "+ mMapVal( 0, 0, 180, 90,-90 ));
+  console.log("shoud be: 0: "+ mMapVal( 90, 0, 180, 90,-90 ));
+  console.log("shoud be: -90: "+ mMapVal( 180, 0, 180, 90,-90 ));
+
+  console.log("shoud be: 90: "+ mMapVal( 0, 180, 0, -90,90 ));
+  console.log("shoud be: 0: "+ mMapVal( 90, 180, 0, -90,90 ));
+  console.log("shoud be: -90: "+ mMapVal( 180, 180, 0, -90,90 ));
+
+  console.log("shoud be: -90: "+ mMapVal( 0, 180, 0, 90,-90 ));
+  console.log("shoud be: 0: "+ mMapVal( 90, 180, 0, 90,-90 ));
+  console.log("shoud be: 90: "+ mMapVal( 180, 180, 0, 90,-90 ));
+
+
+  console.log("shoud be: 0: "+ mMapVal( 0, 1, 20, 0,1, true ));
+  console.log("shoud be: 1: "+ mMapVal( 20, 1, 20, 0,1, true ));
+  console.log("shoud be: >1: "+ mMapVal( 30, 1, 20, 0,1, true ));
+
+  console.log("shoud be: 0: "+ mMapVal( 0, -1, -20, 0,1, true ));
+  console.log("shoud be: 1: "+ mMapVal( -20, -1, -20, 0,1, true ));
+  console.log("shoud be: >1: "+ mMapVal( -30, -1, -20, 0,1, true ));
+}
+
+if( 0 ){
+  var dm = '928.80856';
+  var dm = '07838.028';
+  function ddmmToLdec( ddmm ){
+    var dot = ddmm.indexOf('.');
+    console.log("dot is at "+dot);
+    var dd = parseInt(ddmm.substring(0,dot-2));
+    console.log("dd:"+dd);
+    var mm = parseFloat( ddmm.substring(dot-2) );
+    console.log("mm.mmmm:"+mm);
+    var dec = dd + ( mm/60 );
+    console.log("dec:"+dec);
+  }
+  ddmmToLdec( dm );
+}
+
+if( 2 ){
+  var inIs = 234.124151;
+  console.log("in:"+inIs);
+  console.log(" fixto 0: "+inIs.toFixed(0));
+  console.log(" fixto 2: "+inIs.toFixed(2));
+  console.log(" fixto 20: "+inIs.toFixed(20));
+
+
+}
 
 </script>
 
@@ -96,11 +183,12 @@ test end<br>
 <div id="svgDyno">--</div>
 <div id="htmlDyno" style="z-index:2;position:absolute;top:0;left:0;"></div>
 <div style="z-index:2;position:absolute;bottom:0;left:0;">
-ws in:[<div id="wsInStat" style="display:inline;">?</div>] out
-[<div id="wsOutStat" style="display:inline;">out?</div>]
+in:[<div id="wsInStat" style="display:inline;">?</div>]
+out:[<div id="wsOutStat" style="display:inline;">out?</div>]
 <input type="button" value="On" onclick="sOutSend('action:on')" >
 <input type="button" value="Off" onclick="sOutSend('action:off')" >
 <input type="button" value="Menu" onclick="pager.setPage(-1)" >
+<input type="button" value="full screen" onclick="mkfullscreen()" >
 </div>
 
 </body>

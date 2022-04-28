@@ -18,7 +18,7 @@ class sPager {
   }
 
   addPage( obj ){
-    console.log("sPager add page");
+    console.log("sPager add page: ["+obj.getName+"] as "+(this.pages.length) );
     this.pages.push( obj );
   }
 
@@ -34,6 +34,7 @@ class sPager {
     console.log("getHtml current page: "+this.currentPage);
     lAngels = {};
     movePathStartOffset = {};
+    putTextStorage = {};
 
     if( this.currentPage == -1 ){
       this.getMenu();
@@ -48,6 +49,7 @@ class sPager {
         console.log("sPage page "+this.currentPage+" don't have getHtmlAfterLoad()");
       }
       $("#svgDyno").html( cp.svgDyno );
+      cp.svgDynoAfterLoad();
     }
 
   }
@@ -62,7 +64,7 @@ class sPager {
       ta+= '<br>';
     }
 
-    $("#htmlDyno").html( "uuu html?</br>"+ta );
+    $("#htmlDyno").html( "Pages in stack:</br>"+ta );
 
   }
 

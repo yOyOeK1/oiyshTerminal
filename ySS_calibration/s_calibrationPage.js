@@ -6,7 +6,7 @@ class s_calibrationPage{
 
   get getHtml(){
     return `
-<table border="1" width="300">
+<table border="0" width="100%">
 	<tr>
 		<td>
 			Accel correction:
@@ -32,8 +32,8 @@ class s_calibrationPage{
 		</td>
 	</tr>
 </table>
-
-
+<div>in pocket: 175,-82,-89</div>
+<div>on tool box char port aft: -1,1,2</div>
     `;
   }
 

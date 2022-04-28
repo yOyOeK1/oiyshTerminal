@@ -34,45 +34,110 @@ function rotateSvg( objName, haveRotateCenter, ang ){
 }
 
 
-function deg360ToNorm( deg ){
-	var n = (deg%360.0)/360.0;
-	//console.log("n:"+n);
-	if( n < 0 )
-		n = 1.0 + n;
-	return n;
+/*
+morpheFromTo( "shape01", "shape02", norm );
+*/
+function morpheFromTo( objMin, objMax, norm ){
+	console.log("morpheFromTo: "+norm);
+	
+
 }
+
+
 
 /*
 posNormal - 0.0 - 1.0
 */
 var movePathStartOffset = {};
-function moveOnPath( objToMove, objPath, posNormal ){
-	var path = SVG("#"+objPath);
-	//console.log("path length:"+path.length());
-	var m = path.matrixify();
-	var p = new SVG.Point( path.pointAt( path.length()*posNormal ) ).transform( m );
-	//console.log("new point xy"+ p.x+" , "+p.y);
-	var obj = SVG("#"+objToMove);
 
-	if( movePathStartOffset[objToMove] == undefined ){
-		//console.log("notDef");
-		var pZero = new SVG.Point( path.pointAt( path.length()*0.0 ) ).transform( m );
-		//console.log("obj xy "+obj.x()+" , "+obj.y());
-		var xOff = pZero.x-obj.x();
-		var yOff = pZero.y-obj.y();
+function moveOnPath( objToMove, objPath, posNormal ){
+
+	if( movePathStartOffset[ objToMove ] == undefined ){
+		var path = SVG("#"+objPath);
+		var m = path.matrixify();
+		var pathLength = path.length();
+		var pZero = new SVG.Point( path.pointAt( pathLength*0.0 ) ).transform( m );
+		var obj = SVG("#"+objToMove);
+
 		movePathStartOffset[ objToMove ] = {
-			'x': xOff,
-			'y': yOff
+			'obj': obj,
+			'path': path,
+			'm': m,
+			'pathLength': pathLength,
+			'xOffset': parseFloat( pZero.x-obj.x() ),
+			'yOffset': parseFloat( pZero.y-obj.y() ),
+			'pos': posNormal
 		};
-		//console.log("have offset "+movePathStartOffset[ objToMove ]['x']+" , "+movePathStartOffset[ objToMove ]['y']);
-		//console.log("have offset2 "+xOff+" , "+yOff);
+
+		d = movePathStartOffset[ objToMove ];
+
+	}else{
+
+		if( movePathStartOffset[ objToMove ]['pos'] == posNormal ){
+			//console.log("moveOnPath pos Norm same skip.");
+			return 0;
+		}else{
+			//console.log("moveOnPath pos "+posNormal);
+			movePathStartOffset[ objToMove ]['pos'] = posNormal;
+			d = movePathStartOffset[ objToMove ];
+		}
+
 	}
 
 
-	//console.log("obj height"+obj.height());
-	obj.move(
-		p.x-movePathStartOffset[ objToMove ]['x'],
-		p.y-movePathStartOffset[ objToMove ]['y']
+	var p = new SVG.Point(
+		d['path'].pointAt(
+			d['pathLength']*posNormal
+			)
+		).transform( d['m'] );
+
+	//console.log("----------------");
+	//console.log("p "+p.x+" , "+p.y+"	offsets"+d['xOffset']+" , "+d['yOffset']);
+
+	d['obj'].move(
+		p.x-d['xOffset'],
+		p.y-d['yOffset']
 	);
 	//obj.move( p.x, p.y );
+}
+
+var putTextStorage = {};
+// putText("textCen", "test"+ui.value, 'c', 11);
+function putText( objName, text, align, chars ){
+
+	if( putTextStorage[ objName ] == text ){
+		//console.log("putText simple same");
+		return 0;
+	}else
+		putTextStorage[ objName ] = text;
+
+
+	var tl = ("a"+text).length-1;
+	//console.log(" putText tl:"+tl+" for:"+text);
+	var addIt = '';
+
+	if( align == 'c' ){
+		var add = parseInt(chars-tl)/2;
+		for(var i=0; i<add; i++)
+			addIt+= ' ';
+
+		//console.log("children for "+objName+": " );
+		//console.log( $("#"+objName).children()[0] );
+
+		//console.log( $("#"+objName).children()[0].innerHTML );
+		$("#"+objName).children()[0].innerHTML = addIt + text;
+		//$("#"+objName).text( addIt+text	);
+
+	}else if( align == 'r' ){
+		var add = parseInt(chars-tl);
+		for(var i=0; i<add; i++)
+			addIt+= ' ';
+
+		//$("#"+objName).text( addIt+text );
+		$("#"+objName).children()[0].innerHTML = addIt+text;
+	}else{
+		$("#"+objName).children()[0].innerHTML = text;
+	}
+
+
 }
