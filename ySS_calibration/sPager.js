@@ -23,10 +23,25 @@ class sPager {
   }
 
   setPage( pageNo ){
+    mkShaderResuming = true;
+    mkShader('normal');
+    try{
+      var bgColor = this.pages[ pageNo ].getDefaultBackgroundColor;
+      $(document.body).css(
+        "background-color", bgColor
+        );
+      console.log("default background set: "+bgColor);
+    }catch(e){
+      console.log("pageNo: "+pageNo+" don't have getDefaultBackgroundColor()");
+      console.log("error: "+e);
+    }
+    mkShaderResuming = false;
+
     console.log("sPager set page to: "+pageNo);
     this.currentPage = pageNo;
     this.getPage();
-
+    document.cookie="lastPage="+pageNo+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC; path=/";
+    mkShaderStoreResume();
   }
 
 

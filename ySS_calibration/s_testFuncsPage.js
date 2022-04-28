@@ -6,6 +6,10 @@ class s_testFuncsPage{
 
   }
 
+  get getDefaultBackgroundColor(){
+		return "#ffddcc";
+	}
+
   getHtml(){
     return `
 <div style="display:inline;position:absolute;top:0;width:200;">

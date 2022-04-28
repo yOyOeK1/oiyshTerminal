@@ -1,0 +1,1 @@
+google-chrome --proxy-server="192.168.43.1:8118" --app="http://localhost:8081"

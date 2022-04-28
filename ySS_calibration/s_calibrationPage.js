@@ -4,6 +4,10 @@ class s_calibrationPage{
     return 'calibration page';
   }
 
+  get getDefaultBackgroundColor(){
+    return "#ffffff";
+  }
+
   get getHtml(){
     return `
 <table border="0" width="100%">
@@ -70,6 +74,9 @@ class s_calibrationPage{
     return s_calibration;
   }
 
+  svgDynoAfterLoad(){
+
+  }
 
   onMessageCallBack( r ){
     if( r.topic == "and/mag" ){

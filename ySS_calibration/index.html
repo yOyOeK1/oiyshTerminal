@@ -77,6 +77,22 @@ function svgTests(  ){
 }
 
 
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 $( document ).ready(function() {
 	console.log( "ready!" );
 	//
@@ -87,11 +103,20 @@ $( document ).ready(function() {
 	wsConnectOut();
 
 	pager.getPage( -1 );
-	//pager.setPage( 3 );
+
+  // store last sean page on browser
+  var lastUse = document.cookie;
+  console.log("have cookie from last use: ["+lastUse+"]");
+  var lastPageNo = getCookie('lastPage');
+  console.log("lastPage: ["+lastPageNo+"]")
+  if( lastPageNo != "" )
+    pager.setPage( parseInt( lastPageNo ) );
+
+  //pager.setPage( 3 );
 
   //mkShader('invert');
   //mkShader('normal');
-//  mkShader('blackRed');
+  //mkShader('blackRed');
 
 
 });
@@ -167,7 +192,7 @@ if( 0 ){
   ddmmToLdec( dm );
 }
 
-if( 2 ){
+if( 0 ){
   var inIs = 234.124151;
   console.log("in:"+inIs);
   console.log(" fixto 0: "+inIs.toFixed(0));

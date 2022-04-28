@@ -4,6 +4,11 @@ class s_ilooNavPage{
 		return 'iloo nav';
 	}
 
+	get getDefaultBackgroundColor(){
+		return "#000000";
+	}
+
+
 	get getHtml(){
 		return ``;
 	}
@@ -17,7 +22,7 @@ class s_ilooNavPage{
 	}
 
 	svgDynoAfterLoad(){
-		
+
 	}
 
 	doLL(){
