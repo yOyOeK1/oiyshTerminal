@@ -49,6 +49,7 @@ class sPager {
         console.log("sPage page "+this.currentPage+" don't have getHtmlAfterLoad()");
       }
       $("#svgDyno").html( cp.svgDyno );
+
       cp.svgDynoAfterLoad();
     }
 

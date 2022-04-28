@@ -5,8 +5,12 @@
 <script src="s_calibration.js"></script>
 <script src="s_calibrationPage.js"></script>
 
+
 <script src="s_basicSail.js"></script>
 <script src="s_basicSailPage.js"></script>
+
+<script src="s_ilooNav.js"></script>
+<script src="s_ilooNavPage.js"></script>
 
 
 <script src="s_fitscreen.js"></script>
@@ -20,6 +24,7 @@
 <script src="jquery.min.js"></script>
 <script src="jquery-ui.js"></script>
 <script src="svg.min.js"></script>
+<script src="mShaders.js"></script>
 <script src="mMath.js"></script>
 <script src="mOperation.js"></script>
 <script src="mWebSockets.js"></script>
@@ -35,6 +40,7 @@
 const pager = new sPager();
 pager.addPage( new s_calibrationPage() );
 pager.addPage( new s_basicSailPage() );
+pager.addPage( new s_ilooNavPage() );
 pager.addPage( new s_testFuncsPage() );
 pager.addPage( new s_blankPage() );
 
@@ -81,7 +87,12 @@ $( document ).ready(function() {
 	wsConnectOut();
 
 	pager.getPage( -1 );
-	pager.setPage( 2 );
+	//pager.setPage( 3 );
+
+  //mkShader('invert');
+  //mkShader('normal');
+//  mkShader('blackRed');
+
 
 });
 
@@ -166,6 +177,7 @@ if( 2 ){
 
 }
 
+
 </script>
 
 
@@ -189,6 +201,9 @@ out:[<div id="wsOutStat" style="display:inline;">out?</div>]
 <input type="button" value="Off" onclick="sOutSend('action:off')" >
 <input type="button" value="Menu" onclick="pager.setPage(-1)" >
 <input type="button" value="full screen" onclick="mkfullscreen()" >
+<input type="button" value="invert" onclick="mkShader('invert')" >
+<input type="button" value="black red" onclick="mkShader('blackRed')" >
+<input type="button" value="normal" onclick="mkShader('normal')" >
 </div>
 
 </body>

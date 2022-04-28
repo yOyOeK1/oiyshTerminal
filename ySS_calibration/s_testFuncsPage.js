@@ -26,6 +26,8 @@ class s_testFuncsPage{
           rotateSvg( "objRot", true, ui.value );
           rotateSvg( "objRot2", true, ui.value );
 
+          rotateSvgSetRC( "objRot2Shadow", "objRot2RC", ui.value );
+
           //$("#textDef").text("test"+ui.value);
           putText("textDef", "test"+ui.value );
           putText("textCen", "test"+Math.pow(ui.value,2), 'c', 11);

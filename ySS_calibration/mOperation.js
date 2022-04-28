@@ -7,8 +7,33 @@ function rotateImage(obj, degree) {
 
 }
 
+//rotateSvgSetRC( "objRot2Shadow", "objRot2RC", ui.value );
+function rotateSvgSetRC( objName, objNameRc, ang ){
+	lAng = lAngels[objName];
+
+	if( lAng == undefined ){
+		console.log("new entry");
+		lAngels[objName] = {
+			'ang': 0,
+			'obj': SVG.find("#"+objName),
+			'objRC': SVG.find("#"+objNameRc)
+		}
+	}
+
+	lAngels[objName]['obj'].rotate( ang - lAngels[objName]['ang'],
+		lAngels[objName]['objRC'].x()[0],
+		lAngels[objName]['objRC'].y()[0]
+		);
+
+
+	lAngels[objName]['ang'] = ang;
+
+}
+
+
 var lAngels = {}
 function rotateSvg( objName, haveRotateCenter, ang ){
+
   lAng = lAngels[objName];
 
   if( lAng == undefined ){
@@ -39,7 +64,7 @@ morpheFromTo( "shape01", "shape02", norm );
 */
 function morpheFromTo( objMin, objMax, norm ){
 	console.log("morpheFromTo: "+norm);
-	
+
 
 }
 
