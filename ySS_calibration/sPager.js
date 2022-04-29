@@ -23,6 +23,7 @@ class sPager {
   }
 
   makeLooperIter(){
+  
     //console.log("pager looper iter...");
     try{
       this.pages[ this.currentPage ].looperIter();
