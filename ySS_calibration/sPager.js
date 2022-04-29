@@ -22,6 +22,14 @@ class sPager {
     this.pages.push( obj );
   }
 
+  makeLooperIter(){
+    console.log("pager looper iter...");
+    try{
+      this.pages[ this.currentPage ].looperIter();
+    }catch( e ){}
+  }
+
+
   setPage( pageNo ){
     mkShaderResuming = true;
     mkShader('normal');

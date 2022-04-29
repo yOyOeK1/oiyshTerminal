@@ -1,3 +1,7 @@
+
+//var a = new Array(0, 150, 30, 20, -8, -200);
+//Math.min.apply(null,a);
+
 function toDegrees ( rad ) {
   return rad * (180 / Math.PI);
 }
@@ -36,6 +40,26 @@ function deg360ToNorm( deg ){
 	if( n < 0 )
 		n = 1.0 + n;
 	return n;
+}
+
+function deg360Pos( deg ){
+  deg = deg%360;
+  if( deg < 0 )
+    deg+=360;
+  return deg;
+}
+
+function deg360delta( deg0, deg1 ){
+  //console.log("deg to Pos in:"+deg0+" -> "+deg360Pos(deg0) );
+  //console.log("deg to Pos in:"+deg1+" -> "+deg360Pos(deg1) );
+  deg0 = deg360Pos(deg1)-deg360Pos(deg0);
+
+  if( deg0 > 180 )
+    deg0-=360;
+  if( deg0 < -180 )
+    deg0+=360;
+
+  return deg0;
 }
 
 // mMapVal( ui.value, 0, 180, -90,90 )

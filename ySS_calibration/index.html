@@ -93,6 +93,13 @@ function getCookie(cname) {
   return "";
 }
 
+function looperIter(){
+  console.log("looper iter ....");
+
+  pager.makeLooperIter();
+  setTimeout( looperIter, 5000 );
+}
+
 $( document ).ready(function() {
 	console.log( "ready!" );
 	//
@@ -118,7 +125,7 @@ $( document ).ready(function() {
   //mkShader('normal');
   //mkShader('blackRed');
 
-
+  looperIter();
 });
 
 
@@ -199,9 +206,31 @@ if( 0 ){
   console.log(" fixto 2: "+inIs.toFixed(2));
   console.log(" fixto 20: "+inIs.toFixed(20));
 
+}
+
+if( 0 ){
+  console.log("deg delta 0 10 -> 10:"+deg360delta( 0, 10 ) );
+  console.log("deg delta 0 179 -> 179:"+deg360delta( 0, 179 ) );
+  console.log("deg delta 0 -10 -> -10:"+deg360delta( 0, -10 ) );
+  console.log("deg delta 350 10 -> 20:"+deg360delta( 350, 10 ) );
+  console.log("deg delta 10 -10 -> -20:"+deg360delta( 10, -10 ) );
+  console.log("deg delta -170 170 -> -20:"+deg360delta( -170, 170 ) );
+  console.log("deg delta -190 190 -> 20:"+deg360delta( -190, 190 ) );
+  console.log("deg delta 370 -10 -> -20:"+deg360delta( 370, -10 ) );
+  console.log("deg delta 90 270 -> -180 || 180:"+deg360delta( 90, 270 ) );
+  console.log("deg delta 180 -360 -> -180 || 180:"+deg360delta( 180, -360 ) );
+  console.log("deg delta 270 91-> -179:"+deg360delta( 270, 91 ) );
 
 }
 
+if( 0 ){
+  console.log("try to get battery status...");
+  navigator.getBattery()
+    .then(function(battery) {
+      console.log(battery.level);
+  });
+
+}
 
 </script>
 

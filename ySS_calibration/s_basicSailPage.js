@@ -4,11 +4,27 @@ class s_basicSailPage{
     return 'basic sail';
   }
 
+  get getDefaultBackgroundColor(){
+    return "#ffffff";
+  }
+
   get getHtml(){
     return ``;
   }
 
 
+  navBatteryUpdate( perc ){
+    putText("batPercent", perc+"%");
+  }
+
+
+  looperIter(){
+      console.log("basic sailing looperIter...");
+      navBatteryPercent(this.navBatteryUpdate);
+
+  }
+
+  // to fix !!!!
   makeLoopForNav(){
     console.log("loopForNav");
 
@@ -35,7 +51,7 @@ class s_basicSailPage{
   }
 
   svgDynoAfterLoad(){
-    
+
   }
 
 
@@ -111,35 +127,22 @@ class s_basicSailPage{
       SVG("#XTER").attr({'fill-opacity': 0.0});
 
 
-    }else if( r.topic == 'NR/nav/rng' ){
-      putText("gpsRNG", (""+r.payload).substring(0,5) );
+    }else if( r.topic == 'NR/nav/rmb' ){
+      putText("gpsRNG", (""+r.payload['rng']).substring(0,5) );
 
-    }else if( r.topic == 'NR/nav/xte' ){
-      putText("gpsXTE", (""+r.payload).substring(0,5) );
-      storeIt( 'xte', r.payload, sec30 );
+      putText("gpsXTE", (""+r.payload['xte']).substring(0,5) );
+      storeIt( 'xte', r.payload['xte'], sec30 );
 
-    }else if( r.topic == 'NR/nav/onHeading' ){
-      putText("gpsOnhead", Math.round(r.payload) );
+      putText("gpsOnhead", Math.round(r.payload['onHeading']) );
       var hdg = storeGetLast( 'hdg' )['v'];
-      var res = (parseInt(r.payload) - hdg )%360;
+      var delta = deg360delta( hdg, parseInt(r.payload['onHeading']) );
 
-      console.log("onheadcal res:"+res+" hdg:"+hdg);
-
-      var delta = Math.round(res);
-      if( delta > 180 ){
-        delta-=360;
-      }
-
-
-      var lM = 0.0//mMapVal( delta , -20.0, 1.0, 0.8, 0.001, true );
-      var rM = 0.0//mMapVal( delta , 1.0, 20.0, 0.001, 0.8, true );
-      if( delta > 3 )
-        rM = 0.7;
-      else if( delta < -3 )
-        lM = 0.7;
-
-      SVG("#XTEL").attr({'fill-opacity': lM});
-      SVG("#XTER").attr({'fill-opacity': rM});
+      SVG("#XTEL").attr({
+        'fill-opacity': mMapVal( delta, -1, -10, 0, 1, true)
+        });
+      SVG("#XTER").attr({
+        'fill-opacity': mMapVal( delta, 1, 10, 0, 1, true)
+        });
 
 
       //console.log("onheadcal delta:"+delta+" lM:"+lM+" rM:"+rM);

@@ -1,6 +1,8 @@
 
 class s_testFuncsPage{
 
+  iterCounter = 0;
+
   get getName(){
     return "test functions";
 
@@ -9,6 +11,20 @@ class s_testFuncsPage{
   get getDefaultBackgroundColor(){
 		return "#ffddcc";
 	}
+
+
+  navBatteryUpdate( perc ){
+    putText("batPercent", perc+"%");
+  }
+
+
+  looperIter(){
+      console.log("looperIter...");
+      navBatteryPercent(this.navBatteryUpdate);
+      this.iterCounter++;
+      putText("looperIter", ""+this.iterCounter);
+  }
+
 
   getHtml(){
     return `

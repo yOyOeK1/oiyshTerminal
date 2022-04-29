@@ -166,3 +166,13 @@ function putText( objName, text, align, chars ){
 
 
 }
+
+
+function navBatteryPercent( callback ){
+	//console.log("try to get battery status...");
+	navigator.getBattery()
+    .then(function(battery) {
+      //console.log(" callback:"+callback+" bat:"+battery.level);
+			callback( Math.round(battery.level*100) );
+  });
+}

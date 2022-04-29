@@ -39,9 +39,9 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284272"
-     inkscape:cx="304.11967"
-     inkscape:cy="770.57957"
+     inkscape:zoom="5.6568544"
+     inkscape:cx="446.3754"
+     inkscape:cy="809.08914"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -61,7 +61,7 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        id="guide7203"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="8.1359373,204.45677"
+       position="8.1359377,4.2323472"
        orientation="1,0"
        id="guide7004"
        inkscape:locked="false" />
@@ -125,25 +125,25 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.87777805px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.26458335"
-       x="7.8052077"
+       x="6.0854163"
        y="76.932808"
        id="gpsLat"
        inkscape:label="#text6962"><tspan
          sodipodi:role="line"
          id="tspan6960"
-         x="7.8052077"
+         x="6.0854163"
          y="76.932808"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.26458335">-000.000000</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.8777771px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.26458335"
-       x="7.7621408"
+       x="6.0423493"
        y="81.23745"
        id="gpsLon"
        inkscape:label="#text6962-9"><tspan
          sodipodi:role="line"
          id="tspan6960-1"
-         x="7.7621408"
+         x="6.0423493"
          y="81.23745"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.26458335">-000.000000</tspan></text>
     <text
@@ -234,26 +234,26 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.69016218px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.12544055"
-       x="72.636803"
-       y="-37.706181"
+       x="72.449715"
+       y="-35.274029"
        id="text6958-0"
        transform="rotate(90)"><tspan
          sodipodi:role="line"
          id="tspan6956-4"
-         x="72.636803"
-         y="-37.706181"
+         x="72.449715"
+         y="-35.274029"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.35212946px;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#808080;stroke-width:0.12544055">COG</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:27.32243919px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.7318511"
-       x="41.094452"
-       y="83.888313"
+       x="38.6623"
+       y="83.701225"
        id="gpsCOG"
        inkscape:label="#text6962"><tspan
          sodipodi:role="line"
          id="tspan6960-2"
-         x="41.094452"
-         y="83.888313"
+         x="38.6623"
+         y="83.701225"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.51602936px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.7318511">000.0</tspan></text>
     <path
        style="fill:#00ff00;stroke:none;stroke-width:0.30524337px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0.493"
@@ -272,62 +272,93 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.69016218px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.12544055"
-       x="72.73941"
-       y="-80.072586"
+       x="72.420029"
+       y="-74.068558"
        id="text6958-0-6"
        transform="rotate(90)"><tspan
          sodipodi:role="line"
          id="tspan6956-4-7"
-         x="72.73941"
-         y="-80.072586"
+         x="72.420029"
+         y="-74.068558"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.35212946px;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#808080;stroke-width:0.12544055">XTE</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:15.671381px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.4197692"
-       x="84.132004"
-       y="79.155586"
+       x="78.127975"
+       y="78.836205"
        id="gpsXTE"
        inkscape:label="#text6962"><tspan
          sodipodi:role="line"
          id="tspan6960-2-3"
-         x="84.132004"
-         y="79.155586"
+         x="78.127975"
+         y="78.836205"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.1938448px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.4197692">000.0</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.69016218px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.12544055"
-       x="72.904755"
-       y="-105.33768"
+       x="72.585373"
+       y="-99.333649"
        id="text6958-0-6-5"
        transform="rotate(90)"><tspan
          sodipodi:role="line"
          id="tspan6956-4-7-6"
-         x="72.904755"
-         y="-105.33768"
+         x="72.585373"
+         y="-99.333649"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.35212946px;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#808080;stroke-width:0.12544055">RNG</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:15.671381px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.4197692"
-       x="108.83871"
-       y="79.28788"
+       x="102.83468"
+       y="78.968498"
        id="gpsRNG"
        inkscape:label="#text6962"><tspan
          sodipodi:role="line"
          id="tspan6960-2-3-9"
-         x="108.83871"
-         y="79.28788"
+         x="102.83468"
+         y="78.968498"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.1938448px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.4197692">000.0</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:15.671381px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.4197692"
-       x="84.075554"
-       y="85.772606"
+       x="78.071526"
+       y="85.453224"
        id="gpsOnhead"
        inkscape:label="#text6962"><tspan
          sodipodi:role="line"
          id="tspan6960-2-3-2"
-         x="84.075554"
-         y="85.772606"
+         x="78.071526"
+         y="85.453224"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.1938448px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.4197692">000.0</tspan></text>
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.02377462;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.95294118"
+       id="rect865"
+       width="8.832839"
+       height="4.8004556"
+       x="-80.549591"
+       y="122.18931"
+       ry="1.3441277"
+       transform="rotate(-90)" />
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.02377474;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.95294118"
+       id="rect867"
+       width="1.9461424"
+       height="2.4213636"
+       x="-72.914536"
+       y="123.26484"
+       ry="0.42997494"
+       transform="rotate(-90)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:16.4656105px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.41164026"
+       x="72.240318"
+       y="-123.08475"
+       id="batPercent"
+       transform="rotate(90)"
+       inkscape:label="#text871"><tspan
+         sodipodi:role="line"
+         id="tspan869"
+         x="72.240318"
+         y="-123.08475"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.48853636px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#ffffff;stroke-width:0.41164026">100%</tspan></text>
   </g>
 </svg>`;

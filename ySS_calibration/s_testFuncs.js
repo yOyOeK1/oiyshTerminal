@@ -59,9 +59,9 @@ var s_testFuncs=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="253.63641"
-     inkscape:cy="532.39847"
+     inkscape:zoom="4.0000001"
+     inkscape:cx="189.10667"
+     inkscape:cy="66.632441"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -627,5 +627,51 @@ var s_testFuncs=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        id="barRedGreen"
        d="m 89.887741,148.53676 h 15.264449 v 37.15383 H 89.887741 Z"
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.51243734;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.95294118" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+       x="32.940624"
+       y="288.40103"
+       id="text1501"><tspan
+         sodipodi:role="line"
+         id="tspan1499"
+         x="32.940624"
+         y="288.40103"
+         style="stroke-width:0.26458335">looper:</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+       x="45.911858"
+       y="288.46249"
+       id="looperIter"
+       inkscape:label="#text1505"><tspan
+         sodipodi:role="line"
+         id="tspan1503"
+         x="45.911858"
+         y="288.46249"
+         style="stroke-width:0.26458335">10234</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+       x="33.205208"
+       y="292.03906"
+       id="text1509"><tspan
+         sodipodi:role="line"
+         id="tspan1507"
+         x="33.205208"
+         y="292.03906"
+         style="stroke-width:0.26458335">viewer battery:</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.52777767px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+       x="60.457291"
+       y="292.23749"
+       id="batPercent"
+       inkscape:label="#text1513"><tspan
+         sodipodi:role="line"
+         id="tspan1511"
+         x="60.457291"
+         y="292.23749"
+         style="stroke-width:0.26458335">100%</tspan></text>
   </g>
 </svg>`;
