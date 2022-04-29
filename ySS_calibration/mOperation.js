@@ -1,3 +1,5 @@
+var makeWithAnimation = false;
+
 function rotateImage(obj, degree) {
 	obj.css({
             '-webkit-transform':'rotate('+degree+'deg)',
@@ -41,15 +43,18 @@ function rotateSvg( objName, haveRotateCenter, ang ){
 		lAngels[objName] = {
 			'ang': 0,
 			'obj': SVG.find("#"+objName),
-			'objRC': haveRotateCenter ? SVG.find("#"+objName+"RC") : null
+			'objRC': haveRotateCenter ? SVG.find("#"+objName+"RC") : null,
+			'runner': null
 		}
 	}
 
+
   if( haveRotateCenter ){
-    lAngels[objName]['obj'].rotate( ang - lAngels[objName]['ang'],
+		lAngels[objName]['obj'].rotate( ang - lAngels[objName]['ang'],
 			lAngels[objName]['objRC'].x()[0],
 			lAngels[objName]['objRC'].y()[0]
 			);
+
   }else{
     lAngels[objName]['obj'].rotate( ang - lAngels[objName]['ang'] );
   }
@@ -85,13 +90,15 @@ function moveOnPath( objToMove, objPath, posNormal ){
 		var obj = SVG("#"+objToMove);
 
 		movePathStartOffset[ objToMove ] = {
+			'objToMoveName': objToMove,
 			'obj': obj,
 			'path': path,
 			'm': m,
 			'pathLength': pathLength,
 			'xOffset': parseFloat( pZero.x-obj.x() ),
 			'yOffset': parseFloat( pZero.y-obj.y() ),
-			'pos': posNormal
+			'pos': posNormal,
+			'runner': null
 		};
 
 		d = movePathStartOffset[ objToMove ];
@@ -119,10 +126,22 @@ function moveOnPath( objToMove, objPath, posNormal ){
 	//console.log("----------------");
 	//console.log("p "+p.x+" , "+p.y+"	offsets"+d['xOffset']+" , "+d['yOffset']);
 
-	d['obj'].move(
-		p.x-d['xOffset'],
-		p.y-d['yOffset']
-	);
+	if( makeWithAnimation == false ){ // direct move
+		d['obj'].move(
+			p.x-d['xOffset'],
+			p.y-d['yOffset']
+		);
+	} else { // animate move
+		if( d['runner'] && d['runner'].active() ){
+			//console.log("runner is running for "+d['objToMoveName'] );
+			d['runner'].unschedule();
+		}
+
+		d['runner'] = d['obj'].animate().move(
+			p.x-d['xOffset'],
+			p.y-d['yOffset']
+		);
+	}
 	//obj.move( p.x, p.y );
 }
 

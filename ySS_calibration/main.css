@@ -1,7 +1,7 @@
 
 @font-face {
     font-family: 'LCDDotMatrix5x8';
-    src: url('./LCDDotMatrix5x8.ttf') format('truetype');
+    src: url('./fonts/LCDDotMatrix5x8.ttf') format('truetype');
 		font-weight: normal;
     font-style: normal;
 }
@@ -9,7 +9,7 @@
 
 @font-face {
     font-family: 'Uroob';
-    src: url('./Uroob-Regular.ttf') format('truetype');
+    src: url('./fonts/Uroob-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -27,7 +27,8 @@ body{
 	width:100%;
 	margin:0;
 	padding:0;
-  background-color: #ffffff;
+	background-color: #ffffff;
+	font-family: Helvetican, sans-serif;
 }
 #svgDyno{
 	width:100%;
@@ -49,4 +50,40 @@ body{
 	/*-webkit-filter: grayscale(100%);*/ /* Safari 6.0 - 9.0 */
   /*filter: grayscale(100%);*/
 
+}
+.bottomPanel{
+	z-index:20;
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;
+	text-align:center;
+	padding:0;
+}
+
+.bottomPanelContainer{
+	display:none;
+	margin:0 auto;
+	padding:16px;
+}
+div.bottomPanelHandle{
+	padding:8px 0 0 0;
+	width:28px;
+	margin:0 auto;
+	font-weight: bold;
+	font-size:16px;
+  //display:none;
+}
+
+/*
+.bottomPanel:hover .bottomPanelContainer{
+	display:inline-block;
+}
+*/
+.bottomPanel input[type=button]{
+	background:#ddd;
+	border:0;
+	border-radius: 3px;
+	padding:6px;
+	text-transform:uppercase;
 }

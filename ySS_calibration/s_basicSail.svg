@@ -39,9 +39,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6568544"
-     inkscape:cx="446.3754"
-     inkscape:cy="809.08914"
+     inkscape:zoom="2.8284272"
+     inkscape:cx="373.54079"
+     inkscape:cy="795.45669"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -85,6 +85,11 @@
        orientation="0,1"
        id="guide884"
        inkscape:locked="false" />
+    <sodipodi:guide
+       position="92.983067,211.45696"
+       orientation="0,1"
+       id="guide1515"
+       inkscape:locked="false" />
   </sodipodi:namedview>
   <metadata
      id="metadata1597">
@@ -125,25 +130,25 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.87777805px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.26458335"
-       x="6.0854163"
+       x="5.0270829"
        y="76.932808"
        id="gpsLat"
        inkscape:label="#text6962"><tspan
          sodipodi:role="line"
          id="tspan6960"
-         x="6.0854163"
+         x="5.0270829"
          y="76.932808"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.26458335">-000.000000</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.8777771px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.26458335"
-       x="6.0423493"
+       x="4.9840159"
        y="81.23745"
        id="gpsLon"
        inkscape:label="#text6962-9"><tspan
          sodipodi:role="line"
          id="tspan6960-1"
-         x="6.0423493"
+         x="4.9840159"
          y="81.23745"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.26458335">-000.000000</tspan></text>
     <text
@@ -234,27 +239,27 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.69016218px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.12544055"
-       x="72.449715"
-       y="-35.274029"
+       x="72.543259"
+       y="-34.245041"
        id="text6958-0"
        transform="rotate(90)"><tspan
          sodipodi:role="line"
          id="tspan6956-4"
-         x="72.449715"
-         y="-35.274029"
+         x="72.543259"
+         y="-34.245041"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.35212946px;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#808080;stroke-width:0.12544055">COG</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:27.32243919px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.7318511"
-       x="38.6623"
-       y="83.701225"
+       style="font-style:normal;font-weight:normal;font-size:31.29893112px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.83836424"
+       x="37.469437"
+       y="85.29615"
        id="gpsCOG"
        inkscape:label="#text6962"><tspan
          sodipodi:role="line"
          id="tspan6960-2"
-         x="38.6623"
-         y="83.701225"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.51602936px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.7318511">000.0</tspan></text>
+         x="37.469437"
+         y="85.29615"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.35638046px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.83836424">000.0</tspan></text>
     <path
        style="fill:#00ff00;stroke:none;stroke-width:0.30524337px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0.493"
        d="m 127.04667,118.00198 -10.64007,32.5656 0.35214,-63.574624 z"
@@ -297,24 +302,24 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.69016218px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.12544055"
        x="72.585373"
-       y="-99.333649"
+       y="-98.275314"
        id="text6958-0-6-5"
        transform="rotate(90)"><tspan
          sodipodi:role="line"
          id="tspan6956-4-7-6"
          x="72.585373"
-         y="-99.333649"
+         y="-98.275314"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.35212946px;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#808080;stroke-width:0.12544055">RNG</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:15.671381px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.4197692"
-       x="102.83468"
+       x="101.77634"
        y="78.968498"
        id="gpsRNG"
        inkscape:label="#text6962"><tspan
          sodipodi:role="line"
          id="tspan6960-2-3-9"
-         x="102.83468"
+         x="101.77634"
          y="78.968498"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.1938448px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.4197692">000.0</tspan></text>
     <text

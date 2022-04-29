@@ -23,7 +23,7 @@ class sPager {
   }
 
   makeLooperIter(){
-    console.log("pager looper iter...");
+    //console.log("pager looper iter...");
     try{
       this.pages[ this.currentPage ].looperIter();
     }catch( e ){}
@@ -38,6 +38,11 @@ class sPager {
       $(document.body).css(
         "background-color", bgColor
         );
+
+      $(".defBg").css(
+		    "background-color", bgColor
+      );
+
       console.log("default background set: "+bgColor);
     }catch(e){
       console.log("pageNo: "+pageNo+" don't have getDefaultBackgroundColor()");

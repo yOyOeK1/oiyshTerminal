@@ -19,8 +19,8 @@ class s_basicSailPage{
 
 
   looperIter(){
-      console.log("basic sailing looperIter...");
-      navBatteryPercent(this.navBatteryUpdate);
+    //console.log("basic sailing looperIter...");
+    navBatteryPercent(this.navBatteryUpdate);
 
   }
 

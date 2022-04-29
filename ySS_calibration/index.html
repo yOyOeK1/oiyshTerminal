@@ -126,6 +126,16 @@ $( document ).ready(function() {
   //mkShader('blackRed');
 
   looperIter();
+
+  $(".bottomPanelHandle").mouseup( function(){
+    console.log("unclick");
+    if( $(".bottomPanelContainer").is(":visible") ){
+        $(".bottomPanelContainer").hide();
+    }else{
+      $(".bottomPanelContainer").show();
+    }
+  });
+
 });
 
 
@@ -232,34 +242,36 @@ if( 0 ){
 
 }
 
+
 </script>
 
-
 <body>
-<div style="display:none;position:absolute;top:200;">
-test start: <br>
-<input type="button" value="heel 0" onclick="rotateImage($('#heelI'),0.1)" >
-<input type="button" value="heel 90" onclick="rotateImage($('#heelI'),90)" >
-<input type="button" value="send ws msg" onclick="sOutSend(1)" >
-<div id="sliRotTest" width="200" height="50"></div>
-test end<br>
-</div>
+	<div style="display:none;position:absolute;top:200;">
+		test start: <br>
+		<input type="button" value="heel 0" onclick="rotateImage($('#heelI'),0.1)" >
+		<input type="button" value="heel 90" onclick="rotateImage($('#heelI'),90)" >
+		<input type="button" value="send ws msg" onclick="sOutSend(1)" >
+		<div id="sliRotTest" width="200" height="50"></div>
+		test end<br>
+	</div>
 
 
-<div id="svgDyno">--</div>
-<div id="htmlDyno" style="z-index:2;position:absolute;top:0;left:0;"></div>
-<div style="z-index:2;position:absolute;bottom:0;left:0;">
-in:[<div id="wsInStat" style="display:inline;">?</div>]
-out:[<div id="wsOutStat" style="display:inline;">out?</div>]
-<input type="button" value="On" onclick="sOutSend('action:on')" >
-<input type="button" value="Off" onclick="sOutSend('action:off')" >
-<input type="button" value="Menu" onclick="pager.setPage(-1)" >
-<input type="button" value="full screen" onclick="mkfullscreen()" >
-<input type="button" value="invert" onclick="mkShader('invert')" >
-<input type="button" value="black red" onclick="mkShader('blackRed')" >
-<input type="button" value="normal" onclick="mkShader('normal')" >
-</div>
-
+	<div id="svgDyno">--</div>
+	<div id="htmlDyno" style="z-index:2;position:absolute;top:0;left:0;"></div>
+	<div class="bottomPanel">
+		<div class="bottomPanelHandle">^</div>
+		<div class="bottomPanelContainer defBg">
+			in:[<span id="wsInStat">?</span>]
+			out:[<span id="wsOutStat">out?</span>]
+			<input type="button" value="On" onclick="sOutSend('action:on')" >
+			<input type="button" value="Off" onclick="sOutSend('action:off')" >
+			<input type="button" value="Menu" onclick="pager.setPage(-1)" >
+			<input type="button" value="full screen" onclick="mkfullscreen()" >
+			<input type="button" value="invert" onclick="mkShader('invert')" >
+			<input type="button" value="black red" onclick="mkShader('blackRed')" >
+			<input type="button" value="normal" onclick="mkShader('normal')" >
+		</div>
+	</div>
 </body>
 
 </html>

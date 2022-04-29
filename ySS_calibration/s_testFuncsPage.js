@@ -19,7 +19,7 @@ class s_testFuncsPage{
 
 
   looperIter(){
-      console.log("looperIter...");
+      console.log("looperIter @ s_testFuncsPage ...");
       navBatteryPercent(this.navBatteryUpdate);
       this.iterCounter++;
       putText("looperIter", ""+this.iterCounter);
