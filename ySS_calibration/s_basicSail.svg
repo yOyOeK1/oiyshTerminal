@@ -39,9 +39,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284272"
-     inkscape:cx="373.54079"
-     inkscape:cy="795.45669"
+     inkscape:zoom="0.7071068"
+     inkscape:cx="182.46785"
+     inkscape:cy="618.52021"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -153,16 +153,16 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#4d4d4d;stroke-width:0.26458335">-000.000000</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:12.62791824px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.33824781"
-       x="-3.8421855"
-       y="149.25923"
+       style="font-style:normal;font-weight:normal;font-size:12.97903442px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.3476527"
+       x="60.618523"
+       y="152.07791"
        id="magHDG"
        inkscape:label="#text6984"><tspan
          sodipodi:role="line"
          id="tspan6982"
-         x="-3.8421855"
-         y="149.25923"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:112.74926758px;font-family:Uroob;-inkscape-font-specification:Uroob;stroke-width:0.33824781">360</tspan></text>
+         x="60.618523"
+         y="152.07791"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:115.71111298px;font-family:Uroob;-inkscape-font-specification:Uroob;text-align:center;text-anchor:middle;stroke-width:0.3476527">360</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.69016218px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.12544055"
@@ -203,12 +203,12 @@
          inkscape:label="#text7038"
          id="heelAng"
          y="163.13805"
-         x="-4.583672"
+         x="0.11873487"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.87777805px;line-height:1.25;font-family:Uroob;-inkscape-font-specification:Uroob;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.26458335"
          xml:space="preserve"><tspan
-           style="fill:#4d4d4d;stroke-width:0.26458335"
+           style="font-size:9.8795948px;text-align:center;text-anchor:middle;fill:#4d4d4d;stroke-width:0.26458335"
            y="163.13805"
-           x="-4.583672"
+           x="0.11873496"
            id="tspan7036"
            sodipodi:role="line">123</tspan></text>
     </g>
@@ -355,15 +355,15 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:16.4656105px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.41164026"
-       x="72.240318"
-       y="-123.08475"
+       x="76.030891"
+       y="-123.13872"
        id="batPercent"
        transform="rotate(90)"
        inkscape:label="#text871"><tspan
          sodipodi:role="line"
          id="tspan869"
-         x="72.240318"
-         y="-123.08475"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.48853636px;font-family:Uroob;-inkscape-font-specification:Uroob;fill:#ffffff;stroke-width:0.41164026">100%</tspan></text>
+         x="76.030891"
+         y="-123.13872"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444449px;font-family:Uroob;-inkscape-font-specification:Uroob;text-align:center;text-anchor:middle;fill:#ffffff;stroke-width:0.41164026">100%</tspan></text>
   </g>
 </svg>

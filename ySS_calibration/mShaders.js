@@ -8,16 +8,21 @@ function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
-function mkLightHex( hexIn ){
+
+
+function mkLightHex( hexIn, operationType ){
+  var doShader = ( operationType != undefined ) ?
+    operationType : mkShaderType;
+
   //console.log("invert["+hexIn+"]");
   if( hexIn.substring(0,4) == "rgb("){
     rgb = hexIn.replace("rgb(","").replace(")",'').split(",");
     tr = "rgb(";
-    if( mkShaderType == 'invert' ){
+    if( doShader == 'invert' ){
       tr+= 255-parseInt( rgb[0] )+", ";
       tr+= 255-parseInt( rgb[1] )+", ";
       tr+= 255-parseInt( rgb[2] )+" )";
-    }else if( mkShaderType == 'blackRed'){
+    }else if( doShader == 'blackRed'){
       var avg = (parseInt( rgb[0] ) + parseInt( rgb[1] ) + parseInt( rgb[2] ) ) / 3;
       tr+= avg+", 0, 0 )";
     }
@@ -30,11 +35,11 @@ function mkLightHex( hexIn ){
     console.log("from["+hexIn.replace("rgba(","").replace(")")+"]");
     console.log(rgba);
     tr = "rgba(";
-    if( mkShaderType == 'invert' ){
+    if( doShader == 'invert' ){
       tr+= (255-parseInt( rgba[0] ) )+", ";
       tr+= (255-parseInt( rgba[1] ) )+", ";
       tr+= (255-parseInt( rgba[2] ) )+", "+rgba[3]+")";
-    }else if( mkShaderType == 'blackRed'){
+    }else if( doShader == 'blackRed'){
       var avg = (parseInt( rgba[0] ) + parseInt( rgba[1] ) + parseInt( rgba[2] ) ) / 3;
       tr+= avg+", 0, 0, "+rgba[3]+" )";
     }
@@ -43,13 +48,13 @@ function mkLightHex( hexIn ){
     return tr;
 
   }else if( hexIn.length == 7 ){
-    if( mkShaderType == 'invert' ){
+    if( doShader == 'invert' ){
       tr = rgbToHex(
         255-parseInt( hexIn.substring(1,3) , 16),
         255-parseInt( hexIn.substring(3,5), 16),
         255-parseInt( hexIn.substring(5,7), 16)
         );
-    }else if( mkShaderType == 'blackRed'){
+    }else if( doShader == 'blackRed'){
       var avg = parseInt( hexIn.substring(1,3) , 16);
       avg+= parseInt( hexIn.substring(3,5) , 16);
       avg+= parseInt( hexIn.substring(5,7) , 16);
@@ -138,7 +143,7 @@ function mkShaderStoreSettings(){
   ( mkShaderType == 'normal' )
     seq = new Array();
 
-  document.cookie="shaderStore="+seq.join(",")+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC; path=/";
+  document.cookie="shaderStore="+seq.join(",")+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC";
 
 
 }
@@ -147,13 +152,17 @@ var mkShaderType;
 function mkShader( shType ){
   mkShaderType = shType;
   console.log("mkLightNight mode..."+mkShaderType);
-  var col = $(document.body).css("background-color");
+  var bgColor = $(document.body).css("background-color");
+  var bodyColor = $(document.body).css("color");
   //console.log("bg:"+col);
-  if( mkShaderType == 'normal')
+  if( mkShaderType == 'normal'){
     $(document.body).css("background-color", "#ffffff");
-  else{
-    $(document.body).css("background-color", mkLightHex( col ) );
-
+    $(".bottomPanelContainer").css("background-color", "#ffffff");
+    $(document.body).css("color", "#000000");
+  }else{
+    $(document.body).css("background-color", mkLightHex( bgColor ) );
+    $(document.body).css("color", mkLightHex(bodyColor) );
+    $(".bottomPanelContainer").css("background-color", mkLightHex(bgColor) );
   }
   //return 0;
   var s = SVG("#svgDyno");

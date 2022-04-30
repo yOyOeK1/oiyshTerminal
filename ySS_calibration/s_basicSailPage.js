@@ -13,15 +13,9 @@ class s_basicSailPage{
   }
 
 
-  navBatteryUpdate( perc ){
-    putText("batPercent", perc+"%");
-  }
-
-
   looperIter(){
     //console.log("basic sailing looperIter...");
-    navBatteryPercent(this.navBatteryUpdate);
-
+    //navBatteryPercent(this.navBatteryUpdate);
   }
 
   // to fix !!!!
@@ -75,7 +69,9 @@ class s_basicSailPage{
       return 0;
 
 
-    var cog = getAngleLL(  lastLat['v'], lastLon['v'], lat['v'], lon['v'] );
+    var cog = deg360Pos(
+      getAngleLL(  lastLat['v'], lastLon['v'], lat['v'], lon['v'] )
+      );
     //console.log("cog:"+cog);
     storeIt( 'cog', cog, min1 );
     putText("gpsCOG", (""+cog).substring(0,5) );
@@ -86,14 +82,15 @@ class s_basicSailPage{
     //console.log("distance is "+nm);
     //console.log("in time ms:"+inTime);
 
-    var cog = nm*(3600000/inTime);
-    putText("gpsSpeed", (""+cog).substring(0,5) , 'c', 5);
+    var sog = nm*(3600000/inTime);
+    putText("gpsSpeed", (""+sog).substring(0,5) , 'c', 5);
   }
 
 
 
   onMessageCallBack( r ){
-
+    //console.log("s_basicSailPage onMessageCallBack ");
+    //console.log("s_bas... :"+r.topic);
     if( r.topic == 'and/lat' ){
       putText("gpsLat", r.payload.substring(0,11) );
       storeIt( 'lat', parseFloat(r.payload),  min5);
@@ -104,7 +101,8 @@ class s_basicSailPage{
       this.doLL();
 
     }else if( r.topic == 'and/mag' ){
-      putText("magHDG", Math.round(r.payload) , 'c', 3);
+      //putText("magHDG", Math.round(r.payload) , 'c', 3);
+      putText("magHDG", Math.round(r.payload) );
       storeIt( 'hdg', parseFloat(r.payload),  sec1*10);
 
 
@@ -115,7 +113,7 @@ class s_basicSailPage{
       storeIt( "heel", heelNorm, sec30 );
       moveOnPath( "heelBallAvg", "heelBallPath", avgIt("heel", sec1*10) );
 
-      putText("heelAng", Math.round(r.payload) , 'c', 3);
+      putText("heelAng", Math.round(r.payload));
       //moveOnPath( "heelAngValue", "heelBallPath", heelNorm );
 
 
@@ -147,7 +145,13 @@ class s_basicSailPage{
 
       //console.log("onheadcal delta:"+delta+" lM:"+lM+" rM:"+rM);
 
+    }else if( r.topic == 'thisDevice/bat/perc' ){
+        putText("batPercent", r.payload+"%" );
 
+    }else{
+      console.log("s_basicSailPage on ws message NaN");
+      console.log(r);
+      console.log("---------------");
     }
 
 

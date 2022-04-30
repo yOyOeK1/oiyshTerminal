@@ -187,11 +187,77 @@ function putText( objName, text, align, chars ){
 }
 
 
-function navBatteryPercent( callback ){
-	//console.log("try to get battery status...");
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
+
+function mkfullscreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen =
+    docEl.requestFullscreen ||
+    docEl.mozRequestFullScreen ||
+    docEl.webkitRequestFullScreen ||
+    docEl.msRequestFullscreen;
+  var cancelFullScreen =
+    doc.exitFullscreen ||
+    doc.mozCancelFullScreen ||
+    doc.webkitExitFullscreen ||
+    doc.msExitFullscreen;
+
+  if (
+    !doc.fullscreenElement &&
+    !doc.mozFullScreenElement &&
+    !doc.webkitFullscreenElement &&
+    !doc.msFullscreenElement
+  ) {
+    requestFullScreen.call(docEl);
+  } else {
+    cancelFullScreen.call(doc);
+  }
+}
+
+
+
+function navBatteryPercentSignUp( pager ){
+	navigator.getBattery().then(battery => {
+  battery.onlevelchange = () => {
+		pager.wsCallbackExternal({
+			'topic': 'thisDevice/bat/perc',
+			'payload': Math.round( battery.level*100 ).toString()
+			});
+  	};
+	});
+	console.log("navBatteryPercentSignUp ! as [thisDevice/bat/perc]");
+}
+
+
+function navBatteryPercent( pager ){
+	console.log("try to get battery status...");
 	navigator.getBattery()
     .then(function(battery) {
-      //console.log(" callback:"+callback+" bat:"+battery.level);
-			callback( Math.round(battery.level*100) );
+
+			setTimeout( function (){
+				console.log(" callback bat:"+battery.level);
+				pager.wsCallbackExternal({
+					'topic': 'thisDevice/bat/perc',
+					'payload': Math.round( battery.level*100 ).toString()
+					});},1000);
   });
 }

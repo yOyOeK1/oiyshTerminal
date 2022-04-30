@@ -2,12 +2,18 @@
 
 console.log("sPager.js file");
 class sPager {
-
+  currentPage = -1;
 
   constructor(){
     this.currentPage = -1;
     this.pages = new Array();
     console.log("sPager constructor done !");
+  }
+
+  wsCallbackExternal( r ){
+    console.log("wsCallbackExternal got msg");
+    console.log(r);
+    this.wsCallback( r );
   }
 
   wsCallback( r ){
@@ -23,7 +29,6 @@ class sPager {
   }
 
   makeLooperIter(){
-  
     //console.log("pager looper iter...");
     try{
       this.pages[ this.currentPage ].looperIter();
@@ -32,32 +37,46 @@ class sPager {
 
 
   setPage( pageNo ){
+    this.currentPage = pageNo;
+
     mkShaderResuming = true;
     mkShader('normal');
-    try{
-      var bgColor = this.pages[ pageNo ].getDefaultBackgroundColor;
-      $(document.body).css(
-        "background-color", bgColor
-        );
-
-      $(".defBg").css(
-		    "background-color", bgColor
-      );
-
-      console.log("default background set: "+bgColor);
-    }catch(e){
-      console.log("pageNo: "+pageNo+" don't have getDefaultBackgroundColor()");
-      console.log("error: "+e);
-    }
+    this.setCssForPage();
     mkShaderResuming = false;
 
     console.log("sPager set page to: "+pageNo);
-    this.currentPage = pageNo;
+
     this.getPage();
-    document.cookie="lastPage="+pageNo+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC; path=/";
+    document.cookie="lastPage="+pageNo+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC";
     mkShaderStoreResume();
+
+    navBatteryPercent( this );
   }
 
+  setCssForPage(){
+    var bgColor = this.getPageBGColor;
+    $(document.body).css(
+      "background-color", bgColor
+      );
+      $(document.body).css(
+        "color", mkLightHex(bgColor,'invert')
+        );
+
+    $(".defBg").css(
+	    "background-color", bgColor
+    );
+
+    console.log("default background set: "+bgColor);
+  }
+
+  get getPageBGColor(){
+    try{
+      return this.pages[ this.currentPage ].getDefaultBackgroundColor;
+    }catch(e){
+      console.log("pageNo: "+this.currentPage+" don't have getDefaultBackgroundColor()");
+      return "#ffffff";
+    }
+  }
 
   getPage(){
     console.log("getHtml current page: "+this.currentPage);
