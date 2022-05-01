@@ -61,11 +61,27 @@ function mkLightHex( hexIn, operationType ){
 
       tr = rgbToHex( parseInt(avg/3), 0, 0 );
     }
-
-
     //console.log(" and its: "+tr+" from ......");
     return tr;
 
+  }else if( hexIn.length == 4 ){
+    if( doShader == 'invert' ){
+      tr = "#"+
+        (""+(16-parseInt( hexIn.substring(1,2) , 16) ) ).toString(16)+
+        (""+(16-parseInt( hexIn.substring(2,3), 16) ) ).toString(16)+
+        (""+(16-parseInt( hexIn.substring(3,4), 16) ) ).toString(16);
+    }else if( doShader == 'blackRed'){
+      var avg = parseInt( hexIn.substring(1,2) , 16);
+      avg+= parseInt( hexIn.substring(2,3) , 16);
+      avg+= parseInt( hexIn.substring(3,4) , 16);
+
+      tr = "#"+(avg/3).toString(16)+"00";
+    }
+    console.log("hexIn 4 and its: "+tr+" from ......["+hexIn+"]");
+    return tr;
+
+  }else{
+    console.log("hexIn NaN ["+hexIn+"]");
   }
   console.log("no action for invert !!!");
   return "";
@@ -151,7 +167,7 @@ function mkShaderStoreSettings(){
 var mkShaderType;
 function mkShader( shType ){
   mkShaderType = shType;
-  console.log("mkLightNight mode..."+mkShaderType);
+  //console.log("mkLightNight mode..."+mkShaderType);
   var bgColor = $(document.body).css("background-color");
   var bodyColor = $(document.body).css("color");
   //console.log("bg:"+col);

@@ -14,13 +14,13 @@ class s_basicSailPage{
 
 
   looperIter(){
-    //console.log("basic sailing looperIter...");
+    //cl("basic sailing looperIter...");
     //navBatteryPercent(this.navBatteryUpdate);
   }
 
   // to fix !!!!
   makeLoopForNav(){
-    console.log("loopForNav");
+    cl("loopForNav");
 
     var xtet = storeGetLast['xte']['t'];
     var t = new Date().getTime();
@@ -29,7 +29,7 @@ class s_basicSailPage{
       this.onMessageCallBack({
         'topic': 'NR/nav/clien'
         });
-      console.log("loopForNav clean it !");
+      cl("loopForNav clean it !");
     }
 
 
@@ -40,12 +40,21 @@ class s_basicSailPage{
   }
 
   get svgDyno(){
-    console.log("s_basicSailPage get svgDyno");
+    cl("s_basicSailPage get svgDyno");
     return s_basicSail;
   }
 
+  hdgPlotUpdater = null;
   svgDynoAfterLoad(){
-
+    this.hdgPlotUpdater = m_d3PlotInit("hdgPlot",  {
+      'direction': 'upDown',
+      'plotType': 'area',
+      'fillColor': '#0f0',
+      'lineSize': 1,
+      'legendX': 'no',
+      'legendY': 'no',
+      'fillToPoint': 0
+      });
   }
 
 
@@ -57,12 +66,12 @@ class s_basicSailPage{
     var lastLon = storeGetPreLast('lon');
 
     /*
-    console.log("-------- do LL");
-    console.log(lat);
-    console.log(lon);
+    cl("-------- do LL");
+    cl(lat);
+    cl(lon);
 
-    console.log(lastLat);
-    console.log(lastLon);
+    cl(lastLat);
+    cl(lastLon);
     */
 
     if( lastLat == undefined )
@@ -72,15 +81,15 @@ class s_basicSailPage{
     var cog = deg360Pos(
       getAngleLL(  lastLat['v'], lastLon['v'], lat['v'], lon['v'] )
       );
-    //console.log("cog:"+cog);
+    //cl("cog:"+cog);
     storeIt( 'cog', cog, min1 );
     putText("gpsCOG", (""+cog).substring(0,5) );
 
     var nm = getDistLLInNM( lastLat['v'], lastLon['v'], lat['v'], lon['v'] );
     var inTime = lat['t']-lastLat['t'];
 
-    //console.log("distance is "+nm);
-    //console.log("in time ms:"+inTime);
+    //cl("distance is "+nm);
+    //cl("in time ms:"+inTime);
 
     var sog = nm*(3600000/inTime);
     putText("gpsSpeed", (""+sog).substring(0,5) , 'c', 5);
@@ -89,8 +98,8 @@ class s_basicSailPage{
 
 
   onMessageCallBack( r ){
-    //console.log("s_basicSailPage onMessageCallBack ");
-    //console.log("s_bas... :"+r.topic);
+    //cl("s_basicSailPage onMessageCallBack ");
+    //cl("s_bas... :"+r.topic);
     if( r.topic == 'and/lat' ){
       putText("gpsLat", r.payload.substring(0,11) );
       storeIt( 'lat', parseFloat(r.payload),  min5);
@@ -103,12 +112,19 @@ class s_basicSailPage{
     }else if( r.topic == 'and/mag' ){
       //putText("magHDG", Math.round(r.payload) , 'c', 3);
       putText("magHDG", Math.round(r.payload) );
-      storeIt( 'hdg', parseFloat(r.payload),  sec1*10);
+      var hdg = parseFloat(r.payload)
+      storeIt( 'hdg', hdg,  sec30);
+      var hdgAvg =  avgIt("hdg", sec30);
+      storeIt( 'hdgDeltaFromAvg', deg360delta( hdgAvg, hdg ), sec30  );
 
+      //cl("avgIt hdg min1: "+ avgIt("hdg", min1));
+      this.hdgPlotUpdater( storeData[ 'hdgDeltaFromAvg' ], {
+        'fillToPoint': 0
+        });
 
     }else if( r.topic == 'and/orient/heel'){
       var heelNorm = (r.payload/45)+0.5;
-      //console.log("heelNorm:"+heelNorm);
+      //cl("heelNorm:"+heelNorm);
       moveOnPath( "heelBall", "heelBallPath", heelNorm );
       storeIt( "heel", heelNorm, sec30 );
       moveOnPath( "heelBallAvg", "heelBallPath", avgIt("heel", sec1*10) );
@@ -143,15 +159,15 @@ class s_basicSailPage{
         });
 
 
-      //console.log("onheadcal delta:"+delta+" lM:"+lM+" rM:"+rM);
+      //cl("onheadcal delta:"+delta+" lM:"+lM+" rM:"+rM);
 
     }else if( r.topic == 'thisDevice/bat/perc' ){
         putText("batPercent", r.payload+"%" );
 
     }else{
-      console.log("s_basicSailPage on ws message NaN");
-      console.log(r);
-      console.log("---------------");
+      cl("s_basicSailPage on ws message NaN");
+      cl(r);
+      cl("---------------");
     }
 
 
@@ -176,7 +192,7 @@ class s_basicSailPage{
   		rotateSvg( "boatPitch", true, p );
 
   	}else if( r.topic == "and/stat/accelCorrect" ){
-  		console.log("got accel correct");
+  		cl("got accel correct");
   		$("#accCorrV").text( r.payload );
   		var cor = r.payload.split(",");
   		$("#sliX").slider( 'value', cor[0] );

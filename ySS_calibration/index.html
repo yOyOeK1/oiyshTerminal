@@ -23,11 +23,13 @@
 
 <script src="jquery.min.js"></script>
 <script src="jquery-ui.js"></script>
+<script src="d3.v4.js"></script>
 <script src="svg.min.js"></script>
 <script src="mShaders.js"></script>
 <script src="mMath.js"></script>
 <script src="mOperation.js"></script>
 <script src="mWebSockets.js"></script>
+<script src="m_d3Plot.js"></script>
 
 
 
@@ -50,7 +52,7 @@ function sendSetAccCor(){
   var ts = $("#sliX").slider('value')+","+
     $("#sliY").slider('value')+","+
     $("#sliZ").slider('value');
-  console.log("ts:"+ts);
+  cl("ts:"+ts);
   sOutSend("action:setAccCor:"+ts);
   $("#accCorrV").text( ts );
 
@@ -66,7 +68,7 @@ function svgTests(  ){
 
 	$( "#sliRotTest" ).slider({
 			slide: function( event, ui ) {
-				console.log(ui.value);
+				cl(ui.value);
 				rotateSvg( "boatHeel", true, ui.value );
 					},
 				min:-180,
@@ -80,14 +82,14 @@ function svgTests(  ){
 
 
 function looperIter(){
-  console.log("looper iter ....");
+  cl("looper iter ....");
 
   pager.makeLooperIter();
   setTimeout( looperIter, 5000 );
 }
 
 $( document ).ready(function() {
-	console.log( "ready!" );
+	cl( "ready!" );
 
   svgTests();
 
@@ -98,9 +100,9 @@ $( document ).ready(function() {
 
   // store last sean page on browser
   var lastUse = document.cookie;
-  console.log("have cookie from last use: ["+lastUse+"]");
+  cl("have cookie from last use: ["+lastUse+"]");
   var lastPageNo = getCookie('lastPage');
-  console.log("lastPage: ["+lastPageNo+"]")
+  cl("lastPage: ["+lastPageNo+"]")
   if( lastPageNo != "" )
     pager.setPage( parseInt( lastPageNo ) );
 
@@ -115,7 +117,7 @@ $( document ).ready(function() {
   navBatteryPercentSignUp( pager );
 
   $(".bottomPanelHandle").mouseup( function(){
-    console.log("unclick");
+    cl("unclick");
     if( $(".bottomPanelContainer").is(":visible") ){
         $(".bottomPanelContainer").hide();
     }else{

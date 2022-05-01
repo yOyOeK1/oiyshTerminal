@@ -59,9 +59,9 @@ var s_testFuncs=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.0000001"
-     inkscape:cx="189.10667"
-     inkscape:cy="66.632441"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="245.91112"
+     inkscape:cy="162.44827"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -570,27 +570,27 @@ var s_testFuncs=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333397px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
-       x="32.366341"
-       y="270.24631"
+       style="font-style:normal;font-weight:normal;font-size:4.7837739px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.11959435"
+       x="33.080147"
+       y="283.42633"
        id="text2227"><tspan
          sodipodi:role="line"
          id="tspan2225"
-         x="32.366341"
-         y="270.24631"
-         style="stroke-width:0.26458335">house battery</tspan></text>
+         x="33.080147"
+         y="283.42633"
+         style="stroke-width:0.11959435">house battery</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333397px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
-       x="31.617989"
-       y="280.91037"
+       style="font-style:normal;font-weight:normal;font-size:6.91025448px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.17275636"
+       x="67.308708"
+       y="283.7233"
        id="houBatVol"
        inkscape:label="#text2231"><tspan
          sodipodi:role="line"
          id="tspan2229"
-         x="31.617989"
-         y="280.91037"
-         style="stroke-width:0.26458335">00.00</tspan></text>
+         x="67.308708"
+         y="283.7233"
+         style="stroke-width:0.17275636">00.00</tspan></text>
     <rect
        style="opacity:0.49300005;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.5291667;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="shape02-9"
@@ -673,5 +673,14 @@ var s_testFuncs=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
          x="60.457291"
          y="292.23749"
          style="stroke-width:0.26458335">100%</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.52900004;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="d3PlotLine"
+       width="41.804169"
+       height="35.71875"
+       x="52.387501"
+       y="237.46873"
+       ry="1.3441284"
+       inkscape:label="#rect4593" />
   </g>
 </svg>`;

@@ -2,6 +2,7 @@
 class s_testFuncsPage{
 
   iterCounter = 0;
+  d3plot01data = new Array();
 
   get getName(){
     return "test functions";
@@ -17,6 +18,13 @@ class s_testFuncsPage{
       console.log("looperIter @ s_testFuncsPage ...");
       this.iterCounter++;
       putText("looperIter", ""+this.iterCounter);
+
+      this.d3plot01data.push({'x':this.iterCounter,'y':Math.random()*360});
+      if( this.d3plot01data.length > 5 )
+        this.d3plot01data = this.d3plot01data.slice( 1 );
+
+      this.d3plot01(this.d3plot01data);
+
   }
 
 
@@ -30,10 +38,27 @@ class s_testFuncsPage{
     `;
   }
 
+  pushDataToPlot( no, val ){
+    this.d3plot01data.push({'x':no,'y':val});
+
+    if( this.d3plot01data.length > 20 )
+      this.d3plot01data = this.d3plot01data.slice( 1 );
+
+    this.d3plot01(this.d3plot01data );
+
+  }
+
+
   getHtmlAfterLoad(){
     $( "#sliTTest" ).slider({
   			slide: function( event, ui ) {
   				console.log(ui.value);
+
+
+          pager.pages[ pager.currentPage ].pushDataToPlot(
+            pager.pages[ pager.currentPage ].iterCounter++,ui.value
+          );
+
 
           putText("sliderVal", "slider: "+ui.value );
 
@@ -88,7 +113,36 @@ class s_testFuncsPage{
     return s_testFuncs;
   }
 
+  d3plot01 = null;
+
   svgDynoAfterLoad(){
+    this.d3plot01 = m_d3PlotInit("d3PlotLine",{
+      'direction': 'upDown',
+
+      //'legendX': 'no',
+      //'legendY': 'no',
+
+      'lineColor': "#f00",
+      'lineSize': 5,
+      'plotSubPix': 4,
+
+      //'plotType': 'line'
+
+      'plotType': 'area',
+      'fillColor': '#0f0',
+      'fillToPoint': 100
+
+      });
+
+    this.d3plot01data.push({'x':-20, 'y':0});
+    this.d3plot01data.push({'x':-16, 'y':100});
+    this.d3plot01data.push({'x':-13, 'y':50});
+    this.d3plot01data.push({'x':-11, 'y':60});
+    this.d3plot01data.push({'x':-9, 'y':60});
+    this.d3plot01data.push({'x':-7, 'y':60});
+    this.d3plot01data.push({'x':-6, 'y':80});
+    this.d3plot01data.push({'x':-2, 'y':90});
+    this.d3plot01(this.d3plot01data );
 
   }
 

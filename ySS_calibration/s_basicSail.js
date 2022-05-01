@@ -39,9 +39,9 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7071068"
-     inkscape:cx="182.46785"
-     inkscape:cy="618.52021"
+     inkscape:zoom="2.8284272"
+     inkscape:cx="110.10077"
+     inkscape:cy="150.73635"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -89,6 +89,11 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        position="92.983067,211.45696"
        orientation="0,1"
        id="guide1515"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="10.980208,82.748437"
+       orientation="0,1"
+       id="guide4595"
        inkscape:locked="false" />
   </sodipodi:namedview>
   <metadata
@@ -215,26 +220,26 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:8.1442194px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21814872"
-       x="1.03882"
-       y="259.10696"
+       x="0.85173136"
+       y="254.42975"
        id="gpsSpeed"
        inkscape:label="#text6984"><tspan
          sodipodi:role="line"
          id="tspan6982-6"
-         x="1.03882"
-         y="259.10696"
+         x="0.85173136"
+         y="254.42975"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:72.71623993px;font-family:Uroob;-inkscape-font-specification:Uroob;stroke-width:0.21814872">88.88</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.69016218px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.12544055"
-       x="218.03276"
-       y="0.60652781"
+       x="213.89865"
+       y="-0.054930516"
        id="text6958-5-7"
        transform="rotate(90)"><tspan
          sodipodi:role="line"
          id="tspan6956-8-5"
-         x="218.03276"
-         y="0.60652781"
+         x="213.89865"
+         y="-0.054930516"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.35212946px;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#808080;stroke-width:0.12544055">SOG</tspan></text>
     <text
        xml:space="preserve"
@@ -365,5 +370,15 @@ var s_basicSail=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
          x="76.030891"
          y="-123.13872"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444449px;font-family:Uroob;-inkscape-font-specification:Uroob;text-align:center;text-anchor:middle;fill:#ffffff;stroke-width:0.41164026">100%</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.52900004;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="hdgPlot"
+       width="118.71019"
+       height="38.330326"
+       x="8.1359377"
+       y="255.55984"
+       ry="1.3441284"
+       rx="0"
+       inkscape:label="#rect4597" />
   </g>
 </svg>`;

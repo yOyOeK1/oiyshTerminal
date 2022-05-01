@@ -1,5 +1,10 @@
 var makeWithAnimation = false;
 
+function cl( msg ){
+	console.log(msg);
+}
+
+
 function rotateImage(obj, degree) {
 	obj.css({
             '-webkit-transform':'rotate('+degree+'deg)',

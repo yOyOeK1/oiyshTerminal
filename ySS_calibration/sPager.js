@@ -1,35 +1,35 @@
 
 
-console.log("sPager.js file");
+
 class sPager {
   currentPage = -1;
 
   constructor(){
     this.currentPage = -1;
     this.pages = new Array();
-    console.log("sPager constructor done !");
+    cl("sPager constructor done !");
   }
 
   wsCallbackExternal( r ){
-    console.log("wsCallbackExternal got msg");
-    console.log(r);
+    cl("wsCallbackExternal got msg");
+    cl(r);
     this.wsCallback( r );
   }
 
   wsCallback( r ){
     if( this.currentPage == -1 )
-      console.log("pager dumm callback:"+r);
+      cl("pager dumm callback:"+r);
     else
       this.pages[ this.currentPage ].onMessageCallBack(r);
   }
 
   addPage( obj ){
-    console.log("sPager add page: ["+obj.getName+"] as "+(this.pages.length) );
+    cl("sPager add page: ["+obj.getName+"] as "+(this.pages.length) );
     this.pages.push( obj );
   }
 
   makeLooperIter(){
-    //console.log("pager looper iter...");
+    //cl("pager looper iter...");
     try{
       this.pages[ this.currentPage ].looperIter();
     }catch( e ){}
@@ -44,7 +44,7 @@ class sPager {
     this.setCssForPage();
     mkShaderResuming = false;
 
-    console.log("sPager set page to: "+pageNo);
+    cl("sPager set page to: "+pageNo);
 
     this.getPage();
     document.cookie="lastPage="+pageNo+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC";
@@ -66,20 +66,20 @@ class sPager {
 	    "background-color", bgColor
     );
 
-    console.log("default background set: "+bgColor);
+    cl("default background set: "+bgColor);
   }
 
   get getPageBGColor(){
     try{
       return this.pages[ this.currentPage ].getDefaultBackgroundColor;
     }catch(e){
-      console.log("pageNo: "+this.currentPage+" don't have getDefaultBackgroundColor()");
+      cl("pageNo: "+this.currentPage+" don't have getDefaultBackgroundColor()");
       return "#ffffff";
     }
   }
 
   getPage(){
-    console.log("getHtml current page: "+this.currentPage);
+    cl("getHtml current page: "+this.currentPage);
     lAngels = {};
     movePathStartOffset = {};
     putTextStorage = {};
@@ -94,7 +94,7 @@ class sPager {
       try{
         cp.getHtmlAfterLoad();
       }catch(e){
-        console.log("sPage page "+this.currentPage+" don't have getHtmlAfterLoad()");
+        cl("sPage page "+this.currentPage+" don't have getHtmlAfterLoad()");
       }
       $("#svgDyno").html( cp.svgDyno );
 
