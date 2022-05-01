@@ -192,6 +192,19 @@ function putText( objName, text, align, chars ){
 }
 
 
+function updateStyle( objName , args ){
+	var obj = SVG("#"+objName);
+	var s = obj.attr('style').split(";");
+	var l = s.length;
+	var k = "";
+	for( var i=0;i<l;i++ ){
+		k = s[i].substring(0,s[i].indexOf(":") );
+		if( args[ k ] != undefined )
+			s[i] = k+":"+args[k];
+	}
+	obj.attr('style', s.join(';'));
+}
+
 
 function getCookie(cname) {
   let name = cname + "=";

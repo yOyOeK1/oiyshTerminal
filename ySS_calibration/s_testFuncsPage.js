@@ -60,6 +60,15 @@ class s_testFuncsPage{
           );
 
 
+          updateStyle("shaderTester", {
+            'fill': shaderColor( rgbToHex(
+                0,
+                Math.round(mMapVal( ui.value, -180, 360, 0,255 )),
+                0
+              ) )
+            } );
+          cl("set color");
+
           putText("sliderVal", "slider: "+ui.value );
 
           rotateSvg( "objRot", true, ui.value );

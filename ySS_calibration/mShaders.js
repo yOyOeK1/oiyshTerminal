@@ -87,11 +87,48 @@ function mkLightHex( hexIn, operationType ){
   return "";
 }
 
+function shaderColor( hex ){
+  var shaderStore = getCookie('shaderStore');
+  var seq = shaderStore.split(",");
+  for( var s=0; s<seq.length; s++ ){
+    if( seq[s].length > 2 ){
+      hex = mkLightHex( hex, seq[s] );
+    }
+  }
+  return hex;
+}
+
 function mkLightOperationFromStyle( obj ){
   //console.log("mkLightOperationFromStyle ");
-  var s = obj.attr("style").split(";");
+  var style = obj.attr("style");
+
+  //cl("style: "+style);
+  //cl("fill:"+obj.attr("fill") );
+  //cl("stroke:"+obj.attr("stroke"));
+  if( style == undefined  ){
+    var tFill = obj.attr("fill");
+    var tStroke = obj.attr("stroke");
+
+    if( tFill == undefined && tStroke == undefined )
+      return 0;
+    else{
+      var nStyle = new Array();
+      if( tFill != undefined ){
+        nStyle.push("fill:"+tFill);
+        obj.attr("fill",null);
+      }
+      if( tStroke != undefined ){
+        nStyle.push("stroke:"+tStroke);
+        obj.attr("stroke",null);
+      }
+      style = nStyle.join(";");
+    }
+
+
+  }
+
+  var s = style.split(";");
   var sfsOrg = obj.attr("sfsOrg");
-  //console.log("sfsOrg:"+sfsOrg );
   var fill = "";
   var stroke = "";
   var orgFill,orgStroke;
@@ -121,13 +158,8 @@ function mkLightOperationFromStyle( obj ){
 
   }
 
-
-
   if( sfsOrg == undefined )
     obj.attr("sfsOrg", fill+","+stroke );
-
-
-
 
   obj.attr("style", s.join(";"))
 
@@ -155,8 +187,7 @@ function mkShaderStoreSettings(){
   var seq = shaderStore.split(",");
   seq.push(mkShaderType);
 
-  if
-  ( mkShaderType == 'normal' )
+  if( mkShaderType == 'normal' )
     seq = new Array();
 
   document.cookie="shaderStore="+seq.join(",")+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC";
@@ -199,12 +230,13 @@ function mkShader( shType ){
 function mkLightRun( obj, level ){
 
   obj.each(function(){
-    //console.log("a level:"+level+" id=["+this['node']["id"]+"]" );
+    cl("a level:"+level+" id=["+this['node']["id"]+"]" );
 
     try{
       mkLightOperationFromStyle( this );
     }catch(e){
-      //console.log("style no id=["+this['node']["id"]+"]");
+      cl("style no id=["+this['node']["id"]+"] error: "+e);
+
     }
     //console.log(this);
     if( this['type'] != "mask")

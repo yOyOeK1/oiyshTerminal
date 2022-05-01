@@ -73,7 +73,6 @@ function m_d3PlotInit( objName, settings ){
     }
 
     if( settings['direction']  == "upDown" ){
-      cl("settings direction is upDown")
       var dTmp = dx;
       dx = dy;
       dy = dTmp;
@@ -84,6 +83,13 @@ function m_d3PlotInit( objName, settings ){
       d3.min(data, function(d) { return d[dx] }),
       d3.max(data, function(d) { return d[dx] })
     ]);
+    if( settings['direction'] == "upDown" && settings['fillToPoint']  != undefined ){
+      var tXDomain = x.domain();
+      x.domain([
+        Math.min( tXDomain[0], settings['fillToPoint'] ),
+        Math.max( tXDomain[1], settings['fillToPoint'] )
+      ]);
+    }
 
     if( settings['legendX'] == "no"){
     }else{
@@ -97,6 +103,15 @@ function m_d3PlotInit( objName, settings ){
       d3.min(data, function(d) { return d[dy]  }),
       d3.max(data, function(d) { return d[dy]  })
       ]);
+    if( settings['direction'] != "upDown" && settings['fillToPoint'] != undefined ){
+      var tYDomain = y.domain();
+      y.domain([
+        Math.min( tYDomain[0], settings['fillToPoint'] ),
+        Math.max( tYDomain[1], settings['fillToPoint'] )
+      ]);
+    }
+
+
 
     if( settings['legendY'] == "no"){
     }else{
@@ -141,11 +156,14 @@ function m_d3PlotInit( objName, settings ){
           .y1(function(d) { return y(d[dy]); }));
 
       }
-      u
-      .attr("fill", settings['fillColor'] ? settings['fillColor'] : "#0f0f0f")
-      .attr("stroke", settings['lineColor'] ? settings['lineColor'] : "#000000" )
-      .attr("stroke-width", settings['lineSize'] ? settings['lineSize'] :5 );
 
+      var mStyle = [
+        "fill:"+shaderColor( settings['fillColor'] ? settings['fillColor'] : "#0f0f0f"),
+        "stroke:"+shaderColor( settings['lineColor'] ? settings['lineColor'] : "#000000" ),
+        "stroke-width:"+( settings['lineSize'] ? settings['lineSize'] : 5 )
+        ];
+      u
+      .attr( "style", mStyle.join(";") );
 
       cl("  it's a area plot !! settings:"+settings['fillToPoint']+" addInfo:"+addInfo);
     }

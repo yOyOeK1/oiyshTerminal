@@ -60,7 +60,7 @@ var s_testFuncs=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.0000001"
-     inkscape:cx="245.91112"
+     inkscape:cx="179.16112"
      inkscape:cy="162.44827"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -682,5 +682,9 @@ var s_testFuncs=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        y="237.46873"
        ry="1.3441284"
        inkscape:label="#rect4593" />
+    <path
+       style="opacity:1;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:0.52900004;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 32.014583,254.60051 a 3.9026041,3.9026041 0 0 1 -3.902604,3.9026 3.9026041,3.9026041 0 0 1 -3.902605,-3.9026 3.9026041,3.9026041 0 0 1 3.902605,-3.9026 3.9026041,3.9026041 0 0 1 3.902604,3.9026"
+       id="shaderTester" />
   </g>
 </svg>`;
