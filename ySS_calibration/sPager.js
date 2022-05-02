@@ -47,7 +47,7 @@ class sPager {
     cl("sPager set page to: "+pageNo);
 
     this.getPage();
-    document.cookie="lastPage="+pageNo+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC";
+    document.cookie="lastPage="+pageNo+";max-age=31536000;";
     mkShaderStoreResume();
 
     navBatteryPercent( this );

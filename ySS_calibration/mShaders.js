@@ -88,11 +88,9 @@ function mkLightHex( hexIn, operationType ){
 }
 
 function shaderColor( hex ){
-  var shaderStore = getCookie('shaderStore');
-  var seq = shaderStore.split(",");
-  for( var s=0; s<seq.length; s++ ){
-    if( seq[s].length > 2 ){
-      hex = mkLightHex( hex, seq[s] );
+  for( var s=0; s<sharedStoreCookie.length; s++ ){
+    if( sharedStoreCookie[s].length > 2 ){
+      hex = mkLightHex( hex, sharedStoreCookie[s] );
     }
   }
   return hex;
@@ -177,9 +175,10 @@ function mkShaderStoreResume(){
   }
 
   mkShaderResuming = false;
-
+  sharedStoreCookie = seq;
 }
 
+var sharedStoreCookie = [];
 var mkShaderResuming = false;
 function mkShaderStoreSettings(){
   var shaderStore = getCookie('shaderStore');
@@ -190,8 +189,8 @@ function mkShaderStoreSettings(){
   if( mkShaderType == 'normal' )
     seq = new Array();
 
-  document.cookie="shaderStore="+seq.join(",")+";expires=; expires=Thu, 18 Dec "+(Date().getFullYear+10)+" 12:00:00 UTC";
-
+  document.cookie="shaderStore="+seq.join(",")+";max-age=31536000;";
+  sharedStoreCookie = seq;
 
 }
 
