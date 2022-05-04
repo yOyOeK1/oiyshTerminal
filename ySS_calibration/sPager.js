@@ -107,13 +107,13 @@ class sPager {
     var ta = "";
 
     for(var i=0;i<this.pages.length;i++){
-      ta+= '<input type="button" ';
+      ta+= '<input type="button" class="menu-button"';
       ta+= 'value="'+this.pages[i].getName+'" ';
       ta+= 'onclick="pager.setPage('+i+')"/>';
       ta+= '<br>';
     }
 
-    $("#htmlDyno").html( "Pages in stack:</br>"+ta );
+    $("#htmlDyno").html( ta );
 
   }
 

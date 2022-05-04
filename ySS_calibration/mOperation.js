@@ -254,28 +254,36 @@ function mkfullscreen() {
 
 
 function navBatteryPercentSignUp( pager ){
-	navigator.getBattery().then(battery => {
-  battery.onlevelchange = () => {
-		pager.wsCallbackExternal({
-			'topic': 'thisDevice/bat/perc',
-			'payload': Math.round( battery.level*100 ).toString()
-			});
-  	};
-	});
-	console.log("navBatteryPercentSignUp ! as [thisDevice/bat/perc]");
+	try{
+		navigator.getBattery().then(battery => {
+		battery.onlevelchange = () => {
+			pager.wsCallbackExternal({
+				'topic': 'thisDevice/bat/perc',
+				'payload': Math.round( battery.level*100 ).toString()
+				});
+		};
+		});
+		console.log("navBatteryPercentSignUp ! as [thisDevice/bat/perc]");
+	}catch{
+		return false;
+	}
 }
 
 
 function navBatteryPercent( pager ){
 	console.log("try to get battery status...");
-	navigator.getBattery()
-    .then(function(battery) {
+	try{
+		navigator.getBattery()
+		.then(function(battery) {
 
-			setTimeout( function (){
-				console.log(" callback bat:"+battery.level);
-				pager.wsCallbackExternal({
-					'topic': 'thisDevice/bat/perc',
-					'payload': Math.round( battery.level*100 ).toString()
-					});},1000);
-  });
+				setTimeout( function (){
+					console.log(" callback bat:"+battery.level);
+					pager.wsCallbackExternal({
+						'topic': 'thisDevice/bat/perc',
+						'payload': Math.round( battery.level*100 ).toString()
+						});},1000);
+	  });
+	}catch{
+		return false;
+	}
 }
