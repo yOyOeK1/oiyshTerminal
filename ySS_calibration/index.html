@@ -1,5 +1,22 @@
 <html>
 
+<script>
+class moduleCollector{
+  mod = {};
+  set exports( a ){
+    console.log("moduleCollector gos some");
+    console.log(a.name);
+    this.mod[ a.name ] = a;
+  }
+
+  getModule( name ){
+    return this.mod[name];
+  }
+
+}
+var module = new moduleCollector();
+</script>
+
 <script src="sPager.js"></script>
 
 <script src="s_calibration.js"></script>
@@ -12,7 +29,15 @@
 <script src="s_ilooNav.js"></script>
 <script src="s_ilooNavPage.js"></script>
 
-<script src="s_ap.js"></script>
+<script src="apSimulator.js"></script>
+<script src="apV3.js"></script>
+<script src="s_apV3Page.js"></script>
+
+<script src="s_apV3Svg.js"></script>
+<script src="s_apV3SvgPage.js"></script>
+
+
+<script src="apSolver.js"></script>
 <script src="s_apPage.js"></script>
 
 
@@ -22,7 +47,7 @@
 <script src="s_testFuncs.js"></script>
 <script src="s_testFuncsPage.js"></script>
 
-
+<script src="nr_reqTest1.js"></script>
 
 <script src="jquery.min.js"></script>
 <script src="jquery-ui.js"></script>
@@ -46,6 +71,8 @@ const pager = new sPager();
 pager.addPage( new s_calibrationPage() );
 pager.addPage( new s_basicSailPage() );
 pager.addPage( new s_ilooNavPage() );
+pager.addPage( new s_apV3SvgPage() );
+pager.addPage( new s_apV3Page() );
 pager.addPage( new s_apPage() );
 pager.addPage( new s_testFuncsPage() );
 pager.addPage( new s_blankPage() );

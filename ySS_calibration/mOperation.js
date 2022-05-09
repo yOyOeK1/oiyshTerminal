@@ -1,7 +1,7 @@
 var makeWithAnimation = false;
 
 function cl( msg ){
-	//console.log(msg);
+	console.log(msg);
 }
 
 

@@ -200,6 +200,8 @@ function mkShader( shType ){
   //console.log("mkLightNight mode..."+mkShaderType);
   var bgColor = $(document.body).css("background-color");
   var bodyColor = $(document.body).css("color");
+  var inputBgColor = $(document.input).css("background-color");
+  var inputColor = $(document.input).css("color");
   //console.log("bg:"+col);
   if( mkShaderType == 'normal'){
     $(document.body).css("background-color", "#ffffff");
@@ -209,6 +211,14 @@ function mkShader( shType ){
     $(document.body).css("background-color", mkLightHex( bgColor ) );
     $(document.body).css("color", mkLightHex(bodyColor) );
     $(".bottomPanelContainer").css("background-color", mkLightHex(bgColor) );
+
+    /* TODO inputs to shader
+    cl('shader for input'+inputBgColor);
+    cl('shader for input'+inputColor);
+
+    $(document.input).css('background-color', mkLightHex(inputBgColor) );
+    $(document.input).css('color', mkLightHex(inputColor) );
+    */
   }
   //return 0;
   var s = SVG("#svgDyno");

@@ -10,6 +10,10 @@ class sPager {
     cl("sPager constructor done !");
   }
 
+  getCurrentPage(){
+    return this.pages[ this.currentPage ];
+  }
+
   wsCallbackExternal( r ){
     cl("wsCallbackExternal got msg");
     cl(r);
@@ -20,7 +24,7 @@ class sPager {
     if( this.currentPage == -1 )
       cl("pager dumm callback:"+r);
     else
-      this.pages[ this.currentPage ].onMessageCallBack(r);
+      this.getCurrentPage().onMessageCallBack(r);
   }
 
   addPage( obj ){
@@ -31,7 +35,7 @@ class sPager {
   makeLooperIter(){
     //cl("pager looper iter...");
     try{
-      this.pages[ this.currentPage ].looperIter();
+      this.getCurrentPage().looperIter();
     }catch( e ){}
   }
 
@@ -71,7 +75,7 @@ class sPager {
 
   get getPageBGColor(){
     try{
-      return this.pages[ this.currentPage ].getDefaultBackgroundColor;
+      return this.getCurrentPage().getDefaultBackgroundColor;
     }catch(e){
       cl("pageNo: "+this.currentPage+" don't have getDefaultBackgroundColor()");
       return "#ffffff";
@@ -88,13 +92,13 @@ class sPager {
       this.getMenu();
       $("#svgDyno").html("");
     }else{
-      var cp = this.pages[ this.currentPage ];
+      var cp = this.getCurrentPage();
 
       $("#htmlDyno").html( cp.getHtml );
       try{
         cp.getHtmlAfterLoad();
       }catch(e){
-        cl("sPage page "+this.currentPage+" don't have getHtmlAfterLoad()");
+        cl("sPage page "+this.currentPage+" don't have getHtmlAfterLoad() error["+e+"]");
       }
       $("#svgDyno").html( cp.svgDyno );
 

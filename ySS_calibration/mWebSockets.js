@@ -26,7 +26,7 @@ function wsConnectIn( onMesCallBack ){
 
     onMesCallBack.wsCallback( r );
 
-		cl("on message .data:"+m.data);
+		//cl("on message .data:"+m.data);
 
 
 	}

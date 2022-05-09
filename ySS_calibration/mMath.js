@@ -125,19 +125,49 @@ function storeGetPreLast( key ){
   return storeData[key][ storeData[key].length-2 ];
 }
 
-function avgIt( key, forMs ){
-  var t = new Date().getTime()-forMs;
+
+function storeGetFirstOlderThen( key, ms ){
+  var d = storeData[key];
+  if( d == undefined )
+    return undefined;
+
+  var t = new Date().getTime()-ms;
+  var l = d.length-1;
+  for( var i=l;i>0;i-- ){
+    if( d[i]['t']<=t ){
+      return d[i];
+    }
+  }
+
+  return undefined;
+}
+
+/*
+if only forMs set thin
+[0] |__________[forMs]++++| [now]
+
+if forMs and toMs set thin
+[0] |___[forMs]++++[forMS+toMs]____________| [now]
+*/
+function avgIt( key, forMs, toMs ){
+  var now = new Date().getTime();
+
+  var t = now-forMs;
+
+  var tFrom = now;
+  if( toMs != undefined )
+    tFrom = t+toMs;
+
   var d = storeData[key];
   var l = d.length-1;
   var tr = 0;
   var trC = 0;
 
+
   for( var i=l; i>=0; i-- ){
-    if( d[i]['t'] >= t ){
+    if( t <= d[i]['t'] && d[i]['t'] <= tFrom ){
       tr+= d[i]['v'];
       trC++;
-    }else{
-      break;
     }
 
   }
