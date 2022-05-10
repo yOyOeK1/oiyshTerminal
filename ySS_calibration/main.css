@@ -29,7 +29,7 @@ body{
 	padding:0;
 	background-color: #ffffff;
   color: #000000;
-	font-family: Helvetican, sans-serif;
+	font-family: Helvetica, sans-serif;
 }
 #svgDyno{
 	width:100%;
@@ -52,6 +52,9 @@ body{
   /*filter: grayscale(100%);*/
 
 }
+#htmlDyno{
+	width:100%;
+}
 .bottomPanel{
 	z-index:20;
 	position:absolute;
@@ -68,12 +71,9 @@ body{
 	padding:16px;
 }
 div.bottomPanelHandle{
-	padding:8px 0 0 0;
-	width:28px;
+	padding:2vh 0;
 	margin:0 auto;
-	font-weight: bold;
-	font-size:16px;
-  //display:none;
+	cursor:pointer;
 }
 
 .bottomPanel input[type=button]{
@@ -81,5 +81,19 @@ div.bottomPanelHandle{
 	border:0;
 	border-radius: 3px;
 	padding:6px;
+	text-transform:uppercase;
+}
+.menu-button{
+	font-size:4vh;
+	line-height:8vh;
+	color:#222;
+	background-color:#eee;
+	#border:1px solid #999;
+	width:94vw;
+	max-width:350px;
+	margin: 2vh;
+	padding:2vh;
+	text-align:center;
+	border-radius:3px;
 	text-transform:uppercase;
 }
