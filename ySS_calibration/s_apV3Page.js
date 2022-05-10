@@ -113,7 +113,7 @@ tiller by:
 			this.apSim = new apSimulator("apSimControls", 'pager.getCurrentPage().apSim');
 			this.apV3 = new apV3();
 			this.apV3.setDebug( true, 'apDebug' );
-			this.apV3.setAuto(45);
+			this.apV3.setAuto(10);
 
 			var apSettings = this.apV3.getSettings();
 			this.buildApSettings(apSettings);
@@ -171,8 +171,10 @@ tiller by:
 				$("#apStatus").text( r.payload );
 
 		}else if( r.topic == 'ap/settings'){
-			var set = r.settings;
-			this.buildApSettings(set);
+			if( !this.apInDebug ){
+				var set = r.settings;
+				this.buildApSettings(set);
+			}
 
 		}else if( r.topic == 'thisDevice/bat/perc'){
 			$("#batPerc").text( r.payload+"%" );

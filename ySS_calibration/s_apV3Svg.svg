@@ -136,6 +136,17 @@
          stdDeviation="0.51511065"
          id="feGaussianBlur1050-2" />
     </filter>
+    <linearGradient
+       id="linearGradient4544">
+      <stop
+         style="stop-color:black;stop-opacity:1;"
+         offset="0"
+         id="stop4546" />
+      <stop
+         style="stop-color:black;stop-opacity:0;"
+         offset="1"
+         id="stop4548" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -144,20 +155,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="252.71448"
-     inkscape:cy="-14.483236"
+     inkscape:zoom="2"
+     inkscape:cx="116.09288"
+     inkscape:cy="354.94198"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="881"
-     inkscape:window-height="692"
-     inkscape:window-x="22"
+     inkscape:window-width="1366"
+     inkscape:window-height="704"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-others="false"
      inkscape:snap-nodes="false"
@@ -720,6 +731,65 @@
          y="315.51627"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.01989937px;font-family:Uroob;-inkscape-font-specification:Uroob;stroke-width:0.40049756"
          id="tspan3960">XTE: 100.0</tspan></text>
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use1478"
+       id="use1486-6"
+       transform="matrix(1.0036507,0,0,0.88413157,-64.737546,-4.5553815)"
+       width="100%"
+       height="100%" />
+    <rect
+       style="opacity:1;fill:#a9ff37;fill-opacity:1;stroke:#000000;stroke-width:0.52;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2388"
+       width="28.575001"
+       height="24.870829"
+       x="0.13229166"
+       y="178.40051"
+       rx="3.9192634"
+       ry="3.2411458" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use1482"
+       id="use1490-9"
+       transform="matrix(1.0036507,0,0,0.88413157,-64.737546,-4.5553815)"
+       width="100%"
+       height="100%" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use1484"
+       id="use1492-1"
+       transform="matrix(1.0036507,0,0,0.88413157,-64.737546,-4.5553815)"
+       width="100%"
+       height="100%" />
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#b5ab9b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.36937797px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 8.9890875,185.46918 2.7051805,2.14549 -1.492512,2.23876 -2.6118978,-2.14547 c -0.5496832,1.4883 0.307699,4.108 3.7312778,2.79846 l 5.783487,4.1044 c -2.003457,2.14708 0.331491,4.15163 2.985025,2.89174 l -2.518615,-2.14548 1.305951,-1.77236 2.518614,1.77236 c 1.005698,-1.75682 -1.115964,-4.75591 -3.358154,-1.95893 l -5.970049,-4.29096 c 2.421745,-5.69488 -1.669744,-4.88146 -3.0783075,-3.63801 z"
+       id="path1904"
+       sodipodi:nodetypes="ccccccccccccc"
+       inkscape:export-filename="/home/httpdocs/webs/turystyka_aedv/base_aedv2/icons/ico_config_256_256.png"
+       inkscape:export-xdpi="331.84"
+       inkscape:export-ydpi="331.84" />
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.36937797px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 16.1718,183.7901 6.063336,5.50364 c -0.342616,-1.21247 -1.623915,-2.11205 0.09328,-4.01113 l -4.664098,-3.638 z"
+       id="path2793"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/httpdocs/webs/turystyka_aedv/base_aedv2/icons/ico_config_256_256.png"
+       inkscape:export-xdpi="331.84"
+       inkscape:export-ydpi="331.84" />
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#d45500;fill-rule:evenodd;stroke:#000000;stroke-width:0.36937797px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 17.757595,185.28261 -9.4214835,11.66025 1.5857952,1.11939 8.5819453,-12.21994 z"
+       id="path3680"
+       inkscape:export-filename="/home/httpdocs/webs/turystyka_aedv/base_aedv2/icons/ico_config_256_256.png"
+       inkscape:export-xdpi="331.84"
+       inkscape:export-ydpi="331.84" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -791,5 +861,15 @@
        y="177.60333"
        rx="1.2072859"
        onclick="apv3bt('toRMB')" />
+    <rect
+       transform="translate(0,-71.045819)"
+       style="display:inline;opacity:0.22099998;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:0.02645833;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2223-0"
+       width="32.014584"
+       height="27.582813"
+       x="-1.1675633"
+       y="177.27272"
+       rx="1.2072859"
+       onclick="apv3bt('settings')" />
   </g>
 </svg>

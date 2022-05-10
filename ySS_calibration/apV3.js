@@ -1,11 +1,7 @@
 
 class apV3{
 
-	config = {
-		'tillerGain': 1200,
-		'avgSmoothing': 3000, // in millis
-		'sampleGap': 2000
-	};
+
 
 	debug = false;
 	dDiv = '';
@@ -123,10 +119,14 @@ class apV3{
 	actionTo = 0;
 	tillerPos = 0;
 
-	aPush( actName, actForMs ){
+	aPush( actName, actForMs, site ){
 		var t = new Date().getTime()+actForMs;
-		this.cl("aPush: "+actName+" for:"+(actForMs/1000).toFixed(1));
+		this.cl("aPush: "+actName+" for:"+(actForMs/1000).toFixed(1)+
+			" delta:"+this.delta.toFixed(2)
+		);
 		this.actionStack.push({
+			'site': site,
+			'tAdd': new Date().getTime(),
 			'to': t,
 			'name': actName
 		});
@@ -141,8 +141,24 @@ class apV3{
 		return true;
 	}
 
+	aLast( ){
+		return this.actionStack[ this.actionStack.length-1 ]||{
+			'site': 1,
+			'tAdd': new Date().getTime(),
+			'to': 0,
+			'name': ''
+		};
+	}
+
 	sec1 = 1000;
 	min1 = 60000;
+
+	config = {
+		'tillerGain': 1200,
+		'avgSmoothing': 3000, // in millis
+		'sampleGap': 2000,
+		'debugToGraphana': 1
+	};
 
 	update( hdm ){
 		if( !this.on )
@@ -150,7 +166,7 @@ class apV3{
 
 		var t = new Date().getTime();
 		this.hdm = hdm;
-		this.delta = this.deg360delta( this.hdm, this.target );
+		this.delta = this.deg360delta( this.hdm, this.target ) ;
 		this.storeIt("ap3Delta", this.delta, this.min1 );
 
 		var deltaS = this.avgIt("ap3Delta", this.config['avgSmoothing'] );
@@ -159,13 +175,10 @@ class apV3{
 			);
 
 		var siteOn = deltaS >= 0 ? 1 : -1;
-		//deltaS*= site;
-		//deltaOld*= site;
 
 		var angSpeed = ( ( deltaS-deltaOld ) / (this.config['avgSmoothing']/1500) );
-
-
 		this.storeIt("ap3AngSpeed", angSpeed, this.min1 );
+
 		var angSpeedOldStare = this.storeGetFirstOlderThen('ap3AngSpeed', 1000 );
 		if( angSpeedOldStare != undefined ){
 			var angAccel = ( angSpeed - angSpeedOldStare['v'] ) / ((t-angSpeedOldStare['t'])/1000);
@@ -187,37 +200,62 @@ class apV3{
 
 
 
-		if(
-			Math.abs( deltaS ) > 1 &&
-			(
-				this.sameSite( deltaS, angSpeed ) ||
-				angSpeed == 0
-			) &&
-			this.aCan('to target')
-		){
-			this.tillerBy( (deltaS < 0 ? -0.01: 0.01)*Math.abs( deltaS ) );
-			this.aPush('to target', this.sec1*5 );
+			if(
+				Math.abs( angSpeed ) < 0.5 &&
+				Math.abs( deltaS ) > 0.5 &&
+				(
+					this.sameSite( deltaS, angSpeed ) ||
+					angSpeed == 0
+				) &&
+				Math.abs( accTrend ) < 0.08 &&
+				this.aCan('to target')
+			){
+				var g = Math.abs( deltaS );
+				if( g > 35 )
+					g = 35;
+				this.tillerBy( (deltaS < 0 ? -0.005: 0.005)*g );
+				this.aPush('to target', this.sec1*5 );
 
-		}
+			}
 
-		if(
-			 !this.sameSite( deltaS, deltaPred15 ) &&
-			 Math.abs( angSpeed ) > 0.1 &&
-			 this.aCan('langing far')
-		){
-			this.tillerBy( (deltaS > 0 ? -0.1 : 0.1 )*Math.abs(angSpeed) );
-			this.aPush('langing far', this.sec1*3 );
-		}
+			if(
+				Math.abs( angSpeed ) > 2.5 &&
+				(
+					!this.sameSite( deltaS, angSpeed )
+				) &&
+				this.aCan('to fast to target')
+			){
+				var g = 1;
+				if( Math.abs(angSpeed) > 2.5 )
+					g = Math.abs(angSpeed)/2.5;
+				this.tillerBy( (deltaS > 0 ? -0.05: 0.05)*( g ) );
+				this.aPush('to fast to target', this.sec1*2 );
 
-		if(
-			 accTrend <= 0 &&
-			 this.sameSite( deltaS, angSpeed ) &&
-			 //Math.abs( angSpeed )> 0.2 &&
-			 this.aCan('stop run away')
-		){
-			this.tillerBy( (deltaS < 0 ? -0.2 : 0.2)*Math.abs(angSpeed) );
-			this.aPush('stop run away', this.sec1*4 );
-		}
+			}
+
+
+			if(
+				 !this.sameSite( deltaS, deltaPred10 ) &&
+				 Math.abs( angSpeed ) > 0.1 &&
+				 this.aCan('landing')
+			){
+				var g = Math.abs(angSpeed);
+				if( this.aLast()['name'] == 'landing')
+					g/= 2;
+				this.tillerBy( (deltaS > 0 ? -0.07 : 0.07 )*g );
+				this.aPush('landing', this.sec1*2 );
+			}
+
+			if(
+				 //angAccel >= angAccelOld &&
+				 this.sameSite( deltaS, angSpeed ) &&
+				 Math.abs( angSpeed )> 0.4 &&
+				 this.aCan('stop run away')
+			){
+				this.tillerBy( (deltaS < 0 ? -0.1 : 0.1)*Math.abs(angSpeed) );
+				this.aPush('stop run away', this.sec1*2 );
+			}
+
 
 
 		this.d({

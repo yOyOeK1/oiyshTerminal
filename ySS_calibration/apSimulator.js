@@ -3,9 +3,9 @@ class apSimulator{
 
 	// config
 	speed = 4;
-	delay = 2; // more then 1
+	delay = 6; // more then 1
 	tillerOffset = 0;
-	randomNois = 3;
+	randomNois = 0;
 	debug = false;
 
 	tiller = 0;

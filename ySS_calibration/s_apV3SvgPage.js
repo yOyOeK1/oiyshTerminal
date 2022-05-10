@@ -1,4 +1,5 @@
 
+var apv3svgRMB = false;
 function apv3bt( cmd ){
 	cl("apv3bt send["+cmd+"]");
 
@@ -6,10 +7,17 @@ function apv3bt( cmd ){
 		sOutSend('ap:auto:'+pager.getCurrentPage().lastHDM);
 	else if( cmd == 'stb' )
 		sOutSend('ap:standby');
-	else if( cmd == 'toRMB')
+	else if( cmd == 'toRMB' && apv3svgRMB )
 		sOutSend('ap:toRMB');
 
-	else if( cmd == '-1')
+	else if( cmd == 'settings' ){
+		if( $("#apSettings").is(":visible") ){
+				$("#apSettings").hide();
+		}else{
+			$("#apSettings").show();
+		}
+
+	}else if( cmd == '-1')
 		sOutSend('ap:correctTarget:-1');
 	else if( cmd == '+1')
 		sOutSend('ap:correctTarget:1');
@@ -36,13 +44,15 @@ class s_apV3SvgPage{
 
 
 	get getHtml(){
-		return '';
+		return `<div id="apSettings"
+		style="z-index:90;position:absolute;top:0;left:0;border:10px;margin:10px;padding:10px;
+		background-color:white;border:1px solid gray;">abc</div>`;
 	}
 
 
 
 	buildApSettings( settings ){
-		var tr = ''
+		var tr = '<b>Autopilot settings:</b><br>';
 		var varToCollect = [];
 		for( var k in settings ){
 			tr+= k+': <input type="input" id="apSett_'+k+'" value="'+settings[k]+'" style="display:inline;"><br>';
@@ -50,7 +60,7 @@ class s_apV3SvgPage{
 		}
 		tr+= '<input type="button" value="SET" onclick="sOutSend(\'ap:setSetting:\'+'+
 			varToCollect.join('+\',\'+')+
-			')">';
+			');$(\'#apSettings\').hide()">';
 		/*
 		<input type="button" id="apPidSet" value="SET"
 			onclick="sOutSend('ap:pid:'+
@@ -80,6 +90,7 @@ class s_apV3SvgPage{
 		SVG("#rmbBT").opacity(0.3);
 		putText("textInfoRMB", '' );
 		SVG("#textInfoRMB").hide();
+		$("#apSettings").hide();
 	}
 
 
@@ -96,7 +107,7 @@ class s_apV3SvgPage{
 
 		}else if( r.topic == 'ap/settings'){
 			var set = r.settings;
-			//this.buildApSettings(set);
+			this.buildApSettings(set);
 
 		}else if( r.topic == 'thisDevice/bat/perc'){
 			putText("batPercent", r.payload+"%" );
@@ -117,6 +128,7 @@ class s_apV3SvgPage{
 
 		}else if( r.topic == 'NR/nav/rmb' ){
 			SVG("#rmbBT").opacity(1.0);
+			apv3svgRMB = true;
 
 			putText("textRMB", Math.round(r.payload.onHeading) );
 			SVG("#textInfoRMB").text( `RMB at:`+r.payload.lat.toFixed(6)+`   `+r.payload.lon.toFixed(6)+`
