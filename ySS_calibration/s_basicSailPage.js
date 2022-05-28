@@ -83,7 +83,7 @@ class s_basicSailPage{
       );
     //cl("cog:"+cog);
     storeIt( 'cog', cog, min1 );
-    putText("gpsCOG", (""+cog).substring(0,5) );
+    putText("gpsCOG", (""+avgItKalman('cog', sec1*10)).substring(0,5) );
 
     var nm = getDistLLInNM( lastLat['v'], lastLon['v'], lat['v'], lon['v'] );
     var inTime = lat['t']-lastLat['t'];
@@ -92,7 +92,8 @@ class s_basicSailPage{
     //cl("in time ms:"+inTime);
 
     var sog = nm*(3600000/inTime);
-    putText("gpsSpeed", (""+sog).substring(0,5) , 'c', 5);
+    storeIt('sog', sog, min1 );
+    putText("gpsSpeed", (""+avgItKalman('sog',sog,sec1*10)).substring(0,5) , 'c', 5);
   }
 
 

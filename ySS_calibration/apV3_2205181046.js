@@ -180,9 +180,7 @@ class apV3{
 					this.actionStack[l]['site'],
 					this.actionStack[l-2]['site']
 				)&&
-				Math.abs( this.deg360delta(
-					this.actionStack[l-2]['delta'], this.actionStack[l]['delta']
-				) )>5
+				Math.abs( this.actionStack[l-2]['delta'])>5
 
 			){
 				tr = true;
@@ -209,9 +207,6 @@ class apV3{
 	gainMax = 3;
 
 	logStack = [];
-
-
-
 	update( hdm ){
 		if( !this.on )
 			return '';
@@ -261,7 +256,7 @@ class apV3{
 					Math.abs( this.aLast()['delta'] ) > 5
 				) ||
 				(
-					this.aInRow('stop run away') >= 6 &&
+					this.aInRow('stop run away') >= 4 &&
 					Math.abs( this.aLast()['delta'] ) > 5
 				)
 			){
@@ -285,7 +280,7 @@ class apV3{
 
 		}
 
-			/*
+
 			if(
 				0 &&
 				Math.abs( angSpeed ) < 0.5 &&
@@ -296,20 +291,6 @@ class apV3{
 				) &&
 				Math.abs( accTrend ) < 0.08 &&
 				this.aCan('to target')
-			){*/
-			var aLastAction = this.aLast();
-			if(
-				(
-					!this.sameSite( deltaS, angSpeed ) &&
-					Math.abs( angSpeed ) < 0.7 &&
-					(
-						aLastAction['name'] == 'stop run away' &&
-						aLastAction['to'] < t &&
-						Math.abs( deltaS )> (5/this.gain)
-					) &&
-					this.aCan('to target')
-				)||
-				aLastAction['name'] == 'gain Up'
 			){
 				var g = Math.abs( deltaS );
 				if( g > 35 )
@@ -320,7 +301,7 @@ class apV3{
 			}
 
 			if(
-				Math.abs( angSpeed ) > 1.5 &&
+				Math.abs( angSpeed ) > 2.0 &&
 				(
 					!this.sameSite( deltaS, angSpeed )
 				) &&
@@ -338,7 +319,7 @@ class apV3{
 
 			if(
 				 !this.sameSite( deltaS, deltaPred10 ) &&
-				 //Math.abs( angSpeed ) > 0.1 &&
+				 Math.abs( angSpeed ) > 0.1 &&
 				 this.aCan('landing')
 			){
 				var g = Math.abs(angSpeed);
@@ -352,7 +333,7 @@ class apV3{
 			if(
 				 //angAccel >= angAccelOld &&
 				 this.sameSite( deltaS, angSpeed ) &&
-				 Math.abs( angSpeed ) > 0.05 &&
+				 1/*Math.abs( angSpeed ) > 0.2*/ &&
 				 this.aCan('stop run away')
 			){
 				/*

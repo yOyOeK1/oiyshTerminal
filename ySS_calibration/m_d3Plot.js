@@ -57,7 +57,7 @@ function m_d3PlotInit( objName, settings ){
 
     if( addInfo != undefined){
       for( var key in addInfo ){
-        cl("key: "+key);
+        //cl("key: "+key+" => "+addInfo[key]);
         settings[key] = addInfo[key];
       }
 
@@ -135,7 +135,9 @@ function m_d3PlotInit( objName, settings ){
 
 
     var dPlotType = null;
-    if( !settings['plotType'] || settings['plotType'] == "line" ){
+    //cl("plot type:"+settings['plotType']);
+    if( !settings['plotType'] || settings['plotType'] == 'line' ){
+      //cl("plot type line and ?");
       u.attr("d",
         d3.line()
        .x(function(d) { return x(d[dx]); })

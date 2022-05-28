@@ -63,6 +63,7 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
     swFor = strtol( str.c_str(), NULL, 10 );
     
 
+    ledOn();
     digitalWrite( 5, HIGH );
     digitalWrite( 4, HIGH );
     
@@ -70,8 +71,9 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
       digitalWrite( 5, LOW );
       swUpTo = ticker + swFor;
     }else{
-      swUpTo = ticker - swFor;
       digitalWrite( 4, LOW );
+      swUpTo = ticker - swFor;
+      
     }
     
   }else if( String( topic ) == "espAPDri/cmd" ){
@@ -323,6 +325,7 @@ void loop() {
   if( ticker > swUpTo ){
     digitalWrite( 5, HIGH );
     digitalWrite( 4, HIGH );
+    ledOff();
   }
   
   iter++;

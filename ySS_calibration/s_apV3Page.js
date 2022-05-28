@@ -35,6 +35,8 @@ Mag compas:
 <hr>
 Autopilot settings:
 <div id="apSettings"></div>
+<input type="button" value="dumpMem" onclick="pager.getCurrentPage().apDumpMem()">
+<div id="apMem"></div>
 <hr>
 `+(this.apInDebug ? `
 Simulotor:
@@ -42,6 +44,15 @@ Simulotor:
 <div id="apSimControls">---</div>
 <div id="apDebug"></div>
 <hr>
+<input type="button" value="mkNewPID"
+	onclick="pager.getCurrentPage().apV3.makeNewPID()">
+<input type="button" value="mkNewOffset"
+		onclick="pager.getCurrentPage().apV3.makeNewOffset()">
+
+useBrain:
+<input type="checkbox"  id="apUseBrain" onclick="pager.getCurrentPage().apV3.brainSw()">
+<br>
+
 `:'')+
 
 `
@@ -55,9 +66,33 @@ tiller by:
 		`;
 	}
 
+	apDumpMem(){
+		var l = pager.getCurrentPage().apV3.logStack;
+		var tr = [];
+	//	for( var i=0,il=l.length-1;i<il;i++){
+			tr+=JSON.stringify( l );
+		//}
+		$('#apMem').html(tr);
+	}
+
+
+	relayMs = 1;
+
 	apHDMDeb(){
 		if( this.apInDebug == false )
 			return 0;
+
+		if( 0 ){ // relay test
+			try{
+				var r = pager.getCurrentPage().relayMs;
+				sOutSend('ap:correctTargetMs:'+ Math.round(r));
+				cl("relay test:"+r);
+				pager.getCurrentPage().relayMs = r*1.1 ;
+			}catch(e){
+				cl("relay test error:"+e);
+			}
+		}
+
 		//cl("apHDMDeb");
 		if( $('#apHDMDebFake').prop("checked") ){
 			setTimeout( pager.getCurrentPage().apHDMDeb, 500 );
@@ -65,12 +100,12 @@ tiller by:
 			var ap = pager.getCurrentPage().apV3;
 
 			sim.iter();
-			var apres = ap.update( sim.hdm );
+			var apres = ap.update( parseFloat(sim.hdm) );
 			if( apres['tillerBy'] != 0 ){
 				sim.TillerFake( apres['tillerBy'] );
 				$('#apDebTillerBy').html(
 					(new Date().getMinutes()+":"+new Date().getSeconds())+" -> "+
-					apres['tillerBy'].toFixed(2)+"<br>"+
+					apres['tillerBy'].toFixed(6)+"<br>"+
 					$('#apDebTillerBy').html().substring(0,100)
 				);
 			}
@@ -111,7 +146,25 @@ tiller by:
 		cl("s_apV3Page - getHtmlAfterLoad start...");
 		if( this.apInDebug == true ){
 			this.apSim = new apSimulator("apSimControls", 'pager.getCurrentPage().apSim');
-			this.apV3 = new apV3();
+
+			cl('---------------------');
+			cl('localStorage:'+localStorage.getItem('test001')||"not found :(");
+
+			localStorage.setItem('test001',
+				(new Date()+' ok is it working ') );
+
+			//this.apV3 = new apV3();
+
+			//this.apV3 = new apML5v1();
+			//ML5v1Setup();
+
+			//this.apV3 = new apVPID();
+
+			//this.apV3 = new apVPID2();
+			this.apV3 = new apVPID22();
+
+			//this.apV3 = new apVBrain2();
+
 			this.apV3.setDebug( true, 'apDebug' );
 			this.apV3.setAuto(10);
 
@@ -185,7 +238,7 @@ tiller by:
 				apTillerFake = parseFloat( r.payload.tillerPos );
 				if( r.payload.tillerBy != 0 )
 					$('#apDebTillerBy').html(
-						(new Date().getMinutes()+":"+new Date().getSeconds())+" -> "+r.payload.tillerBy.toFixed(4)+"<br>"+
+						(new Date().getMinutes()+":"+new Date().getSeconds())+" -> "+r.payload.tillerBy.toFixed(8)+"<br>"+
 						$('#apDebTillerBy').html().substring(0,100)
 						);
 

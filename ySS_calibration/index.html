@@ -15,9 +15,19 @@ class moduleCollector{
 
 }
 var module = new moduleCollector();
-</script>
 
+
+
+</script>
+<div id="justGuageTmp"></div>
+<script src="raphael-2.1.4.min.js"></script>
+<script src="justgage.js"></script>
+<script src="m_MyJustGage.js"></script>
+
+<script src="ml5.min.js"></script>
 <script src="sPager.js"></script>
+
+<script src="kalman.min.js"></script>
 
 <script src="s_calibration.js"></script>
 <script src="s_calibrationPage.js"></script>
@@ -29,17 +39,37 @@ var module = new moduleCollector();
 <script src="s_ilooNav.js"></script>
 <script src="s_ilooNavPage.js"></script>
 
+
+
+<!-- ap playground area START-->
 <script src="apSimulator.js"></script>
 <script src="apV3.js"></script>
+<!--
+<script src="apML5v1.js"></script>
+-->
+<script src="PIDController.js"></script>
+<!--
+<script src="PID2.js"></script>
+-->
+<script src="brain.js"></script>
+<script src="apVPID.js"></script>
+<script src="apVPID2.js"></script>
+<script src="apVPID2.2.js"></script>
+<script src="apVBrain2.js"></script>
+<!-- ap playground area END -->
+
+
+
 <script src="s_apV3Page.js"></script>
 
 <script src="s_apV3Svg.js"></script>
 <script src="s_apV3SvgPage.js"></script>
 
-
 <script src="apSolver.js"></script>
 <script src="s_apPage.js"></script>
 
+<script src="s_windEffordDebug.js"></script>
+<script src="s_windEffordPage.js"></script>
 
 <script src="s_fitscreen.js"></script>
 <script src="s_blankPage.js"></script>
@@ -74,6 +104,7 @@ pager.addPage( new s_ilooNavPage() );
 pager.addPage( new s_apV3SvgPage() );
 pager.addPage( new s_apV3Page() );
 pager.addPage( new s_apPage() );
+pager.addPage( new s_windEffordPage() );
 pager.addPage( new s_testFuncsPage() );
 pager.addPage( new s_blankPage() );
 
@@ -180,7 +211,7 @@ testFunctionsPart();
 	<div id="svgDyno">--</div>
 	<div id="htmlDyno" style="z-index:2;position:absolute;top:0;left:0;"></div>
 	<div class="bottomPanel">
-		<div class="bottomPanelHandle"><img src="images/menu.svg"></div>
+		<div class="bottomPanelHandle"><img id="bottomPanelMenuImg" src="images/menu.svg"></div>
 		<div class="bottomPanelContainer defBg">
 			in:[<span id="wsInStat">?</span>]
 			out:[<span id="wsOutStat">out?</span>]

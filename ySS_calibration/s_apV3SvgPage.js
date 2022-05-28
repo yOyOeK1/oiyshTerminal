@@ -114,9 +114,10 @@ class s_apV3SvgPage{
 
 		}else if( r.topic == 'ap/workStat'){
 			if( r.payload.tillerBy != 0 ){
+				//console.log("tillerPos:"+r.payload.tillerPos);
 				//cl("tillerPos:"+r.payload.tillerBy);
 				//cl("tillerPos after map:"+mMapVal( parseFloat(r.payload.tillerBy), -1.2, 1.2, 0,1, true ));
-				moveOnPath( "rudderPos", "pathRudder", mMapVal( parseFloat(r.payload.tillerBy), -1.2, 1.2, 0,1, true ) );
+				moveOnPath( "rudderPos", "pathRudder", mMapVal( parseFloat(r.payload.tillerPos), -1.2, 1.2, 0,1, true ) );
 			}
 
 			if( r.payload.mode == 'toRMB' ){

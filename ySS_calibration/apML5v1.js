@@ -1,5 +1,83 @@
 
-class apV3{
+
+
+let neuralNetwork;
+var ml5Ready = false;
+var ml5LastaRes = [];
+
+function ML5v1Setup() {
+  // Crude interface
+
+  const nnOptions = {
+    dataUrl: 'apML5V1_data3.json',
+    inputs: ['deltaS','deltaOld','tillerPos'],
+    outputs: ['tiller'],
+    task: 'classification',
+    debug: true
+  };
+  neuralNetwork = ml5.neuralNetwork(nnOptions, modelReady);
+}
+
+function modelReady() {
+	console.log("apML modelReady");
+  neuralNetwork.normalizeData();
+  const trainingOptions = {
+    epochs: 20,
+    batchSize: 64
+  }
+	console.log("apML tain ....");
+  neuralNetwork.train(trainingOptions, whileTraining, finishedTraining);
+  // Start guessing while training!
+  //classify();
+
+}
+
+function whileTraining(epoch, logs) {
+  //lossP.html(`Epoch: ${epoch} - loss: ${logs.loss.toFixed(2)}`);
+	console.log("apML still training....");
+}
+
+function finishedTraining(anything) {
+  console.log('apML done!');
+  console.log(anything);
+	console.log("so test it ....");
+  classify(10.1,10,0);
+		console.log("so test it ....DONE");
+	ml5Ready = true;
+}
+
+function classify( deltaS, deltaOld, tillerPos ) {
+	const inputs = {
+		deltaS: deltaS,
+		deltaOld: deltaOld,
+		tillerPos: tillerPos
+	};
+  neuralNetwork.classify([inputs.deltaS, inputs.deltaOld, inputs.tillerPos], gotResults);
+}
+
+function gotResults(error, results) {
+	console.log("apML got Results");
+	console.log("apML results");
+	console.log(results);
+  if (error) {
+		try{
+    	console.log(error);
+		}catch(e){
+			console.log("turbo error "+e);
+		}
+  } else {
+		ml5LastaRes = results;
+  	console.log(`apML label:${results[0].label}, confidence: ${results[0].confidence.toFixed(2)}`);
+    //labelP.html(`label:${results[0].label}, confidence: ${results[0].confidence.toFixed(2)}`);
+    //classify();
+  }
+}
+
+
+
+
+class apML5v1{
+
 
 
 
@@ -15,7 +93,7 @@ class apV3{
 	cl( msg ){
 		if( !this.debug )
 			return 0;
-		console.log("apV3 deb: "+msg);
+		console.log("apML5v1 deb: "+msg);
 	}
 
 	setDebug( status, divName ){
@@ -125,16 +203,11 @@ class apV3{
 			" delta:"+this.delta.toFixed(2)
 		);
 		this.actionStack.push({
-			'delta': this.delta,
 			'site': site,
 			'tAdd': new Date().getTime(),
 			'to': t,
 			'name': actName
 		});
-
-
-		if( this.actionStack.length > 100 )
-			this.actionStack.shift();
 	}
 	aCan( actName ){
 		var t = new Date().getTime();
@@ -146,18 +219,6 @@ class apV3{
 		return true;
 	}
 
-	aInRow( actName ){
-		var c = 0;
-		var l = this.actionStack.length-1;
-		for(var i=l; i>=0; i--){
-			if( this.actionStack[i]['name'] == actName )
-				c++;
-			else
-				break;
-		}
-		return c;
-	}
-
 	aLast( ){
 		return this.actionStack[ this.actionStack.length-1 ]||{
 			'site': 1,
@@ -166,34 +227,6 @@ class apV3{
 			'name': ''
 		};
 	}
-
-	chkOvershoot(){
-		var tr = false;
-		if( this.actionStack.length > 2 ){
-			var l = this.actionStack.length-1;
-
-			if(
-				this.actionStack[l]['name'] == 'stop run away' &&
-				this.actionStack[l-1]['name'] == 'landing' &&
-				this.actionStack[l-2]['name'] == 'stop run away' &&
-				!this.sameSite(
-					this.actionStack[l]['site'],
-					this.actionStack[l-2]['site']
-				)&&
-				Math.abs( this.deg360delta(
-					this.actionStack[l-2]['delta'], this.actionStack[l]['delta']
-				) )>5
-
-			){
-				tr = true;
-				this.cl("overshoot detect!");
-			}
-		}
-
-
-		return tr;
-	}
-
 
 	sec1 = 1000;
 	min1 = 60000;
@@ -204,14 +237,8 @@ class apV3{
 		'sampleGap': 2000,
 		'debugToGraphana': 1
 	};
-	gain = 1;
-	gainMin = 0.3;
-	gainMax = 3;
 
 	logStack = [];
-
-
-
 	update( hdm ){
 		if( !this.on )
 			return '';
@@ -252,127 +279,31 @@ class apV3{
 		var accTrend = Math.abs(angAccel) - Math.abs(angAccelOld);
 
 
-		if( 1 ){
-			//this.cl( "stop in row:"+this.aInRow('stop run away') );
-			if(
-				(
-					this.aLast()['name'] == 'stop run away' &&
-					(this.aLast()['to']+13000) < t &&
-					Math.abs( this.aLast()['delta'] ) > 5
-				) ||
-				(
-					this.aInRow('stop run away') >= 6 &&
-					Math.abs( this.aLast()['delta'] ) > 5
-				)
-			){
-				this.gain*=1.2;
-				this.aPush("gain Up", this.sec1*10);
-			}
-			if(
-				this.aInRow('to fast to target') > 0 ||
-				this.chkOvershoot()
-			){
-				this.gain*=0.5;
-				this.aPush("gain Down", this.sec1*1);
-			}
-
-
-
-			if( this.gain > this.gainMax)
-				this.gain = this.gainMax;
-			else if( this.gain< this.gainMin)
-				this.gain = this.gainMin;
+		var tillerMoveBy = 0;
+		if( ml5LastaRes.length != 0 ){
+			tillerMoveBy = parseFloat(ml5LastaRes[0].label);
+			ml5LastaRes = [];
 
 		}
 
-			/*
-			if(
-				0 &&
-				Math.abs( angSpeed ) < 0.5 &&
-				Math.abs( deltaS ) > 0.5 &&
-				(
-					this.sameSite( deltaS, angSpeed ) ||
-					angSpeed == 0
-				) &&
-				Math.abs( accTrend ) < 0.08 &&
-				this.aCan('to target')
-			){*/
-			var aLastAction = this.aLast();
-			if(
-				(
-					!this.sameSite( deltaS, angSpeed ) &&
-					Math.abs( angSpeed ) < 0.7 &&
-					(
-						aLastAction['name'] == 'stop run away' &&
-						aLastAction['to'] < t &&
-						Math.abs( deltaS )> (5/this.gain)
-					) &&
-					this.aCan('to target')
-				)||
-				aLastAction['name'] == 'gain Up'
-			){
-				var g = Math.abs( deltaS );
-				if( g > 35 )
-					g = 35;
-				this.tillerBy( (deltaS < 0 ? -0.005: 0.005)*g*this.gain  );
-				this.aPush('to target', this.sec1*5 );
 
-			}
+		if( ml5Ready ){
 
-			if(
-				Math.abs( angSpeed ) > 1.5 &&
-				(
-					!this.sameSite( deltaS, angSpeed )
-				) &&
-				this.aCan('to fast to target')
-			){
-				var g = 1;
-				if( Math.abs(angSpeed) > 2.5 )
-					g = Math.abs(angSpeed)/2.5;
-				this.tillerBy( (deltaS > 0 ? -0.05: 0.05)*( g )*this.gain  );
-				this.aPush('to fast to target', this.sec1*2 );
+			classify(
+				parseFloat(deltaS.toFixed(2)),
+				parseFloat(deltaOld.toFixed(2)),
+				parseFloat(this.tillerPos.toFixed(2))
+			);
 
-			}
+		}else{
+			this.cl("apML not ready ...");
+		}
+		//this.tillerBy( (deltaS < 0 ? -0.1 : 0.1)*Math.abs(angSpeed)*trendGainSRA );
 
 
-
-			if(
-				 !this.sameSite( deltaS, deltaPred10 ) &&
-				 //Math.abs( angSpeed ) > 0.1 &&
-				 this.aCan('landing')
-			){
-				var g = Math.abs(angSpeed);
-				if( this.aLast()['name'] == 'landing')
-					g/= 2;
-				this.tillerBy( (deltaS > 0 ? -0.06 : 0.06 )*g*this.gain  );
-				this.aPush('landing', this.sec1*2, deltaS );
-			}
-
-
-			if(
-				 //angAccel >= angAccelOld &&
-				 this.sameSite( deltaS, angSpeed ) &&
-				 Math.abs( angSpeed ) > 0.05 &&
-				 this.aCan('stop run away')
-			){
-				/*
-				if( Math.abs(angAccDelta) > 0.2 ){
-					if( this.sameSite( deltaS, angAccDelta ) )
-						this.trendGainSRA = 2.0;
-					else
-						this.trendGainSRA = 0.5;
-					}
-					*/
-
-
-				this.tillerBy( (deltaS < 0 ? -0.1 : 0.1)*Math.abs(angSpeed) *this.gain );
-				this.aPush('stop run away', this.sec1*2, deltaS );
-			}
 
 
 		var tillerSum = this.tillerStackSum().toFixed(2);
-		var tillerMoves = this.tillerGetMoves();
-
 		var debVals = {
 			'delta': this.delta,
 			'deltaS': deltaS.toFixed(2)+" siteOn:"+siteOn,
@@ -381,7 +312,6 @@ class apV3{
 			'angSpeedOld': angSpeedOld,
 			'angAccel': angAccel.toFixed(2)+" , "+angAccelOld.toFixed(2),
 			'accTrend': accTrend,
-			'gain': this.gain,
 			'tillerSum': tillerSum+" pos:"+this.tillerPos.toFixed(3),
 			'lastAgent':this.aLast()['name'],
 		};
@@ -393,18 +323,17 @@ class apV3{
 		);
 		*/
 
-		if( 0 )
-			this.logStack.push({
-				'deltaS': parseFloat(deltaS.toFixed(2)),
-				'deltaOld': parseFloat(deltaOld.toFixed(2)),
-				'tillerPos': parseFloat(this.tillerPos.toFixed(2)),
-				'tiller': tillerMoves.toFixed(2)
-			});
+		this.logStack.push({
+			'deltaS': deltaS.toFixed(2),
+			'deltaOld': deltaOld.toFixed(2),
+			'tillerPos': this.tillerPos.toFixed(2),
+			'tiller': tillerSum
+		});
 
 		return {
 			'delta': this.delta,
 			'tillerPos': this.tillerPos,
-			'tillerBy': tillerMoves
+			'tillerBy': tillerMoveBy
 		};
 
 	}
@@ -562,4 +491,4 @@ class apV3{
 
 
 }
-module.exports = apV3
+module.exports = apML5v1

@@ -1,5 +1,140 @@
 
-class apV3{
+
+
+class PID2{
+
+    privateScope = {
+      target:null,
+      gains: {
+        P: null,
+        I: null,
+        D: null
+      },
+      Iterm: 0,
+      ItermLimit: {
+        min: -1000,
+        max: 1000
+      },
+      previousError: 0,
+      output: {
+        min: null,
+        max: null,
+        minThreshold: null
+      },
+      tLast: null
+    };
+		updateCount = 0;
+
+    setTarget(value) {
+        this.privateScope.target = value;
+    };
+
+    setGains(Pgain, Igain, Dgain) {
+        this.privateScope.gains.P = Pgain;
+        this.privateScope.gains.I = Igain;
+        this.privateScope.gains.D = Dgain;
+    };
+
+    setOutput(min, max, minThreshold) {
+        this.privateScope.output.min = min;
+        this.privateScope.output.max = max;
+        this.privateScope.output.minThreshold = minThreshold;
+    };
+
+    setItermLimit(min, max) {
+        this.privateScope.ItermLimit.min = min;
+        this.privateScope.ItermLimit.max = max;
+    };
+
+    maxError = null;
+    update(current) {
+        var t = new Date().getTime();
+        if( this.privateScope.tLast == null)
+          this.privateScope.tLast = t;
+        var dt = (t - this.privateScope.tLast)/1000;
+
+
+        var error = current - this.privateScope.target;
+
+
+        var Pterm = error * this.privateScope.gains.P;
+
+        if( this.maxError == null)
+          this.maxError = Pterm;
+        if( this.maxError < Pterm  )
+          this.maxError = Pterm;
+
+
+        var Dterm = ( (error - this.privateScope.previousError)/dt * this.privateScope.gains.D );
+        var output;
+
+        //e2:0.00194 Iterm:0.01080 Dte:-0.01509 curr0.19
+        //e2:0.00122 Iterm:0.02524 Dte:-0.00584 curr0.12
+
+        this.privateScope.previousError = error;
+
+
+        if( 1 ){
+            //error_i = error_i + dt*1*error;
+
+
+            this.privateScope.Iterm += (error *dt * this.privateScope.gains.I);
+            if (((error >= 0) && (this.privateScope.Iterm >= 0)) || ((error < 0) && (this.privateScope.Iterm < 0)))
+            {
+            }else{
+              //this.privateScope.Iterm = -this.maxError;
+              //this.maxError = 0;
+            }
+
+            if (this.privateScope.Iterm > this.privateScope.ItermLimit.max) {
+                this.privateScope.Iterm = this.privateScope.ItermLimit.max;
+            } else if (this.privateScope.Iterm < this.privateScope.ItermLimit.min) {
+                this.privateScope.Iterm = this.privateScope.ItermLimit.min;
+            }
+
+        }else{
+
+          this.privateScope.Iterm += (error *dt * this.privateScope.gains.I);
+          if (this.privateScope.Iterm > this.privateScope.ItermLimit.max) {
+              this.privateScope.Iterm = this.privateScope.ItermLimit.max;
+          } else if (this.privateScope.Iterm < this.privateScope.ItermLimit.min) {
+              this.privateScope.Iterm = this.privateScope.ItermLimit.min;
+          }
+
+        }
+
+
+        cl("e2:"+Pterm.toFixed(5)+
+          " Iterm:"+this.privateScope.Iterm.toFixed(5)+
+          " Dte:"+Dterm.toFixed(5)+
+          " curr"+current.toFixed(2)+
+          " m:"+this.maxError.toFixed(3)
+          );
+
+        output = Pterm + this.privateScope.Iterm + Dterm;
+        if (output < this.privateScope.output.minThreshold) {
+            output = this.privateScope.output.min;
+        } else if (output > this.privateScope.output.max) {
+            output = this.privateScope.output.max;
+        }
+
+        this.privateScope.tLast = t;
+
+				if( this.updateCount++ < 4 )
+					return null;
+
+        return output;
+    };
+
+
+};
+
+
+
+
+class apVPID2{
+
+
 
 
 
@@ -15,7 +150,7 @@ class apV3{
 	cl( msg ){
 		if( !this.debug )
 			return 0;
-		console.log("apV3 deb: "+msg);
+		console.log("apVPID2 deb: "+msg);
 	}
 
 	setDebug( status, divName ){
@@ -28,6 +163,10 @@ class apV3{
 	}
 	setSettings( settings ){
 		this.config = settings;
+		try{
+			this.pid.setGains( this.config['P'],this.config['I'],this.config['D'] );
+			this.pid.setItermLimit(-this.config['zeroMaxOffset'],this.config['zeroMaxOffset']);
+		}catch(e){}
 	}
 
 	d( msg ){
@@ -79,6 +218,9 @@ class apV3{
 		this.action = [];
 		this.actionStack = [];
 		this.tillerPos = 0;
+		this.msgCount = 0;
+    this.tLast = 0;
+    this.offsetAddjust = 0;
 	}
 
 	tillerStack = [];
@@ -104,6 +246,15 @@ class apV3{
 		return this.tillerStack.reduce((partialSum, a) => partialSum + a, 0);
 	}
 
+	tillerByFromPID(){
+		var sum = this.tillerStackSum();
+		if( Math.abs(sum) > this.config['response'] ){
+			this.tillerStack = [];
+			this.tillerPos+= sum;
+			return sum;
+		}
+		return 0;
+	}
 
 	sameSite( a, b ){
 		if( ( a < 0 ) == ( b < 0 ) )
@@ -119,271 +270,118 @@ class apV3{
 	actionTo = 0;
 	tillerPos = 0;
 
-	aPush( actName, actForMs, site ){
-		var t = new Date().getTime()+actForMs;
-		this.cl("aPush: "+actName+" for:"+(actForMs/1000).toFixed(1)+
-			" delta:"+this.delta.toFixed(2)
-		);
-		this.actionStack.push({
-			'delta': this.delta,
-			'site': site,
-			'tAdd': new Date().getTime(),
-			'to': t,
-			'name': actName
-		});
-
-
-		if( this.actionStack.length > 100 )
-			this.actionStack.shift();
-	}
-	aCan( actName ){
-		var t = new Date().getTime();
-		var l = this.actionStack.length-1;
-		for(var i=l; i>=0; i--){
-			if( this.actionStack[i]['name'] == actName && this.actionStack[i]['to']>t )
-				return false;
-		}
-		return true;
-	}
-
-	aInRow( actName ){
-		var c = 0;
-		var l = this.actionStack.length-1;
-		for(var i=l; i>=0; i--){
-			if( this.actionStack[i]['name'] == actName )
-				c++;
-			else
-				break;
-		}
-		return c;
-	}
-
-	aLast( ){
-		return this.actionStack[ this.actionStack.length-1 ]||{
-			'site': 1,
-			'tAdd': new Date().getTime(),
-			'to': 0,
-			'name': ''
-		};
-	}
-
-	chkOvershoot(){
-		var tr = false;
-		if( this.actionStack.length > 2 ){
-			var l = this.actionStack.length-1;
-
-			if(
-				this.actionStack[l]['name'] == 'stop run away' &&
-				this.actionStack[l-1]['name'] == 'landing' &&
-				this.actionStack[l-2]['name'] == 'stop run away' &&
-				!this.sameSite(
-					this.actionStack[l]['site'],
-					this.actionStack[l-2]['site']
-				)&&
-				Math.abs( this.deg360delta(
-					this.actionStack[l-2]['delta'], this.actionStack[l]['delta']
-				) )>5
-
-			){
-				tr = true;
-				this.cl("overshoot detect!");
-			}
-		}
-
-
-		return tr;
-	}
-
 
 	sec1 = 1000;
 	min1 = 60000;
 
 	config = {
+		'apName': 'apVPID2',
 		'tillerGain': 1200,
 		'avgSmoothing': 3000, // in millis
 		'sampleGap': 2000,
-		'debugToGraphana': 1
+		'debugToGraphana': 1,
+		'P': 0.01,
+		'I': 0.001,
+		'D': 0.01,
+		'response':0.005,
+		'zeroMaxOffset': 0.3
 	};
-	gain = 1;
-	gainMin = 0.3;
-	gainMax = 3;
+	pid = null;
+	tLast = 0;
 
+	makeNewPID(){
+		this.cl("makeNewPID");
+		this.pid = new PID2();
+		this.pid.setTarget(0);
+		this.pid.setOutput(-1,1);
+		this.pid.setGains( this.config['P'],this.config['I'],this.config['D'] );
+		this.pid.setItermLimit(-this.config['zeroMaxOffset'],this.config['zeroMaxOffset']);
+		this.msgCount = 0;
+	}
+
+	makeNewOffset(){
+		this.offset+= this.delta;
+    //this.pid.setTarget(-this.offset);
+    this.pid.privateScope.Iterm = 0;
+	}
+
+
+
+	offset = 0;
 	logStack = [];
-
-
+  offsetAddjust = 0;
+  offsetLessAddjust = 0;
 
 	update( hdm ){
 		if( !this.on )
 			return '';
+		if( this.pid == null ){
+			this.makeNewPID();
+		}
 
-		//cl("ap iter...");
+		this.msgCount++;
+
+		this.cl("ap iter...");
 		var t = new Date().getTime();
 		this.hdm = hdm;
-		this.delta = this.deg360delta( this.hdm, this.target ) ;
+		this.delta = this.deg360delta(this.hdm, this.target) ;
 		this.storeIt("ap3Delta", this.delta, this.min1 );
 
 		var deltaS = this.avgItKalman("ap3Delta", this.config['avgSmoothing'] );
-		var deltaOld = this.avgItKalman("ap3Delta",
-			this.config['avgSmoothing']+this.config['sampleGap'] //,this.config['avgSmoothing']
-			);
 
-		var siteOn = deltaS >= 0 ? 1 : -1;
+    var deltaSLong = this.avgItKalman("ap3Delta", this.config['avgSmoothing']*3 );
 
-		var angSpeed = ( ( deltaS-deltaOld ) / (this.config['avgSmoothing']/1500) );
-		this.storeIt("ap3AngSpeed", angSpeed, this.min1 );
 
-		var angSpeedOldStare = this.storeGetFirstOlderThen('ap3AngSpeed', 1000 );
-		if( angSpeedOldStare != undefined ){
-			var angAccel = ( angSpeed - angSpeedOldStare['v'] ) / ((t-angSpeedOldStare['t'])/1000);
-			this.storeIt("ap3AngAccel", angAccel, this.min1 );
-			var angAccelOld = this.avgItKalman("ap3AngAccel", this.config['avgSmoothing'] );
-			var angSpeedOld = angSpeedOldStare['v'];
-		}else{
-			var angAccel = 0;
-			var angAccelOld = 0;
-			var angSpeedOld = 0;
+    var til = -this.pid.update(deltaS+this.offset);
+		if( this.msgCount < 5 ){
+			til = 0;
 		}
 
-		var deltaPred5 = deltaS+( angSpeed*5 );
-		var deltaPred10 = deltaS+( angSpeed*10 );
-		var deltaPred15 = deltaS+( angSpeed*15 );
+		this.tillerBy( ( this.tLast-til ) );
+		var tillerMoves = this.tillerByFromPID();
+		this.tLast = til;
 
-		var angAccDelta = angAccel-angAccelOld;
-		var accTrend = Math.abs(angAccel) - Math.abs(angAccelOld);
+		//this.tillerBy( (deltaS < 0 ? -0.1 : 0.1)*Math.abs(angSpeed)*trendGainSRA );
+    /*
+    if(
+      this.msgCount > 5 &&
+      this.msgCount > ( this.offsetAddjust + 10 ) &&
+      Math.abs( deltaS - deltaSLong ) < 2
+    ){
+      cl("e2: reset zero");
+      if(Math.abs( deltaS ) > 5 ){
+        this.makeNewOffset();
+      }else{
+        //this.offset-= deltaS*0.2* ( this.offset < 0 ? -1 : 1 );
+      }
 
+      this.offsetAddjust = this.msgCount;
+    }
 
-		if( 1 ){
-			//this.cl( "stop in row:"+this.aInRow('stop run away') );
-			if(
-				(
-					this.aLast()['name'] == 'stop run away' &&
-					(this.aLast()['to']+13000) < t &&
-					Math.abs( this.aLast()['delta'] ) > 5
-				) ||
-				(
-					this.aInRow('stop run away') >= 6 &&
-					Math.abs( this.aLast()['delta'] ) > 5
-				)
-			){
-				this.gain*=1.2;
-				this.aPush("gain Up", this.sec1*10);
-			}
-			if(
-				this.aInRow('to fast to target') > 0 ||
-				this.chkOvershoot()
-			){
-				this.gain*=0.5;
-				this.aPush("gain Down", this.sec1*1);
-			}
-
-
-
-			if( this.gain > this.gainMax)
-				this.gain = this.gainMax;
-			else if( this.gain< this.gainMin)
-				this.gain = this.gainMin;
-
-		}
-
-			/*
-			if(
-				0 &&
-				Math.abs( angSpeed ) < 0.5 &&
-				Math.abs( deltaS ) > 0.5 &&
-				(
-					this.sameSite( deltaS, angSpeed ) ||
-					angSpeed == 0
-				) &&
-				Math.abs( accTrend ) < 0.08 &&
-				this.aCan('to target')
-			){*/
-			var aLastAction = this.aLast();
-			if(
-				(
-					!this.sameSite( deltaS, angSpeed ) &&
-					Math.abs( angSpeed ) < 0.7 &&
-					(
-						aLastAction['name'] == 'stop run away' &&
-						aLastAction['to'] < t &&
-						Math.abs( deltaS )> (5/this.gain)
-					) &&
-					this.aCan('to target')
-				)||
-				aLastAction['name'] == 'gain Up'
-			){
-				var g = Math.abs( deltaS );
-				if( g > 35 )
-					g = 35;
-				this.tillerBy( (deltaS < 0 ? -0.005: 0.005)*g*this.gain  );
-				this.aPush('to target', this.sec1*5 );
-
-			}
-
-			if(
-				Math.abs( angSpeed ) > 1.5 &&
-				(
-					!this.sameSite( deltaS, angSpeed )
-				) &&
-				this.aCan('to fast to target')
-			){
-				var g = 1;
-				if( Math.abs(angSpeed) > 2.5 )
-					g = Math.abs(angSpeed)/2.5;
-				this.tillerBy( (deltaS > 0 ? -0.05: 0.05)*( g )*this.gain  );
-				this.aPush('to fast to target', this.sec1*2 );
-
-			}
-
-
-
-			if(
-				 !this.sameSite( deltaS, deltaPred10 ) &&
-				 //Math.abs( angSpeed ) > 0.1 &&
-				 this.aCan('landing')
-			){
-				var g = Math.abs(angSpeed);
-				if( this.aLast()['name'] == 'landing')
-					g/= 2;
-				this.tillerBy( (deltaS > 0 ? -0.06 : 0.06 )*g*this.gain  );
-				this.aPush('landing', this.sec1*2, deltaS );
-			}
-
-
-			if(
-				 //angAccel >= angAccelOld &&
-				 this.sameSite( deltaS, angSpeed ) &&
-				 Math.abs( angSpeed ) > 0.05 &&
-				 this.aCan('stop run away')
-			){
-				/*
-				if( Math.abs(angAccDelta) > 0.2 ){
-					if( this.sameSite( deltaS, angAccDelta ) )
-						this.trendGainSRA = 2.0;
-					else
-						this.trendGainSRA = 0.5;
-					}
-					*/
-
-
-				this.tillerBy( (deltaS < 0 ? -0.1 : 0.1)*Math.abs(angSpeed) *this.gain );
-				this.aPush('stop run away', this.sec1*2, deltaS );
-			}
+    if(
+      this.msgCount > ( this.offsetLessAddjust + 10 ) &&
+      !this.sameSite( this.offset, deltaS ) &&
+      Math.abs( deltaS ) > 5
+    ){
+      cl("e2: offset less");
+      this.offset+= deltaS*0.2;
+      this.offsetLessAddjust = this.msgCount;
+    }
+    */
 
 
 		var tillerSum = this.tillerStackSum().toFixed(2);
-		var tillerMoves = this.tillerGetMoves();
 
 		var debVals = {
+			//'hdm': hdm,
+			//'target': this.target,
+			'pRes': til,
+			'useBrain': this.useBrain? 'yes':'no',
+			'tillerPos': this.tillerPos,
 			'delta': this.delta,
-			'deltaS': deltaS.toFixed(2)+" siteOn:"+siteOn,
-			'deltaPredict 5, 10, 15 -> ': deltaPred5.toFixed(0)+" , "+deltaPred10.toFixed(0)+" , "+deltaPred15.toFixed(0),
-			'angSpeed': angSpeed,
-			'angSpeedOld': angSpeedOld,
-			'angAccel': angAccel.toFixed(2)+" , "+angAccelOld.toFixed(2),
-			'accTrend': accTrend,
-			'gain': this.gain,
-			'tillerSum': tillerSum+" pos:"+this.tillerPos.toFixed(3),
-			'lastAgent':this.aLast()['name'],
+			'deltaS': deltaS.toFixed(2),
+			'offset':this.offset
+
 		};
 		this.d(debVals);
 		/*cl("ap iter DONE d:"+deltaS.toFixed(2)+
@@ -396,6 +394,7 @@ class apV3{
 		if( 0 )
 			this.logStack.push({
 				'deltaS': parseFloat(deltaS.toFixed(2)),
+				'deltaS2': parseFloat(deltaS2.toFixed(2)),
 				'deltaOld': parseFloat(deltaOld.toFixed(2)),
 				'tillerPos': parseFloat(this.tillerPos.toFixed(2)),
 				'tiller': tillerMoves.toFixed(2)
@@ -561,5 +560,5 @@ class apV3{
 
 
 
-}
-module.exports = apV3
+};
+module.exports = apVPID2

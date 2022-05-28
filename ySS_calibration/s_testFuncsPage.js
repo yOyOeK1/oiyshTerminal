@@ -96,6 +96,10 @@ class s_testFuncsPage{
           moveOnPath( "cirPathObj", "cirPath", deg360ToNorm(parseFloat(ui.value)) );
 
 
+          pager.getCurrentPage().justGage1.refresh( parseInt( ui.value) );
+          pager.getCurrentPage().justGage2.refresh( deg360Pos(parseInt( ui.value)) );
+
+
 
           rotateSvg( "guageOne", true,
             mMapVal( ui.value, 0, 180, -90,90, true )
@@ -123,6 +127,11 @@ class s_testFuncsPage{
   }
 
   d3plot01 = null;
+  justGage1 = null;
+  justGage2 = null;
+
+
+
 
   svgDynoAfterLoad(){
     this.d3plot01 = m_d3PlotInit("d3PlotLine",{
@@ -152,6 +161,28 @@ class s_testFuncsPage{
     this.d3plot01data.push({'x':-6, 'y':80});
     this.d3plot01data.push({'x':-2, 'y':90});
     this.d3plot01(this.d3plot01data );
+
+    cl("justGage1 init.");
+    // chk it out https://github.com/toorshia/justgage
+    this.justGage1 = MyJustGage({
+      id: 'justGuage1',
+      value: 10,
+      min: 0,
+      max: 100,
+      title: 'just guage 1',
+      showInnerShadow: true
+    });
+    cl('justGage1 done');
+
+    this.justGage2 = MyJustGage({
+      id: 'justGuage2',
+      value: 10,
+      min: 0,
+      max: 360,
+      title: 'guage2',
+      donut: true
+    });
+
 
   }
 
@@ -250,4 +281,6 @@ function testFunctionsPart(){
     });
 
   }
+
+
 }

@@ -176,3 +176,31 @@ function avgIt( key, forMs, toMs ){
   return tr/trC;
 
 }
+function avgItKalman( key, forMs, toMs ){
+  var now = new Date().getTime();
+
+  var kal = new KalmanFilter();
+  var t = now-forMs;
+
+  var tFrom = now;
+  if( toMs != undefined )
+    tFrom = t+toMs;
+
+  var d = storeData[key];
+  var l = d.length-1;
+  var tf = [];
+  var tfC = 0;
+
+  for( var i=l; i>=0; i-- ){
+    if( t <= d[i]['t'] && d[i]['t'] <= tFrom ){
+      tf.push( kal.filter(d[i]['v']) );
+      tfC++;
+    }
+
+  }
+
+
+  //console.log("avgIt tr"+tr+" trC"+trC+" res"+(tr/trC));
+  return tf.reduce((partialSum, a) => partialSum + a, 0)/tfC;
+
+}

@@ -227,9 +227,23 @@ function mkShader( shType ){
     //console.log("a");
     //console.log(this);
     if( this['type'] != "mask")
-      mkLightRun( this, 0 )
+      mkLightRun( this, 0 );
 
   });
+
+  // TODO fix menu
+  /*
+  cl("bottom menu ------- START ");
+  var sm = SVG("#bottomPanelMenuImg");
+  sm.each(function(){
+    console.log("a");
+    console.log(this);
+    if( this['type'] != "mask")
+      mkLightRun( this, 0 );
+
+  });
+  cl("bottom menu ------- END ");
+  */
 
   if( !mkShaderResuming )
     mkShaderStoreSettings();
