@@ -1,6 +1,7 @@
 #!/bin/sh
 
-
+# link short
+# https://bit.ly/3Qedy9w
 
 #### config
 sshPort=2222
@@ -191,7 +192,7 @@ proot-distro login debian -- /root/sGrafana.sh
   chmod +x ./startGrafana.sh
 
   echo "checking if proxy is set?"
-  if [ -f "~/.setProxy" ]; then
+  if [ -f ~/.setProxy ]; then
     ip=`cat ~/.setProxy`
     echo "  yes ["$ip"]"
     echo "  so setting up proxy on debian also..."
@@ -402,7 +403,7 @@ fInstallOiyshTerminal(){
   git clone https://github.com/yOyOeK1/oiyshTerminal.git
 
   echo "building mqtt 2 mysql ...."
-  cd /oiyshTerminal/cMqtt2Mysql2
+  cd ~/oiyshTerminal/cMqtt2Mysql2
   inc="-I/home/yoyo/src/mosquitto-2.0.13/include "
   libsDir="-L/home/yoyo/src/mosquitto-2.0.13/bu/lib "
   libs="-lmosquitto "
@@ -463,6 +464,12 @@ fSetProxy(){
 ' > ~/.gitconfig
 
   echo $ip > ~/.setProxy
+
+  echo "setting proxy for apk / pkg ..."
+  echo 'Acquire::http::Proxy "'$ip'"; ' > debian_rootfs/etc/apt/apt.conf.d/proxy.conf
+  echo 'Acquire::https::Proxy "'$ip'"; ' >> debian_rootfs/etc/apt/apt.conf.d/proxy.conf
+
+
 
   echo $http_proxy
   echo "DONE"
