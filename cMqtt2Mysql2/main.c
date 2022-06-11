@@ -33,13 +33,13 @@
 
 #include "myWords.h"
 
-char *mysqlHost = "192.168.43.1";
+char *mysqlHost = "127.0.0.1";
 int mysqlPort = 3306;
 char *mysqlDb = "svoiysh";
 char *mysqlUser = "ykpu";
 char *mysqlPasswd = "pimpimpampam";
 
-char *mqttHost = "192.168.43.1";
+char *mqttHost = "127.0.0.1";
 int mqttPort = 10883;
 char *mqttClientId = "cMqtt2Mysql";
 
@@ -47,9 +47,9 @@ char *sufixTest = "topic_";
 
 
 char *topicDrop[] = {
-	"test1/",
-	"test2/",
-	"e01Mux/cpu/",
+	"and/",
+	"NR/",
+	"cIMU/",
 	0
 	};
 
@@ -318,8 +318,8 @@ void *myThread( void *vargp){
 					msgInStack--;
 					add++;
 
-					printf("q: %s\n",qbufB);
-					//int id = sqlInsert( qbufB);
+					//printf("q: %s\n",qbufB);
+					int id = sqlInsert( qbufB);
 					//printf("added and id is %i\n",id);
 
 				}
@@ -346,7 +346,7 @@ void sqlCreateTopicTable( char *tableName ){
 			sufixTest, tableName
 			);
 	printf("table to make %s\n",qCreateTopic);
-	//sqlQuery( qCreateTopic );
+	sqlQuery( qCreateTopic );
 }
 
 
@@ -407,7 +407,10 @@ int main(){
 	printf("hello it's a c mqtt 2 mysql demon!\n");
 
 
-	sqlConnect();
+	if( sqlConnect() == false ){
+		printf("sql server is down :( so bay :..(\n");
+		exit(1);
+	}
 
 	if( 0 ){
 		printf("testing topic ignore filter \n");

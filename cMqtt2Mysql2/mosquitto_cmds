@@ -1,0 +1,1 @@
+mosquitto_sub -t '#' -p 10883 -V mqttv311 -d -h 'hu'
