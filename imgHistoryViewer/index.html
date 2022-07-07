@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+    <link rel="stylesheet" href="http://192.168.43.1:3000/public/forms/jquery-ui.css">
+
+  <script src="http://192.168.43.1:3000/public/forms/jquery.min.js"></script>
+  <script src="http://192.168.43.1:3000/public/forms/jquery-ui.js"></script>
+
+  <script>
+// config of viewer
+var pathToWs = 'ws://192.168.43.1:1880/ws/pwf/newImg';
+var pathToImgs = 'http://192.168.43.1:3000/public/pwf/';
+var selfRefreshIntervals = 120; // min
+// config of viewer
+
+
+
+var socket1 = null;
+function wsConnect1( ){
+  socket1 = new  WebSocket(pathToWs);
+
+  socket1.onopen = function(){
+  	console.log("on open");
+  }
+
+  socket1.onclose = function(){
+  	console.log("on close");
+    setTimeout( wsConnect1( ), 1000 );
+    console.log("reconnect...");
+  }
+
+  socket1.onerror = function(e){
+  	console.log("on error:"+e);
+  }
+
+  socket1.onmessage = function(m){
+  	console.log("on message:"+m);
+  	console.log("on message .data:["+m.data+"]");
+    if( m.data == "new img" ){
+  		console.log("got new img !!");
+  		location.reload();
+  	}else{
+      try{
+        var r = JSON.parse(m.data);
+        //console.log(r);
+        imgs = r;
+        $("#wImg").attr("src", pathToImgs+imgs[0] );
+        $("#slider").value = 0;
+      }catch(e){
+        console.log("no error"+e);
+      }
+
+    }
+
+
+  }
+}
+
+ var imgs = new Array();
+
+  $( function() {
+
+  window.setTimeout(function(){
+    location.reload()
+
+  },1000*60*selfRefreshIntervals);
+
+
+    $( "#slider" ).slider({
+      slide: function( event, ui ) {
+        $("#sliderVal").html( ui.value+" -> "+imgs[ui.value] );
+        $("#wImg").attr("src", pathToImgs+imgs[ui.value] );
+
+      }
+    });
+
+    wsConnect1();
+
+  } );
+  </script>
+</head>
+<body>
+
+
+<img id="wImg" width="100%" src="" /><br>
+<div id="sliderVal" style="display:none;">NaN</div>
+<div id="slider"></div>
+
+
+</body>
+</html>
