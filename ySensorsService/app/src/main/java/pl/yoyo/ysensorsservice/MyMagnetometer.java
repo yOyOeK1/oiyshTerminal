@@ -74,10 +74,8 @@ public class MyMagnetometer implements SensorEventListener {
                     if( mserv!=null ) {
                         //mserv.mqtt.publish("mag/raw", mGeomagnetic[0] + "," + mGeomagnetic[1] + "," + mGeomagnetic[2] );
 
-                        mGeomagneticCorrect = mtrans.rotByZXY( mGeomagnetic[0], mGeomagnetic[1], mGeomagnetic[2],
-                                accelCorrect[0], accelCorrect[1], accelCorrect[2] );
                         mserv.mqtt.publish("mag/raw", mGeomagnetic[0] + "," + mGeomagnetic[1] + "," + mGeomagnetic[2] );
-                        mserv.mqtt.publish("mag/rawCorrect", mGeomagneticCorrect[0] + "," + mGeomagneticCorrect[1] + "," + mGeomagneticCorrect[2] );
+
                     }else
                         Log.d(TAG, "mag mserv = null");
                     /*
@@ -131,11 +129,11 @@ public class MyMagnetometer implements SensorEventListener {
 
                     mLastAccelCorrect = mtrans.rotByZXY( mLastAccelerometer[0], mLastAccelerometer[1], mLastAccelerometer[2],
                             accelCorrect[0], accelCorrect[1], accelCorrect[2] );
-                    mserv.mqtt.publish("accel", mLastAccelCorrect[0]+","+mLastAccelCorrect[1]+","+mLastAccelCorrect[2]);
 
                     //Log.d(TAG, rotat[0] + ",   " + rotat[1] + ",  " + rotat[2]+",  "+rotat[3]+",  "+rotat[4]+",  "+rotat[5]+",  "+rotat[6]+",  "+rotat[7]+",  "+rotat[8]);
-                }else
+                }else {
                     Log.d(TAG, "accel mserv = null");
+                }
                 /*
                 try {
                     Intent i = new Intent();
@@ -152,6 +150,10 @@ public class MyMagnetometer implements SensorEventListener {
 
 
                 if (mLastAccelerometerSet && mLastMagnetomoterSet) {
+
+                    mGeomagneticCorrect = mtrans.rotByZXY( mGeomagnetic[0], mGeomagnetic[1], mGeomagnetic[2],
+                            accelCorrect[0], accelCorrect[1], accelCorrect[2] );
+
                     SensorManager.getRotationMatrix(mR, null, mLastAccelCorrect, mGeomagneticCorrect);
                     SensorManager.getOrientation(mR, mOrientation);
                     float azimuthInRadians = mOrientation[0];
@@ -161,6 +163,10 @@ public class MyMagnetometer implements SensorEventListener {
                         mserv.mqtt.publish("mag", azimuthInDegress + "");
                         mserv.mqtt.publish("orient/pitch", Math.toDegrees(mOrientation[1]) + "");
                         mserv.mqtt.publish("orient/heel", Math.toDegrees(mOrientation[2]) + "");
+
+                        mserv.mqtt.publish("accel", mLastAccelCorrect[0]+","+mLastAccelCorrect[1]+","+mLastAccelCorrect[2]);
+
+                        mserv.mqtt.publish("mag/rawCorrect", mGeomagneticCorrect[0] + "," + mGeomagneticCorrect[1] + "," + mGeomagneticCorrect[2] );
 
                     }else
                         Log.d(TAG, "accelMag mserv = null");

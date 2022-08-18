@@ -69,7 +69,7 @@ public class MyService extends Service {
     public void sensorsStart(){
         mMag.registerListeners(speedSet);
         if( speedSet.equals("standby") ) {
-            mll.setIntervals(5000, 5);
+            mll.setIntervals(1000, 0);
 
         }else{
             mll.setIntervals(0, 0);
