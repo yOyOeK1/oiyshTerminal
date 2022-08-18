@@ -2,10 +2,10 @@
 class apSimulator{
 
 	// config
-	speed = 9;
-	delay = 1; // more then 1
+	speed = 2;
+	delay = 3; // more then 1
 	tillerOffset = 0;
-	randomNois = 0;
+	randomNois = 0.1;
 	debug = false;
 	drift = 0;
 
@@ -29,18 +29,18 @@ class apSimulator{
 		[2, {drift: 20,speed:9}],
 		[2, {drift: -20,speed:9}],
 		[1, {drift: 10,speed:9}],
-		[3, {drift: 40,speed:9}],
+		[3, {target:5, drift: 40,speed:9}],
 		[3, {drift: -20,speed:9}],
 		[3, {drift: -10,speed:9}],
 		[3, {drift: -40,speed:9}],
 		[3, {drift: -20,speed:9}],
-		[5, {target: 10, druft:0, speed: 2, randomNois: 1.8}],
+		[5, {target: 10, druft:0, speed: 4, randomNois: 1.8}],
 		[40, {target: 20}],
-		[40, {target: 60}],
+		[40, {target: 60, drift:3}],
 		[40, {target: 0}],
 		[60, {target: -45}],
 		[60, {target: 45}],
-		[60, {target: -45}],
+		[60, {target: -45, drift:-3}],
 		[60, {target: 45}],
 		[30, {target: -10}],
 		[10, {target: 15, speed:6, delay: 6, randomNois: 1.9}],
@@ -71,7 +71,7 @@ class apSimulator{
 		[2, {drift: -20,speed:14, randomNois: 1.3}],
 		[2, {drift: 20,speed:9}],
 		[2, {drift: -40,speed:20}],
-		[30, {target: 26}],
+		[30, {target: 26}], // 610 sec
 		[10, {drift: -5}],
 		[30, {target: -47}],
 		[10, {target: -65}],
@@ -170,6 +170,10 @@ class apSimulator{
 		this.angleForce = 0;
 		this.hdm = 0;
 		this.target = 0;
+
+		this.lTarget = null;
+		this.onError = 0;
+
 		this.delta = 0;
 		this.tiller = 0;
 		this.timeTicker = 0;
@@ -227,12 +231,14 @@ class apSimulator{
 			) / (this.delay+1);
 		this.hdm = deg360Pos( this.hdm +
 			( this.angleForce*
-			//	parseFloat( $('#apSimSpeed').val()||2 )
-			this.speed
+			( this.playScen == false ?	parseFloat( $('#apSimSpeed').val()||2 ):
+				this.speed
+			)
 			 )+
 			( Math.random() - 0.5 )*this.randomNois +
-			//parseFloat( $('#apSimDrift').val()||0 )/10
-			this.drift / 10
+			( this.playScen == false ?	parseFloat( $('#apSimDrift').val()||0 )/10:
+				this.drift / 10
+			)
 			);
 
 		this.delta = deg360delta(this.hdm, this.target );
@@ -245,9 +251,24 @@ class apSimulator{
 			this.hdmH.shift();
 
 
+		if( this.lTarget == null )
+			this.lTarget = this.target;
+		if( this.lTarget != this.target ){
+			this.onError = 0;
+			this.lTarget = this.target;
+		}
+		this.onError+=0.1;
+
+		var onErrorGain = Math.abs(this.delta)*this.onError;
+		//console.log( "onErrorGain:"+onError);
+		this.sumError+= Math.abs(this.delta)*onErrorGain;
 
 
-		this.sumError+= Math.abs(this.delta)*Math.abs(this.delta);
+		// fittnes v1
+		//this.sumError+= Math.abs(this.delta)*Math.abs(this.delta);
+
+
+
 		if( this.uiUpdate ){
 			$('#apSimTarget').text( this.target );
 			$('#apSimDelta').text( this.delta.toFixed(2) );
@@ -280,6 +301,11 @@ class apSimulator{
 			this.tilleryByH.shift();
 
 		this.tiller+= by;
+		if( this.tiller > 1 )
+			this.tiller = 1;
+		if( this.tiller < -1)
+			this.tiller = -1;
+
 		this.tillerMovesSum += Math.abs(by);
 	}
 
