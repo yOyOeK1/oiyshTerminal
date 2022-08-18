@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+    <link rel="stylesheet" href="http://192.168.43.1:3000/public/forms/jquery-ui.css">
+
+  <script src="http://192.168.43.1:3000/public/forms/jquery.min.js"></script>
+  <script src="http://192.168.43.1:3000/public/forms/jquery-ui.js"></script>
+
+  <script>
+
+
+var imgOrgSize = [512,512];
+var coorOfImg = {
+  'NW': {
+    'xy':[21,233],
+    'll':[-80.5799,9.07398]
+  },
+  'SE': {
+    'xy':[506,354],
+    'll':[-78.4996,8.56452]
+  }
+};
+var coorTest = [-79.5784,9.61427];
+//251, 107 pix
+var crossLocation = 0;
+
+function setCrossOnImg(){
+  if( crossLocation != 0 ){
+    var imgSize = [ $("#wImg").width(), $("#wImg").height() ];
+    var xy = [
+      mMapVal( crossLocation[0], 0, imgOrgSize[0], 0, imgSize[0] ),
+      mMapVal( crossLocation[1], 0, imgOrgSize[1], 0, imgSize[1] )
+    ];
+
+    $("#crosLL").css('left', parseInt(xy[0])-2+"px");
+    $("#crosLL").css('top', parseInt(xy[1])-20+"px");
+
+  }
+}
+
+function mMapVal( val, minI, maxI, minO, maxO, inLimits = false){
+  var dI = maxI - minI;
+  var dO = maxO - minO;
+  var nI = ( val - minI )/dI;
+
+  if( inLimits ){
+    var tr = minO + ( nI*dO );
+    if( tr < minO )
+      return minO;
+    else if( tr > maxO )
+      return maxO;
+    else
+      return tr;
+
+  }else
+    return minO + ( nI*dO );
+
+}
+function getXYFromLL( lat, lon ){
+  var x = mMapVal(
+    lat,
+    coorOfImg['NW']['ll'][0], coorOfImg['SE']['ll'][0],
+    coorOfImg['NW']['xy'][0], coorOfImg['SE']['xy'][0]
+    );
+  var y = mMapVal(
+    lon,
+    coorOfImg['NW']['ll'][1], coorOfImg['SE']['ll'][1],
+    coorOfImg['NW']['xy'][1], coorOfImg['SE']['xy'][1]
+    );
+
+  console.log(" getXYFromLL: "+x+" , "+y);
+  return [x,y];
+}
+
+//getXYFromLL( coorTest[0], coorTest[1] );
+
+function secToNiceTime( secs ){
+  var tr = '';
+  var d = secs;
+  if( d < 60 ){
+    tr = d+"sec.";
+  }else if( d < 3600 ){
+    tr = parseInt(d/60)+"min.";
+  }else{
+    tr = parseInt(d/3600)+"h";
+    tr+= " "+secToNiceTime( ( d-parseInt( parseInt(d/3600)*3600 ) ) )
+  }
+  return tr;
+}
+
+function extractDateFromName( name ){
+  var t = name.substring(4, name.length-4);
+  var tn = new Date().getTime()/1000;
+  var d = parseInt( tn - parseInt(t) );
+  console.log("t:["+t+"] now:["+tn+"] d:["+d+"]");
+
+  return secToNiceTime( d );
+
+}
+
+var socket1 = null;
+function wsConnect1( ){
+  socket1 = new  WebSocket("ws://192.168.43.1:1880/ws/pcr/newImg");
+
+  socket1.onopen = function(){
+  	console.log("on open");
+  }
+
+  socket1.onclose = function(){
+  	console.log("on close");
+    setTimeout( wsConnect1( ), 1000 );
+    console.log("reconnect...");
+  }
+
+  socket1.onerror = function(e){
+  	console.log("on error:"+e);
+  }
+
+  socket1.onmessage = function(m){
+
+  	console.log("on message:"+m);
+  	console.log("on message .data:["+m.data+"]");
+    var j = 0;
+    try{
+      j = JSON.parse(m.data);
+    }catch(e){}
+
+
+    if( j != 0 && j.typeMsg == 'msgLocation' ){
+        var d = 0;
+        if( d == 1 ) console.log("got location !");
+        var ll = j.ll[0].split(" ");
+        if( d == 1 ) console.log("lat lon");
+        if( d == 1 ) console.log(ll);
+        var xy = getXYFromLL(ll[1], ll[0]);
+        //console.log(imgSize);
+        crossLocation = xy;
+        setCrossOnImg();
+
+    } else if( m.data == "new img" ){
+  		console.log("got new img !!");
+  		location.reload();
+
+  	}else{
+      try{
+        var r = JSON.parse(m.data);
+        //console.log(r);
+        imgs = r;
+        $("#wImg").attr("src", "http://192.168.43.1:3000/public/prc/"+imgs[0] );
+        $("#slider").value = 0;
+
+        $("#imgOldInfo").text( extractDateFromName( imgs[0] ) );
+
+      }catch(e){
+        console.log("no error");
+      }
+
+    }
+
+
+  }
+}
+
+ var imgs = new Array();
+
+  $( function() {
+    $(window).resize( function(){
+        setCrossOnImg();
+    });
+
+  window.setTimeout(function(){
+    location.reload()
+
+  },300000);
+
+
+    $( "#slider" ).slider({
+      slide: function( event, ui ) {
+        $("#sliderVal").html( ui.value+" -> "+imgs[ui.value] );
+        $("#wImg").attr("src", "http://192.168.43.1:3000/public/prc/"+imgs[ui.value] );
+
+        $("#imgOldInfo").text( extractDateFromName( imgs[ui.value] ) );
+      }
+    });
+
+    wsConnect1();
+
+  } );
+  </script>
+</head>
+<body>
+
+
+<img id="wImg" width="100%" src="" /><br>
+<div id="crosLL" style="position:absolute;top:-10px; left:-10px;"><img src="ico_igla_32_32.png"></div>
+<div id="sliderVal" style="display:none;">NaN</div>
+<div id="slider"></div>
+<div id="imgOldInfo" style="
+  font-family: monospace;
+  position:relative;
+  top:-40px;left:50px;
+  width:80px;
+  border:solid #262fb5 1px;
+  background-color: #3b4b90;
+  color: white;
+  ">old is</div>
+
+
+</body>
+</html>
