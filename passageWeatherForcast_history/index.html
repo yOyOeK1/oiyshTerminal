@@ -11,13 +11,117 @@
   <script src="http://192.168.43.1:3000/public/forms/jquery-ui.js"></script>
 
   <script>
+  
+  
 // config of viewer
+
 var pathToWs = 'ws://192.168.43.1:1880/ws/pwf/newImg';
 var pathToImgs = 'http://192.168.43.1:3000/public/pwf/';
 var selfRefreshIntervals = 120; // min
+
+var haveInfoOnHowOldIsImg = true; // or false if you don't want it
+
+var haveInfoOnCurrentLocation = true; // or false if you don't wath to have it
+var imgOrgSize = [700,525];
+var coorOfImg = {
+  'NW': {
+    'xy':[96,120],
+    'll':[-87.1698,21.5455]
+  },
+  'SE': {
+    'xy':[650,435],
+    'll':[-60.3791,8.65318]
+  }
+};
+
+
 // config of viewer
 
 
+
+
+
+// cross hair location
+var crossLocation = 0;
+function setCrossOnImg(){
+  if( crossLocation != 0 ){
+    var imgSize = [ $("#wImg").width(), $("#wImg").height() ];
+    var xy = [
+      mMapVal( crossLocation[0], 0, imgOrgSize[0], 0, imgSize[0] ),
+      mMapVal( crossLocation[1], 0, imgOrgSize[1], 0, imgSize[1] )
+    ];
+
+    $("#crosLL").css('left', parseInt(xy[0])-2+"px");
+    $("#crosLL").css('top', parseInt(xy[1])-20+"px");
+
+  }
+}
+
+function mMapVal( val, minI, maxI, minO, maxO, inLimits = false){
+  var dI = maxI - minI;
+  var dO = maxO - minO;
+  var nI = ( val - minI )/dI;
+
+  if( inLimits ){
+    var tr = minO + ( nI*dO );
+    if( tr < minO )
+      return minO;
+    else if( tr > maxO )
+      return maxO;
+    else
+      return tr;
+
+  }else
+    return minO + ( nI*dO );
+
+}
+function getXYFromLL( lat, lon ){
+  var x = mMapVal(
+    lat,
+    coorOfImg['NW']['ll'][0], coorOfImg['SE']['ll'][0],
+    coorOfImg['NW']['xy'][0], coorOfImg['SE']['xy'][0]
+    );
+  var y = mMapVal(
+    lon,
+    coorOfImg['NW']['ll'][1], coorOfImg['SE']['ll'][1],
+    coorOfImg['NW']['xy'][1], coorOfImg['SE']['xy'][1]
+    );
+
+  console.log(" getXYFromLL: "+x+" , "+y);
+  return [x,y];
+}
+// cross hair location 
+
+// old image is 
+
+function secToNiceTime( secs ){
+  var tr = '';
+  var d = secs;
+  if( d < 60 ){
+    tr = d+"sec.";
+  }else if( d < 3600 ){
+    tr = parseInt(d/60)+"min.";
+  }else{
+    tr = parseInt(d/3600)+"h";
+    tr+= " "+secToNiceTime( ( d-parseInt( parseInt(d/3600)*3600 ) ) )
+  }
+  return tr;
+}
+
+function extractDateFromName( name ){
+  var t = name.substring(4, name.length-4);
+  var tn = new Date().getTime()/1000;
+  var d = parseInt( tn - parseInt(t) );
+  console.log("t:["+t+"] now:["+tn+"] d:["+d+"]");
+
+  return secToNiceTime( d );
+
+}
+
+// old image is
+
+
+// web socket 
 
 var socket1 = null;
 function wsConnect1( ){
@@ -39,10 +143,28 @@ function wsConnect1( ){
 
   socket1.onmessage = function(m){
   	console.log("on message:"+m);
-  	console.log("on message .data:["+m.data+"]");
-    if( m.data == "new img" ){
+  	//console.log("on message .data:["+m.data+"]");
+    var j = 0;
+    try{
+      j = JSON.parse(m.data);
+    }catch(e){}
+
+
+    if( j != 0 && j.typeMsg == 'msgLocation' ){
+        var d = 0;
+        if( d == 1 ) console.log("got location !");
+        var ll = j.ll[0].split(" ");
+        if( d == 1 ) console.log("lat lon");
+        if( d == 1 ) console.log(ll);
+        var xy = getXYFromLL(ll[1], ll[0]);
+        //console.log(imgSize);
+        crossLocation = xy;
+        setCrossOnImg();
+
+    }else if( m.data == "new img" ){
   		console.log("got new img !!");
   		location.reload();
+  		
   	}else{
       try{
         var r = JSON.parse(m.data);
@@ -50,6 +172,11 @@ function wsConnect1( ){
         imgs = r;
         $("#wImg").attr("src", pathToImgs+imgs[0] );
         $("#slider").value = 0;
+        
+        if( haveInfoOnHowOldIsImg )
+			$("#imgOldInfo").text( extractDateFromName( imgs[0] ) );
+
+        
       }catch(e){
         console.log("no error"+e);
       }
@@ -63,6 +190,18 @@ function wsConnect1( ){
  var imgs = new Array();
 
   $( function() {
+  
+  
+  if( haveInfoOnHowOldIsImg == false)
+  	$("#imgOldInfo").hide();
+  	
+  if( haveInfoOnCurrentLocation == false){
+  	$("#crosLL").hide();
+  }else{
+	  $(window).resize( function(){
+		    setCrossOnImg();
+		});
+  }
 
   window.setTimeout(function(){
     location.reload()
@@ -74,6 +213,9 @@ function wsConnect1( ){
       slide: function( event, ui ) {
         $("#sliderVal").html( ui.value+" -> "+imgs[ui.value] );
         $("#wImg").attr("src", pathToImgs+imgs[ui.value] );
+
+		if( haveInfoOnHowOldIsImg )
+			$("#imgOldInfo").text( extractDateFromName( imgs[ui.value] ) );
 
       }
     });
@@ -87,8 +229,19 @@ function wsConnect1( ){
 
 
 <img id="wImg" width="100%" src="" /><br>
+<div id="crosLL" style="position:absolute;top:-10px; left:-10px;"><img src="ico_igla_32_32.png"></div>
 <div id="sliderVal" style="display:none;">NaN</div>
 <div id="slider"></div>
+<div id="imgOldInfo" style="
+  font-family: monospace;
+  position:relative;
+  top:-40px;left:50px;
+  width:80px;
+  border:solid #262fb5 1px;
+  background-color: #3b4b90;
+  color: white;
+  ">old is</div>
+
 
 
 </body>
