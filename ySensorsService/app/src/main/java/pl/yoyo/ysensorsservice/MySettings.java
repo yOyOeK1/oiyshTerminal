@@ -30,6 +30,11 @@ public class MySettings {
             editor.putString("xAccel", "0");
             editor.putString("yAccel", "0");
             editor.putString("zAccel", "0");
+
+            editor.putString("sendAccel", "0");
+            editor.putString("sendAccelRaw", "0");
+            editor.putString("sendMagRaw", "0");
+
             editor.apply();
 
             sett = context.getSharedPreferences("mysettings", MODE_PRIVATE);

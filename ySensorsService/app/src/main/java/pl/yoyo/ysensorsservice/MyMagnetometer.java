@@ -34,6 +34,9 @@ public class MyMagnetometer implements SensorEventListener {
     private float[] mR = new float[9];
 
     private float[] accelCorrect = {0,0,0};
+    private boolean sendMagRaw = false;
+    private boolean sendAccelRaw = false;
+    private boolean sendAccel = false;
 
     public int magCount = 0;
     public int accelCount = 0;
@@ -74,7 +77,8 @@ public class MyMagnetometer implements SensorEventListener {
                     if( mserv!=null ) {
                         //mserv.mqtt.publish("mag/raw", mGeomagnetic[0] + "," + mGeomagnetic[1] + "," + mGeomagnetic[2] );
 
-                        mserv.mqtt.publish("mag/raw", mGeomagnetic[0] + "," + mGeomagnetic[1] + "," + mGeomagnetic[2] );
+                        if( sendMagRaw )
+                            mserv.mqtt.publish("mag/raw", mGeomagnetic[0] + "," + mGeomagnetic[1] + "," + mGeomagnetic[2] );
 
                     }else
                         Log.d(TAG, "mag mserv = null");
@@ -164,9 +168,11 @@ public class MyMagnetometer implements SensorEventListener {
                         mserv.mqtt.publish("orient/pitch", Math.toDegrees(mOrientation[1]) + "");
                         mserv.mqtt.publish("orient/heel", Math.toDegrees(mOrientation[2]) + "");
 
-                        mserv.mqtt.publish("accel", mLastAccelCorrect[0]+","+mLastAccelCorrect[1]+","+mLastAccelCorrect[2]);
+                        if( sendAccel )
+                            mserv.mqtt.publish("accel", mLastAccelCorrect[0]+","+mLastAccelCorrect[1]+","+mLastAccelCorrect[2]);
 
-                        mserv.mqtt.publish("mag/rawCorrect", mGeomagneticCorrect[0] + "," + mGeomagneticCorrect[1] + "," + mGeomagneticCorrect[2] );
+                        if( sendMagRaw )
+                            mserv.mqtt.publish("mag/rawCorrect", mGeomagneticCorrect[0] + "," + mGeomagneticCorrect[1] + "," + mGeomagneticCorrect[2] );
 
                     }else
                         Log.d(TAG, "accelMag mserv = null");
@@ -305,6 +311,9 @@ public class MyMagnetometer implements SensorEventListener {
         accelCorrect[0] = mtrans.deg2rad( Float.parseFloat( msett.getSett("xAccel") ) );
         accelCorrect[1] = mtrans.deg2rad( Float.parseFloat( msett.getSett("yAccel") ) );
         accelCorrect[2] = mtrans.deg2rad( Float.parseFloat( msett.getSett("zAccel") ) );
+        sendAccel = Boolean.parseBoolean( msett.getSett("sendAccel") );
+        sendAccelRaw = Boolean.parseBoolean( msett.getSett("sendAccelRaw") );
+        sendMagRaw = Boolean.parseBoolean( msett.getSett("sendMagRaw") );
 
         try {
             magOffset = Integer.parseInt( this.msett.getSett("magOffset").toString() );

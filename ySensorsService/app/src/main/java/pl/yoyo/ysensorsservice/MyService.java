@@ -390,8 +390,36 @@ public class MyService extends Service {
 
 
 
-        }else if( cmd.equals("magOffset:?") ){
-            mqtt.publish("stat/magOffset",mMag.msett.getSett("magOffset") );
+        }else if( cmd.equals("magOffset:?") ) {
+            mqtt.publish("stat/magOffset", mMag.msett.getSett("magOffset"));
+
+        }else if( cmd.equals("send:?") ){
+            mqtt.publish("stat/sendAccel",mMag.msett.getSett("sendAccel") );
+            mqtt.publish("stat/sendAccelRaw",mMag.msett.getSett("sendAccelRaw") );
+            mqtt.publish("stat/sendMagRaw",mMag.msett.getSett("sendMagRaw") );
+
+        }else if( cmd.indexOf("sendAccel:") == 0 ){
+            String[] vars = cmd.split(":");
+
+            Log.i(TAG,"sendAccel now:"+vars[0]+" "+vars[1]);
+            mMag.msett.setSett("sendAccel", vars[1] );
+            mMag.updateCorrection();
+
+        }else if( cmd.indexOf("sendAccelRaw:") == 0 ){
+            String[] vars = cmd.split(":");
+
+            Log.i(TAG,"sendAccelRaw now:"+vars[0]+" "+vars[1]);
+            mMag.msett.setSett("sendAccelRaw", vars[1] );
+            mMag.updateCorrection();
+
+        }else if( cmd.indexOf("sendMagRaw:") == 0 ){
+            String[] vars = cmd.split(":");
+
+            Log.i(TAG,"sendMagRaw now:"+vars[0]+" "+vars[1]);
+            mMag.msett.setSett("sendMagRaw", vars[1] );
+            mMag.updateCorrection();
+
+
 
         }else if( cmd.indexOf("magOffset:") == 0 ){
             String vars = cmd.substring( "magOffset:".length() );
@@ -405,6 +433,13 @@ public class MyService extends Service {
 
         }else{
             mqtt.publish("resp","ping - to get pong\n" +
+                    "send:? - let you know sendX: status\n"+
+                    "   accel:"+mMag.msett.getSett("sendAccel")+", "+
+                    " accelRaw:"+mMag.msett.getSett("sendAccelRaw")+", "+
+                    " magRaw:"+mMag.msett.getSett("sendMagRaw")+"\n"+
+                    "sendAccel:[0,1] - send accel\n"+
+                    "sendAccelRaw:[0,1] - send accel raw\n"+
+                    "sendMagRaw:[0,1] - send mag raw\n"+
                     "sensorsEvery:? - get current sensor broadcast every iter\n"+
                     "sensorsEvery:10 - 10 is how often it will push sensors to mqtt\n" +
                     "magOffset:? - get current magnetic hdg offset\n"+
