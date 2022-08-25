@@ -7,11 +7,11 @@
 
 char apCount = 2;
 char apAt = 1;
-char *ap_ssid[] = {  "DIRECT-7u-SecureTether-svOiysh7" , "HUAWEI Y7a",        "mis amores05"           };
-char *ap_pass[] = {  "9egHgaWh",                        "srytyfrytybangbang", "luisianys17"  };
+char *ap_ssid[] = {  "gio", "HUAWEI Y7a",        "DIRECT-7u-SecureTether-svOiysh7"     };
+char *ap_pass[] = {  "giorgio1975",  "srytyfrytybangbang", "9egHgaWh"  };
 char mqAt = 1;
 bool apOk = false;
-char *mq_server[] = { "192.168.49.1", "192.168.43.1"  };
+char *mq_server[] = { "192.168.49.1", "192.168.43.1", "192.168.43.1"  };
 int mq_port = 10883;
 char *mqClient = "esp01APDrive";
 #define MQMSG_BUFFER_SIZE  (50)
@@ -50,6 +50,7 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
   tmpPayload = (char*)payload;
   tmpPayload[length] = 0;
   String str = String(tmpPayload);
+  String topicStr = topic;
   /*
   ph("Message arrived [");
   ph(topic);
@@ -59,8 +60,28 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
   ph("] len:");
   phnl(String(length));
   */
+
+  /*
+  client.publish( 
+      String( String(mqClient)+"/gotCmd" ).c_str(), 
+      String( "topic["+String(topic)+"] msg["+String(str)+"]" ).c_str()
+      );
+  if( topicStr.equals("esp01APDrive/cmd") ){
+     client.publish( 
+      String( String(mqClient)+"/gotCmd" ).c_str(), 
+      String( "topic ok" ).c_str()
+      );
+  }
+  if( str.equals(  "led:On" ) ){
+      ledOn();
+      client.publish( 
+        String( String(mqClient)+"/gotCmd" ).c_str(), 
+        String( "msg OK...." ).c_str()
+        );
+  }
+  */
   
-  if( String( topic ) == "NR/ap/tillerBy" ){
+  if( topicStr.equals( "NR/ap/tillerBy" ) ){
     swFor = strtol( str.c_str(), NULL, 10 );
     
 
@@ -77,55 +98,32 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
       
     }
     
-  }else if( String( topic ) == "esp01APDrive/cmd" ){
-    if( str == "led:On" )
+  }else if( topicStr.equals( "esp01APDrive/cmd" ) ){
+    if( str.equals(  "led:On" ) ){
       ledOn();
-    else if( str == "led:Off" )
+    }else if( str.equals(  "led:Off" ) ){
       ledOff();
-
-    else if( str == "p1:On" )
+    }
+    else if( str.equals(  "p0:On" ) )
+      digitalWrite( 0, HIGH);
+    else if( str.equals(  "p0:Off" ) )
+      digitalWrite( 0, LOW);
+    
+    else if( str.equals(  "p1:On" ) )
       digitalWrite( 1, HIGH);
-    else if( str == "p1:Off" )
+    else if( str.equals(  "p1:Off" ) )
       digitalWrite( 1, LOW);
 
-    else if( str == "p3:On" )
+    else if( str.equals(  "p2:On" ) )
+      digitalWrite( 2, HIGH);
+    else if( str.equals(  "p2:Off" ) )
+      digitalWrite( 2, LOW);
+
+    else if( str.equals(  "p3:On" ) )
       digitalWrite( 3, HIGH);
-    else if( str == "p3:Off" )
+    else if( str.equals(  "p3:Off" ) )
       digitalWrite( 3, LOW);
 
-
-    else if( str == "pTX:On" )
-      digitalWrite( 1, HIGH);
-    else if( str == "pTX:Off" )
-      digitalWrite( 1, LOW);
-
-    else if( str == "pRX:On" )
-      digitalWrite( 3, HIGH);
-    else if( str == "pRX:Off" )
-      digitalWrite( 3, LOW);
-
-
-
-    else if( str == "p5:On" )
-      digitalWrite( 5, HIGH);
-    else if( str == "p5:Off" )
-      digitalWrite( 5, LOW);
-    
-    else if( str == "p4:On" )
-      digitalWrite( 4, HIGH);
-    else if( str == "p4:Off" )
-      digitalWrite( 4, LOW);
-    
-    else if( str == "p14:On" )
-      digitalWrite( 14, HIGH);
-    else if( str == "p14:Off" )
-      digitalWrite( 14, LOW);
-    
-    else if( str == "p12:On" )
-      digitalWrite( 12, HIGH);
-    else if( str == "p12:Off" )
-      digitalWrite( 12, LOW);
-      
   }
     
   
@@ -175,9 +173,11 @@ void setup() {
   pinMode(12, OUTPUT);
   digitalWrite( 12, HIGH);
   */
-  pinMode(1,FUNCTION_3); 
-  pinMode(3,FUNCTION_3);
+  pinMode(1,FUNCTION_3); // TX
+  pinMode(3,FUNCTION_3); // RX
+  pinMode(0,OUTPUT); // GPIO0
   pinMode(1,OUTPUT);
+  pinMode(2,OUTPUT); // GPIO2
   pinMode(3,OUTPUT);
   
   
