@@ -1,0 +1,938 @@
+[
+    {
+        "id": "dc100dc94d61a256",
+        "type": "tab",
+        "label": "ySS oriCal",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "723b063ef50ea7c3",
+        "type": "exec",
+        "z": "dc100dc94d61a256",
+        "command": "/data/data/com.termux/files/home/ySS/shStopService.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "shStopService.sh",
+        "x": 830,
+        "y": 100,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b52e01bf025f7a25",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "off on loop",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 100,
+        "wires": [
+            [
+                "723b063ef50ea7c3"
+            ]
+        ]
+    },
+    {
+        "id": "3114b88e6a7f43b5",
+        "type": "exec",
+        "z": "dc100dc94d61a256",
+        "command": "/data/data/com.termux/files/home/ySS/shStartService.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "shStartService.sh",
+        "x": 830,
+        "y": 40,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "3171de2d8dec70d1",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "on on loop",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 580,
+        "y": 40,
+        "wires": [
+            [
+                "3114b88e6a7f43b5"
+            ]
+        ]
+    },
+    {
+        "id": "6e972fe8d0532d27",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "ping",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "ping",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 560,
+        "wires": [
+            [
+                "f0e20f44c35a8239"
+            ]
+        ]
+    },
+    {
+        "id": "f0e20f44c35a8239",
+        "type": "websocket out",
+        "z": "dc100dc94d61a256",
+        "name": "/ws/accel/oriCal",
+        "server": "8516e78c8b694779",
+        "client": "",
+        "x": 840,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "318a83a44dedb148",
+        "type": "websocket in",
+        "z": "dc100dc94d61a256",
+        "name": "/ws/accel/oriCal_In",
+        "server": "5192310fb92c0375",
+        "client": "",
+        "x": 190,
+        "y": 200,
+        "wires": [
+            [
+                "073235304195fa7d",
+                "d24cfdc27d6173d6",
+                "59aeb56c4852664c"
+            ]
+        ]
+    },
+    {
+        "id": "073235304195fa7d",
+        "type": "debug",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "d24cfdc27d6173d6",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "func": "\nm = msg.payload;\n\nnode.status({\n    text: m\n});\n\n\n\nif( m == \"action:off\" ){\n    node.send([null,{}]);\n    \n}else if( m == \"action:on\" ){\n    node.send([{},null]);\n\n    \n}else if( m == \"action:getAccelCorrect\" ){\n    msg = {\n        topic: \"and/cmd\",\n        payload: \"accelCorrect:?\"\n        };\n    node.send([null,null,msg]);\n    \n}else if( m.substring(0,17) == \"action:setAccCor:\" ){\n    accCor = m.substring(17);\n    \n    msg = {\n      topic:\"and/cmd\",\n      payload: \"accelCorrect:\"+accCor\n    };\n    \n    node.send([null,null,msg]);\n    \n    node.status({\n        text:\"set correct\"+accCor\n    });\n}\n\n\n\n\n",
+        "outputs": 5,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 240,
+        "wires": [
+            [
+                "3114b88e6a7f43b5"
+            ],
+            [
+                "723b063ef50ea7c3"
+            ],
+            [
+                "e88f0cfad5151b4b"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "71d93728273b2939",
+        "type": "mqtt in",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "topic": "and/#",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4bf528a73403ee8b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 620,
+        "wires": [
+            [
+                "6fb3306c2d1e9967",
+                "59aeb56c4852664c"
+            ]
+        ]
+    },
+    {
+        "id": "e88f0cfad5151b4b",
+        "type": "mqtt out",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4bf528a73403ee8b",
+        "x": 750,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "6fb3306c2d1e9967",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "func": "\nreturn {\n    topic: msg.topic,\n    payload: msg.payload\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "f0e20f44c35a8239"
+            ]
+        ]
+    },
+    {
+        "id": "2c2dc82b9f6f7406",
+        "type": "mqtt in",
+        "z": "dc100dc94d61a256",
+        "name": "e01Mux/adc0",
+        "topic": "e01Mux/adc0",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d611ceefa2b9fd0b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 720,
+        "wires": [
+            [
+                "6fb3306c2d1e9967"
+            ]
+        ]
+    },
+    {
+        "id": "8e92236cb4b9a77a",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "gps p0 lat",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "and/lat",
+        "payload": "9.0",
+        "payloadType": "str",
+        "x": 120,
+        "y": 380,
+        "wires": [
+            [
+                "6fb3306c2d1e9967"
+            ]
+        ]
+    },
+    {
+        "id": "db87107df3ca67ba",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "gps p0 lon",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "and/lon",
+        "payload": "-78.0",
+        "payloadType": "str",
+        "x": 110,
+        "y": 420,
+        "wires": [
+            [
+                "6fb3306c2d1e9967"
+            ]
+        ]
+    },
+    {
+        "id": "70bf37a06a04e96f",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "gps p2 lat",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1.1",
+        "topic": "and/lat",
+        "payload": "10.0",
+        "payloadType": "str",
+        "x": 120,
+        "y": 460,
+        "wires": [
+            [
+                "6fb3306c2d1e9967"
+            ]
+        ]
+    },
+    {
+        "id": "757df0c5723b39fa",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "gps p2 lon",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1.5",
+        "topic": "and/lon",
+        "payload": "-78.0",
+        "payloadType": "str",
+        "x": 110,
+        "y": 500,
+        "wires": [
+            [
+                "6fb3306c2d1e9967"
+            ]
+        ]
+    },
+    {
+        "id": "e435951805d82abd",
+        "type": "tcp in",
+        "z": "dc100dc94d61a256",
+        "name": "from opencpn :12226",
+        "server": "server",
+        "host": "",
+        "port": "12226",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "\\n",
+        "topic": "",
+        "base64": false,
+        "x": 1000,
+        "y": 260,
+        "wires": [
+            [
+                "8d718b12b13c74c9",
+                "a84695150d12fee7"
+            ]
+        ]
+    },
+    {
+        "id": "8d718b12b13c74c9",
+        "type": "debug",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a84695150d12fee7",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "extract nav to point",
+        "func": "function ddmmToLdec( ddmm ){\n    var dot = ddmm.indexOf('.');\n    var dd = parseInt(ddmm.substring(0,dot-2));\n    var mm = parseFloat( ddmm.substring(dot-2) );\n    return dd + ( mm/60 );\n}\n\n\nif( msg.payload.substring(0,1) == \"$\" && msg.payload.substring(6,7) == \",\" ){\n    m = msg.payload;\n    key = m.substring(3,6);\n    v = m.split(\",\");\n    tex = \"\";\n    srcCmd = m.substring(1,3);\n    \n    if( key == \"RMB\" ){\n        xte = v[12];\n        if( v[3] == \"L\" )\n            xte*=-1;\n            \n        lat = ddmmToLdec(v[6])*( v[7]==\"S\"?-1:1);\n        lon = ddmmToLdec(v[8])*( v[9]==\"W\"?-1:1);\n        flow.set('rmbLast',Math.round(v[11]));\n        \n        node.send({\n            topic: \"NR/nav/rmb\",\n            payload: {\n                'xte': xte,\n                'rng': v[10],\n                'onHeading': v[11],\n                'arrived': v[13]=='V'?0:1,\n                'to': v[4],\n                'lat': lat,\n                'lon': lon\n                },\n            srcDev: srcCmd\n        });\n        /*\n        node.send({\n            topic: \"NR/nav/rng\",\n            payload: v[10],\n            srcDev: srcCmd\n        });\n        \n        node.send({\n            topic: \"NR/nav/onHeading\",\n            payload: v[11],\n            srcDev: srcCmd\n        });\n        \n        \n        \n        node.send({\n            topic: \"NR/nav/arrival\",\n            payload: v[13],\n            srcDev: srcCmd\n        });\n        */\n        \n    }\n    \n    \n    \n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1270,
+        "y": 260,
+        "wires": [
+            [
+                "96b3175ecfc9917c",
+                "f0e20f44c35a8239",
+                "59aeb56c4852664c"
+            ]
+        ]
+    },
+    {
+        "id": "96b3175ecfc9917c",
+        "type": "debug",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9c34c47c70102874",
+        "type": "debug",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "e0fe1439430dc210",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test",
+        "payloadType": "str",
+        "x": 390,
+        "y": 1040,
+        "wires": [
+            [
+                "1f7d57962a14fa14"
+            ]
+        ]
+    },
+    {
+        "id": "1f7d57962a14fa14",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "test global funcs",
+        "func": "var mu = global.get('mutil');\n\nmuTest = {\n    'add( 10, 1 ) -> 11': mu.add(10,1),\n    'getHello' : mu.getHello()\n};\n\nnode.send({payload:mu.degPos(-90)});\n\nd3 = {\n    \"pos(-180) -> 180\":mu.degPos(-180),\n    \"pos(-190) -> 170\":mu.degPos(-190),\n    \"pos(-361) -> 359\":mu.degPos(-361),\n    \"pos(-350) -> 10\":mu.degPos(10),\n    \"delta( 0, 10) -> 10\": mu.degDelta(0,10),\n    \"delta( 0, -10) -> -10\": mu.degDelta(0,-10),\n    \"delta( 90, -90) -> -190 || 190\": mu.degDelta(90,-90)\n};\n\nnode.send({\n    muTest,\n    d3,\n    'Controller': mu.getPid().getHello()\n});",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1040,
+        "wires": [
+            [
+                "9c34c47c70102874"
+            ]
+        ]
+    },
+    {
+        "id": "057f74a11eeabfc5",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 980,
+        "wires": [
+            [
+                "7ef168a719e03c57"
+            ]
+        ]
+    },
+    {
+        "id": "7ef168a719e03c57",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "deg360 functions",
+        "func": "const mutil = (function () {\n    'use strict';\n    var cc = 0;\n    \n    function add(a, b) {\n        return a + b;\n    }\n    \n    function getHello( ){\n        return \"hello \"+cc++;\n    }\n    \n    function degPos( deg ){\n        deg = deg%360;\n        if( deg < 0 )\n            deg+=360;\n        return deg;\n    }\n    \n    function degDelta( deg0, deg1 ){\n        deg0 = degPos(deg1)-degPos(deg0);\n        \n        if( deg0 > 180 )\n            deg0-=360;\n        if( deg0 < -180 )\n            deg0+=360;\n        \n        return deg0;\n    }\n    \n    function mMapVal( val, minI, maxI, minO, maxO, inLimits = false){\n      var dI = maxI - minI;\n      var dO = maxO - minO;\n      var nI = ( val - minI )/dI;\n    \n      if( inLimits ){\n        var tr = minO + ( nI*dO );\n        if( tr < minO )\n          return minO;\n        else if( tr > maxO )\n          return maxO;\n        else\n          return tr;\n    \n      }else\n        return minO + ( nI*dO );\n    \n    }\n    \n    \n    \n    class Controller {\n      helloCount = 0;\n      updatesCount = 0;\n      \n      constructor(k_p, k_i, k_d, dt) {\n        let i_max;\n        if (typeof k_p === 'object') {\n          let options = k_p;\n          k_p = options.k_p;\n          k_i = options.k_i;\n          k_d = options.k_d;\n          dt = options.dt;\n          i_max = options.i_max;\n        }\n    \n        // PID constants\n        this.k_p = (typeof k_p === 'number') ? k_p : 1;\n        this.k_i = k_i || 0;\n        this.k_d = k_d || 0;\n    \n        // Interval of time between two updates\n        // If not set, it will be automatically calculated\n        this.dt = dt || 0;\n    \n        // Maximum absolute value of sumError\n        this.i_max = i_max || 0;\n    \n        this.sumError  = 0;\n        this.lastError = 0;\n        this.lastTime  = 0;\n    \n        this.target    = 0; // default value, can be modified with .setTarget\n      }\n      \n      getHello(){\n          return \"hello from Controller\"+this.helloCount++;\n      }\n    \n      setTarget(target) {\n        this.target = target;\n      }\n    \n      update(currentValue) {\n        if(!currentValue) throw new Error(\"Invalid argument\");\n        this.currentValue = currentValue;\n        this.updatesCount++;\n    \n        // Calculate dt\n        let dt = this.dt;\n        if (!dt) {\n          let currentTime = Date.now();\n          if (this.lastTime === 0) { // First time update() is called\n            dt = 0;\n          } else {\n            dt = (currentTime - this.lastTime) / 1000; // in seconds\n          }\n          this.lastTime = currentTime;\n        }\n        if (typeof dt !== 'number' || dt === 0) {\n          dt = 1;\n        }\n    \n        let error = (this.target - this.currentValue);\n        this.sumError = this.sumError + error*dt;\n        if (this.i_max > 0 && Math.abs(this.sumError) > this.i_max) {\n          let sumSign = (this.sumError > 0) ? 1 : -1;\n          this.sumError = sumSign * this.i_max;\n        }\n    \n        let dError = (error - this.lastError)/dt;\n        this.lastError = error;\n    \n        // differential_error - delta\n        // heading_error = heading_to_steer - heading; \n        // differential_error = bearingrate; // 0 - 0.5\n        //PID_output = PID_Ks[0] * (PID_Ks[1] * heading_error  - PID_Ks[2] * differential_error); \n        //rudder_command = rudder_command + PID_output;\n    \n    \n        return (this.k_p*error) + (this.k_i * this.sumError) + (this.k_d * dError);\n      }\n    \n      reset() {\n        this.sumError  = 0;\n        this.lastError = 0;\n        this.lastTime  = 0;\n      }\n    }\n    \n    \n    function getPid(){\n        return pid;\n    }   \n    \n    function toDegrees ( rad ) {\n      return rad * (180 / Math.PI);\n    }\n    function getAngle( x0, y0, x1, y1 ){\n      var dx = x1-x0;\n      var dy = y1-y0;\n      return toDegrees( Math.atan2( dx, dy ) );\n    }\n\n    \n    var sec1 = 1000;\n    var sec30 = sec1*30;\n    var min1 = 2*sec30;\n    var min5 = min1*5;\n    \n    var storeData = {};\n    function storeIt( key, val, forMs ){\n      var t = new Date().getTime();\n      //new Date().getTime() / 1000\n      //console.log(\"t:\"+t);\n      // todo\n      if( storeData[key] == undefined )\n        storeData[key] = new Array();\n    \n        storeData[key].push({\n          'v': val,\n          't': t\n          });\n    \n        var tOld = t - forMs;\n        while( true ){\n          if( storeData[key][0]['t'] < tOld ){\n            //console.log(\"storeIt key:\"+key+\" drop to old!\");\n            storeData[key].shift();\n    \n          }else{\n            //console.log(\"storeIt key:\"+key+\" is up to date...\"+len);\n            break;\n          }\n    \n        }\n    \n    \n    }\n    function storeGetLast( key ){\n      return storeData[key][ storeData[key].length-1 ];\n    }\n    function storeGetPreLast( key ){\n      return storeData[key][ storeData[key].length-2 ];\n    }\n    \n    function avgIt( key, forMs, toMs ){\n  var now = new Date().getTime();\n\n  var t = now-forMs;\n\n  var tFrom = now;\n  if( toMs != undefined )\n    tFrom = t+toMs;\n\n  var d = storeData[key];\n  var l = d.length-1;\n  var tr = 0;\n  var trC = 0;\n\n\n  for( var i=l; i>=0; i-- ){\n    if( t <= d[i]['t'] && d[i]['t'] <= tFrom ){\n      tr+= d[i]['v'];\n      trC++;\n    }\n\n  }\n\n  //console.log(\"avgIt tr\"+tr+\" trC\"+trC+\" res\"+(tr/trC));\n  return tr/trC;\n\n}\n    \n    \n    var pid = new Controller( 0.05 ,0.0001, 0.002);\n    \n    class apContener {\n      on = false;\n      \n      resp = 100;\n      gain2 = -6;\n      \n      hdm = 0;\n      target = 0;\n      delta = 0;\n      \n      pid = getPid();\n      pidRes = 0;\n      tPos = 0;\n      pidResS = 0;\n      \n      \n      \n      constructor() {\n      }\n      \n      pidResS = 0;\n      calTillerMove( pidRes ){\n          var d = pidRes - this.tPos;\n          \n        \n          if( Math.abs(d) > 0.25 ){\n            this.tPos = pidRes;\n            return Math.round(d*this.resp);\n          }else\n            return 0;\n      }\n      \n      rudder_command = 0;\n      pid2( delta ){\n          // differential_error - delta\n        // heading_error = heading_to_steer - heading; \n        // differential_error = bearingrate; // 0 - 0.5\n        var PID_output = this.pid.k_p * (this.pid.k_i * delta  - this.pid.k_d * this.gain2); \n        return this.rudder_command + PID_output;\n      }\n      \n      update( degMag ){\n          storeIt('ap_degMag', degMag, sec30);\n          this.hdm = avgIt('ap_degMag',sec1*2);\n          this.delta = degDelta( this.hdm, this.target );\n          this.pidRes = this.pid.update( this.delta-(this.tPos*this.gain2) );\n          this.rudder_command = this.pidRes;\n          storeIt('pidRes', this.pidRes, sec30);\n          \n          //this.pidRes = this.pid.update( this.delta - this.pidRes );\n          \n          \n          \n          return {\n            hdm: this.hdm,\n            target: this.target,\n            delta: this.delta,\n            pidRes: this.pidRes,\n            pidResAvgSec5: avgIt('pidRes',sec1*5),\n            tillerPos: this.tPos,\n            tillerBy: this.calTillerMove( this.pidRes ),\n            pidAng: this.ang,\n            time: new Date()\n            };\n      }\n      \n      setTarget( deg ){\n          this.target = degPos(deg);\n      }\n      \n      setAuto( degTarget ){\n          this.setTarget( degTarget );\n          this.on = true;\n          this.tPos = 0;\n          this.pidRes = 0;\n          this.pid.reset();\n          this.rudder_command = 0;\n          \n      }\n      setStandby(){\n          this.on = false;\n      }\n      \n      getStatusMsg(){\n          if( this.on ){\n              return \"auto to: \"+Math.round(this.target);\n          }else{\n            return \"stand by\";    \n          }\n          \n      }\n      \n    }\n    var apCon = new apContener();\n    function getApContener(){\n        return apCon;\n    }\n    \n    \n    \n    \n    \n    class apSolver{\n\n\ta0 = 0;\n\ta1 = 0;\n\ta2 = 0;\n\n\n\n\n\tdb( msg){\n\t\t/*\n\t\t$('#sDeb').html(\n\t\t\tmsg+\"<br>\"+\n\t\t\t$('#sDeb').html()\n\t\t\t);\n\t\t*/\n\t}\n\n\tq1(){\n\t\tvar tr = \"cn - NaN\";\n\t\tif( this.a0 == this.a1 && this.a1 == this.a2 )\n\t\t\ttr = 'c1 - stable';\n\t\telse if( this.a0 > this.a1 && this.a1 == this.a2 )\n\t\t\ttr = 'c2 - up start';\n\t\telse if( this.a0 < this.a1 && this.a1 == this.a2 )\n\t\t\ttr = 'c3 - down start';\n\n\t\telse if( this.a0 > this.a1 && this.a1 > this.a2 )\n\t\t\ttr = 'c4 - up speed up';\n\n\n\t\telse if( this.a0 < this.a1 && this.a1 < this.a2 )\n\t\t\ttr = 'c5 - down speed up';\n\n\t\telse if( this.a0 < this.a1 && this.a1 > this.a2 )\n\t\t\ttr = 'c6 - down past peek';\n\n\t\telse if( this.a0 > this.a1 && this.a1 < this.a2 )\n\t\t\ttr = 'c7 - up past bottom';\n\n\t\telse if( this.a0 == this.a1 && this.a1 > this.a2 )\n\t\t\ttr = 'c8 - up';\n\n\t\telse if( this.a0 == this.a1 && this.a1 < this.a2 )\n\t\t\ttr = 'c9 - down';\n\n\t\treturn tr;\n\t}\n\n\ttAvgs = 2;\n\tdegSpe01 = 0\n\tdegSpe02 = 0\n\n\tpreA0DS01 = 0;\n\tpreA0DS02 = 0;\n\taccels(){\n\t\tthis.degSpe01 = ( parseFloat(this.a0)-parseFloat(this.a1) )/1;\n\t\tthis.degSpe02 = ( parseFloat(this.a0)-parseFloat(this.a2) )/2;\n\n\t\tstoreIt(\"ap_preA0DS01\", ( (this.a0+(this.degSpe01*this.tPredict)) ), sec30);\n\t\tstoreIt(\"ap_preA0DS02\", ( (this.a0+(this.degSpe02*this.tPredict)) ), sec30);\n\t\tthis.preA0DS01 = avgIt('ap_preA0DS01',sec1*3);\n\t\tthis.preA0DS02 = avgIt('ap_preA0DS02',sec1*3);\n\n\t\treturn \"ds: \"+this.degSpe01.toFixed(2)+\" \"+\n\t\t\tthis.degSpe02.toFixed(2)+\" deg/s\";\n\t}\n\n\n\ttLastAct = 0;\n\teveryT = 1000;\n\tactType = '';\n\tlastDelta = 0;\n\n\ttPredict = 15;\n\tstartTrashHold = 5;\n\tmaxAngleSpeed = 2.0;\n\terrorToCorrectionGain = 0.05;\n\tlandingAHeadGain = 1.5;\n\n\ttillerOffset = 0;\n\ttillerPos = 0;\n\n\ttillerTuneLast = 0;\n\n\ttillerStack = [];\n\n\tlandingHardDirection = 0;\n\n\ttillerStackSum(){\n\t\treturn this.tillerStack.reduce((partialSum, a) => partialSum + a, 0);\n\n\t}\n\n\thdm = 0;\n\tdelta = 0;\n\ttarget = 0;\n\tresp = 1;\n\tgain2 = 600;\n\ton = false;\n\n\tgetStatusMsg(){\n\t    if( this.on ){\n          return \"auto to: \"+Math.round(this.target);\n      }else{\n        return \"stand by\";    \n      }\n\t}\n\t\n\tgetStatusResp(){\n\t\treturn {\n        hdm: this.hdm,\n        target: this.target,\n        delta: this.a0,\n        tillerPos: this.tillerPos,\n        tillerBy: this.tillerGetToSend(  ),\n        time: new Date()\n        };\n\t}\n\n\tsetAuto( target ){\n\t\tthis.setTarget( target );\n\t\tthis.tillerStack = [];\n\t\tthis.actType = '';\n\t\tthis.on = true;\n\n\t}\n\n\tsetStandby(){\n        this.on = false;\n        this.actType = '';\n\t}\n\n\n\n\tsetTarget(target){\n\t\tthis.target = target;\n\t}\n\n\ttillerBy( by ){\n\t\tif( Math.abs(by) > 0.01 ){\n\t\t\tthis.tillerStack.push(by);\n\t\t\tthis.tillerPos+= by;\n\t\t\t//apTillerFake+= by*this.gain2;\n\t\t\tthis.tillerToSend.push( by*this.gain2 );\n\t\t}\n\t\t//$(\"#apDebTillerPos\").text(apTillerFake);\n\t\t//this.db(\" --> tiller is:\"+apTillerFake+\" and offset:\"+this.tillerOffset);\n\t}\n\n\ttillerToSend = [];\n\ttillerGetToSend(){\n\t\tvar tr = this.tillerToSend.reduce((partialSum, a) => partialSum + a, 0);\n\t\tthis.tillerToSend = [];\n\t\treturn tr;\n\t}\n\n\tupdate( hdm ){\n\t    if( this.on == false )\n\t        return this.getStatusResp();\n\t        \n\t\tthis.hdm = hdm;\n\t\tthis.delta = degDelta( this.hdm, this.target );\n\t\tvar t = new Date().getTime();\n\t\tstoreIt(\"apDelta\", this.delta, sec30 );\n\t\tthis.a0 = avgIt('apDelta', sec1);\n\t\tthis.a1 = avgIt('apDelta', sec1*2) ||0;\n\t\tthis.a2 = avgIt('apDelta', sec1*4) ||0;\n\n\t\tthis.db(\n\t\t\t\"\t\"+ Math.round(this.a2)+\n\t\t\t\"\t\"+Math.round(this.a1)+\n\t\t\t\"\t\"+Math.round(this.a0)+\n\t\t\t\"<br>\t\tacc: \"+this.accels()+\n\t\t\t\"\t\tq: \"+ this.q1()+\n\t\t\t\"<br> delt pred \"+this.tPredict+\"sec: \"+\n\t\t\tthis.preA0DS01.toFixed(0)+\" \"+this.preA0DS02.toFixed(0)+\" \"\n\n\t\t );\n\n\t\t /*\n\t\t var deb0 = {'deb0':{\n\t\t\t'time': new Date(),\n\n\t\t\t'a0': this.a0,\n\t\t\t'a1': this.a1,\n\t\t\t'a2': this.a2,\n\t\t\t'hdm': apHDMFake,\n\t\t\t'target': $(\"#ap2Target\").val()\n\t\t \t}};\n\t\t sOutSend('apDeb:'+JSON.stringify(deb0));\n\n\t\t var deb0 = {'debPreA0DS01':{\n\t\t\t'time': new Date().getTime()+(this.tPredict*1000),\n\t\t\t'data0': this.preA0DS01,\n\t\t\t'data1': this.preA0DS02,\n\t\t \t}};\n\t\t sOutSend('apDeb:'+JSON.stringify(deb0));\n\n\t\t var deb0 = {\n\t\t\t'time': new Date(),\n\t\t\t'hdm': apHDMFake,\n\t\t\t'target': $(\"#ap2Target\").val()\n\t\t \t};\n\t\t sOutSend('apDeb:'+JSON.stringify(deb0));\n\t\t */\n\n\n\n\n\n\n\t\t if( this.tLastAct < (t-this.everyT) || this.tLastAct == 0 ){\n\t\t\t this.db(\"$ action [\"+this.actType+\"] old\"+(t-this.tLastAct));\n\n\t\t\t var trashHoldWithGain = Math.abs( Math.abs(this.degSpe01)>1? Math.abs(this.degSpe01)*this.landingAHeadGain : this.landingAHeadGain )*this.startTrashHold;\n\n\t\t\t if( Math.abs( this.lastDelta ) < this.startTrashHold || Math.abs( this.preA0DS02 ) < this.startTrashHold )\n\t\t\t \tthis.db(\" is ok :)\");\n\n\n\n\t\t\t\tvar tillerSum = this.tillerStackSum();\n\n\t\t\t\tif( this.actType == 'landing' &&\n\t\t\t\t\t(t-this.tLastAct) >= 4000\n\t\t\t\t\t){\n\t\t\t\t\t\tthis.actType = '';\n\t\t\t\t\t\tthis.db(\"[landing ABORD]\");\n\t\t\t\t}\n\n\t\t\t\tif( this.actType == 'tune offset start' &&\n\t\t\t\t\tMath.abs( this.a0 ) >= this.startTrashHold\n\t\t\t\t\t){\n\t\t\t\t\t\tthis.actType = '';\n\t\t\t\t\t\tthis.tLastAct = t;\n\n\t\t\t\t\t\tif( this.degSpe01 > 0 ){\n\t\t\t\t\t\t\tthis.tillerBy( -0.05 );\n\t\t \t\t\t\t \tthis.tillerStack = [];\n\n\t\t\t\t\t\t}else{\n\t\t\t\t\t\t\tthis.tillerBy( 0.05 );\n\t\t \t\t\t\t \tthis.tillerStack = [];\n\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tthis.db(\"[<b>tune offset ABORD</b>]\");\n\n\t\t\t\t}\n\n\t\t\t\tif( this.actType == 'tune offset start' ){\n\t\t\t\t\tvar res = \"none\";\n\n\t\t\t\t\tif( this.degSpe01 > 0 ){\n\t\t\t\t\t\tthis.tillerBy( -0.05 );\n\t \t\t\t\t \tthis.tillerStack = [];\n\t\t\t\t\t\tres = \"-\";\n\t\t\t\t\t}else{\n\t\t\t\t\t\tthis.tillerBy( 0.05 );\n\t \t\t\t\t \tthis.tillerStack = [];\n\t\t\t\t\t\tres = \"+\";\n\t\t\t\t\t}\n\n\n\t\t\t\t\tthis.actType = '';\n\t\t\t\t\tthis.tLastAct = t;\n\t\t\t\t\tthis.db(\"[<b>tune offset DONE</b>] res:\"+res);\n\t\t\t\t}\n\n\t\t\t\tif( this.actType == '' &&\n\t\t\t\t\tMath.abs(this.degSpe01) < 0.5 &&\n\t\t\t\t\tMath.abs( this.a0 ) < this.startTrashHold &&\n\t\t\t\t\tMath.abs( this.a1 ) < this.startTrashHold &&\n\t\t\t\t\ttillerSum == 0\n\t\t\t\t\t){\n\n\t\t\t\t\tthis.tillerTuneLast = this.degSpe01;\n\t\t\t\t\tthis.actType = 'tune offset start';\n\t\t\t\t\tthis.tLastAct = t+sec1*3;\n\t\t\t\t\tthis.db(\"[<b>tune offset start</b>]\");\n\n\t\t\t\t}else if(\n\t\t\t\t this.actType == 'landing hard' &&\n\t\t\t\t this.tillerStack.length == 0\n\t\t\t ){\n\t\t\t \t\tthis.actType = '';\n\t\t\t\t\tthis.tLastAct = t+sec1*2;\n\t\t\t\t\tthis.db(\" [ clean landing hard ]\");\n\t\t\t\t\tthis.db(\" [landing direction ]\"+this.landingHardDirection);\n\t\t\t\t\tthis.db(\" a0:\"+this.a0);\n\n\n\t\t\t\t\t/*\n\t\t\t\t\tif( this.landingHardDirection == 1 )\n\t\t\t\t\t\tif( this.a0 > 0 )\n\t\t\t\t\t\t\tthis.tPredict+= 1;\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\tthis.tPredict-= 1;\n\n\t\t\t\t\tif( this.landingHardDirection == -1 )\n\t\t\t\t\t\tif( this.a0 < 0 )\n\t\t\t\t\t\t\tthis.tPredict+= 1;\n\t\t\t\t\t\telse\n\t\t\t\t\t\t\tthis.tPredict-= 1;\n\n\t\t\t\t\tif( this.tPredict < 5 )\n\t\t\t\t\t\tthis.tPredict = 5;\n\t\t\t\t\telse if( this.tPredict > 30 )\n\t\t\t\t\t\tthis.tPredict = 30;\n\t\t\t\t\t*/\n\n\t\t\t\t}else if(\n\t\t\t\t this.actType != 'landing hard' &&\n\t\t\t\t this.tillerStack.length > 0 &&\n\t\t\t\t ( this.lastDelta > 0 ) != ( this.preA0DS02 > 0)\n\t\t\t \t){\n\t\t\t\t this.actType = 'landing hard';\n\t\t\t\t var sum = tillerSum;\n\n\t\t\t\t this.tillerBy( -(sum*0.98) );\n\t\t\t\t this.tillerStack = [];\n\t\t\t\t this.tLastAct = t+sec1*3;\n\n\t\t\t\t this.landingHardDirection = sum >= 0 ? 1 : -1;\n\n\t\t\t\t this.db(\" [landing hard] by stack tiller \"+this.tillerStack.toString());\n\n\n\t\t\t }else if( (\n\t\t\t\t this.actType == 'correct' ||\n\t\t\t\t this.actType == 'langing '\n\t\t\t \t\t) &&\n\t\t\t \t(\n\t\t\t\t\tMath.abs( this.a0 )  <= trashHoldWithGain   ||\n\t\t\t \t\tMath.abs( this.preA0DS02 ) <= trashHoldWithGain\n\t\t\t\t)\n\t\t\t){\n\t\t\t\t this.actType = 'landing';\n\t\t\t\t this.tillerBy( -tillerSum/2 );\n\n\t\t\t\t this.tLastAct = t+sec1*0.5;\n\t\t\t\t this.db(\" [landing] by stack tiller \"+this.tillerStack.toString());\n\n\t\t\t\t \tif( this.tillerStack.length == 0 ){\n\t\t\t\t\t\tthis.actType = 'landing done';\n\t\t\t\t\t\tthis.tLastAct = t;\n\t\t\t\t\t\tthis.tLastAct = t+sec1;\n\t\t\t\t\t\tthis.db(\"\t[landing done] out of tiller stack\");\n\t\t\t\t\t\tthis.landingAHeadGain-=0.1;\n\t\t\t\t\t}\n\n\t\t\t }else if( ( this.actType == '' || this.actType == 'correct' ) &&\n\t\t\t \tMath.abs( this.a0 ) > this.startTrashHold &&\n\t\t\t \tMath.abs( this.preA0DS02 ) > this.startTrashHold\n\n\n\t\t\t ){\n\t\t\t\t this.lastDelta = this.a0;\n\t\t\t\t this.actType = 'correct';\n\t\t\t\t var tickBy = this.errorToCorrectionGain*this.a0;\n\t\t\t\t var maxOnStack = 3;\n\t\t\t\t \tif( tickBy > maxOnStack )\n\t\t\t\t \t\ttickBy = maxOnStack;\n\t\t\t\t\telse if( tickBy < -maxOnStack)\n\t\t\t\t\t\ttickBy = -maxOnStack;\n\n\t\t\t\t\tvar tillSumAbs = Math.abs( tillerSum );\n\t\t\t\t\tvar afterTilerSum = tillSumAbs+Math.abs(tickBy);\n\n\t\t\t\t if( afterTilerSum<maxOnStack )\n\t\t\t\t \tthis.tillerBy( -tickBy );\n\t\t\t\t else{\n\t\t\t\t\tthis.db(\" correct maxt out!\" + tillerSum);\n\t\t\t\t\tthis.tillerBy(\n\t\t\t\t\t\t( maxOnStack - tillSumAbs ) * (tickBy >= 0 ? -1 : 1)\n\t\t\t\t\t );\n\t\t\t\t\tthis.db(\"  so max on :\"+this.tillerStackSum());\n\t\t\t\t }\n\t\t\t\t this.tLastAct = t+sec1;\n\t\t\t\t this.db(\" [correct] by tick by:\"+tickBy);\n\n\n\t\t\t }\n\n\t\t }\n\t\t \n\t\t return this.getStatusResp();\n\n\t}\n\n\t\n\n}\n\n    \n    \n    var apS = new apSolver();\n    \n    function getApS(){\n        return apS;\n    }\n    \n    \n    \n    return {\n        add: add,\n        getHello:getHello,\n        degPos: degPos,\n        degDelta: degDelta,\n        Controller:Controller,\n        getPid: getPid,\n        apContener: apContener,\n        getApContener: getApContener,\n        apSolver: apSolver,\n        getApS: getApS\n    };\n    \n}());\n\nglobal.set('mutil', mutil);\n\n    \n    \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59aeb56c4852664c",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "autopilot brain",
+        "func": "\nvar mu = global.get('mutil');\n//var apV3 = global.get('apV3');\nvar pid = mu.getPid();\n//var ap = mu.getApS()//mu.getApContener()\n\n// Auto pilot drivers\n//var apV3 = global.get('apV3');\nvar apVPID2 = global.get('apVPID2');\nvar apVB1 = global.get('apVB1');\n\n\nvar ap = flow.get('apObj')||undefined;\nif( ap == undefined ){\n    //ap = new apV3();\n    //ap = new apVPID2();\n    ap = new apVB1();\n    \n    flow.set('apObj',ap);\n}\nglobal.set('apOnIs', ap.on );\n\nvar apMode = flow.get('apMode')||undefined;\nvar apMinMove = 25;\n\nfunction sendApStatus(){\n    node.send([\n        {\n            topic: 'ap/status',\n            payload: \n                (ap.getStatusMsg().on == '1' ? apMode+': '+ap.target :'stand by')\n        },\n        null\n    ]);\n}\n\nfunction sendSettingsStatus(){\n    node.send([\n        {\n            topic: 'ap/settings',\n            settings: ap.getSettings()\n        },\n        null\n    ]);\n}\n\nfunction makeApToRMB(){\n    if( apMode == 'toRMB'){\n        var rmbLast = flow.get('rmbLast')||undefined;\n        if( rmbLast != undefined ){\n            if( ap.on ){\n                ap.setTarget(rmbLast);\n            }else{\n                ap.setAuto(rmbLast);\n            }\n            sendApStatus();\n        }\n    }\n}\n\n// on connection of client send init status\nif( msg.status && msg.status.event == 'connect' ){\n    node.send([\n        {\n            topic: 'ap/status',\n            payload: \"i:\"+ \n                (ap.getStatusMsg().on == '1' ? apMode+': '+ap.target :'stand by')\n        },\n        null\n    ]);\n        \n    sendSettingsStatus();\n    \n    \n}\n\n// on incomming cmd\nif( msg._session && msg._session.type == 'websocket'){\n    if( msg.payload == 'ap:standby' ){\n        flow.set('apMode','stand by');\n        apMode = 'stand by';\n        ap.setStandby();\n        node.send([\n            {\n                topic: 'ap/status',\n                payload: (ap.getStatusMsg().on == '1' ? apMode+': '+ap.target :'stand by')\n            },\n            null\n        ]);\n            \n    }else if( msg.payload.substring(0,8) == 'ap:auto:' ){\n        flow.set('apMode','auto');\n        apMode = 'auto';\n        ap.setAuto( parseFloat(msg.payload.substring(8)) );\n        sendApStatus();\n        \n    }else if( msg.payload == 'ap:toRMB' ){\n        flow.set('apMode','toRMB');\n        apMode = 'toRMB';\n        makeApToRMB();\n        \n    }else if( msg.payload.substring(0,17) == 'ap:correctTarget:' ){\n        var t = parseFloat( msg.payload.substring(17) );\n        ap.setTarget(\n            t+ap.target\n            );\n        sendApStatus();\n        if( !ap.on ){\n            node.send([\n                null,\n                {\n                    topic: 'NR/ap/tillerBy',\n                    payload: t > 0 ? 200 : -200\n                }\n            ]);\n        }\n    }else if( msg.payload.substring(0,19) == 'ap:correctTargetMs:' ){\n        var t = parseFloat( msg.payload.substring(19) );\n        node.send([\n            null,\n            {\n                topic: 'NR/ap/tillerBy',\n                payload: t \n            }\n        ]);\n    \n         \n    }else if( msg.payload.substring(0,6) == 'apDeb:' ){\n        j = JSON.parse( msg.payload.substring(6) );\n            node.send([\n                {\n                    topic: 'ap/debug',\n                    payload: j\n                },  \n                null\n            ]);\n\n        \n    \n            \n    }else if( msg.payload.substring(0,14) == 'ap:setSetting:' ){\n        var set = msg.payload.substring(14).split(',');\n        var conf = ap.getSettings();\n        var i = 0;\n        for(var k in conf){\n            conf[k] = set[i++];\n        }\n        ap.setSettings( conf );\n        sendSettingsStatus();\n    }\n    \n}\n\n// getting mqtt mag\nfunction onNewMag( h ){\n    if( ap.on ){\n        res = ap.update( parseFloat(h) );\n        var moveBy = Math.round( res.tillerBy*ap.config['tillerGain'] );\n        if( Math.abs( moveBy ) < apMinMove && moveBy != 0 )\n            moveBy = apMinMove * ( moveBy >= 0 ? 1 : -1 );\n        \n        if( moveBy != 0 )\n            node.send([\n                null,\n                {\n                    topic: 'NR/ap/tillerBy',\n                    payload: moveBy.toString()\n                }\n                ]);\n                \n        res['mode'] = apMode;\n        \n        node.send([\n            {\n                topic: 'ap/workStat',\n                payload: res\n            },\n            null\n            ]);\n    }\n    \n    node.status({\n        text:\"mag:\"+h+\" ap.on:\"+(ap.on?'1':'0')\n        \n    });\n}\nif( msg.topic == 'and/mag' ){\n    var h = parseFloat(msg.payload );\n    \n    onNewMag( h );\n\n}else if( msg.topic == 'NR/nav/rmb' ){\n    makeApToRMB();\n    \n}else if( msg.payload.substring(0,13) == \"apDebHDMFake:\"){\n    var h = parseFloat( msg.payload.substring(13) );\n    \n    node.send([\n        null,\n        {\n            topic: 'and/mag',\n            payload: h,\n            fake: \"1\"\n        }\n        ]);\n    \n    onNewMag( h );\n    \n}\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 860,
+        "wires": [
+            [
+                "f0e20f44c35a8239"
+            ],
+            [
+                "445759ff7004b406"
+            ]
+        ]
+    },
+    {
+        "id": "8267680d0b26c922",
+        "type": "status",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "scope": [
+            "f0e20f44c35a8239",
+            "318a83a44dedb148"
+        ],
+        "x": 200,
+        "y": 860,
+        "wires": [
+            [
+                "59aeb56c4852664c"
+            ]
+        ]
+    },
+    {
+        "id": "e1918c7f5d862745",
+        "type": "debug",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "d71b19826e14c537",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test",
+        "payloadType": "str",
+        "x": 370,
+        "y": 1080,
+        "wires": [
+            [
+                "07b190e542a256f2"
+            ]
+        ]
+    },
+    {
+        "id": "07b190e542a256f2",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "test global funcs",
+        "func": "var mu = global.get('mutil');\n\nmuTest = {\n    'add( 10, 1 ) -> 11': mu.add(10,1),\n    'getHello' : mu.getHello()\n};\n\nnode.send({payload:mu.degPos(-90)});\n\nd3 = {\n    \"pos(-180) -> 180\":mu.degPos(-180),\n    \"pos(-190) -> 170\":mu.degPos(-190),\n    \"pos(-361) -> 359\":mu.degPos(-361),\n    \"pos(-350) -> 10\":mu.degPos(10),\n    \"delta( 0, 10) -> 10\": mu.degDelta(0,10),\n    \"delta( 0, -10) -> -10\": mu.degDelta(0,-10),\n    \"delta( 90, -90) -> -190 || 190\": mu.degDelta(90,-90)\n};\n\nnode.send({\n    muTest,\n    d3,\n    'Controller': mu.getPid().getHello()\n});",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1080,
+        "wires": [
+            [
+                "e1918c7f5d862745"
+            ]
+        ]
+    },
+    {
+        "id": "445759ff7004b406",
+        "type": "mqtt out",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d611ceefa2b9fd0b",
+        "x": 830,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "a1aa287a39c1af61",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 1260,
+        "wires": [
+            [
+                "ce2951657404b6c2"
+            ]
+        ]
+    },
+    {
+        "id": "ce2951657404b6c2",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "func": "var mu2 = global.get('mutil2');\nvar m = new mu2();\n\nreturn {\n    payload: m.add(11, 9)\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1280,
+        "wires": [
+            [
+                "e323e4f2bf68cf79"
+            ]
+        ]
+    },
+    {
+        "id": "e323e4f2bf68cf79",
+        "type": "debug",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "953d641a74fddca2",
+        "type": "inject",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 1380,
+        "wires": [
+            [
+                "c7d3e9f04dd7377c"
+            ]
+        ]
+    },
+    {
+        "id": "c7d3e9f04dd7377c",
+        "type": "function",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "func": "var apV3 = global.get('apV3');\nvar ap = flow.get('ap')||undefined;\nif( ap == undefined ){\n    var m = new apV3();\n    flow.set('ap',m);\n}else{\n    var m = ap;\n}\n\nreturn {\n    payload: m.getStatusMsg()\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 1400,
+        "wires": [
+            [
+                "29e5d82811f992e4"
+            ]
+        ]
+    },
+    {
+        "id": "29e5d82811f992e4",
+        "type": "debug",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "32544cf6b5eda58e",
+        "type": "status",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "scope": [
+            "318a83a44dedb148"
+        ],
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "6c193329fe0d5f0c"
+            ]
+        ]
+    },
+    {
+        "id": "6c193329fe0d5f0c",
+        "type": "link out",
+        "z": "dc100dc94d61a256",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "52f734b330961380"
+        ],
+        "x": 275,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "8516e78c8b694779",
+        "type": "websocket-listener",
+        "path": "/ws/accel/oriCal",
+        "wholemsg": "true"
+    },
+    {
+        "id": "5192310fb92c0375",
+        "type": "websocket-listener",
+        "path": "/ws/accel/oriCal_In",
+        "wholemsg": "false"
+    },
+    {
+        "id": "4bf528a73403ee8b",
+        "type": "mqtt-broker",
+        "name": "MqAtNex7",
+        "broker": "localhost",
+        "port": "10883",
+        "clientid": "nodeRedNex7Client",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d611ceefa2b9fd0b",
+        "type": "mqtt-broker",
+        "name": "nodeRedAtHu",
+        "broker": "localhost",
+        "port": "10883",
+        "clientid": "nodeRedHu",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]
