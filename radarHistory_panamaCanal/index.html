@@ -165,6 +165,16 @@ function wsConnect1( ){
   }
 }
 
+function setImageNO( nr ){
+  $("#sliderVal").html( nr+" -> "+imgs[nr] );
+  $("#wImg").attr("src", "http://192.168.43.1:3000/public/prc/"+imgs[nr] );
+  sliderObj.slider({"value":nr});
+
+  $("#imgOldInfo").text( extractDateFromName( imgs[nr] ) );
+  sliderValIs = nr;
+}
+var sliderValIs = 0;
+var sliderObj = null;
  var imgs = new Array();
 
   $( function() {
@@ -177,19 +187,31 @@ function wsConnect1( ){
 
   },300000);
 
-
-    $( "#slider" ).slider({
+    sliderObj = $( "#slider" );
+    sliderObj.slider({
       slide: function( event, ui ) {
-        $("#sliderVal").html( ui.value+" -> "+imgs[ui.value] );
-        $("#wImg").attr("src", "http://192.168.43.1:3000/public/prc/"+imgs[ui.value] );
-
-        $("#imgOldInfo").text( extractDateFromName( imgs[ui.value] ) );
+        setImageNO(ui.value);
       }
     });
 
     wsConnect1();
 
   } );
+
+function slideL(){
+  slideTo("L");
+}
+function slideR(){
+  slideTo("R");
+}
+function slideTo(dir){
+  console.log('valimg is:'+sliderValIs+" dir:"+dir);
+  if( dir == 'L' && sliderValIs > 0){
+    setImageNO( sliderValIs - 1 );
+  }else if( dir == 'R' && sliderValIs < imgs.length ){
+    setImageNO( sliderValIs + 1 );
+  }
+}
   </script>
 </head>
 <body>
@@ -198,11 +220,24 @@ function wsConnect1( ){
 <img id="wImg" width="100%" src="" /><br>
 <div id="crosLL" style="position:absolute;top:-10px; left:-10px;"><img src="ico_igla_32_32.png"></div>
 <div id="sliderVal" style="display:none;">NaN</div>
-<div id="slider"></div>
+<table style="border:solid gray 1px;width:100%;padding:5px;">
+  <tr>
+    <td style="padding-right:10px;">
+      <input type="button" id="slideL" value=" < " onclick="slideL()">
+    </td>
+    <td width="100%">
+      <div id="slider"></div>
+    </td>
+    <td style="padding-left:10px;">
+      <input type="button" id="slideR" value=" > "  onclick="slideR()">
+    </td>
+  </tr>
+
+</table>
 <div id="imgOldInfo" style="
   font-family: monospace;
   position:relative;
-  top:-40px;left:50px;
+  top:-60px;left:50px;
   width:80px;
   border:solid #262fb5 1px;
   background-color: #3b4b90;
