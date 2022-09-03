@@ -25,6 +25,8 @@ int uaErr = 0;
 long iter = 0;
 
 long swUpTo = 0;
+// Left / Right // p1 p3
+long clUpTo = 0; // clutch for Autopilot actuator // p0
 long ticker = 0;
 
 
@@ -45,6 +47,7 @@ String uamsg = "";
 
 char* tmpPayload;
 long swFor = 0;
+
 void mqcallback(char* topic, byte* payload, unsigned int length){
   
   tmpPayload = (char*)payload;
@@ -83,7 +86,7 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
   
   if( topicStr.equals( "NR/ap/tillerBy" ) ){
     swFor = strtol( str.c_str(), NULL, 10 );
-    
+    clUpTo = ticker+500;
 
     ledOn();
     digitalWrite( 1, HIGH );
@@ -115,9 +118,9 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
       digitalWrite( 1, LOW);
 
     else if( str.equals(  "p2:On" ) )
-      digitalWrite( 2, HIGH);
+      digitalWrite( LED_BUILTIN, HIGH);
     else if( str.equals(  "p2:Off" ) )
-      digitalWrite( 2, LOW);
+      digitalWrite( LED_BUILTIN, LOW);
 
     else if( str.equals(  "p3:On" ) )
       digitalWrite( 3, HIGH);
@@ -176,8 +179,12 @@ void setup() {
   pinMode(1,FUNCTION_3); // TX
   pinMode(3,FUNCTION_3); // RX
   pinMode(0,OUTPUT); // GPIO0
+  digitalWrite(0, HIGH);
   pinMode(1,OUTPUT);
+
+  digitalWrite(2, HIGH);
   pinMode(2,OUTPUT); // GPIO2
+  digitalWrite(2, LOW);
   pinMode(3,OUTPUT);
   
   
@@ -299,6 +306,9 @@ bool doMqtt(){
     return mqReconnect();
     
   }else{
+    // maby this ?
+    // return client.loop();
+    
     client.loop();
     return true;
   }
@@ -337,11 +347,15 @@ void loop() {
 
   if( doWifi() ){
     if( doMqtt() ){
-      if( (iter%500000) == 0 )
+      if( (iter%100000) == 0 ){
         client.publish( 
           String(String(mqClient)+"/cpu/percent").c_str(), 
           String(pushIter++).c_str() 
           );
+      }
+      if( (iter%10000) == 0 ){
+        client.loop();
+      }
         
       //doUart();
       
@@ -351,6 +365,12 @@ void loop() {
   }  
 
   ticker = millis();
+
+  if( ticker > clUpTo ){
+    digitalWrite(0,HIGH);
+  }else{
+    digitalWrite(0,LOW);
+  }
 
   if( ticker > swUpTo ){
     digitalWrite( 1, HIGH );
