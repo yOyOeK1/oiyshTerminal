@@ -1,3 +1,6 @@
+##
+# ./svg2js.sh s_calibration - it's a file name svg without extension
+#
 fN=$1
 echo "make js string var from svg file"
 echo "file is ["$fN"]"
