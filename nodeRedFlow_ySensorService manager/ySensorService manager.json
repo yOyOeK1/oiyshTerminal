@@ -1,0 +1,288 @@
+[
+    {
+        "id": "805e345c078ffbda",
+        "type": "tab",
+        "label": "ySensorService manager",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d0f5cc44e836c1f5",
+        "type": "exec",
+        "z": "805e345c078ffbda",
+        "command": "/data/data/com.termux/files/home/ySS/shStopService.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "shStopService.sh",
+        "x": 970,
+        "y": 280,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ac458332aa63e932",
+        "type": "exec",
+        "z": "805e345c078ffbda",
+        "command": "/data/data/com.termux/files/home/ySS/shStartService.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "shStartService.sh",
+        "x": 970,
+        "y": 220,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e3c978b7551f4285",
+        "type": "inject",
+        "z": "805e345c078ffbda",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "doActionsChk",
+        "payload": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 480,
+        "wires": [
+            [
+                "1e47f16c79fb5797"
+            ]
+        ]
+    },
+    {
+        "id": "1e47f16c79fb5797",
+        "type": "function",
+        "z": "805e345c078ffbda",
+        "name": "",
+        "func": "var timeOut = 5000; // 5 sec\nvar clients = flow.get('yssClients')||{};\n\nif( msg.status ){\n    \n    if( msg.status.text == '0 connections' ){\n        clients[ msg.status.source.name ] = 0;\n    }else if( msg.status.text == 'common.status.disconnected' ){\n        clients[ msg.status.source.name ] = 0;\n    }else{\n        clients[ msg.status.source.name ] = 1;\n    }\n    flow.set('yssClients', clients);\n    \n}\n\n\n\nif( msg.topic == 'doActionsChk' ){\n    tn = new Date().getTime();\n    lastPing = parseInt(flow.get('andPingLastTime'))||0;\n    \n    var andStatus = 'on';\n    fillColor = 'green';\n    if( (lastPing+timeOut) < tn ){\n        andStatus = 'off';\n        fillColor = 'red'\n    }\n    \n    var s = \" -- \";\n    var ks = Object.getOwnPropertyNames(clients);\n    var onSum = 0;\n    for( var k=0,kl=ks.length;k<kl;k++ ){\n        s+= ' ( '+ks[k]+' ->  '+clients[ ks[k] ]+'), ';\n        onSum+= clients[ ks[k] ];\n    }\n    \n    if( global.get('apOnIs') )\n        onSum+=1;\n    \n    \n    \n    node.status({\n        fill:fillColor,\n        shape: 'ring',\n        text:'doAction andStat('+andStatus+')' +s+'[ap:'+global.get('apOnIs')+']'\n    });   \n    \n    \n    if( onSum > 0 && andStatus == 'off'){\n        node.send([\n            {payload:'make it running'},\n            null\n            ]);\n    }else if( onSum == 0 && andStatus == 'on'){\n        node.send([\n            null,\n            {payload:'make it stop'}\n            ]);\n    }\n    \n}\nif( msg.topic == 'and/stat/ping' ){\n    flow.set('andPingLastTime',new Date().getTime());\n    \n    //node.status({\n    //    text:'gotPing'\n    //});\n}",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 540,
+        "wires": [
+            [
+                "ac458332aa63e932"
+            ],
+            [
+                "d0f5cc44e836c1f5"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "efbd243056224b42",
+        "type": "mqtt in",
+        "z": "805e345c078ffbda",
+        "name": "",
+        "topic": "and/stat/ping",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "4bf528a73403ee8b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 540,
+        "wires": [
+            [
+                "1e47f16c79fb5797"
+            ]
+        ]
+    },
+    {
+        "id": "5e34213eb7c27988",
+        "type": "inject",
+        "z": "805e345c078ffbda",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "x": 790,
+        "y": 220,
+        "wires": [
+            [
+                "ac458332aa63e932"
+            ]
+        ]
+    },
+    {
+        "id": "723d7daebb7540b4",
+        "type": "inject",
+        "z": "805e345c078ffbda",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "x": 790,
+        "y": 280,
+        "wires": [
+            [
+                "d0f5cc44e836c1f5"
+            ]
+        ]
+    },
+    {
+        "id": "52f734b330961380",
+        "type": "link in",
+        "z": "805e345c078ffbda",
+        "name": "yssManagerCmdLink",
+        "links": [
+            "d72c7ff305d06eee",
+            "6c193329fe0d5f0c"
+        ],
+        "x": 355,
+        "y": 660,
+        "wires": [
+            [
+                "1e47f16c79fb5797",
+                "c0de322b2322cf08"
+            ]
+        ]
+    },
+    {
+        "id": "c0de322b2322cf08",
+        "type": "debug",
+        "z": "805e345c078ffbda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "2028074dde6dc44d",
+        "type": "inject",
+        "z": "805e345c078ffbda",
+        "name": "zero clients list",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "19674c3f36303a79"
+            ]
+        ]
+    },
+    {
+        "id": "19674c3f36303a79",
+        "type": "function",
+        "z": "805e345c078ffbda",
+        "name": "",
+        "func": "flow.set('yssClients',{});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4bf528a73403ee8b",
+        "type": "mqtt-broker",
+        "name": "MqAtNex7",
+        "broker": "localhost",
+        "port": "10883",
+        "clientid": "nodeRedNex7Client",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]

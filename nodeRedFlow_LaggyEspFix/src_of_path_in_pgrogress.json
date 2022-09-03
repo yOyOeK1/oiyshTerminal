@@ -1,0 +1,21 @@
+[
+    {
+        "id": "b55361971f30b402",
+        "type": "function",
+        "z": "805e345c078ffbda",
+        "name": "function 1",
+        "func": "\nif( (flow.get('andStatus')||\"\") == 'on' )\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "e3cf0af78ba90a0f"
+            ]
+        ]
+    }
+]
