@@ -65,6 +65,10 @@ fMain(){
 
     done
 
+    echo "adding wake lock ..."
+    echo "termux-wake-lock" >> ~/.bashrc
+    echo "  DONE"
+
     echo "DONE :)
     it's a automated installation. So is it ok ? you will see.
     Check wiki at https://github.com/yOyOeK1/oiyshTerminal/wiki
@@ -347,7 +351,7 @@ allow_anonymous true
   mkdir mosquitto/log
   ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/mosquitto/log/run
   echo '#!/data/data/com.termux/files/usr/bin/sh
-exec mosquitto -c ~/mosquitto.conf 2>&1 >> /dev/null' > ./mosquitto/run
+exec mosquitto -c /data/data/com.termux/files/home/mosquitto.conf 2>&1 >> /dev/null' > ./mosquitto/run
   chmod +x ./mosquitto/run
 
   echo "restart service ...."
