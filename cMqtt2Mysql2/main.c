@@ -11,7 +11,7 @@
      `msg` varchar(255) COLLATE utf8_bin NOT NULL,
      `entryDate` int(11) NOT NULL,
      PRIMARY KEY (`id`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
+ ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
  AUTO_INCREMENT=1 ;
 
 # 2022.04.15
@@ -341,7 +341,7 @@ void sqlCreateTopicTable( char *tableName ){
 				"`msg` varchar(255) COLLATE utf8_bin NOT NULL,"
 				"`entryDate` int(11) NOT NULL,"
 				"PRIMARY KEY (`id`)"
-	 	 	 	") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin "
+	 	 	 	") ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin "
 				"AUTO_INCREMENT=1 ;",
 			sufixTest, tableName
 			);
