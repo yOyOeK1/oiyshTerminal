@@ -3,12 +3,18 @@
 
 class sPager {
   currentPage = -1;
+  sm = -1;
 
   constructor(){
     this.currentPage = -1;
     this.pages = new Array();
     cl("sPager constructor done !");
   }
+
+  setScreenManager(s){
+    this.sm = s;
+  }
+
 
   getCurrentPage(){
     return this.pages[ this.currentPage ];
@@ -21,9 +27,58 @@ class sPager {
   }
 
   wsCallback( r ){
-    if( this.currentPage == -1 )
-      cl("pager dumm callback:"+r);
-    else
+
+    if(r.topic && r.payload){
+        if(r.topic == "SMForYou" ){
+          cl("got my screen name !");
+          cl(r.payload);
+          this.sm.setMyNo( r.payload );
+
+        }else if(r.topic == "SMidentifyOn"){
+          cl("got identifyOn cmd !");
+          this.sm.identifyYourSelf();
+
+        }else if(r.topic == 'SMCmdTo' && r.No == sm.myNo ){
+          cl("got cmd to:["+r.payload+']')
+          if( r.payload.substring(0,8) == "setPage:" )
+            klikPageNo( r.payload.substring(8) );
+          else if( r.payload == "mkShader.invert" )
+            mkShader('invert');
+          else if( r.payload == "mkShader.blackRed" )
+            mkShader('blackRed');
+          else if( r.payload == "mkShader.normal" )
+            mkShader('normal');
+          else if( r.payload == "mkfullscreen" ){
+            setTimeout(mkfullscreen,100);
+          }else if( r.payload == "reload" )
+            location.reload();
+
+        }else if(r.topic == "SMToAll"){
+          cl("got cmd to all ! ["+r.payload+"]");
+          if( r.payload == "mkShader.invert" )
+            mkShader('invert');
+          else if( r.payload == "mkShader.blackRed" )
+            mkShader('blackRed');
+          else if( r.payload == "mkShader.normal" )
+            mkShader('normal');
+          else if( r.payload == "mkfullscreen" ){
+            setTimeout(mkfullscreen,100);
+          }else if( r.payload == "reload" )
+            location.reload();
+
+        }
+
+    }
+
+    if( this.currentPage == -1 ){
+      cl("pager dumm callback:");
+      if(0){
+        cl("for debug only");
+        cl(r);
+        cl("topic:["+r.topic+"]");
+        cl("payload:["+r.payload+"]");
+      }
+    }else
       this.getCurrentPage().onMessageCallBack(r);
   }
 
@@ -105,6 +160,10 @@ class sPager {
       cp.svgDynoAfterLoad();
     }
 
+  }
+
+  getPagesList(){
+    return this.pages;
   }
 
   getMenu(){

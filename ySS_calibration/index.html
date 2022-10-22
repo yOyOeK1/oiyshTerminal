@@ -87,6 +87,7 @@ var module = new moduleCollector();
 <script src="mMath.js"></script>
 <script src="mOperation.js"></script>
 <script src="mWebSockets.js"></script>
+<script src="SM.js"></script>
 <script src="m_d3Plot.js"></script>
 
 
@@ -96,6 +97,8 @@ var module = new moduleCollector();
 
 
 <script>
+
+
 
 const pager = new sPager();
 pager.addPage( new s_calibrationPage() );
@@ -108,7 +111,14 @@ pager.addPage( new s_windEffordPage() );
 pager.addPage( new s_testFuncsPage() );
 pager.addPage( new s_blankPage() );
 
+// screen manager remote
+const sm = new SM();
+pager.setScreenManager(sm);
+pager.addPage( sm );
 
+function klikPageNo( No ){
+  pager.setPage(No);
+}
 
 function sendSetAccCor(){
   var ts = $("#sliX").slider('value')+","+
@@ -215,15 +225,18 @@ testFunctionsPart();
 		<div class="bottomPanelContainer defBg">
 			in:[<span id="wsInStat">?</span>]
 			out:[<span id="wsOutStat">out?</span>]
+      No:[<span id="SMNo">?</span>]
 			<input type="button" value="On" onclick="sOutSend('action:on')" >
 			<input type="button" value="Off" onclick="sOutSend('action:off')" >
-			<input type="button" value="Menu" onclick="pager.setPage(-1)" >
+			<input type="button" value="Menu" onclick="pager.setPage(-1);$('.bottomPanelContainer').hide()" >
 			<input type="button" value="full screen" onclick="mkfullscreen()" >
 			<input type="button" value="invert" onclick="mkShader('invert')" >
 			<input type="button" value="black red" onclick="mkShader('blackRed')" >
 			<input type="button" value="normal" onclick="mkShader('normal')" >
+      <input type="button" value="SM" onclick="sm.startIt()" >
 		</div>
 	</div>
+  <div id="SMIdentDiv" style="z-index:10;position:absolute;top:0;left:0;font-size:99vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>
 </body>
 
 </html>
