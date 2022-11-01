@@ -79,6 +79,12 @@ class s_ilooNavPage{
 			var h = Math.round( r.payload );
 			$("#boatHeelVal").text( h );
 			rotateSvg( "boatHeel", true, h );
+
+		}else if( r.topic == "and/orient/pitch" ){
+			var p = Math.round( r.payload );
+			$("#boatPitchVal").text( p );
+			rotateSvgSetRC( "boatPitch", "boatPitchRC", p );
+
 		}
 	}
 }
