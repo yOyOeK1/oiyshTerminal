@@ -39,9 +39,11 @@ class s_ilooNavPage{
 			return 0;
 
 		var cog = getAngleLL(  lastLat['v'], lastLon['v'], lat['v'], lon['v'] );
-		storeIt( 'cog', cog, min1 );
-		putText("boatCOG", (""+Math.abs(cog)).substring(0,3) );
-		rotateSvgSetRC( "boatCogMarker", "rosettaRc", cog-hdg );
+		storeIt( 'cog', Math.round(cog), min1 );
+		putText("boatCOG", (""+Math.abs(cog).toFixed(0)).substring(0,3) );
+		rotateSvgSetRC( "boatCogMarker", "rosettaRc",
+			cog - storeGetLast('hdg')['v']
+			);
 
 		var nm = getDistLLInNM( lastLat['v'], lastLon['v'], lat['v'], lon['v'] );
 		var inTime = lat['t']-lastLat['t'];
@@ -50,8 +52,9 @@ class s_ilooNavPage{
 		//console.log("in time ms:"+inTime);
 
 		var sog = nm*(3600000/inTime);
-		$("#boatSOG").text( (""+sog).substring(0,3) );
+		$("#boatSOG").text( (""+sog.toFixed(1)).substring(0,3) );
 	}
+
 
 	onMessageCallBack( r ){
 
@@ -70,10 +73,15 @@ class s_ilooNavPage{
 			$("#boatHDG").text( mag );
 			rotateSvg( "rosetta", true, -mag );
 
-			//BRG test
-			var brg = 20
-			$("#boatBrg").text( brg );
-			rotateSvgSetRC( "boatBrgMarker", "rosettaRc", brg );
+		}else if( r.topic == 'NR/nav/rmb' ){
+	    //BRG test
+			var brg = Math.round( r.payload['onHeading'] );
+			$("#boatBRG").text( brg );
+			rotateSvgSetRC( "boatBrgMarker", "rosettaRc",
+				brg - storeGetLast('hdg')['v']
+				);
+			//console.log("hdg:");
+			//console.log( storeGetLast('hdg')['v'] );
 
 		}else if( r.topic == 'and/orient/heel'){
 			var h = Math.round( r.payload );

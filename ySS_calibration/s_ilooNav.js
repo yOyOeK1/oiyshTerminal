@@ -56,9 +56,9 @@ var s_ilooNav=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.0000001"
-     inkscape:cx="156.57638"
-     inkscape:cy="611.42366"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="121.97571"
+     inkscape:cy="228.69338"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -135,7 +135,7 @@ var s_ilooNav=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccc" />
     <path
-       style="opacity:1;fill:#b3b3b3;fill-opacity:1;stroke:none;stroke-width:0.199419px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#cccccc;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 66.389579,241.05014 4.98547,-1.49564 1.603473,-18.06652 -13.665374,0.006 1.741982,17.8112 z"
        id="path3732"
        inkscape:connector-curvature="0"
@@ -1283,5 +1283,17 @@ var s_ilooNav=`<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        inkscape:label="#path7205"
        sodipodi:arc-type="arc"
        d="m 27.431196,141.34847 a 0.24529651,0.34341505 0 0 1 -0.245567,0.34106 0.24529651,0.34341505 0 0 1 -0.245017,-0.34183" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.3499999px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.26458299"
+       x="47.658607"
+       y="157.75943"
+       id="boatHeelVal"
+       inkscape:label="#text7327"><tspan
+         sodipodi:role="line"
+         id="tspan7325-4-7-7"
+         x="47.658607"
+         y="157.75943"
+         style="font-size:6.3499999px;fill:#808080;stroke-width:0.26458299">180'</tspan></text>
   </g>
 </svg>`;
