@@ -215,9 +215,7 @@ function getCookie(cname) {
     while (c.charAt(0) == ' ') {
       c = c.substring(1);
     }
-		//console.log('getCookie cname['+cname+'] to ['+c+']');
     if (c.indexOf(name) == 0) {
-			//console.log("ok cookie is "+c.substring(name.length, c.length));
       return c.substring(name.length, c.length);
     }
   }
@@ -247,9 +245,7 @@ function mkfullscreen() {
     !doc.webkitFullscreenElement &&
     !doc.msFullscreenElement
   ) {
-
-		requestFullScreen.call(docEl);
-
+    requestFullScreen.call(docEl);
   } else {
     cancelFullScreen.call(doc);
   }

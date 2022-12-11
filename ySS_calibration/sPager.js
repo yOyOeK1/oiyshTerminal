@@ -103,8 +103,8 @@ class sPager {
   setPage( pageNo ){
     this.currentPage = pageNo;
     this.pageHistory.push( pageNo );
-    console.log("pageHistory:");
-    console.log(this.pageHistory)
+    //console.log("pageHistory:");
+    //console.log(this.pageHistory)
 
     mkShaderResuming = true;
     mkShader('normal');
