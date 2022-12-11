@@ -70,7 +70,7 @@ class s_ilooNavPage{
 		}else if( r.topic == 'and/mag' ){
 			storeIt( 'hdg', parseFloat(r.payload),  sec1*10);
 			var mag = Math.round( r.payload );
-			$("#boatHDG").text( mag );
+			$("#boatHDG").text( mag+'' ); // 3 zera jak baza i stopnie ze jednostki
 			rotateSvg( "rosetta", true, -mag );
 
 		}else if( r.topic == 'NR/nav/rmb' ){

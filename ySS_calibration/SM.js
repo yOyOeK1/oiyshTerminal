@@ -94,9 +94,20 @@ class SM{
   }
 
   get getHtml(){
-    return `
+    var tr = `
 <h2>Screens Manager</h2>
 <div id="SMdeb"></div>
+`;
+    if( pager.pageHistory.length>0 ){
+      for(var p=(pager.pageHistory.length-2);p>=0;p--){
+        if( pager.pageHistory[p] != -1 )
+          tr+= '<input type="button" value="<- back to: ';
+          tr+= pager.pages[ pager.pageHistory[p] ].getName;
+          tr+= '" onclick="pager.setPage('+pager.pageHistory[p]+')">';
+          break;
+      }
+    }
+    tr += `
 <input type="button" value="Identify screens" onclick="sm.sendIdentOn()">
 <br>
 Send to all screens:
@@ -104,12 +115,14 @@ Send to all screens:
 <input type="button" value="invert" onclick="sm.sendToAllCMD('mkShader.invert')" >
 <input type="button" value="black red" onclick="sm.sendToAllCMD('mkShader.blackRed')" >
 <input type="button" value="normal" onclick="sm.sendToAllCMD('mkShader.normal')" >
+<input type="button" value="R" onclick="sm.sendToAllCMD('mkShader.rotate')" >
+
 <input type="button" value="reload" onclick="sm.sendToAllCMD('reload')" >
 
-
 <div id="SMdiv">---</div>
-
     `;
+
+    return tr;
   }
 
   getHtmlAfterLoad(){
@@ -141,11 +154,12 @@ Send to all screens:
 
   shaderBts( No ){
     var tr = '';
+    //tr+= '<input type="button" value="full screen TODO" onclick="sm.sendCmd('+No+',\'mkfullscreen\')" >';
     tr+= '<input type="button" value="invert" onclick="sm.sendCmd('+No+',\'mkShader.invert\')" > ';
     tr+= '<input type="button" value="black red" onclick="sm.sendCmd('+No+',\'mkShader.blackRed\')" > ';
     tr+= '<input type="button" value="normal" onclick="sm.sendCmd('+No+',\'mkShader.normal\')" > ';
+    tr+= '<input type="button" value="R" onclick="sm.sendCmd('+No+',\'mkShader.rotate\')" > ';
     tr+= '<input type="button" value="reload" onclick="sm.sendCmd('+No+',\'reload\')" > ';
-
     return tr;
   }
 

@@ -207,7 +207,7 @@ testFunctionsPart();
 
 </script>
 
-<body>
+<body id="mainBodyOfySS">
 	<div style="display:none;position:absolute;top:200;">
 		test start: <br>
 		<input type="button" value="heel 0" onclick="rotateImage($('#heelI'),0.1)" >
@@ -223,17 +223,61 @@ testFunctionsPart();
 	<div class="bottomPanel">
 		<div class="bottomPanelHandle"><img id="bottomPanelMenuImg" src="images/menu.svg"></div>
 		<div class="bottomPanelContainer defBg">
-			in:[<span id="wsInStat">?</span>]
-			out:[<span id="wsOutStat">out?</span>]
+			io:[<span id="wsInStat">?</span>/<span id="wsOutStat">out?</span>]
       No:[<span id="SMNo">?</span>]
-			<input type="button" value="On" onclick="sOutSend('action:on')" >
+			<!--
+      <input type="button" value="On" onclick="sOutSend('action:on')" >
 			<input type="button" value="Off" onclick="sOutSend('action:off')" >
-			<input type="button" value="Menu" onclick="pager.setPage(-1);$('.bottomPanelContainer').hide()" >
-			<input type="button" value="full screen" onclick="mkfullscreen()" >
-			<input type="button" value="invert" onclick="mkShader('invert')" >
-			<input type="button" value="black red" onclick="mkShader('blackRed')" >
-			<input type="button" value="normal" onclick="mkShader('normal')" >
-      <input type="button" value="SM" onclick="sm.startIt()" >
+      -->
+      <!--
+      <button class="ui-button ui-widget ui-corner-all ui-button-icon-only"
+        title="Menu"
+        onclick="pager.setPage(-1);$('.bottomPanelContainer').hide()">
+        <span class="ui-icon ui-icon-gear"></span>Menu
+      </button>
+      -->
+      <button title="Menu"
+        onclick="pager.setPage(-1);$('.bottomPanelContainer').hide()">
+        <img src="./icons/list.svg">
+      </button>
+      <!--<input type="button" value="Menu" onclick="pager.setPage(-1);$('.bottomPanelContainer').hide()">-->
+
+      <button title="full screen"
+        onclick="mkfullscreen()">
+        <img src="./icons/fullscreen.svg">
+      </button>
+      <!--<input type="button" value="full screen" onclick="mkfullscreen()" >-->
+
+      <button title="invert"
+        onclick="mkShader('invert')">
+        <img src="./icons/arrow-down-up.svg">
+      </button>
+      <!--<input type="button" value="invert" onclick="mkShader('invert')" >-->
+
+      <button title="black red"
+        onclick="mkShader('blackRed')">
+        <img src="./icons/moon-stars.svg">
+      </button>
+      <!--<input type="button" value="black red" onclick="mkShader('blackRed')" >-->
+
+      <button title="normal"
+        onclick="mkShader('normal')">
+        <img src="./icons/journal-check.svg">
+      </button>
+      <!--<input type="button" value="normal" onclick="mkShader('normal')" >-->
+
+      <button title="Screens manager"
+        onclick="sm.startIt()">
+        <img src="./icons/cast.svg">
+      </button>
+      <!--<input type="button" value="SM" onclick="sm.startIt()" ><br>-->
+
+      <button title="rotate"
+        onclick="mkShader('rotate')">
+        <img src="./icons/bootstrap-reboot.svg">
+      </button>
+      <!--<input type="button" value="R" onclick="mkShader('rotate')" >-->
+
 		</div>
 	</div>
   <div id="SMIdentDiv" style="z-index:10;position:absolute;top:0;left:0;font-size:99vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>

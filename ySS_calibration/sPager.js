@@ -4,6 +4,7 @@
 class sPager {
   currentPage = -1;
   sm = -1;
+  pageHistory = [];
 
   constructor(){
     this.currentPage = -1;
@@ -48,6 +49,8 @@ class sPager {
             mkShader('blackRed');
           else if( r.payload == "mkShader.normal" )
             mkShader('normal');
+          else if( r.payload == "mkShader.rotate" )
+            mkShader('rotate');
           else if( r.payload == "mkfullscreen" ){
             setTimeout(mkfullscreen,100);
           }else if( r.payload == "reload" )
@@ -61,6 +64,8 @@ class sPager {
             mkShader('blackRed');
           else if( r.payload == "mkShader.normal" )
             mkShader('normal');
+          else if( r.payload == "mkShader.rotate" )
+            mkShader('rotate');
           else if( r.payload == "mkfullscreen" ){
             setTimeout(mkfullscreen,100);
           }else if( r.payload == "reload" )
@@ -97,6 +102,9 @@ class sPager {
 
   setPage( pageNo ){
     this.currentPage = pageNo;
+    this.pageHistory.push( pageNo );
+    console.log("pageHistory:");
+    console.log(this.pageHistory)
 
     mkShaderResuming = true;
     mkShader('normal');

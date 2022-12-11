@@ -169,13 +169,14 @@ function mkShaderStoreResume(){
   var shaderStore = getCookie('shaderStore');
   console.log("mk shared store settings resume: ["+shaderStore+"]");
   var seq = shaderStore.split(",");
+  sharedStoreCookie = seq;
   for( var s=0; s<seq.length; s++ ){
     if( seq[s].length > 2 )
       mkShader( seq[s] );
   }
 
   mkShaderResuming = false;
-  sharedStoreCookie = seq;
+
 }
 
 var sharedStoreCookie = [];
@@ -194,19 +195,71 @@ function mkShaderStoreSettings(){
 
 }
 
+function mkRotation( rotateStat ){
+  $(document.body).css('-webkit-transform', 'rotate('+rotateStat+'deg)');
+  $(document.body).css('-moz-transform', 'rotate('+rotateStat+'deg)');
+  $(document.body).css('-o-transform', 'rotate('+rotateStat+'deg)');
+  $(document.body).css('-ms-transform', 'rotate('+rotateStat+'deg)');
+  $(document.body).css('transform', 'rotate('+rotateStat+'deg)');
+
+}
+
 var mkShaderType;
 function mkShader( shType ){
   mkShaderType = shType;
-  //console.log("mkLightNight mode..."+mkShaderType);
+  console.log("mkShader mode..."+mkShaderType);
   var bgColor = $(document.body).css("background-color");
   var bodyColor = $(document.body).css("color");
   var inputBgColor = $(document.input).css("background-color");
   var inputColor = $(document.input).css("color");
   //console.log("bg:"+col);
   if( mkShaderType == 'normal'){
-    $(document.body).css("background-color", "#ffffff");
-    $(".bottomPanelContainer").css("background-color", "#ffffff");
-    $(document.body).css("color", "#000000");
+    var bgColor = pager.getPageBGColor
+    $(document.body).css("background-color",
+      bgColor
+      //"#ffffff"
+      );
+    $(".bottomPanelContainer").css("background-color",
+      //"#ffffff"
+      bgColor
+      );
+    $(document.body).css("color",
+      //"#000000"
+      mkLightHex(bgColor,'invert')
+      );
+    //document.cookie="rotateStat=0;max-age=31536000;";
+    mkRotation( 0 );
+
+
+  }else if( mkShaderType == "rotate" ){
+
+    //var rotateStat = getCookie('rotateStat');
+    console.log(" ooo rotate ! resuming["+mkShaderResuming+"]");
+    console.log(" ooo rotate ["+sharedStoreCookie.join(',')+"]");
+    var rotateStat = 0;
+    if( !mkShaderResuming )
+      rotateStat+= 90;
+    for( var si=0,sli=sharedStoreCookie.length; si<sli; si++){
+      console.log(" ooo rotate ["+si+"] in stack ["+sharedStoreCookie[si]+"]");
+      if( sharedStoreCookie[si] == "rotate" ){
+        rotateStat = (rotateStat+90)%360;
+      }
+    }
+
+    console.log(" ooo rotate to def["+rotateStat+"]");
+    /*
+    if( !mkShaderResuming ){
+      rotateStat = (rotateStat+90)%360;
+      document.cookie="rotateStat="+rotateStat+";max-age=31536000;";
+    }
+    */
+    mkRotation( rotateStat );
+    /*
+    if( !mkShaderResuming )
+      mkShaderStoreSettings();
+
+    return 0;
+    */
   }else{
     $(document.body).css("background-color", mkLightHex( bgColor ) );
     $(document.body).css("color", mkLightHex(bodyColor) );
@@ -223,13 +276,15 @@ function mkShader( shType ){
   //return 0;
   var s = SVG("#svgDyno");
 
-  s.each(function(){
-    //console.log("a");
-    //console.log(this);
-    if( this['type'] != "mask")
-      mkLightRun( this, 0 );
+  if( mkShaderType != "rotate" ){
+    s.each(function(){
+      //console.log("a");
+      //console.log(this);
+      if( this['type'] != "mask")
+        mkLightRun( this, 0 );
 
-  });
+    });
+  }
 
   // TODO fix menu
   /*
