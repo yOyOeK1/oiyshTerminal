@@ -1,3 +1,11 @@
+function s_caliSetSliderVal( sliName, byVal ){
+  sliName.val( parseInt( sliName.val()) + byVal );
+  sliName.slider( "refresh" );
+
+  sendSetAccCor();
+
+}
+
 class s_calibrationPage{
 
   get getName(){
@@ -9,57 +17,58 @@ class s_calibrationPage{
   }
 
   get getHtml(){
+    this.getCurrentSend = 0;
     return `
-<table border="0" width="100%">
-	<tr>
-		<td>
-			Accel correction:
-        <input type="button" value="getCorrection" onclick="sOutSend('action:getAccelCorrect')" >
 
-				<b><div id="accCorrV" style="display:inline;">accCorrV</div></b><br>
+<div class="ui-field-contain">
+  <label for="cgTop">Axis correction:</label>
+  <input type="button" name="cgTop" value="getCurrection" onclick="sOutSend('action:getAccelCorrect')" >
 
-				x:
-        <input type="button" value="-" onclick="$('#sliX').slider('value',$('#sliX').slider('value')-1);sendSetAccCor();"/>
-        <input type="button" value="+" onclick="$('#sliX').slider('value',$('#sliX').slider('value')+1);sendSetAccCor();"/>
-        <div id="sliX"></div>
+	<b><div id="accCorrV" style="display:inline;">accCorrV</div></b><br>
+</div>
 
-        y:
-        <input type="button" value="-" onclick="$('#sliY').slider('value',$('#sliY').slider('value')-1);sendSetAccCor();"/>
-        <input type="button" value="+" onclick="$('#sliY').slider('value',$('#sliY').slider('value')+1);sendSetAccCor();"/>
-        <div id="sliY"></div>
 
-        z:
-        <input type="button" value="-" onclick="$('#sliZ').slider('value',$('#sliZ').slider('value')-1);sendSetAccCor();"/>
-        <input type="button" value="+" onclick="$('#sliZ').slider('value',$('#sliZ').slider('value')+1);sendSetAccCor();"/>
-        <div id="sliZ"></div>
+	<div class="ui-field-contain">
+    <label for="cgX">x:</label>
+    <fieldset data-role="controlgroup" name="cgX" id="cgX" data-type="horizontal">
+      <input type="button" value="-" onclick="s_caliSetSliderVal( $('#sliX'), -1 );"/>
+      <input type="button" value="+" onclick="s_caliSetSliderVal( $('#sliX'), 1 );"/>
+    </fieldset>
+  </div>
+  <input type="range"
+    min="-180" max="180" value="10"
+    id="sliX">
 
-		</td>
-	</tr>
-</table>
+  <div class="ui-field-contain">
+    <label for="cgY">y:</label>
+    <fieldset data-role="controlgroup" name="cgY" id="cgY" data-type="horizontal">
+      <input type="button" value="-" onclick="s_caliSetSliderVal( $('#sliY'), -1 );"/>
+      <input type="button" value="+" onclick="s_caliSetSliderVal( $('#sliY'), 1 );"/>
+    </fieldset>
+  </div>
+  <input type="range"
+    min="-180" max="180" value="10"
+    id="sliY">
+
+  <div class="ui-field-contain">
+    <label for="cgZ">z:</label>
+    <fieldset data-role="controlgroup" name="cgZ" id="cgZ" data-type="horizontal">
+      <input type="button" value="-" onclick="s_caliSetSliderVal( $('#sliZ'), -1 );"/>
+      <input type="button" value="+" onclick="s_caliSetSliderVal( $('#sliZ'), 1 );"/>
+    </fieldset>
+  </div>
+  <input type="range"
+    min="-180" max="180" value="10"
+    id="sliZ">
+
+
 <div>in pocket: 175,-82,-89</div>
 <div>on tool box char port aft: -1,1,2</div>
     `;
   }
 
   initSlider( sliderObj ){
-  	$( sliderObj ).slider({
-      	slide: function( event, ui ) {
-        		/*console.log( ui.value );
-
-        		var ts = $("#sliX").slider('value')+","+
-        			$("#sliY").slider('value')+","+
-        			$("#sliZ").slider('value');
-        		console.log("ts:"+ts);
-        		sOutSend("action:setAccCor:"+ts);
-        		$("#accCorrV").text( ts );
-            */
-            sendSetAccCor();
-        		},
-        	min:-180,
-        	max:180,
-        	value:10
-        });
-
+  	$( sliderObj ).change(function(){ sendSetAccCor(); });
   }
 
 
@@ -67,6 +76,7 @@ class s_calibrationPage{
     this.initSlider( $("#sliX") );
   	this.initSlider( $("#sliY") );
   	this.initSlider( $("#sliZ") );
+
   }
 
   get svgDyno(){
@@ -78,7 +88,19 @@ class s_calibrationPage{
 
   }
 
+  getCurrentSend = 0;
   onMessageCallBack( r ){
+
+    if( this.getCurrentSend++ == 0 ){
+      try{
+        sOutSend('action:getAccelCorrect');
+        console.log("send request gor current accel settings....");
+      }catch(e){
+        console.log("get current accell setting errro ....");
+        this.getCurrentSend = 0;
+      }
+    }
+
     if( r.topic == "and/mag" ){
   		var mag = Math.round( r.payload );
   		//$("#bearingV").text( Math.round(r.payload) );
@@ -102,9 +124,17 @@ class s_calibrationPage{
   		console.log("got accel correct");
   		$("#accCorrV").text( r.payload );
   		var cor = r.payload.split(",");
-  		$("#sliX").slider( 'value', cor[0] );
+  		/*
+      $("#sliX").slider( 'value', cor[0] );
   		$("#sliY").slider( 'value', cor[1] );
   		$("#sliZ").slider( 'value', cor[2] );
+      */
+      $("#sliX").val( parseInt(cor[0]) );
+      $("#sliX").slider( "refresh" );
+      $("#sliY").val( parseInt(cor[1]) );
+      $("#sliY").slider( "refresh" );
+      $("#sliZ").val( parseInt(cor[2]) );
+      $("#sliZ").slider( "refresh" );
 
   	}
 

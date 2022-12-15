@@ -30,11 +30,21 @@ class s_testFuncsPage{
 
   getHtml(){
     return `
-<div style="display:inline;position:absolute;top:0;width:200;">
-  test start: <br>
-  <div id="sliTTest" width="200" height="350"></div>
-  test end<br>
+<div style="display:inline;position:absolute;top:0;width:100%;"
+
+  >
+  <label for="sliTTest">Move slider to test:</label>
+  <input type="range" id="sliTTest" name="sliTTest"
+    min="-100" max="360" value="0"
+
+    data-theme="b" data-track-theme="b">
+
 </div>
+<!--
+<button class="ui-btn" onclick="$('#sliTTest').trigger('create');">
+  trigger create
+</button>
+-->
     `;
   }
 
@@ -50,76 +60,81 @@ class s_testFuncsPage{
 
 
   getHtmlAfterLoad(){
-    $( "#sliTTest" ).slider({
-  			slide: function( event, ui ) {
-  				console.log(ui.value);
+    //$( "#sliTTest" ).slider({
+    //  theme:"b",
+    //  trackTheme: "b"
+    //});
+    //$( "#sliTTest" ).slider( "refresh" );
+    $( "#sliTTest" ).change(function(event, ui){
+  	   var v = parseInt($(this).val());
+			//console.log("val of v:"+v+" , ");
 
 
-          pager.pages[ pager.currentPage ].pushDataToPlot(
-            pager.pages[ pager.currentPage ].iterCounter++,ui.value
-          );
+      pager.pages[ pager.currentPage ].pushDataToPlot(
+        pager.pages[ pager.currentPage ].iterCounter++,v
+      );
 
 
-          updateStyle("shaderTester", {
-            'fill': shaderColor( rgbToHex(
-                0,
-                Math.round(mMapVal( ui.value, -180, 360, 0,255 )),
-                0
-              ) )
-            } );
-          cl("set color");
+      updateStyle("shaderTester", {
+        'fill': shaderColor( rgbToHex(
+            0,
+            Math.round(mMapVal( v, -180, 360, 0,255 )),
+            0
+          ) )
+        } );
+      //cl("set color");
 
-          putText("sliderVal", "slider: "+ui.value );
+      putText("sliderVal", "slider: "+v );
 
-          rotateSvg( "objRot", true, ui.value );
-          rotateSvg( "objRot2", true, ui.value );
+      rotateSvg( "objRot", true, v );
+      rotateSvg( "objRot2", true, v );
 
-          rotateSvgSetRC( "objRot2Shadow", "objRot2RC", ui.value );
+      rotateSvgSetRC( "objRot2Shadow", "objRot2RC", v );
 
-          //$("#textDef").text("test"+ui.value);
-          putText("textDef", "test"+ui.value );
-          putText("textCen", "test"+Math.pow(ui.value,2), 'c', 11);
-          putText("textRig", "test"+Math.pow(ui.value,2), 'r', 11);
-          putText("textOnSide", Math.pow(ui.value,2), 'r', 11);
-
-
-          moveOnPath( "obj2Path", "pathBase", parseFloat(ui.value)/100.0 );
-          storeIt("avgTest", parseFloat(ui.value)/100.0, sec30 );
-          moveOnPath( "obj2PathAvg", "pathBaseAvg",
-            avgIt("avgTest", sec30)
-            );
+      //$("#textDef").text("test"+v);
+      putText("textDef", "test"+v );
+      putText("textCen", "test"+Math.pow(v,2), 'c', 11);
+      putText("textRig", "test"+Math.pow(v,2), 'r', 11);
+      putText("textOnSide", Math.pow(v,2), 'r', 11);
 
 
-
-          moveOnPath( "obj2Path2", "pathBase2", parseFloat(ui.value)/100.0 );
-
-          moveOnPath( "cirPathObj", "cirPath", deg360ToNorm(parseFloat(ui.value)) );
-
-
-          pager.getCurrentPage().justGage1.refresh( parseInt( ui.value) );
-          pager.getCurrentPage().justGage2.refresh( deg360Pos(parseInt( ui.value)) );
+      moveOnPath( "obj2Path", "pathBase", parseFloat(v)/100.0 );
+      storeIt("avgTest", parseFloat(v)/100.0, sec30 );
+      moveOnPath( "obj2PathAvg", "pathBaseAvg",
+        avgIt("avgTest", sec30)
+        );
 
 
 
-          rotateSvg( "guageOne", true,
-            mMapVal( ui.value, 0, 180, -90,90, true )
-            );
-            putText("guageOneVal", Math.round(mMapVal( ui.value, 0, 180, -90,90 ))  );
+      moveOnPath( "obj2Path2", "pathBase2", parseFloat(v)/100.0 );
+
+      moveOnPath( "cirPathObj", "cirPath", deg360ToNorm(parseFloat(v)) );
 
 
-          rotateSvg( "guageTwo", true, -ui.value );
+      pager.getCurrentPage().justGage1.refresh( parseInt( v) );
+      pager.getCurrentPage().justGage2.refresh( deg360Pos(parseInt( v)) );
 
-          moveOnPath( "barGreen", "barGreenPath",
-            mMapVal( ui.value, -180, 360, 0,1 ) );
 
-            moveOnPath( "barRedGreen", "barGreenPath",
-              mMapVal( ui.value, -180, 360, 1,0 ) );
 
+      rotateSvg( "guageOne", true,
+        mMapVal( v, 0, 180, -90,90, true )
+        );
+        putText("guageOneVal", Math.round(mMapVal( v, 0, 180, -90,90 ))  );
+
+
+      rotateSvg( "guageTwo", true, -v );
+
+      moveOnPath( "barGreen", "barGreenPath",
+        mMapVal( v, -180, 360, 0,1 ) );
+
+        moveOnPath( "barRedGreen", "barGreenPath",
+          mMapVal( v, -180, 360, 1,0 ) );
+        });/*
         		},
   				min:-180,
   				max:360,
   				value:10
-  			});
+  			});*/
   }
 
   get svgDyno(){

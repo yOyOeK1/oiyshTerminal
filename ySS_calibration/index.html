@@ -1,5 +1,12 @@
 <html>
 
+<head>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ySS_calibration</title>
+
+
+
 <script>
 class moduleCollector{
   mod = {};
@@ -79,8 +86,16 @@ var module = new moduleCollector();
 
 <script src="nr_reqTest1.js"></script>
 
+<!--
 <script src="jquery.min.js"></script>
 <script src="jquery-ui.js"></script>
+-->
+<script src="http://192.168.43.1:3000/public/forms/jquery.min.js"></script>
+<script src="http://192.168.43.1:3000/public/forms/jquery-ui.js"></script>
+<script src="http://192.168.43.1:3000/public/forms/jquery.mobile-1.4.5.min.js"></script>
+
+
+
 <script src="d3.v4.js"></script>
 <script src="svg.min.js"></script>
 <script src="mShaders.js"></script>
@@ -91,8 +106,11 @@ var module = new moduleCollector();
 <script src="m_d3Plot.js"></script>
 
 
-
+<!--
 <link rel="stylesheet" href="jquery-ui.css">
+-->
+<link rel="stylesheet" href="http://192.168.43.1:3000/public/forms/jquery.mobile-1.4.5.min.css" />
+
 <link rel="stylesheet" href="main.css">
 
 
@@ -121,10 +139,11 @@ function klikPageNo( No ){
 }
 
 function sendSetAccCor(){
-  var ts = $("#sliX").slider('value')+","+
-    $("#sliY").slider('value')+","+
-    $("#sliZ").slider('value');
-  cl("ts:"+ts);
+  //console.log("sendSetAccCor: "+$("#sliX").val());
+  var ts = $("#sliX").val()+","+
+    $("#sliY").val()+","+
+    $("#sliZ").val();
+  //cl("ts:"+ts);
   sOutSend("action:setAccCor:"+ts);
   $("#accCorrV").text( ts );
 
@@ -160,7 +179,12 @@ function looperIter(){
   setTimeout( looperIter, 5000 );
 }
 
+var doneFlag = 0;
 $( document ).ready(function() {
+  if( doneFlag++ == 1 ){
+    cl("ready! abord double init ?");
+    return 0;
+  }
 	cl( "ready!" );
 
   svgTests();
@@ -188,26 +212,151 @@ $( document ).ready(function() {
 
   navBatteryPercentSignUp( pager );
 
+  console.log("mouseup set times");
   $(".bottomPanelHandle").mouseup( function(){
+
     cl("unclick");
+
+    /*
+    cl("panelMenu open / close status:"+$("#panelMenu").panel());
     if( $(".bottomPanelContainer").is(":visible") ){
         $(".bottomPanelContainer").hide();
+        $("#panelMenu").panel("close");
     }else{
       $(".bottomPanelContainer").show();
+      $("#panelMenu").panel("open");
     }
+    */
+    $("#panelMenu").panel("open");
+
   });
 
+  $( window ).resize( function(){
+    setSvgFit()
+  });
+
+  setSvgFit();
 });
 
 
+var svgDynoCssOrg = 0;
+function setSvgFit(){
+  var d = 0;
+  //console.log("resize :"+$(document.body).width()+" h:"+$(document.body).height());
+  //$('#svgDyno').css('width', $(document.body).width() );
+  //$('#svgDyno').css('height', $(document.body).height() );
 
+  //return 0;
+  if( d )
+    console.log(
+      "childrens:"+$('#svgDyno').children().length+' length\n'+
+      "[0]: "+$('#svgDyno').children()[0]
+    );
+  var div = $('#svgDyno').parent();
+
+  var currentWidth = div.outerWidth();
+  var currentHeight = div.outerHeight();
+
+  if( d ) console.log('--------\nresize current:'+currentWidth+' x '+currentHeight);
+
+  var availableHeight = window.innerHeight;
+  var availableWidth = window.innerWidth;
+
+  var scaleX = availableWidth / currentWidth;
+  var scaleY = availableHeight / currentHeight;
+
+  if (0) {
+    scaleX = Math.min(scaleX, scaleY);
+    scaleY = scaleX;
+  }
+
+  var translationX = Math.round((availableWidth - (currentWidth * scaleX)) / 2);
+  var translationY = Math.round((availableHeight - (currentHeight * scaleY)) / 2);
+
+  /*div.parent().css({
+    "position": "fixed",
+    "left": "0px",
+    "top": "0px",
+    "-webkit-transform": "translate(" + translationX + "px, "
+                                      + translationY + "px) scale3d("
+                                      + scaleX + ", " + scaleY + ", 1)",
+    "-webkit-transform-origin": "0 0"
+
+  });
+  */
+  //$('#svgSizing').width(availableWidth);
+  //$('#svgSizing').height(availableHeight);
+
+  if( d ){
+    console.log("resize scale:"+scaleX+" x "+scaleY);
+    console.log("resize availabe:"+availableWidth+" x "+availableHeight);
+    console.log('resize translation: '+translationX+' x '+translationY);
+  }
+
+  var sd = $('#svgDyno');
+
+
+
+  var sdp = sd.parent();
+  var lo = 'mkRotation Action: ';
+  if( mkRotationAngCurrent == 90 || mkRotationAngCurrent == 270 ){
+
+
+    if( svgDynoCssOrg == 0 ){
+      console.log("no svgDynoCssOrg making it ....");
+      try{
+        svgDynoCssOrg = {
+          'w': sd.width(),
+          'h': sd.height()
+        };
+        if( d )console.log(' ok done :) now we can restore :)');
+      }catch(e){
+        console.log(' no :( no css error)');
+      }
+    }
+    if( d ){
+      console.log("svgDynoCssOrg:");
+      console.log(svgDynoCssOrg);
+    }
+
+
+    sd.height(currentWidth);
+    sd.width(currentHeight);
+
+    sd.css({
+      'position':'absolute',
+      'top': Math.round(availableHeight/2 -currentWidth/2),
+      'left': Math.round(availableWidth/2 - currentHeight/2)
+    });
+    //z-index:10;position:relative;top:0;left:0;
+
+    //sdp.width(availableWidth-100);
+    //sdp.height(availableHeight-100);
+
+    lo+= ' Yes ';
+  }else{
+    lo+= ' No ';
+    if( svgDynoCssOrg ){
+      sd.width( '100%' );
+      sd.height( '100%' );
+      sd.css({
+        'top':0,
+        'left':0
+      });
+
+    }
+  }
+  if( d ) console.log(lo);
+
+}
 
 
 testFunctionsPart();
 
 </script>
-
+</head>
 <body id="mainBodyOfySS">
+  <!--
 	<div style="display:none;position:absolute;top:200;">
 		test start: <br>
 		<input type="button" value="heel 0" onclick="rotateImage($('#heelI'),0.1)" >
@@ -216,8 +365,81 @@ testFunctionsPart();
 		<div id="sliRotTest" width="200" height="50"></div>
 		test end<br>
 	</div>
+-->
+
+<div data-role="page">
+
+  <div data-role="popup" id="SMIdentPop" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+    <div id="SMIdentDiv" style="z-index:10;position:relative;top:0;left:0;font-size:70vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>
+  </div>
 
 
+  <div
+    data-role="panel"
+    data-display="overlay"
+    id="panelMenu">
+
+
+    <ul data-role="listview" data-theme="d" id="menuListView">
+      <li data-role="list-divider">
+
+        <div class="ui-field-contain">
+          <fieldset data-role="controlgroup" data-type="horizontal">
+
+            <button title="full screen"
+              onclick="mkfullscreen()">
+              <img src="./icons/fullscreen.svg">
+            </button>
+
+            <button title="invert"
+              onclick="mkShader('invert')">
+              <img src="./icons/arrow-down-up.svg">
+            </button>
+
+            <button title="black red"
+              onclick="mkShader('blackRed')">
+              <img src="./icons/moon-stars.svg">
+            </button>
+
+            <button title="normal"
+              onclick="mkShader('normal')">
+              <img src="./icons/journal-check.svg">
+            </button>
+
+            <button title="Screens manager"
+              onclick="sm.startIt()">
+              <img src="./icons/cast.svg">
+            </button>
+
+            <button title="rotate"
+              onclick="mkShader('rotate')">
+              <img src="./icons/bootstrap-reboot.svg">
+            </button>
+
+
+
+
+          </fieldset>
+        </div>
+
+      </li>
+      <!--
+      <li><a href="#" data-rel="close">Cat</a></li>
+      <li><a href="#" data-rel="close">Dog</a></li>
+      <li><a href="#" data-rel="close">Rabbit</a></li>
+      <li><a href="#" data-rel="close">Guinea Pig</a></li>
+      <li><a href="#" data-rel="close">Parrot</a></li>
+      -->
+      <li data-theme="b" data-rel="close" class="innerMenuList"
+        onclick="$('#panelMenu').panel('close');">Cancel</li>
+    </ul>
+
+
+  </div>
+
+</div>
+
+  <!--<div id="svgSizing" style="z-index:20;position:absolute;top:0;left:0;"></div>-->
 	<div id="svgDyno">--</div>
 	<div id="htmlDyno" style="z-index:2;position:absolute;top:0;left:0;"></div>
 	<div class="bottomPanel">
@@ -236,16 +458,20 @@ testFunctionsPart();
         <span class="ui-icon ui-icon-gear"></span>Menu
       </button>
       -->
+      <!--
       <button title="Menu"
         onclick="pager.setPage(-1);$('.bottomPanelContainer').hide()">
         <img src="./icons/list.svg">
       </button>
+      -->
       <!--<input type="button" value="Menu" onclick="pager.setPage(-1);$('.bottomPanelContainer').hide()">-->
 
+      <!--
       <button title="full screen"
         onclick="mkfullscreen()">
         <img src="./icons/fullscreen.svg">
       </button>
+      -->
       <!--<input type="button" value="full screen" onclick="mkfullscreen()" >-->
 
       <button title="invert"
@@ -280,7 +506,10 @@ testFunctionsPart();
 
 		</div>
 	</div>
-  <div id="SMIdentDiv" style="z-index:10;position:absolute;top:0;left:0;font-size:99vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>
+
+
+
+
 </body>
 
 </html>

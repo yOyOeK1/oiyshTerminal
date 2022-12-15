@@ -195,13 +195,17 @@ function mkShaderStoreSettings(){
 
 }
 
+var mkRotationAngCurrent = 0;
 function mkRotation( rotateStat ){
-  $(document.body).css('-webkit-transform', 'rotate('+rotateStat+'deg)');
-  $(document.body).css('-moz-transform', 'rotate('+rotateStat+'deg)');
-  $(document.body).css('-o-transform', 'rotate('+rotateStat+'deg)');
-  $(document.body).css('-ms-transform', 'rotate('+rotateStat+'deg)');
-  $(document.body).css('transform', 'rotate('+rotateStat+'deg)');
+  mkRotationAngCurrent = rotateStat;
+  $('#svgDyno').css('-webkit-transform', 'rotate('+rotateStat+'deg)');
+  $('#svgDyno').css('-moz-transform', 'rotate('+rotateStat+'deg)');
+  $('#svgDyno').css('-o-transform', 'rotate('+rotateStat+'deg)');
+  $('#svgDyno').css('-ms-transform', 'rotate('+rotateStat+'deg)');
+  $('#svgDyno').css('transform', 'rotate('+rotateStat+'deg)');
 
+  setSvgFit();
+  console.log("call fit svg")
 }
 
 var mkShaderType;
@@ -214,7 +218,9 @@ function mkShader( shType ){
   var inputColor = $(document.input).css("color");
   //console.log("bg:"+col);
   if( mkShaderType == 'normal'){
-    var bgColor = pager.getPageBGColor
+    var bgColor = pager.getPageBGColor;
+    $('.ui-page').css( 'background', bgColor );
+    $('.ui-page').css( 'background-color', bgColor );
     $(document.body).css("background-color",
       bgColor
       //"#ffffff"
@@ -262,6 +268,8 @@ function mkShader( shType ){
     */
   }else{
     $(document.body).css("background-color", mkLightHex( bgColor ) );
+    $('.ui-page').css( 'background', mkLightHex(bgColor) );
+    $('.ui-page').css( 'background-color', mkLightHex(bgColor) );
     $(document.body).css("color", mkLightHex(bodyColor) );
     $(".bottomPanelContainer").css("background-color", mkLightHex(bgColor) );
 

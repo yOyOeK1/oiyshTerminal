@@ -74,10 +74,13 @@ class SM{
     $("#SMIdentDiv").fadeIn();
     setTimeout( sm.identifyYourSelfTO,2000 );
     sOutSend("SMStat:"+this.myNo+","+pager.currentPage);
+    $('#SMIdentPop').popup( 'open' );
+    console.log('pop test !');
   }
 
   identifyYourSelfTO(){
     $("#SMIdentDiv").fadeOut( "slow" );
+    $('#SMIdentPop').popup( 'close' );
   }
 
 
@@ -95,29 +98,55 @@ class SM{
 
   get getHtml(){
     var tr = `
-<h2>Screens Manager</h2>
 <div id="SMdeb"></div>
+
+<div class="ui-field-contain">
+  <fieldset data-role="controlgroup" data-type="horizontal">
+    <div>Screens Manager</div>
+
 `;
     if( pager.pageHistory.length>0 ){
-      for(var p=(pager.pageHistory.length-2);p>=0;p--){
+      for(var p=(pager.pageHistory.length-2);p>0;p--){
         if( pager.pageHistory[p] != -1 )
-          tr+= '<input type="button" value="<- back to: ';
+          tr+= '<input type="button" value="<-- ';
           tr+= pager.pages[ pager.pageHistory[p] ].getName;
-          tr+= '" onclick="pager.setPage('+pager.pageHistory[p]+')">';
+          tr+= '" onclick="pager.setPage('+pager.pageHistory[p]+')" />';
           break;
       }
     }
     tr += `
-<input type="button" value="Identify screens" onclick="sm.sendIdentOn()">
-<br>
-Send to all screens:
-<input type="button" value="full screen TODO" onclick="sm.sendToAllCMD('mkfullscreen')" >
-<input type="button" value="invert" onclick="sm.sendToAllCMD('mkShader.invert')" >
-<input type="button" value="black red" onclick="sm.sendToAllCMD('mkShader.blackRed')" >
-<input type="button" value="normal" onclick="sm.sendToAllCMD('mkShader.normal')" >
-<input type="button" value="R" onclick="sm.sendToAllCMD('mkShader.rotate')" >
+    <input type="button" value="Identify screens" onclick="sm.sendIdentOn()" />
+  </fieldset>
+</div>
 
-<input type="button" value="reload" onclick="sm.sendToAllCMD('reload')" >
+
+
+<div class="ui-field-contain">
+  <label for="smSenToAll">Send to all screens:</label>
+  <fieldset name="smSenToAll" data-role="controlgroup" data-type="horizontal">
+
+  <button title="fullscreen" onclick="sm.sendToAllCMD('mkfullscreen')" >
+    <img src="./icons/fullscreen.svg">
+  </button>
+  <button title="invert" onclick="sm.sendToAllCMD('mkShader.invert')" >
+    <img src="./icons/arrow-down-up.svg">
+  </button>
+  <button title="black red" onclick="sm.sendToAllCMD('mkShader.blackRed')" >
+    <img src="./icons/moon-stars.svg">
+  </button>
+  <button title="normal" onclick="sm.sendToAllCMD('mkShader.normal')" >
+    <img src="./icons/journal-check.svg">
+  </button>
+  <button title="rotate" onclick="sm.sendToAllCMD('mkShader.rotate')" >
+    <img src="./icons/bootstrap-reboot.svg">
+  </button>
+
+  <button title="rotate" onclick="sm.sendToAllCMD('reload')" >
+    <img src="./icons/arrow-clockwise.svg">
+  </button>
+
+  </fieldset>
+</div>
 
 <div id="SMdiv">---</div>
     `;
@@ -153,26 +182,31 @@ Send to all screens:
   }
 
   shaderBts( No ){
-    var tr = '';
+    var tr = `<span> </span>`;
     //tr+= '<input type="button" value="full screen TODO" onclick="sm.sendCmd('+No+',\'mkfullscreen\')" >';
-    tr+= '<input type="button" value="invert" onclick="sm.sendCmd('+No+',\'mkShader.invert\')" > ';
-    tr+= '<input type="button" value="black red" onclick="sm.sendCmd('+No+',\'mkShader.blackRed\')" > ';
-    tr+= '<input type="button" value="normal" onclick="sm.sendCmd('+No+',\'mkShader.normal\')" > ';
-    tr+= '<input type="button" value="R" onclick="sm.sendCmd('+No+',\'mkShader.rotate\')" > ';
-    tr+= '<input type="button" value="reload" onclick="sm.sendCmd('+No+',\'reload\')" > ';
+    tr+= '<button value="invert" onclick="sm.sendCmd('+No+',\'mkShader.invert\')" ><img src="./icons/arrow-down-up.svg"></button> ';
+    tr+= '<button value="black red" onclick="sm.sendCmd('+No+',\'mkShader.blackRed\')" ><img src="./icons/moon-stars.svg"></button> ';
+    tr+= '<button value="normal" onclick="sm.sendCmd('+No+',\'mkShader.normal\')" ><img src="./icons/journal-check.svg"></button> ';
+    tr+= '<button value="R" onclick="sm.sendCmd('+No+',\'mkShader.rotate\')" ><img src="./icons/bootstrap-reboot.svg"></button> ';
+    tr+= '<button value="reload" onclick="sm.sendCmd('+No+',\'reload\')" ><img src="./icons/arrow-clockwise.svg"></button> ';
     return tr;
   }
 
   addScreen(s){
     if( s[0] != this.myNo ){
       this.screens.push(s);
-      var tr = '<hr>'+'Screen No: '+s[0]+'<br>';
+      var tr = '';
       //tr+= 'current page: '+s[1]+'<br>';
+      tr+= '<div class="ui-field-contain">';
+      tr+= '<label>Screen No: '+s[0]+'</label>';
+      tr+= `<fieldset data-role="controlgroup" data-type="horizontal">`;
       tr+= this.cbOfPages( s[0], s[1] )+' ';
       tr+= this.shaderBts( s[0] );
+      tr+= `</fieldset></div>`;
+
       $("#SMdiv").html(
         $("#SMdiv").html() + tr
-      );
+      );//.enhanceWithin();
     }
   }
 

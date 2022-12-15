@@ -101,6 +101,9 @@ class sPager {
 
 
   setPage( pageNo ){
+
+    $.mobile.panel();
+
     this.currentPage = pageNo;
     this.pageHistory.push( pageNo );
     //console.log("pageHistory:");
@@ -118,6 +121,22 @@ class sPager {
     mkShaderStoreResume();
 
     navBatteryPercent( this );
+    $('#panelMenu').panel('close');
+
+    $('.pageItemsLi').each(function(i){
+      if( i == pager.currentPage ){
+        $(this).attr({
+          'class':"pageItemsLi ui-bar ui-bar-b"
+        });
+      }else{
+        $(this).attr({
+          'class':"pageItemsLi ui-bar ui-bar-a"
+        });
+      }
+    });
+
+    setSvgFit();
+
   }
 
   setCssForPage(){
@@ -157,7 +176,13 @@ class sPager {
     }else{
       var cp = this.getCurrentPage();
 
-      $("#htmlDyno").html( cp.getHtml );
+      console.log("----------------- mobile get active page ----------------");
+      $("#htmlDyno").html( cp.getHtml ).enhanceWithin();
+      //console.log($(":mobile-pagecontainer").pagecontainer("getActivePage"));
+      //$(":mobile-pagecontainer").pagecontainer("getActivePage");
+      //$('#htmlDyno').enhanceWithin();
+      //$("#htmlDyno").enhanceWithin();
+      console.log("----------------- mobile get active page ---------DONE");
       try{
         cp.getHtmlAfterLoad();
       }catch(e){
@@ -168,7 +193,9 @@ class sPager {
       cp.svgDynoAfterLoad();
     }
 
+
   }
+
 
   getPagesList(){
     return this.pages;
@@ -178,13 +205,27 @@ class sPager {
     var ta = "";
 
     for(var i=0;i<this.pages.length;i++){
+      /*
       ta+= '<input type="button" class="menu-button"';
       ta+= 'value="'+this.pages[i].getName+'" ';
       ta+= 'onclick="pager.setPage('+i+')"/>';
       ta+= '<br>';
+      */
+      ta+= `
+<li class="pageItemsLi">
+  <a href="" data-rel="close"
+    onclick="pager.setPage(`+i+`)">`+this.pages[i].getName+`</a>
+</li>`;
     }
 
-    $("#htmlDyno").html( ta );
+    //$("#htmlDyno").html( ta ).enhanceWithin();
+
+    $( ta ).insertBefore( ".innerMenuList" );
+    $("#menuListView").listview('refresh');
+    console.log("------ menuListView content ----------");
+    console.log($("#menuListView").html());
+
+    //$("#menuListView").html().enhanceWithin();
 
   }
 
