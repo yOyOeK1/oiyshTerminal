@@ -137,6 +137,15 @@ class sPager {
 
     setSvgFit();
 
+    
+    console.log("---- ts5 ---");
+    $("tspan").each(function( i ){
+      console.log("ts5 "+i+": "+$(this).html()+" -- >" );
+      console.log( $(this) );
+      $(this).css('text-shadow','0 0 0 #0000');//'10px 15px 5px #f3f3f366');
+    });
+
+
   }
 
   setCssForPage(){
@@ -192,7 +201,6 @@ class sPager {
 
       cp.svgDynoAfterLoad();
     }
-
 
   }
 

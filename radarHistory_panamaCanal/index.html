@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
 
-    <link rel="stylesheet" href="http://192.168.43.1:3000/public/forms/jquery-ui.css">
-
+  <!--
+  <link rel="stylesheet" href="http://192.168.43.1:3000/public/forms/jquery-ui.css">
   <script src="http://192.168.43.1:3000/public/forms/jquery.min.js"></script>
   <script src="http://192.168.43.1:3000/public/forms/jquery-ui.js"></script>
+  -->
+
+  <link rel="stylesheet" href="http://192.168.43.1:3000/public/forms/jquery.mobile-1.4.5.min.css" />
+  <script src="http://192.168.43.1:3000/public/forms/jquery.min.js"></script>
+  <script src="http://192.168.43.1:3000/public/forms/jquery-ui.js"></script>
+  <script src="http://192.168.43.1:3000/public/forms/jquery.mobile-1.4.5.min.js"></script>
+
 
   <script>
-
-
 var imgOrgSize = [512,512];
 var coorOfImg = {
   'NW': {
@@ -152,12 +157,19 @@ function wsConnect1( ){
         imgs = r;
         $("#wImg").attr("src", "http://192.168.43.1:3000/public/prc/"+imgs[0] );
         $("#slider").value = 0;
+        $("#sliderJM").val( 0 );
+
+
 
         $("#imgOldInfo").text( extractDateFromName( imgs[0] ) );
 
       }catch(e){
         console.log("no error");
       }
+
+      //$("#sliderJM").slider('option', "max", imgs.length );
+      //$("#sliderJM").val( $("#sliderJM").val() );
+      //console.log("set max to:"+imgs.length);
 
     }
 
@@ -194,6 +206,11 @@ var sliderObj = null;
       }
     });
 
+    $("#sliderJM").change( function(){
+      console.log($(this).val());
+      setImageNO($(this).val());
+    });
+
     wsConnect1();
 
   } );
@@ -212,15 +229,27 @@ function slideTo(dir){
     setImageNO( sliderValIs + 1 );
   }
 }
+
+function onImgLoadDone(){
+  console.log('onImgLoadDone');
+  setTimeout( setCrossOnImg(), 100 );
+}
   </script>
 </head>
-<body>
+<body class="ui-body ui-body-b and ui-corner-all">
 
 
-<img id="wImg" width="100%" src="" /><br>
+<img id="wImg" width="100%" src="" onload="onImgLoadDone()"/><br>
 <div id="crosLL" style="position:absolute;top:-10px; left:-10px;"><img src="ico_igla_32_32.png"></div>
 <div id="sliderVal" style="display:none;">NaN</div>
-<table style="border:solid gray 1px;width:100%;padding:5px;">
+
+<form class="full-width-slider">
+  <label for="sliderJM" class="ui-hidden-accessible">Time select:</label>
+  <input type="range" name="sliderJM" id="sliderJM" min="0" max="99" value="0">
+</form>
+
+
+<table style="border:solid gray 1px;width:100%;padding:5px; display:none;">
   <tr>
     <td style="padding-right:10px;">
       <input type="button" id="slideL" value=" < " onclick="slideL()">
@@ -234,6 +263,19 @@ function slideTo(dir){
   </tr>
 
 </table>
+<style>
+.full-width-slider input{
+  display:none;
+}
+.full-width-slider .ui-slider-track{
+  margin-left:15px;
+}
+
+.ui-page {
+    background:#2b2e31;
+}
+
+</style>
 <div id="imgOldInfo" style="
   font-family: monospace;
   position:relative;

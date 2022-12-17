@@ -37,6 +37,7 @@ body{
 	padding:0;
 	margin:0 0 -50 0;
 	positon:relative;
+
 }
 #svgDyno svg{
 	height: 100%;
@@ -47,7 +48,7 @@ body{
 	left:0;
 	z-index: 1;
 
-
+  text-shadow: none !important;
 	/*-webkit-filter: grayscale(100%);*/ /* Safari 6.0 - 9.0 */
   /*filter: grayscale(100%);*/
 
