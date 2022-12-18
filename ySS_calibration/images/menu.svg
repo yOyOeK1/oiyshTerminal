@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="9.0194902mm"
-   height="1.9978145mm"
-   viewBox="0 0 9.0194902 1.9978145"
+   width="17.372097mm"
+   height="4.2333336mm"
+   viewBox="0 0 17.372097 4.2333334"
    version="1.1"
    id="svg1380"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="menu.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -27,42 +27,57 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="0.66724888"
-     inkscape:cx="-164.85603"
-     inkscape:cy="-207.56873"
+     inkscape:zoom="7.5490593"
+     inkscape:cx="-5.23244"
+     inkscape:cy="-15.962254"
      inkscape:window-width="1920"
      inkscape:window-height="1003"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="40"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs1377" />
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-86.295328,-203.6099)">
-    <ellipse
-       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.118852"
-       id="path1067"
-       cx="87.294235"
-       cy="204.60881"
-       rx="0.99890739"
-       ry="0.99890727" />
-    <ellipse
-       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.118852"
-       id="ellipse1275"
-       cx="90.805077"
-       cy="204.60881"
-       rx="0.99890739"
-       ry="0.99890727" />
-    <ellipse
-       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.118852"
-       id="ellipse1277"
-       cx="94.31591"
-       cy="204.60881"
-       rx="0.99890739"
-       ry="0.99890727" />
+     transform="translate(-82.119023,-202.49215)">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.5708;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="rect903"
+       width="13.231567"
+       height="4.2333331"
+       x="84.189285"
+       y="202.49214"
+       ry="0"
+       rx="0" />
+    <g
+       id="g3250"
+       transform="matrix(1.3333334,0,0,1.3333334,-32.765028,-68.202948)">
+      <ellipse
+         style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.37131;stroke-dasharray:none;stroke-opacity:1"
+         id="path1067"
+         cx="87.750534"
+         cy="204.60881"
+         rx="1.4018451"
+         ry="1.401845" />
+      <ellipse
+         style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.37131;stroke-dasharray:none;stroke-opacity:1"
+         id="ellipse1275"
+         cx="92.677574"
+         cy="204.60881"
+         rx="1.4018451"
+         ry="1.401845" />
+      <ellipse
+         style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.37131;stroke-dasharray:none;stroke-opacity:1"
+         id="ellipse1277"
+         cx="97.604607"
+         cy="204.60881"
+         rx="1.4018451"
+         ry="1.401845" />
+    </g>
   </g>
 </svg>
