@@ -13,7 +13,7 @@ mysqlUser="ykpu"
 mysqlPasswd="pimpimpampam"
 #### config END
 
-instVer=221220
+instVer=221221
 
 
 fD(){
@@ -63,7 +63,7 @@ fMainConfig(){
 
 
 
-steps="termux-services termux-api nodejs nodeRed mqtt mysql mysqlInit oiyshTerminal ssh grafana mkBashrc mkChkSystem"
+steps="termux-services termux-api ssh nodejs nodeRed mqtt mysql mysqlInit oiyshTerminal grafana mkBashrc mkChkSystem"
 fMain(){
 
   ## curl http://192.168.43.220:8081/installer/run.sh -s | sh
@@ -328,7 +328,7 @@ debian cpu arch ["$cpuArch"]
   proot-distro login debian -- dpkg -i /root/grafana.deb
 
   echo "setting up services files ....."
-  cd $PREFIX/usr/var/service/
+  cd $PREFIX/var/service/
   mkdir grafana
   mkdir grafana/log
   ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/grafana/log/run
@@ -424,9 +424,9 @@ fMkChkSystem(){
 
 
 fInstallSsh(){
-  echo "installing sshd"
+  echo "installing sshd ..."
   apt install openssh -y
-  echo "Set up your password:"
+  echo "Set up your password do ssh:"
   passwd
 
   echo "setting up services files ...."
@@ -461,7 +461,7 @@ fInstallNodeRed(){
   for i in $l
   do
     echo "- installing ["$i"]"
-    proot --link2symlink npm -g install $i
+    proot --link2symlink npm i -g $i
   done
 
   echo "setting up services files ....."
@@ -614,7 +614,10 @@ fSetProxy(){
   echo 'proxy='$ip > ~/.curlrc
 
   echo "setting proxy for npm in .npmrc ..."
-  echo 'proxy='$ip'"' >> ~/.npmrc
+  echo 'proxy='$ip >> ~/.npmrc
+  echo 'https-proxy='$ip >> ~/.npmrc
+  echo 'strict-ssl=false' >> ~/.npmrc
+  echo 'maxsockets=1' >> ~/.npmrc
 
   echo "setting proxy for wget in .wgetrc...."
   echo 'http_proxy='$ip > ~/.wgetrc
