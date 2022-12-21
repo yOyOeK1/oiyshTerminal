@@ -617,6 +617,7 @@ fSetProxy(){
   echo 'proxy='$ip >> ~/.npmrc
   echo 'https-proxy='$ip >> ~/.npmrc
   echo 'strict-ssl=false' >> ~/.npmrc
+  echo 'registry="http://registry.npmjs.org/"' >> ~/.npmrc
   echo 'maxsockets=1' >> ~/.npmrc
 
   echo "setting proxy for wget in .wgetrc...."
