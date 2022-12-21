@@ -1,7 +1,10 @@
-#!/bin/sh
+#!/data/data/com.termux/files/usr/bin/sh
 
 # link short
 # https://bit.ly/3Qedy9w
+#
+# check
+# --force-confdef for apt
 
 #### config
 sshPort=2222
@@ -10,7 +13,8 @@ mysqlUser="ykpu"
 mysqlPasswd="pimpimpampam"
 #### config END
 
-instVer=220608
+instVer=221220
+
 
 fD(){
   echo "[deb] "$*
@@ -23,41 +27,87 @@ funcTest(){
   fD "funcTest DONE"
 }
 
+fDialYN(){
+  #echo "got ------------"
+  #echo $1
+  #echo "end ------------"
 
-fMainConfig(){
-  echo "
-Config for apps and services:
-  sshd at port    :"$sshPort"
-  mqtt broker at port :"$mqttPort"
-  node-red at port    :1880
-  mysql at port       :3306
-    user:   "$mysqlUser"
-    passwd: "$mysqlPasswd"
-    oiyshTerminal database: svoiysh
-
-  mqtt to mysql server drops topics:
-  - and/
-  - NR/
-  - cIMU/
-
-    also prefix for tables is [topic_]
-  "
+  dialog --title "oiyshTerminal - installer" \
+--yesno "$*" 20 60
+  res=$?
+  echo "yesno res:["$res"] is returning it..."
+  return $res
 }
 
-steps="termux-services termux-api nodejs nodeRed mqtt mysql mysqlInit oiyshTerminal ssh grafana"
+fDialInf(){
+  dialog --infobox "$*" 10 30
+}
+
+fMainConfig(){
+  echo "Config for apps and services:\n
+  sshd at port        :"$sshPort"\n
+  mqtt broker at port :"$mqttPort"\n
+  node-red at port    :1880\n
+  mysql at port       :3306\n
+    user:   "$mysqlUser"\n
+    passwd: "$mysqlPasswd"\n
+    oiyshTerminal database: svoiysh\n
+\n
+  mqtt to mysql server drops topics:\n
+  - and/\n
+  - NR/\n
+  - cIMU/\n
+\n
+    also prefix for tables is [topic_]"
+}
+
+
+
+steps="termux-services termux-api nodejs nodeRed mqtt mysql mysqlInit oiyshTerminal ssh grafana mkBashrc mkChkSystem"
 fMain(){
 
   ## curl http://192.168.43.220:8081/installer/run.sh -s | sh
-  echo "Hello in oiyshTerminal installer ver:"$instVer
+  m="Hello in oiyshTerminal installer\n\
+ver:"$instVer"\n\
+\n\
+We will install:\n\
+"$steps
 
-  echo "we will install:"
-  echo $steps
-  fMainConfig
 
-  read -p "Is it ok ? [y/n]" rout
+  m=$m"\n\n"$(fMainConfig)"\n\n\
+More info about project at github wiki:\n\
+https://github.com/yOyOeK1/oiyshTerminal/wiki\n\n\
+Do you want to continue?"
 
-  if [ "$rout" = "y" ]; then
+  fDialYN "$m"
+  rout=$?
+  clear
+  echo "Dialog done. Result:["$rout"]"
+  #exit 1
+  if [ $rout -eq 0 ]; then
     echo "ok so go go go ....."
+
+
+    echo "check if we need to ask for sdcard acces..."
+    echo "home dir is["$HOME"]"
+    if [ -d $HOME"/storage" ]; then
+      echo " - OK. it's done."
+    else
+      echo "let's make permitions to sdcard...."
+      echo " - NO. You will be prompt for permitions. allow if you want to continue."
+      fDialInf "We will ask for permitions to acces sdcard now..."
+      sleep 1
+      termux-setup-storage
+    fi
+
+    curDir=`pwd`
+    echo "------ my pwd ["$curDir"]"
+    echo "move to home..."
+    cp ./run.sh $HOME/run.sh
+    cd $HOME
+    pwd
+    echo "  DONE?"
+
     for w in $steps
     do
       echo "fMain now will do [$w]"
@@ -65,9 +115,7 @@ fMain(){
 
     done
 
-    echo "adding wake lock ..."
-    echo "termux-wake-lock" >> ~/.bashrc
-    echo "  DONE"
+
 
     echo "DONE :)
     it's a automated installation. So is it ok ? you will see.
@@ -92,7 +140,7 @@ fHelp(){
 }
 
 fArgsParse(){
-  fD "fArgsParse argsCount"$#
+  fD "fArgsParse argsCount ["$#"]"
 
   if [ "$#" -eq "0" ]; then
     fMain
@@ -101,7 +149,9 @@ fArgsParse(){
 
     if [ "$1" = "-i" ]; then
       echo "install "$2
-
+      fDialInf "installing now step ["$2"] ..."
+      sleep 1
+      echo "so doing 1:["$1"] 2:["$2"]"
 
       if [ "$2" = "ssh" ]; then
         fChkSv
@@ -137,6 +187,12 @@ fArgsParse(){
 
       elif [ "$2" = "grafana" ]; then
         fInstallGrafana
+
+      elif [ "$2" = "mkChkSystem" ]; then
+        fMkChkSystem
+
+      elif [ "$2" = "mkBashrc" ]; then
+        fMkBashrc
 
 
       fi
@@ -174,12 +230,33 @@ fChkSv(){
   fi
 }
 
+fChkBin(){
+  b=$*
+  echo "checking binary in system ["$b"]"
+  if whereis "$b" > /dev/null; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+if [ "1" -eq 0 ]; then
+  echo "--------fChkBin ('mc') test"
+  fChkBin "mc"
+  res=$?
+  echo "res:["$res"]"
+  echo "test done"
+
+  exit 11
+fi
+
+
 
 fInstallGrafana(){
   echo "installing grafana"
 
   echo "first proot and debian ..."
-  pkg install proot-distro
+  apt install proot-distro -y
   proot-distro install debian
   ln -s /data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/debian debian_rootfs
 
@@ -203,6 +280,9 @@ proot-distro login debian -- /root/sGrafana.sh
     echo "  setting proxy for apk / pkg ..."
     echo 'Acquire::http::Proxy "'$ip'"; ' > debian_rootfs/etc/apt/apt.conf.d/proxy.conf
     echo 'Acquire::https::Proxy "'$ip'"; ' >> debian_rootfs/etc/apt/apt.conf.d/proxy.conf
+    echo "setting proxy for wget in .wgetrc...."
+    echo 'http_proxy='$ip > ~/.wgetrc
+    echo 'https_proxy='$ip >> ~/.wgetrc
 
   else
     echo "  no"
@@ -210,9 +290,9 @@ proot-distro login debian -- /root/sGrafana.sh
 
   echo "update, upgrade ..."
   proot-distro login debian -- apt update
-  proot-distro login debian -- apt upgrade
+  proot-distro login debian -- apt upgrade -y
   echo 'installing essensials ...'
-  proot-distro login debian -- apt install libfontconfig1 wget
+  proot-distro login debian -- apt install libfontconfig1 wget -y
 
 
   echo "getting grafana ..."
@@ -222,16 +302,24 @@ proot-distro login debian -- /root/sGrafana.sh
     urlG="https://dl.grafana.com/enterprise/release/grafana-enterprise_8.5.5_amd64.deb"
   elif [ "$cpuArch" = "aarch64" ];then
     urlG="https://dl.grafana.com/enterprise/release/grafana-enterprise_8.5.5_arm64.deb"
+  elif [ "$cpuArch" = "armhf" ];then
+    urlG="https://dl.grafana.com/enterprise/release/grafana-enterprise_8.5.5_armhf.deb"
   elif [ "$cpuArch" = "armv7l" ]; then
     urlG="https://dl.grafana.com/enterprise/release/grafana-enterprise_8.5.5_armhf.deb"
+  elif [ "$cpuArch" = "armv8l" ]; then
+    urlG="https://dl.grafana.com/enterprise/release/grafana-enterprise_8.5.5_armhf.deb"
+
 
   else
-    echo "oj I don't know what to download :(
+    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    oj I don't know what to download :(
     please send issue raport to https://github.com/yOyOeK1/oiyshTerminal with this
 -- grafana arch unknown --
 debian cpu arch ["$cpuArch"]
 -- grafana arch unknown --
-"
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   fi
 
   echo "downloading ....."
@@ -240,7 +328,7 @@ debian cpu arch ["$cpuArch"]
   proot-distro login debian -- dpkg -i /root/grafana.deb
 
   echo "setting up services files ....."
-  cd $PREFIX/var/service/
+  cd $PREFIX/usr/var/service/
   mkdir grafana
   mkdir grafana/log
   ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/grafana/log/run
@@ -249,9 +337,9 @@ exec /data/data/com.termux/files/home/startGrafana.sh 2>&1 >> /dev/null' > ./gra
   chmod +x ./grafana/run
 
   echo "restart service ...."
-  sv enable grafana
-  sv-disable grafana
   sv-enable grafana
+  #sv-disable grafana
+  #sv-enable grafana
 
   cd ~
 
@@ -261,31 +349,83 @@ exec /data/data/com.termux/files/home/startGrafana.sh 2>&1 >> /dev/null' > ./gra
 
 fInstallTerSer(){
   echo "installing termux-services and needed thinks ...."
+  echo "update...."
+  apt update
   echo "upgrade all ..."
-  pkg upgrade
+  apt upgrade -y
+  echo "reloading profile..."
+  . $PREFIX/etc/profile
   echo "installing essensials..."
-  pkg install clang git wget
+  apt update
+  apt install clang git wget proot mc iproute2 python -y
 
-  pkg install termux-services
-  echo "You need to restart termux.
-CTRL+d or exit command should do but it will be nice to stop it in setting and then start
+  pkg install termux-services -y
+  echo "reloading profile..."
+  . $PREFIX/etc/profile
+
+  fDialInf "You need to restart termux.\n\
+CTRL+d or exit command should do but it will\n\
+be nice to stop it in setting and then start\n\
 it from icon."
+
   fExitNice
+
+}
+
+
+
+fMkBashrc(){
+  echo "making .bashrc file...."
+    t=`date`
+    echo "add things to .bashrc..."
+    echo 'echo "-------------------------
+
+Hello from oiyshTerminal
+
+  installation: '$t'
+
+-----------------
+
+	ssh		    :2222
+	mosquitto	:10883
+	mysqld		:3306
+	grafana		:3000
+	nodeRed		:1880
+
+local time:	`date`
+UTC time:   `date -u`
+
+------------------------"
+
+' > ~/.bashrc
+
+    echo "adding wake lock ..."
+    echo "termux-wake-lock" >> ~/.bashrc
+    echo "  DONE"
 
 }
 
 fInstallTerApi(){
   echo "installing termux-api ...."
-  pkg install termux-api
+  apt install termux-api -y
   echo "DONE"
   echo "Info - reamamber to instal termux-api apk :) termux-api in termux it's only a bridge
 to communicate to android termux-api"
 
 }
 
+fMkChkSystem(){
+  echo "making check of this system ...."
+  cd $HOME/oiyshTerminal/installer
+  ./sm_cheOfSta.sh
+  cd $HOME
+  echo "DONE"
+}
+
+
 fInstallSsh(){
   echo "installing sshd"
-  pkg install openssh
+  apt install openssh -y
   echo "Set up your password:"
   passwd
 
@@ -294,8 +434,8 @@ fInstallSsh(){
 exec sshd -p '$sshPort' -D' > $PREFIX/var/service/sshd/run
   chmod +x $PREFIX/var/service/sshd/run
   echo "restaning service ...."
-  sv enable sshd
-  sv-disable sshd
+  #sv enable sshd
+  #sv-disable sshd
   sv-enable sshd
 
   echo "DONE"
@@ -303,17 +443,25 @@ exec sshd -p '$sshPort' -D' > $PREFIX/var/service/sshd/run
 
 fInstallNodejs(){
   echo "installing node js"
-  pkg install nodejs-lts
+  apt install nodejs-lts -y
   echo "DONE"
 }
 
 fInstallNodeRed(){
   echo "installing node-red and esentials"
-  l="node-red node-red-dashboard node-red-node-mysql node-redcontrib-termux-api termux"
+
+  echo "but first update of npm...."
+  #rm -rvf $HOME"/.npmMy"
+  #proot chown -R 10064:10064 $HOME"/.npmMy"
+  npm config set cache "/data/data/com.termux/files/home/.npmMy" -g
+  npm cache verify -g
+  proot --link2symlink npm i -g npm@8.19.1
+
+  l="termux node-red@2.1.5 node-red-dashboard node-red-node-mysql node-redcontrib-termux-api"
   for i in $l
   do
-    echo "- installing "$i
-    npm -g install $i
+    echo "- installing ["$i"]"
+    proot --link2symlink npm -g install $i
   done
 
   echo "setting up services files ....."
@@ -326,7 +474,7 @@ exec node-red 2>&1 >> /dev/null' > ./node-red/run
   chmod +x ./node-red/run
 
   echo "restart service ...."
-  sv enable node-red
+  #sv enable node-red
   sv-disable node-red
   sv-enable node-red
 
@@ -338,7 +486,7 @@ exec node-red 2>&1 >> /dev/null' > ./node-red/run
 
 fInstallMqtt(){
   echo "installing mosquitto as a mqtt broker"
-  pkg install libmosquitto mosquitto
+  apt install libmosquitto mosquitto -y
 
   echo "making new config file ..."
   echo 'listener '$mqttPort' 0.0.0.0
@@ -355,7 +503,7 @@ exec mosquitto -c /data/data/com.termux/files/home/mosquitto.conf 2>&1 >> /dev/n
   chmod +x ./mosquitto/run
 
   echo "restart service ...."
-  sv enable mosquitto
+  #sv enable mosquitto
   sv-disable mosquitto
   sv-enable mosquitto
 
@@ -368,15 +516,25 @@ exec mosquitto -c /data/data/com.termux/files/home/mosquitto.conf 2>&1 >> /dev/n
 
 fMysqlInit(){
   echo "initing mysql ...."
-  echo "create user '"$mysqlUser"'@'%' identified by '"$mysqlPasswd"';
-create user '"$mysqlUser"'@'localhost' identified by '"$mysqlPasswd"';
-GRANT ALL PRIVILEGES ON *.* TO '"$mysqlUser"'@'%' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO '"$mysqlUser"'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-quit;
-exit;
-" | mysql -D 'mysql' -u $(whoami);
+  q="create user '"$mysqlUser"'@`%` identified by '"$mysqlPasswd"';"
+  q+="create user '"$mysqlUser"'@'localhost' identified by '"$mysqlPasswd"';"
+  q+="GRANT ALL PRIVILEGES ON "
+  q+='*.*'
+  q+=" TO '"$mysqlUser"'@'%' WITH GRANT OPTION;"
+  q+="GRANT ALL PRIVILEGES ON "
+  q+='*.*'
+  q+=" TO '"$mysqlUser"'@'localhost' WITH GRANT OPTION;"
+  q+="FLUSH PRIVILEGES;"
 
+  echo "will use query------------------"
+  echo "$q"
+  echo "-------------do init privileges"
+  #exit 1
+  echo "executing ....."
+  echo "$q" | mysql -D 'mysql' -u $(whoami);
+  echo " DONE"
+
+  echo "create database...."
   echo 'create database svoiysh;' | mysql
 
   echo "so mysql is init for:
@@ -390,7 +548,7 @@ exit;
 
 fInstallMysql(){
   echo "installing mysql service"
-  pkg install mariadb-static
+  apt install mariadb-static -y
   echo "starting service ...."
   sv-enable mysqld
   sleep 3
@@ -412,7 +570,7 @@ fInstallOiyshTerminal(){
   libsDir="-L/home/yoyo/src/mosquitto-2.0.13/bu/lib "
   libs="-lmosquitto "
 
-  gcc -o cMqtt2Mysql2 main.c myWords.c `mysql_config --cflags --libs` $inc $libsDir $libs
+  gcc -Wno-error=int-conversion -o cMqtt2Mysql2 main.c myWords.c `mysql_config --cflags --libs` $inc $libsDir $libs
 
 
   echo "setting up services files ....."
@@ -425,7 +583,7 @@ exec /data/data/com.termux/files/home/oiyshTerminal/cMqtt2Mysql2/cMqtt2Mysql2 2>
   chmod +x ./cMqtt2Mysql/run
 
   echo "restart service ...."
-  sv enable cMqtt2Mysql
+  #sv enable cMqtt2Mysql
   sv-disable cMqtt2Mysql
   sv-enable cMqtt2Mysql
 
@@ -458,6 +616,10 @@ fSetProxy(){
   echo "setting proxy for npm in .npmrc ..."
   echo 'proxy='$ip'"' >> ~/.npmrc
 
+  echo "setting proxy for wget in .wgetrc...."
+  echo 'http_proxy='$ip > ~/.wgetrc
+  echo 'https_proxy='$ip >> ~/.wgetrc
+
   echo "setting proxy for git in .gitconfig ..."
   echo '[http]
 	proxy = '$ip'
@@ -473,6 +635,8 @@ fSetProxy(){
   echo 'Acquire::http::Proxy "'$ip'"; ' > debian_rootfs/etc/apt/apt.conf.d/proxy.conf
   echo 'Acquire::https::Proxy "'$ip'"; ' >> debian_rootfs/etc/apt/apt.conf.d/proxy.conf
 
+  export http_proxy=$ip
+  export https_proxy=$ip
 
 
   echo $http_proxy
@@ -481,6 +645,17 @@ fSetProxy(){
 }
 
 
+# check if we are at termux
+echo "check if we are at termux ...."
+if env | grep TERMUX > /dev/null; then
+#if [ 1 ]; then
+  echo " - ok. It's termux. do normal stuff."
 
-fArgsParse $*
+  fArgsParse $*
+else
+  echo " - no. It's different enviroment / distro. I will exit"
+  fExitNice
+fi
+# end pre check
+
 #fMysqlInit
