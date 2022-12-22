@@ -1,0 +1,45 @@
+Package: otdmTest1
+Version: 0.1
+Architecture: all
+Maintainer: yoyoek@wp.pl
+Depends: mc
+Filename: ./otdmTest1_0.1-1_all.deb
+Size: 860
+MD5sum: 1c8674a7b142148e9ae5433332421565
+SHA1: e4d6ee3d2b34fb2b3307b733d4ca252d734ece98
+SHA256: 34bfa8d1b75f88b7395bb026162edb97e09da0a8094203565f2046c8c696e21b
+Section: base
+Priority: optional
+Description: Testing deb package process no 1
+
+Package: otdmTest2
+Version: 0.2
+Architecture: all
+Maintainer: yoyoek@wp.pl
+Pre-Depends: otdmTest1
+Depends: mc
+Filename: ./otdmTest2_0.1-1_all.deb
+Size: 1000
+MD5sum: 1fb4865f4f0ef6788561a5c29c6e9472
+SHA1: a285a8131c1d9a197c7a4d4c7c381d35b6a2e2c1
+SHA256: 7c970903e8cc0d8c397a14f24cd09743b84e2f2633881ff9e6b2134d9d3a4e2d
+Section: base
+Priority: optional
+Description: Testing deb package process no 2. depend on otdmTest1 :)
+
+Package: otdmnRFTestMqttMysql
+Version: 0.4
+Architecture: all
+Maintainer: yoyoek@wp.pl
+Pre-Depends: nodejs, curl
+Filename: ./otdmnRFTestMqttMysql_0.4-1_all.deb
+Size: 2160
+MD5sum: 6167f4e311cc215dd57507a652da8d75
+SHA1: 58bf6acbc1fb147058fbef69e4bbf8ec7f056954
+SHA256: ebc36b7b42d332e9203ea5eac86e3306bc9c74af5f7bbb67bdce504f475429b6
+Section: base
+Priority: optional
+Description: Set of actions to make a flow in localhost:1880 instance of
+  Node-Red. Flow will check mqtt at 10883 port and give you a option to send
+  query to mysql to see if it's operational.
+
