@@ -1,0 +1,23 @@
+
+echo "- making directory..."
+mkdir -p "/data/data/com.termux/files/home/tmp"
+echo "DONE"
+
+
+tr=$DPKG_MAINTSCRIPT_PACKAGE"------------preinst
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+"$DPKG_MAINTSCRIPT_PACKAGE"------------- preinst END"
+
+echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
+
+

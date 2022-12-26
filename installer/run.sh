@@ -401,6 +401,30 @@ UTC time:   `date -u`
 
     echo "adding wake lock ..."
     echo "termux-wake-lock" >> ~/.bashrc
+
+    if [ -f ~/.setProxy ]; then
+      ph=`cat ~/.setProxy`
+      tp='
+# set proxy
+export http_proxy="'$ph'"
+export HTTP_PROXY="'$ph'"
+
+export https_proxy="'$ph'"
+export HTTPS_PROXY="'$ph'"
+
+export ALL_PROXY='$ph'
+
+export no_proxy="192.168.*.*,127.0.0.1,localhost"
+export NO_PROXY="192.168.*.*,127.0.0.1,localhost"
+    '
+    echo "adding proxy to .bashrc..."
+    echo "$tp" >> ~/.bashrc
+    echo "adding profile file with proxy settings..."
+    echo "$tp" >> /data/data/com.termux/files/usr/etc/profile.d/setProxy.sh
+
+
+    fi
+
     echo "  DONE"
 
 }
@@ -612,6 +636,7 @@ fSetProxy(){
 
   echo "setting proxy for curl in .curlrc ..."
   echo 'proxy='$ip > ~/.curlrc
+  echo 'noproxy=127.0.0.1' >> ~/.curlrc
 
   echo "setting proxy for npm in .npmrc ..."
   echo 'proxy='$ip >> ~/.npmrc

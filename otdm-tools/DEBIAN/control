@@ -1,0 +1,15 @@
+Package:otdm-tools
+Version: 0.12
+Section: base
+Priority: optional
+Architecture: all
+Depends: jq, python (>=3.0) | python3
+#Recommends: jq, python (>=3.0) | python3
+Pre-Depends: otdm-installer (>=0.1) | otdm-installer-dummy (>=0.1)
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It's a set of tool to help with the work
+  of downloding http jsons parsing extracting importing
+  exporting injecting datasource dashboards items to
+  grafana. Can do adding and removing operations from
+  files in Node-red in flows.

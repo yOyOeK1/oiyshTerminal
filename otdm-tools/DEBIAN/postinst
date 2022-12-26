@@ -1,0 +1,52 @@
+
+tr=$DPKG_MAINTSCRIPT_PACKAGE"------------postints
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+"$DPKG_MAINTSCRIPT_PACKAGE"------------- postinst END"
+
+echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
+
+
+
+echo "check if jq is postinst..."
+if which jq 2> /dev/null; then
+  echo "  OK"
+  
+else
+  echo "  no luck :(\ntrying if there is pkg?"
+  if which pkg 2> /dev/null; then
+    echo "  there is pkg. trying to use it to install jq."
+    pkg install jq
+  else
+    echo "Error you need to have "jq" in the system! install it first!"
+    exit 1
+  fi
+
+fi
+
+echo "check if pip is...."
+if which pip 2> /dev/null; then
+  echo "pip pip pppip pii ....OK"
+else
+  echo "Error no pip in a system... You need to get pip!"
+  exit 1
+fi
+
+echo "checkin deps for python...."
+if pip list | grep requests 2> /dev/null ; then
+  echo "requests ....... OK"
+else
+  echo "requests - installing...."
+  pip install requests
+fi
+echo "pip section .......OK"
+

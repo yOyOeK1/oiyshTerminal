@@ -1,0 +1,30 @@
+{
+/*
+THIS FILE IS FROM
+
+oiyshTerminal Deb Manager
+
+set of tools to work on Node-red, grafana injections, test, operations.
+
+if you have different setting for:
+port, user name, password you need to go to placys
+where all the work is done and change it manualy.
+TODO Problem appear what with operation of remowing deb?
+$ apt remove otdm-tools
+it will detect difference in it's injection and current
+status.
+???
+Let's see.
+
+
+
+
+
+TODO
+If you change somthing in this file notching will hapend?
+TODO
+
+*/
+
+"name":"tools",
+}

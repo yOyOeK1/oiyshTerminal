@@ -1,0 +1,26 @@
+{
+  "otdm": {
+    "prefix": "/data/data/com.termux/files/home/.otdm"
+  },
+  "node-red": {
+    "host":"localhost",
+    "port": 1880,
+    "apiPath": ""
+  },
+  "grafana": {
+    "host":"localhost",
+    "port": 3000,
+    "apiPath": "/api",
+    "dbname": "svoiysh",
+    "user": "admin",
+    "passwd": "admin"
+  },
+  "mysql": {
+    "host":"localhost",
+    "port": 3306,
+    "dbname": "svoiysh",
+    "user": "ykpu",
+    "passwd": "pimpimpampam"
+  }
+
+}

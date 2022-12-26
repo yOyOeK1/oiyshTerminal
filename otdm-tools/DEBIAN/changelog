@@ -1,0 +1,35 @@
+dpkg (0.12 unstable; urgency=low
+
+  [ B.Ceglik ]
+  * changing place of python dependencis to be able to install on wanilla dpkg instance. Ok it's settle down on. It will shout on partial dpkg instance. It means than if you have a dpkg not really use in your system there is no way to go around postist execution problem. otdm-tools needs pip that comes with python. So option on system widhout dpkg system. Installing dpkg, then lot of --force-depends
+  
+  -- B.Ceglik <yoyoek@wp.pl  22-12-26
+
+
+dpkg (0.11)
+
+  [ B.Ceglik ]
+  * added dependencies to start installation tool chain if needed. it needs otdm-installer or otdm-installer-dummy
+  * -testAll 1 - new arg set. It's going by grafana and node-red doing test if function are ok.
+  * new release to see if I can deploy node-red flow from 
+  $ apt install otdm-nrf-testmqttmysql
+  starting from unknown status of system deb based. To get to point where I will see in front of me browser with that flow.
+  * preinst now go checking of pip and try to install deps if needed. checking jq if there is no checking if there is a pkg, then use it to install jq.
+  
+  -- B.Ceglik <yoyoek@wp.pl  22-12-26
+
+
+dpkg (0.10) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * It's a first release with python wersion of tools. Move from otdmTools to otdm-tools.
+
+  -- B.Ceglik <yoyoek@wp.pl  22-12-25
+
+
+ dpkg (0.1) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * Start of a otdm idea.....
+
+  -- B.Ceglik <yoyoek@wp.pl  22-12-25
