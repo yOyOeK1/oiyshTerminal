@@ -1,0 +1,12 @@
+Package:otdm-installer-dummy
+Version: 0.1
+Section: base
+Priority: optional
+Architecture: all
+#Depends: jq
+#Pre-Depends: otdm-installer (>=0.1) | otdm-installer-dummy (>=0.1), python (>=3.0) | python3
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It's a dummy package to break a tool of dependencis
+	on system not termux based. Like ubuntu can use otdm-* :) 
+	NICE !

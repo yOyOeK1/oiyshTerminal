@@ -1,0 +1,4 @@
+otdm-installer-dummy
+
+It's a path to break a tool list dependency. 
+This package is for system that are not termux.
