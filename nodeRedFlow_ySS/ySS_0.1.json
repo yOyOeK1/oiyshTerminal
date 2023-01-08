@@ -1,5 +1,5 @@
 [
-    { 
+    {
         "id": "332849e3e8657538",
         "type": "tab",
         "label": "ySS",
@@ -71,14 +71,14 @@
         "id": "68f3ae55cd07c2d3",
         "type": "function",
         "z": "332849e3e8657538",
-        "name": "",
+        "name": "Main engine",
         "func": "var bPath = \"/home/yoyo/Apps/oiyshTerminal/ySS_calibration/\";\nmsg.yssWSUrl = \"ws://192.168.43.220:1880/ws/yss\";\nmsg.yssPages = [\n    {\n      \"oName\": \"s_calibrationPage\",\n      \"o\": null,\n      \"jssrc\":[\"s_calibration.js\", \"s_calibrationPage.js\"]\n    },\n    {\n      \"oName\": \"s_ilooNavPage\",\n      \"o\": null,\n      \"jssrc\":[\"s_ilooNav.js\", \"s_ilooNavPage.js\"]\n    },\n    {\n      \"oName\": \"s_basicSailPage\",\n      \"o\": null,\n      \"jssrc\":[\"s_basicSailPage.js\", \"s_basicSail.js\"]\n    },\n    {\n      \"oName\": \"s_apV3SvgPage\",\n      \"o\": null,\n      \"jssrc\":[\"s_apV3Svg.js\", \"s_apV3SvgPage.js\"]\n    }\n    \n];\n\n\n\nvar u=msg.req.url.substring(5);\nif ( u == \"\" )\n    u = \"index.html\";\n\nmsg.filename = bPath+\"\"+u;\n\nvar ext = u.split('.');\next = ext[ ext.length-1 ];\n\nif( ext == \"js\" || ext == \"map\" )\n    mimeStr = \"text/javascript\";\nelse if( ext == \"png\" )\n    mimeStr = \"image/png\";\nelse if( ext == \"hdr\" )\n    mimeStr = \"application/octet-stream\";\nelse if( ext == \"ico\" )\n    mimeStr = \"image/png\";\nelse if( ext == \"svg\" )\n    mimeStr = \"image/svg+xml\";\nelse if( ext == \"css\" )\n    mimeStr = \"text/css\";\nelse if( ext == \"glb\" )\n    mimeStr = \"application/octet-stream\";\nelse if( ext == \"html\" )\n    mimeStr = \"text/html\";\nelse{\n    mimeStr = \"text/html\";\n\n    node.status({ text: \"ext:\"+ext });\n}\n//mimeStr = \"text/javascript\";\n\nmsg.headers = {\n    'Content-type': String(mimeStr),\n    'Content-Length': 1\n};\n\n\n\nif( msg.req.url == \"/yss/s_nodeRedSupport.js\"){\n    msg.payload='console.log(\"its a inject from node-red.\");';\n    node.send([null,msg]);\n    \n}else{\n    return msg;\n}",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
+        "x": 530,
         "y": 280,
         "wires": [
             [
