@@ -1,0 +1,286 @@
+[
+    {
+        "id": "332849e3e8657538",
+        "type": "tab",
+        "label": "ySS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c7e341a0.381cc",
+        "type": "http in",
+        "z": "332849e3e8657538",
+        "name": "",
+        "url": "/yss/*",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 280,
+        "wires": [
+            [
+                "68f3ae55cd07c2d3"
+            ]
+        ]
+    },
+    {
+        "id": "2fb1c354.d04e3c",
+        "type": "file in",
+        "z": "332849e3e8657538",
+        "name": "",
+        "filename": "",
+        "format": "",
+        "encoding": "utf8",
+        "allProps": false,
+        "x": 780,
+        "y": 240,
+        "wires": [
+            [
+                "4cafb182bdd5879e"
+            ]
+        ]
+    },
+    {
+        "id": "88974243.7768c",
+        "type": "http response",
+        "z": "332849e3e8657538",
+        "name": "",
+        "x": 1450,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "c184f62456566da0",
+        "type": "debug",
+        "z": "332849e3e8657538",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "68f3ae55cd07c2d3",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "",
+        "func": "var bPath = \"/home/yoyo/Apps/oiyshTerminal/ySS_calibration/\";\nmsg.yssWSUrl = \"ws://192.168.43.220:1880/ws/yss\";\nmsg.yssPages = [\n    {\n      \"oName\": \"s_calibrationPage\",\n      \"o\": null,\n      \"jssrc\":[\"s_calibration.js\", \"s_calibrationPage.js\"]\n    },\n    {\n      \"oName\": \"s_ilooNavPage\",\n      \"o\": null,\n      \"jssrc\":[\"s_ilooNav.js\", \"s_ilooNavPage.js\"]\n    },\n    {\n      \"oName\": \"s_basicSailPage\",\n      \"o\": null,\n      \"jssrc\":[\"s_basicSailPage.js\", \"s_basicSail.js\"]\n    },\n    {\n      \"oName\": \"s_apV3SvgPage\",\n      \"o\": null,\n      \"jssrc\":[\"s_apV3Svg.js\", \"s_apV3SvgPage.js\"]\n    }\n    \n];\n\n\n\nvar u=msg.req.url.substring(5);\nif ( u == \"\" )\n    u = \"index.html\";\n\nmsg.filename = bPath+\"\"+u;\n\nvar ext = u.split('.');\next = ext[ ext.length-1 ];\n\nif( ext == \"js\" || ext == \"map\" )\n    mimeStr = \"text/javascript\";\nelse if( ext == \"png\" )\n    mimeStr = \"image/png\";\nelse if( ext == \"hdr\" )\n    mimeStr = \"application/octet-stream\";\nelse if( ext == \"ico\" )\n    mimeStr = \"image/png\";\nelse if( ext == \"svg\" )\n    mimeStr = \"image/svg+xml\";\nelse if( ext == \"css\" )\n    mimeStr = \"text/css\";\nelse if( ext == \"glb\" )\n    mimeStr = \"application/octet-stream\";\nelse if( ext == \"html\" )\n    mimeStr = \"text/html\";\nelse{\n    mimeStr = \"text/html\";\n\n    node.status({ text: \"ext:\"+ext });\n}\n//mimeStr = \"text/javascript\";\n\nmsg.headers = {\n    'Content-type': String(mimeStr),\n    'Content-Length': 1\n};\n\n\n\nif( msg.req.url == \"/yss/s_nodeRedSupport.js\"){\n    msg.payload='console.log(\"its a inject from node-red.\");';\n    node.send([null,msg]);\n    \n}else{\n    return msg;\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 280,
+        "wires": [
+            [
+                "2fb1c354.d04e3c"
+            ],
+            [
+                "88974243.7768c"
+            ]
+        ]
+    },
+    {
+        "id": "9451c53cd16cf926",
+        "type": "debug",
+        "z": "332849e3e8657538",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1330,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "4cafb182bdd5879e",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "inject to index.html",
+        "func": "if( msg.req.url == \"/yss/mWebSockets.js\"){\n    \n    msg.payload = String( msg.payload ).replace(\n        new RegExp(\"ws://192.168.43.1:1880/ws/accel/oriCal\", 'g'),\n        //\"ws://192.168.43.1:1880/ws/accel/oriCal\"\n        msg.yssWSUrl\n        );\n    \n    node.status({text:\"is mWebSocket !\"});\n    return msg;\n        \n}else if( msg.req.url == \"/yss/\" ||  msg.req.url == \"/yss/index.html\"  ){\n    trsrc = ``;\n    trjs = '';\n    \n    for( var p=0,pc=msg.yssPages.length; p<pc; p++ ){\n        var plug = msg.yssPages[p];\n        for( var s=0,sc=plug['jssrc'].length; s<sc; s++ ){\n            trsrc+= `<script src=\"`+plug['jssrc'][s]+`\"></script> `;   \n        }\n        \n        trjs+= 'pager.addPage( new '+plug['oName']+\"() ); \";\n        \n    }\n    \n    \n    \n    tr = ` built automaticli in node-red -->\n`+trsrc+`\n<script>\nfunction nodeRedInjectionAddPages(){\n    `+trjs+`\n}\n</script>\n<!--build automaticli in node-red `;\n    \n    node.status({text:\"is index !\"});\n    msg.payload = String(msg.payload).replace( \"noderedinjectpoint\", tr);\n    \n    return msg;\n}else\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 220,
+        "wires": [
+            [
+                "88974243.7768c"
+            ]
+        ]
+    },
+    {
+        "id": "716f0f50f417974a",
+        "type": "http in",
+        "z": "332849e3e8657538",
+        "name": "",
+        "url": "/yss",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 140,
+        "wires": [
+            [
+                "ee4a37926348b77a"
+            ]
+        ]
+    },
+    {
+        "id": "d21ea999ddb9d752",
+        "type": "http response",
+        "z": "332849e3e8657538",
+        "name": "",
+        "x": 1450,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ee4a37926348b77a",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "redirect to ./yss/",
+        "func": "mimeStr = \"text/html\";\nmsg.headers = {\n    'Content-type': String(mimeStr),\n    'Content-Length': 1\n};\nmsg.payload = `<!DOCTYPE html>\n<html>\n  <head>\n    <meta http-equiv=\"refresh\" content=\"0; url='./yss/'\" />\n  </head>\n  <body>\n    <p>Please follow <a href=\"./yss/\">./yss/</a>.</p>\n  </body>\n</html>`;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 140,
+        "wires": [
+            [
+                "d21ea999ddb9d752"
+            ]
+        ]
+    },
+    {
+        "id": "150c5ffc557d90b1",
+        "type": "websocket in",
+        "z": "332849e3e8657538",
+        "name": "/ws/yss_In",
+        "server": "7d55711ded41b9c7",
+        "client": "",
+        "x": 240,
+        "y": 520,
+        "wires": [
+            [
+                "54f8bc05e74e2e23",
+                "5bd0c7a0667d33b1"
+            ]
+        ]
+    },
+    {
+        "id": "7a1c94972d8c34d0",
+        "type": "websocket out",
+        "z": "332849e3e8657538",
+        "name": "/ws/yss",
+        "server": "b330159b18442ccf",
+        "client": "",
+        "x": 1120,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "54f8bc05e74e2e23",
+        "type": "link out",
+        "z": "332849e3e8657538",
+        "name": "ws_yss_In",
+        "mode": "link",
+        "links": [],
+        "x": 375,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "cb632b9922b2a62e",
+        "type": "link in",
+        "z": "332849e3e8657538",
+        "name": "ws_yss",
+        "links": [],
+        "x": 995,
+        "y": 480,
+        "wires": [
+            [
+                "7a1c94972d8c34d0"
+            ]
+        ]
+    },
+    {
+        "id": "5bd0c7a0667d33b1",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "ScreenManager",
+        "func": "if( msg.status ){\n    if( msg.status.event == \"connect\" ){\n        screenCount = (global.get(\"SMScreenCount\")||0) + 1;\n        if(parseInt(screenCount)>99)\n            screenCount = 0;\n        global.set(\"SMScreenCount\", screenCount);\n        node.status({ text: \"SMs:\"+screenCount });\n        \n        return {\n            topic: \"SMForYou\",\n            payload:screenCount+\"\"\n        };\n        \n    }\n}\n\n\nif( msg.payload ){\n    if( msg.payload.substring(0,3) == \"SM:\" ){\n        var c = msg.payload.substring(3);\n        node.status({ text: \"SM: [\"+c+\"]\" });\n        \n        \n        if( c == \"identifyOn\" ){\n            return {\n                topic: \"SMidentifyOn\",\n                payload: \"1\"\n            };\n        }\n        \n        \n    }else if( msg.payload.substring(0,8) == \"SMToAll:\" ){\n        var c = msg.payload.substring(8);\n        node.status({ text:\"SM to all:[\"+c+\"]\" });\n        \n        return {\n            topic: \"SMToAll\",\n            payload: c\n        };\n    //SMStat    \n    }else if( msg.payload.substring(0,7) == \"SMStat:\" ){\n        var c = msg.payload.substring(7);\n        node.status({ text:\"SMStat:[\"+c+\"]\" });\n        \n        return {\n            topic: \"SMStat\",\n            payload: c\n        };\n    \n    //SMCmdTo\n    }else if( msg.payload.substring(0,7) == \"SMCmdTo\" ){\n        var c = msg.payload.substring(7).split(',');\n        c.shift();\n        node.status({ text:\"SMCmdTo:[\"+c[0]+\"] cmd:\"+c[1] });\n        \n        return {\n            topic: \"SMCmdTo\",\n            No: c[0],\n            payload: c[1]\n        };\n    }\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 520,
+        "wires": [
+            [
+                "7a1c94972d8c34d0"
+            ]
+        ]
+    },
+    {
+        "id": "65e6caaae480d499",
+        "type": "status",
+        "z": "332849e3e8657538",
+        "name": "",
+        "scope": [
+            "150c5ffc557d90b1"
+        ],
+        "x": 240,
+        "y": 600,
+        "wires": [
+            [
+                "5bd0c7a0667d33b1",
+                "6c193329fe0d5f0c"
+            ]
+        ]
+    },
+    {
+        "id": "6c193329fe0d5f0c",
+        "type": "link out",
+        "z": "332849e3e8657538",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "52f734b330961380"
+        ],
+        "x": 375,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "7d55711ded41b9c7",
+        "type": "websocket-listener",
+        "path": "/ws/yss_In",
+        "wholemsg": "false"
+    },
+    {
+        "id": "b330159b18442ccf",
+        "type": "websocket-listener",
+        "path": "/ws/yss",
+        "wholemsg": "true"
+    }
+]
