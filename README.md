@@ -1,5 +1,6 @@
 ![Welcome in oiyshTerminal - Logo](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/images/otWorld1.png?raw=true)
 
+
 **Important!** Although oiyshTerminal was created for our boat it is not limited to boats alone. Every time the word boat is used feel free to substitute it with home, RV, car, dinghy or whatever else you choose to use it for. Most of the features currently included are boat specific but you are free to modify them to your needs or create your own. With that out of the way...
 
 
