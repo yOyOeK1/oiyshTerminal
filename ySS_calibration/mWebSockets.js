@@ -22,7 +22,24 @@ function wsConnectIn( onMesCallBack ){
 	socketIn.onmessage = function(m){
 		//cl("on message:"+m);
 		r = JSON.parse(m.data);
-		//cl("on message r.payload:"+r.payload);
+		//cl("on message r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
+
+		if( r.topic == "otdmRes" ){
+			cl("got otdmRes !!");
+
+			cl("res:");
+			cl( JSON.stringify( r.payload) );
+
+			var al = r.payload;
+			tr=[];
+			for( var i=0,ic=al.length; i<ic; i++ ){
+				tr.push( "- "+al[i]['text'] );
+			}
+			$("#otdmResDyno").html(tr.join("<br>"));
+
+
+
+		}
 
     onMesCallBack.wsCallback( r );
 
@@ -54,5 +71,6 @@ function wsConnectOut(){
 }
 
 function sOutSend( msg ){
+	//socketOut.send(JSON.stringify(msg));
 	socketOut.send(msg);
 }

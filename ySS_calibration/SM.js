@@ -74,13 +74,13 @@ class SM{
     $("#SMIdentDiv").fadeIn();
     setTimeout( sm.identifyYourSelfTO,2000 );
     sOutSend("SMStat:"+this.myNo+","+pager.currentPage);
-    $('#SMIdentPop').popup( 'open' );
+    //$('#SMIdentPop').popup( 'open' );
     console.log('pop test !');
   }
 
   identifyYourSelfTO(){
     $("#SMIdentDiv").fadeOut( "slow" );
-    $('#SMIdentPop').popup( 'close' );
+    //$('#SMIdentPop').popup( 'close' );
   }
 
 

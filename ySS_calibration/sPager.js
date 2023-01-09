@@ -22,8 +22,8 @@ class sPager {
   }
 
   wsCallbackExternal( r ){
-    cl("wsCallbackExternal got msg");
-    cl(r);
+    //cl("wsCallbackExternal got msg");
+    //cl(r);
     this.wsCallback( r );
   }
 
@@ -31,7 +31,7 @@ class sPager {
 
     if(r.topic && r.payload){
         if(r.topic == "SMForYou" ){
-          cl("got my screen name !");
+          cl("got my screen name !"+r.payload);
           cl(r.payload);
           this.sm.setMyNo( r.payload );
 
@@ -137,7 +137,7 @@ class sPager {
 
     setSvgFit();
 
-    
+
     console.log("---- ts5 ---");
     $("tspan").each(function( i ){
       console.log("ts5 "+i+": "+$(this).html()+" -- >" );
@@ -192,8 +192,9 @@ class sPager {
       //$('#htmlDyno').enhanceWithin();
       //$("#htmlDyno").enhanceWithin();
       console.log("----------------- mobile get active page ---------DONE");
+      cp.getHtmlAfterLoad();
       try{
-        cp.getHtmlAfterLoad();
+        var abcueoa = 1213;
       }catch(e){
         cl("sPage page "+this.currentPage+" don't have getHtmlAfterLoad() error["+e+"]");
       }
@@ -230,8 +231,8 @@ class sPager {
 
     $( ta ).insertBefore( ".innerMenuList" );
     $("#menuListView").listview('refresh');
-    console.log("------ menuListView content ----------");
-    console.log($("#menuListView").html());
+    //console.log("------ menuListView content ----------");
+    //console.log($("#menuListView").html());
 
     //$("#menuListView").html().enhanceWithin();
 

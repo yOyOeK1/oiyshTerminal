@@ -12,7 +12,8 @@ https://github.com/fulup-bzh/GeoGate/blob/master/encoder/lib/GG-AisEncode.js
 <head>
   <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>ySS_calibration</title>
+	<title>ySS</title>
+  <link rel="icon" type="image/x-icon" href="favicon.png">
 
 
 
@@ -32,111 +33,183 @@ class moduleCollector{
 }
 var module = new moduleCollector();
 
-
-
 </script>
 <div id="justGuageTmp"></div>
 <script src="raphael-2.1.4.min.js"></script>
 <script src="justgage.js"></script>
-<script src="m_MyJustGage.js"></script>
-
 <script src="ml5.min.js"></script>
-<script src="sPager.js"></script>
-
 <script src="kalman.min.js"></script>
 
-<script src="s_calibration.js"></script>
-<script src="s_calibrationPage.js"></script>
 
 
-<script src="s_basicSail.js"></script>
-<script src="s_basicSailPage.js"></script>
+<!-- noderedinjectpoint -->
+<script src="s_nodeRedSupport.js"></script>
 
-<script src="s_ilooNav.js"></script>
-<script src="s_ilooNavPage.js"></script>
 
+
+<script type="importmap">
+    {
+        /*
+        "imports": {
+            "three": "./three/three.module.js",
+            "OrbitControls": "./three/jsm/controls/OrbitControls.js",
+            "GLTFLoader": "./three/jsm/loaders/GLTFLoader.js",
+            "RGBELoader": "./three/jsm/loaders/RGBELoader.js",
+            "FontLoader": "./three/jsm/loaders/FontLoader.js",
+            "SVGLoader":  "./three/jsm/loaders/SVGLoader.js"
+        }
+        */
+        "imports": {
+            "three": "./three.module.js",
+            "OrbitControls": "./three_OrbitControls.js",
+            "GLTFLoader": "./three_GLTFLoader.js",
+            "RGBELoader": "./three_RGBELoader.js",
+            "FontLoader": "./three_FontLoader.js",
+            "SVGLoader":  "./three_SVGLoader.js"
+        }
+    }
+
+</script>
+<script type="module">
+console.log("---- start import ");
+import * as THREE from "three";
+console.log("---- done import ");
+import { OrbitControls } from 'OrbitControls';
+import { GLTFLoader } from 'GLTFLoader';
+import { RGBELoader } from 'RGBELoader';
+import { FontLoader } from "FontLoader";
+import { SVGLoader } from "SVGLoader";
+console.log('---------------------');
+console.log( THREE );
+console.log('---------------------');
+console.log("yyyyyy ott");
+console.log(ott);
+
+ott = {
+  'THREE': THREE,
+  'OrbitControls': OrbitControls,
+  'GLTFLoader': GLTFLoader,
+  'RGBELoader': RGBELoader,
+  'FontLoader': FontLoader,
+  'SVGLoader': SVGLoader
+};
+</script>
+<script src="s_threeTestPage.js"></script>
+
+
+
+
+<!-- moving to dynamic load node-red
+  <script src="s_calibration.js"></script>
+  <script src="s_calibrationPage.js"></script>
+  <script src="s_basicSail.js"></script>
+  <script src="s_basicSailPage.js"></script>
+  <script src="s_ilooNav.js"></script>
+  <script src="s_ilooNavPage.js"></script>
+
+  <script src="s_windEffordDebug.js"></script>
+  <script src="s_windEffordPage.js"></script>
+
+  <script src="s_apV3Svg.js"></script>
+  <script src="s_apV3SvgPage.js"></script>
+-->
 
 
 <!-- ap playground area START-->
+<!--
 <script src="apSimulator.js"></script>
 <script src="apV3.js"></script>
+-->
 <!--
 <script src="apML5v1.js"></script>
 -->
+<!--
 <script src="PIDController.js"></script>
+-->
 <!--
 <script src="PID2.js"></script>
--->
+
 <script src="brain.js"></script>
 <script src="apVPID.js"></script>
 <script src="apVPID2.js"></script>
 <script src="apVPID2.2.js"></script>
 <script src="apVBrain2.js"></script>
+-->
 <!-- ap playground area END -->
 
 
-
+<!--
 <script src="s_apV3Page.js"></script>
-
-<script src="s_apV3Svg.js"></script>
-<script src="s_apV3SvgPage.js"></script>
 
 <script src="apSolver.js"></script>
 <script src="s_apPage.js"></script>
+-->
 
-<script src="s_windEffordDebug.js"></script>
-<script src="s_windEffordPage.js"></script>
-
+<!--
 <script src="s_fitscreen.js"></script>
 <script src="s_blankPage.js"></script>
-
+<script src="nr_reqTest1.js"></script>
+-->
 <script src="s_testFuncs.js"></script>
 <script src="s_testFuncsPage.js"></script>
 
-<script src="nr_reqTest1.js"></script>
 
-<!--
 <script src="jquery.min.js"></script>
 <script src="jquery-ui.js"></script>
--->
-<script src="http://192.168.43.1:3000/public/forms/jquery.min.js"></script>
-<script src="http://192.168.43.1:3000/public/forms/jquery-ui.js"></script>
-<script src="http://192.168.43.1:3000/public/forms/jquery.mobile-1.4.5.min.js"></script>
-
-
+<script src="jquery.mobile-1.4.5.min.js"></script>
 
 <script src="d3.v4.js"></script>
 <script src="svg.min.js"></script>
+<script src="SM.js"></script>
+<script src="m_d3Plot.js"></script>
+
+<script src="three4yss.js"></script>
+<script src="m_MyJustGage.js"></script>
+<script src="sPager.js"></script>
 <script src="mShaders.js"></script>
 <script src="mMath.js"></script>
 <script src="mOperation.js"></script>
 <script src="mWebSockets.js"></script>
-<script src="SM.js"></script>
-<script src="m_d3Plot.js"></script>
+<!--
+<script src="mqtt.min.js"></<script>
+-->
 
 
 <!--
 <link rel="stylesheet" href="jquery-ui.css">
 -->
-<link rel="stylesheet" href="http://192.168.43.1:3000/public/forms/jquery.mobile-1.4.5.min.css" />
-
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
 <link rel="stylesheet" href="main.css">
 
 
 <script>
-
-
+var ott = "not set";
+var otcam;
+var otsce;
+var otren;
+var otframeC=0;
+var t4y = new Three4Yss();
+var threes = {};
 
 const pager = new sPager();
-pager.addPage( new s_calibrationPage() );
-pager.addPage( new s_basicSailPage() );
-pager.addPage( new s_ilooNavPage() );
-pager.addPage( new s_apV3SvgPage() );
-pager.addPage( new s_apV3Page() );
-pager.addPage( new s_apPage() );
-pager.addPage( new s_windEffordPage() );
+try{
+  nodeRedInjectionAddPages();
+}catch(e){
+  pager.addPage( new s_calibrationPage() );
+  pager.addPage( new s_basicSailPage() );
+  pager.addPage( new s_ilooNavPage() );
+  pager.addPage( new s_apV3SvgPage() );
+  pager.addPage( new s_apV3Page() );
+  pager.addPage( new s_apPage() );
+  pager.addPage( new s_windEffordPage() );
+  pager.addPage( new s_blankPage() );
+
+  cl("nodeRedInjectionAddPages() not pressent running on grafana not node-red?");
+}
+// basic test of functions on svg version
 pager.addPage( new s_testFuncsPage() );
-pager.addPage( new s_blankPage() );
+// basic test of functions on three.js glb models
+pager.addPage( new s_threeTestPage() );
 
 // screen manager remote
 const sm = new SM();
@@ -188,6 +261,34 @@ function looperIter(){
   setTimeout( looperIter, 5000 );
 }
 
+
+function doMqtt(){
+  cl("--------------mqtt");
+  cl(mqtt);
+  const url = 'mqtt://192.168.43.1:10883/';
+  const options = {
+    // Clean session
+    clean: true,
+    connectTimeout: 4000,
+    clientId: 'emqx_test'
+  };
+  const client  = mqtt.connect(url, options)
+  client.on('connect', function () {
+  console.log('Connected')
+  // Subscribe to a topic
+  client.subscribe('test', function (err) {
+      if (!err) {
+        // Publish a message to a topic
+        client.publish('test', 'Hello mqtt')
+      }
+    })
+  });
+  cl("--------------mqtt");
+
+
+}
+
+
 var doneFlag = 0;
 $( document ).ready(function() {
   if( doneFlag++ == 1 ){
@@ -196,6 +297,7 @@ $( document ).ready(function() {
   }
 	cl( "ready!" );
 
+  //doMqtt();
   svgTests();
 
 	wsConnectIn( pager );
@@ -245,6 +347,14 @@ $( document ).ready(function() {
   });
 
   setSvgFit();
+
+
+  //cl('---------------------');
+  //cl( THREE );
+  //cl('---------------------');
+
+
+
 });
 
 
@@ -362,9 +472,55 @@ function setSvgFit(){
 
 testFunctionsPart();
 
+
+function otdm( args ){
+  $("#otdmResDyno").html("loading....");
+  sOutSend( {
+    "otdmRequest": args
+  } );
+}
+
+var tml = 0;
+
+function getTagname(state, event) {
+  if( state == "move" ){
+    var tn = new Date().getTime();
+    if( tml > (tn-200) ){
+      return 0;
+    }
+  }
+  tml=tn;
+  var x = event.targetTouches[0].target.tagName;
+  //cl("getTagname");
+  //cl(event);
+  var tr = {
+    "state": state,
+    //"ontouchstart": JSON.stringify(event),
+    "eC": event.touches.length
+
+  }
+  for( var t=0,tc=event.touches.length; t<tc; t++ ){
+    tr["x"+t] = parseInt(event.touches[0].clientX);
+    tr["y"+t] = parseInt(event.touches[0].clientY);
+  }
+
+  sOutSend( tr );
+}
+
 </script>
 </head>
-<body id="mainBodyOfySS">
+<body id="mainBodyOfySS"
+<!--
+  ontouchstart="getTagname('start', event)"
+  ontouchend="getTagname('end', event)"
+  ontouchmove="getTagname('move', event)"
+-->
+  >
+
+
+
+
+<div id="divForJsSrc"></div>
   <!--
 	<div style="display:none;position:absolute;top:200;">
 		test start: <br>
@@ -375,12 +531,12 @@ testFunctionsPart();
 		test end<br>
 	</div>
 -->
-
+<div id="SMIdentDiv" style="z-index:10;position:relative;top:0;left:0;font-size:50vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>
 <div data-role="page">
 
-  <div data-role="popup" id="SMIdentPop" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+  <!--<div data-role="popup" id="SMIdentPop" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
     <div id="SMIdentDiv" style="z-index:10;position:relative;top:0;left:0;font-size:70vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>
-  </div>
+  </div>-->
 
 
   <div
@@ -454,8 +610,25 @@ testFunctionsPart();
 -->
 
   <!--<div id="svgSizing" style="z-index:20;position:absolute;top:0;left:0;"></div>-->
-	<div id="svgDyno" data-enhance="false" data-role="none">--</div>
-	<div id="htmlDyno" style="z-index:2;position:absolute;top:0;left:0;"></div>
+	<div id="svgDyno" data-enhance="false" data-role="none" style="display:inline;">--</div>
+  <div id="htmlDyno" style="z-index:3;position:absolute;top:0;left:0;">
+<center>
+  <img src="images/otWorld1.png" /><br>
+  <h1>oiyshTerminal - ySS_calibration</h1>
+  More about on: <a href="https://github.com/yOyOeK1/oiyshTerminal">github</a>
+  <br>
+  <br>
+  use bottom menu to start...
+
+  <footer>ver: 2301091425</footer>
+
+</center>
+
+    <!--
+    <button onclick='otdm({ "dganById": "*", "oFile": "/data/data/com.termux/files/home/node2otdmTools.fifo"} );'>do query to otdm</button>
+    <div id="otdmResDyno"></div>
+    -->
+  </div>
 	<div class="bottomPanel">
 		<div class="bottomPanelHandle"><img id="bottomPanelMenuImg" src="images/menu.svg"></div>
 		<div class="bottomPanelContainer defBg">
@@ -520,10 +693,6 @@ testFunctionsPart();
 
 		</div>
 	</div>
-
-
-
-
 </body>
 
 </html>
