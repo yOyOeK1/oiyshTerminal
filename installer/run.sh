@@ -16,6 +16,10 @@ mysqlPasswd="pimpimpampam"
 instVer=221221
 
 
+
+isOldTermux=0
+
+
 fD(){
   echo "[deb] "$*
 }
@@ -81,7 +85,7 @@ Do you want to continue?"
 
   fDialYN "$m"
   rout=$?
-  clear
+  #clear
   echo "Dialog done. Result:["$rout"]"
   #exit 1
   if [ $rout -eq 0 ]; then
@@ -357,7 +361,7 @@ fInstallTerSer(){
   . $PREFIX/etc/profile
   echo "installing essensials..."
   apt update
-  apt install clang git wget proot mc iproute2 python -y
+  apt install clang git wget proot mc python proot -y
 
   pkg install termux-services -y
   echo "reloading profile..."
@@ -386,7 +390,7 @@ Hello from oiyshTerminal
 
 -----------------
 
-	ssh		    :2222
+	ssh		   :2222
 	mosquitto	:10883
 	mysqld		:3306
 	grafana		:3000
@@ -477,15 +481,23 @@ fInstallNodeRed(){
   echo "but first update of npm...."
   #rm -rvf $HOME"/.npmMy"
   #proot chown -R 10064:10064 $HOME"/.npmMy"
-  npm config set cache "/data/data/com.termux/files/home/.npmMy" -g
+  npm config -g set cache "/data/data/com.termux/files/home/.npmMy" -g
   npm cache verify -g
-  proot --link2symlink npm i -g npm@8.19.1
+  if [[ "$isOldTermux" == "1" ]]; then
+    npm i -g npm@8.19.1
+  else
+    proot --link2symlink npm i -g npm@8.19.1
+  fi
 
   l="termux node-red@2.1.5 node-red-dashboard node-red-node-mysql node-redcontrib-termux-api"
   for i in $l
   do
     echo "- installing ["$i"]"
-    proot --link2symlink npm i -g $i
+    if [[ "$isOldTermux" == "1" ]]; then
+      npm i -g "$i"
+    else
+      proot --link2symlink npm i -g "$i"
+    fi
   done
 
   echo "setting up services files ....."
@@ -640,6 +652,7 @@ fSetProxy(){
 
   echo "setting proxy for npm in .npmrc ..."
   echo 'proxy='$ip >> ~/.npmrc
+  echo 'http-proxy='$ip >> ~/.npmrc
   echo 'https-proxy='$ip >> ~/.npmrc
   echo 'strict-ssl=false' >> ~/.npmrc
   echo 'registry="http://registry.npmjs.org/"' >> ~/.npmrc
@@ -673,18 +686,57 @@ fSetProxy(){
 
 }
 
+function chkDialog(){
+  `dialog --help`
+  r=$?
+  if [[ "$r" == "0" ]]; then
+    abc=11
+  else
+    echo 'No cmd "dialog" found. Install it!'
+    apt upgrade
+    apt install dialog
+  fi
+}
 
 # check if we are at termux
+
 echo "check if we are at termux ...."
 if env | grep TERMUX > /dev/null; then
 #if [ 1 ]; then
   echo " - ok. It's termux. do normal stuff."
+  chkDialog
 
-  fArgsParse $*
+elif [[ "$SHELL" == "/data/data/com.termux/files/usr/bin/bash" ]]; then
+  echo "I think it's old termux ~0.79"
+  isOldTermux=1
+  if [[ "$#" == 0 ]]; then
+    fDialYN "Should I add repo url to sources.list?"
+    rout=$?
+    if [ $rout -eq 0 ]; then
+      echo "ok so go go go ....."
+      echo "----- set up repository ...."
+
+        echo "
+deb https://packages.termux.dev/apt/termux-main-21 stable main
+deb https://termux.dev/science-packages-21-bin science stable
+deb https://termux.dev/game-packages-21-bin games stable
+deb https://termux.dev/termux-root-packages-21-bin root stable
+        " > $PREFIX/etc/apt/sources.list
+
+
+      pkg update -y && pkg upgrade -y && pkg install dialog
+      echo "[*] Installation complete"
+    fi
+
+  fi
+  chkDialog
+
 else
   echo " - no. It's different enviroment / distro. I will exit"
   fExitNice
+
 fi
 # end pre check
+fArgsParse $*
 
 #fMysqlInit

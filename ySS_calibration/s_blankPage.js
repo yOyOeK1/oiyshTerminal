@@ -3,7 +3,6 @@ class s_blankPage{
 
   get getName(){
     return "blank page";
-
   }
 
   getHtml(){
@@ -18,10 +17,10 @@ class s_blankPage{
     return s_fitscreen;
   }
 
+  svgDynoAfterLoad(){}
+
   onMessageCallBack( r ){
     console.log("s_blankPage got msg ");
   }
-
-
 
 }

@@ -46,39 +46,56 @@ var module = new moduleCollector();
 <script src="s_nodeRedSupport.js"></script>
 
 
+<script>
+// 4 Three.js section
+var t4y = 0;
+var ott = "not set";
+const otcam = 0;
+const otsce = 0;
+const otren = 0;
+const otcom = 0;
+const otframeC=0;
+const threes = {};
+var pager;
+var sm;
+</script>
 
 <script type="importmap">
     {
-        /*
-        "imports": {
-            "three": "./three/three.module.js",
-            "OrbitControls": "./three/jsm/controls/OrbitControls.js",
-            "GLTFLoader": "./three/jsm/loaders/GLTFLoader.js",
-            "RGBELoader": "./three/jsm/loaders/RGBELoader.js",
-            "FontLoader": "./three/jsm/loaders/FontLoader.js",
-            "SVGLoader":  "./three/jsm/loaders/SVGLoader.js"
-        }
-        */
         "imports": {
             "three": "./three.module.js",
             "OrbitControls": "./three_OrbitControls.js",
             "GLTFLoader": "./three_GLTFLoader.js",
             "RGBELoader": "./three_RGBELoader.js",
             "FontLoader": "./three_FontLoader.js",
-            "SVGLoader":  "./three_SVGLoader.js"
+            "SVGLoader":  "./three_SVGLoader.js",
+            "EffectComposer": "./three/jsm/postprocessing/EffectComposer.js",
+            "RenderPass": "./three/jsm/postprocessing/RenderPass.js",
+            "GlitchPass": "./three/jsm/postprocessing/GlitchPass.js",
+            "ShaderPass": "./three/jsm/postprocessing/ShaderPass.js",
+            "OutlinePass": "./three/jsm/postprocessing/OutlinePass.js"
         }
     }
 
+
 </script>
+
+<!--
 <script type="module">
 console.log("---- start import ");
 import * as THREE from "three";
-console.log("---- done import ");
 import { OrbitControls } from 'OrbitControls';
 import { GLTFLoader } from 'GLTFLoader';
 import { RGBELoader } from 'RGBELoader';
 import { FontLoader } from "FontLoader";
 import { SVGLoader } from "SVGLoader";
+import { EffectComposer } from "EffectComposer";
+import { RenderPass } from "RenderPass";
+import { GlitchPass } from 'GlitchPass';
+import { ShaderPass } from 'ShaderPass';
+import { OutlinePass } from "OutlinePass";
+
+console.log("---- done import ");
 console.log('---------------------');
 console.log( THREE );
 console.log('---------------------');
@@ -91,15 +108,22 @@ ott = {
   'GLTFLoader': GLTFLoader,
   'RGBELoader': RGBELoader,
   'FontLoader': FontLoader,
-  'SVGLoader': SVGLoader
+  'SVGLoader': SVGLoader,
+  'EffectComposer': EffectComposer,
+  'RenderPass': RenderPass,
+  'GlitchPass': GlitchPass,
+  'ShaderPass': ShaderPass,
+  'OutlinePass': OutlinePass
 };
 </script>
+-->
 <script src="s_threeTestPage.js"></script>
 
 
 
 
-<!-- moving to dynamic load node-red
+ <!--moving to dynamic load node-red-->
+ <!--
   <script src="s_calibration.js"></script>
   <script src="s_calibrationPage.js"></script>
   <script src="s_basicSail.js"></script>
@@ -112,6 +136,7 @@ ott = {
 
   <script src="s_apV3Svg.js"></script>
   <script src="s_apV3SvgPage.js"></script>
+  <script src="s_apV3Page.js"></script>
 -->
 
 
@@ -139,7 +164,6 @@ ott = {
 
 
 <!--
-<script src="s_apV3Page.js"></script>
 
 <script src="apSolver.js"></script>
 <script src="s_apPage.js"></script>
@@ -163,7 +187,7 @@ ott = {
 <script src="SM.js"></script>
 <script src="m_d3Plot.js"></script>
 
-<script src="three4yss.js"></script>
+<!--<script src="three4yss.js"></script>-->
 <script src="m_MyJustGage.js"></script>
 <script src="sPager.js"></script>
 <script src="mShaders.js"></script>
@@ -183,38 +207,8 @@ ott = {
 
 
 <script>
-var ott = "not set";
-var otcam;
-var otsce;
-var otren;
-var otframeC=0;
-var t4y = new Three4Yss();
-var threes = {};
+var doneFlag = 0;
 
-const pager = new sPager();
-try{
-  nodeRedInjectionAddPages();
-}catch(e){
-  pager.addPage( new s_calibrationPage() );
-  pager.addPage( new s_basicSailPage() );
-  pager.addPage( new s_ilooNavPage() );
-  pager.addPage( new s_apV3SvgPage() );
-  pager.addPage( new s_apV3Page() );
-  pager.addPage( new s_apPage() );
-  pager.addPage( new s_windEffordPage() );
-  pager.addPage( new s_blankPage() );
-
-  cl("nodeRedInjectionAddPages() not pressent running on grafana not node-red?");
-}
-// basic test of functions on svg version
-pager.addPage( new s_testFuncsPage() );
-// basic test of functions on three.js glb models
-pager.addPage( new s_threeTestPage() );
-
-// screen manager remote
-const sm = new SM();
-pager.setScreenManager(sm);
-pager.addPage( sm );
 
 function klikPageNo( No ){
   pager.setPage(No);
@@ -288,9 +282,54 @@ function doMqtt(){
 
 }
 
+</script>
+<script type="module">
+import { Three4Yss } from "./three4yss.js";
+console.log("Three4Yss loaded... :)");
+t4y = new Three4Yss();
+</script>
+<script>
 
-var doneFlag = 0;
+
 $( document ).ready(function() {
+
+  jQuery.fx.interval = Math.round(1000/18);
+
+  cl("document ready !");
+  cl("is t4y ready?");
+  cl(t4y);
+
+
+  //t4y = new Three4Yss();
+  pager = new sPager();
+  try{
+    nodeRedInjectionAddPages();
+  }catch(e){
+    pager.addPage( new s_calibrationPage() );
+    pager.addPage( new s_basicSailPage() );
+    pager.addPage( new s_ilooNavPage() );
+    pager.addPage( new s_apV3SvgPage() );
+    //pager.addPage( new s_apV3Page() );
+    //pager.addPage( new s_apPage() );
+    //pager.addPage( new s_windEffordPage() );
+    //pager.addPage( new s_blankPage() );
+
+    cl("nodeRedInjectionAddPages() not pressent running on grafana not node-red?");
+  }
+  // basic test of functions on svg version
+  pager.addPage( new s_testFuncsPage() );
+  // basic test of functions on three.js glb models
+  pager.addPage( new s_threeTestPage() );
+
+  // screen manager remote
+  sm = new SM();
+  pager.setScreenManager(sm);
+  pager.addPage( sm );
+
+
+
+
+
   if( doneFlag++ == 1 ){
     cl("ready! abord double init ?");
     return 0;
@@ -515,7 +554,6 @@ function getTagname(state, event) {
   ontouchend="getTagname('end', event)"
   ontouchmove="getTagname('move', event)"
 -->
-  >
 
 
 

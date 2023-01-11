@@ -79,19 +79,29 @@ class s_3dcompass1{
 	}
 
 
-	degToThreeDeg( deg ){
-		return (-deg/36)*Math.PI;
-	}
+
 
 	onMessageCallBack( r ){
 
 		if( r.topic == 'and/mag' ){
 			var mag = parseFloat( r.payload );
-			var emp = otsce.getObjectByName("Empty");
-			t4y.doAni( emp, { 'rotateY': this.degToThreeDeg(mag)} );
+			var emp = t4y.otsce.getObjectByName("Empty");
+			t4y.doAni( emp, { 'rotateY': mag} );
+			t4y.putText( "HDG: "+Math.round(r.payload)+"`",{
+					name :"HDGText",
+					color: 0x000000,
+					size: 5,
+					replace: "HDGText",
+					handle: 'cb',
+					x:-20,
+					y:-7,
+					z: -43,
+					ry:-20,
+					extrude: .5
+			});
 
 		}else if( r.topic == 'and/orient/heel'){
-			var emp = otsce.getObjectByName("SpotLight");
+			var emp = t4y.otsce.getObjectByName("SpotLight");
 			$( emp ).attr('positionX', 'setIt');
 			//cl("start ------------");
 			t4y.doAni( emp, { 'positionX': parseFloat(r.payload)} );

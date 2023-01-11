@@ -217,6 +217,9 @@ function mkShader( shType ){
   var inputBgColor = $(document.input).css("background-color");
   var inputColor = $(document.input).css("color");
   //console.log("bg:"+col);
+  if( t4y ){
+    t4y.shaderAction( mkShaderType );
+  }
   if( mkShaderType == 'normal'){
     var bgColor = pager.getPageBGColor;
     $('.ui-page').css( 'background', bgColor );
