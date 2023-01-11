@@ -1,6 +1,6 @@
 ![Welcome in oiyshTerminal - Logo](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/images/otWorld1.png?raw=true)
 
-**yss** Set of helping functions and mechanisms to get web browser page with menu, shaders, colors invert, red-black, rotation, ... Also provide a remote Screens Managment functionality.
+**yss** Set of helping functions and mechanisms to get web browser page with menu, shaders, colors invert, red-black, rotation, ... Also provide a remote Screens Managment functionality (in action: https://www.youtube.com/watch?v=fz_WaZtpGYo).
 
 
 # What is in it ?
