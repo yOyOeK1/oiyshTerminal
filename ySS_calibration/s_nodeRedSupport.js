@@ -1,0 +1,1 @@
+console.log("its a inject from node-red.");

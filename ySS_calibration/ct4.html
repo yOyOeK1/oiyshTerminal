@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <style>
+      canvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.117.1/build/three.min.js"></script>
+    <script>
+
+const scene = new THREE.Scene();
+const canvas = document.getElementById('canvas');
+const renderer = new THREE.WebGLRenderer({ canvas });
+
+const fov = 75;
+const aspect = 2;  // the canvas default
+const near = 0.1;
+const far = 5;
+const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+camera.position.z = 2;
+
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+
+const geometry2 = new THREE.PlaneGeometry(2, 2);
+const plane = new THREE.Mesh(geometry2, material);
+plane.rotation.x = -Math.PI / 2;
+plane.position.y = -0.5;
+scene.add(plane);
+
+
+const light = new THREE.PointLight(0xffffff, 1, 100);
+light.position.set(2, 2, 2);
+scene.add(light);
+
+renderer.shadowMap.enabled = true;
+plane.receiveShadow = true;
+
+function animate() {
+  requestAnimationFrame(animate);
+  cube.rotation.y += 0.01;
+  renderer.render(scene, camera);
+}
+
+animate();
+
+</script>
+
+
+</html>

@@ -1,0 +1,74 @@
+<html>
+
+<head>
+<script src="http://192.168.43.1:3000/public/forms/jquery.min.js"></script>
+<script src="http://192.168.43.1:3000/public/forms/jquery.mobile-1.4.5.min.js"></script>
+
+<link rel="stylesheet" href="http://192.168.43.1:3000/public/forms/jquery.mobile-1.4.5.min.css" />
+
+<script>
+function addSlider(){
+  var tr = `
+
+  <label for="sliTTest">Move slider to test:</label>
+  <input type="range" id="sliTTest" name="sliTTest"
+    min="-100" max="360" value="0"
+    width="700px" height="350px"
+    data-theme="a" data-track-theme="a">
+
+  `;
+  $('#pfs').html(tr).enhanceWithin();
+
+}
+</script>
+</head>
+<body>
+
+<div data-role="page" id="pageMain">
+  <div data-role="panel"
+    id="panelMenu"
+    data-title="Main menu"
+    data-display="overlay"
+    >
+
+      <ul data-role="listview" data-theme="d">
+        <li data-role="list-divider">
+
+          <div class="ui-field-contain">
+            <fieldset data-role="controlgroup" data-type="horizontal">
+                <button onclick="$('#panelMenu').panel('open')">panel open</button>
+                <button onclick="$('#panelMenu').panel('open')">panel open</button>
+
+            </fieldset>
+          </div>
+
+        </li>
+        <li><a href="#" data-rel="close">Cat</a></li>
+        <li><a href="#" data-rel="close">Dog</a></li>
+        <li><a href="#" data-rel="close">Rabbit</a></li>
+        <li><a href="#" data-rel="close">Guinea Pig</a></li>
+        <li><a href="#" data-rel="close">Parrot</a></li>
+        <li data-theme="d" data-rel="close">Cancel</li>
+      </ul>
+
+    </div>
+
+
+  <button onclick="$('#panelMenu').panel('open')">panel open</button>
+  <div id="pfs">
+
+    <label for="sliTTest">1Move slider to test:</label>
+    <input type="range" id="sliTTest" name="sliTTest"
+      min="-100" max="360" value="0"
+      width="700px" height="350px"
+      data-theme="b" data-track-theme="b">
+
+  </div>
+  <button onclick="addSlider()">add slider</button>
+
+</div>
+
+</body>
+
+
+</html>

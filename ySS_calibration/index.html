@@ -13,7 +13,7 @@ https://github.com/fulup-bzh/GeoGate/blob/master/encoder/lib/GG-AisEncode.js
   <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ySS</title>
-  <link rel="icon" type="image/x-icon" href="favicon.png">
+  <link rel="icon" type="image/x-icon" href="icons/favicon.png">
 
 
 
@@ -35,18 +35,12 @@ var module = new moduleCollector();
 
 </script>
 <div id="justGuageTmp"></div>
-<script src="raphael-2.1.4.min.js"></script>
-<script src="justgage.js"></script>
-<script src="ml5.min.js"></script>
-<script src="kalman.min.js"></script>
-
-
 
 <!-- noderedinjectpoint -->
 <script src="s_nodeRedSupport.js"></script>
 
-
 <script>
+
 // 4 Three.js section
 var t4y = 0;
 var ott = "not set";
@@ -73,54 +67,18 @@ var sm;
             "RenderPass": "./three/jsm/postprocessing/RenderPass.js",
             "GlitchPass": "./three/jsm/postprocessing/GlitchPass.js",
             "ShaderPass": "./three/jsm/postprocessing/ShaderPass.js",
-            "OutlinePass": "./three/jsm/postprocessing/OutlinePass.js"
+            "OutlinePass": "./three/jsm/postprocessing/OutlinePass.js",
+
+            "T4y_putText": "./libs/t4y_putText.js",
+            "T4y_shadersDefs": "./libs/t4y_shadersDefs.js",
+            "T4y_shader": "./libs/t4y_shader.js",
+            "T4y_ani": "./libs/t4y_ani.js",
+            "T4y_console": "./libs/t4y_console.js"
         }
     }
 
 
 </script>
-
-<!--
-<script type="module">
-console.log("---- start import ");
-import * as THREE from "three";
-import { OrbitControls } from 'OrbitControls';
-import { GLTFLoader } from 'GLTFLoader';
-import { RGBELoader } from 'RGBELoader';
-import { FontLoader } from "FontLoader";
-import { SVGLoader } from "SVGLoader";
-import { EffectComposer } from "EffectComposer";
-import { RenderPass } from "RenderPass";
-import { GlitchPass } from 'GlitchPass';
-import { ShaderPass } from 'ShaderPass';
-import { OutlinePass } from "OutlinePass";
-
-console.log("---- done import ");
-console.log('---------------------');
-console.log( THREE );
-console.log('---------------------');
-console.log("yyyyyy ott");
-console.log(ott);
-
-ott = {
-  'THREE': THREE,
-  'OrbitControls': OrbitControls,
-  'GLTFLoader': GLTFLoader,
-  'RGBELoader': RGBELoader,
-  'FontLoader': FontLoader,
-  'SVGLoader': SVGLoader,
-  'EffectComposer': EffectComposer,
-  'RenderPass': RenderPass,
-  'GlitchPass': GlitchPass,
-  'ShaderPass': ShaderPass,
-  'OutlinePass': OutlinePass
-};
-</script>
--->
-<script src="s_threeTestPage.js"></script>
-
-
-
 
  <!--moving to dynamic load node-red-->
  <!--
@@ -174,39 +132,41 @@ ott = {
 <script src="s_blankPage.js"></script>
 <script src="nr_reqTest1.js"></script>
 -->
-<script src="s_testFuncs.js"></script>
-<script src="s_testFuncsPage.js"></script>
 
+<script src="libs/raphael-2.1.4.min.js"></script>
+<script src="libs/justgage.js"></script>
+<!--<script src="libs/ml5.min.js"></script>-->
+<script src="libs/kalman.min.js"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/jquery-ui.js"></script>
+<script src="libs/jquery.mobile-1.4.5.min.js"></script>
+<script src="libs/d3.v4.js"></script>
+<script src="libs/svg.min.js"></script>
+<script src="libs/SM.js"></script>
+<script src="libs/m_d3Plot.js"></script>
+<script src="libs/m_MyJustGage.js"></script>
+<script src="libs/sPager.js"></script>
+<script src="libs/mShaders.js"></script>
+<script src="libs/mMath.js"></script>
+<script src="libs/mOperation.js"></script>
+<script src="libs/mWebSockets.js"></script>
+<script src="libs/aggregation.js"></script>
 
-<script src="jquery.min.js"></script>
-<script src="jquery-ui.js"></script>
-<script src="jquery.mobile-1.4.5.min.js"></script>
-
-<script src="d3.v4.js"></script>
-<script src="svg.min.js"></script>
-<script src="SM.js"></script>
-<script src="m_d3Plot.js"></script>
-
-<!--<script src="three4yss.js"></script>-->
-<script src="m_MyJustGage.js"></script>
-<script src="sPager.js"></script>
-<script src="mShaders.js"></script>
-<script src="mMath.js"></script>
-<script src="mOperation.js"></script>
-<script src="mWebSockets.js"></script>
-<!--
-<script src="mqtt.min.js"></<script>
--->
-
-
-<!--
-<link rel="stylesheet" href="jquery-ui.css">
--->
-<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" href="libs/jquery.mobile-1.4.5.min.css" />
 <link rel="stylesheet" href="main.css">
 
 
+
+<script type="module">
+import { Three4Yss } from "./libs/three4yss.js";
+console.log("Three4Yss loaded... :)");
+t4y = new Three4Yss();
+</script>
+
+
 <script>
+
+
 var doneFlag = 0;
 
 
@@ -282,15 +242,6 @@ function doMqtt(){
 
 }
 
-</script>
-<script type="module">
-import { Three4Yss } from "./three4yss.js";
-console.log("Three4Yss loaded... :)");
-t4y = new Three4Yss();
-</script>
-<script>
-
-
 $( document ).ready(function() {
 
   jQuery.fx.interval = Math.round(1000/18);
@@ -298,6 +249,8 @@ $( document ).ready(function() {
   cl("document ready !");
   cl("is t4y ready?");
   cl(t4y);
+  cl("t4y.getCameraUse");
+  cl(t4y.getOtCam);
 
 
   //t4y = new Three4Yss();
@@ -305,21 +258,22 @@ $( document ).ready(function() {
   try{
     nodeRedInjectionAddPages();
   }catch(e){
-    pager.addPage( new s_calibrationPage() );
-    pager.addPage( new s_basicSailPage() );
-    pager.addPage( new s_ilooNavPage() );
-    pager.addPage( new s_apV3SvgPage() );
+    //pager.addPage( new s_calibrationPage() );
+    //pager.addPage( new s_basicSailPage() );
+    //pager.addPage( new s_ilooNavPage() );
+    //pager.addPage( new s_apV3SvgPage() );
     //pager.addPage( new s_apV3Page() );
     //pager.addPage( new s_apPage() );
     //pager.addPage( new s_windEffordPage() );
     //pager.addPage( new s_blankPage() );
 
     cl("nodeRedInjectionAddPages() not pressent running on grafana not node-red?");
+    cl(e);
   }
   // basic test of functions on svg version
-  pager.addPage( new s_testFuncsPage() );
+  //pager.addPage( new s_testFuncsPage() );
   // basic test of functions on three.js glb models
-  pager.addPage( new s_threeTestPage() );
+  //pager.addPage( new s_threeTestPage() );
 
   // screen manager remote
   sm = new SM();
@@ -480,12 +434,22 @@ function setSvgFit(){
 
     sd.height(currentWidth);
     sd.width(currentHeight);
-
     sd.css({
       'position':'absolute',
       'top': Math.round(availableHeight/2 -currentWidth/2),
       'left': Math.round(availableWidth/2 - currentHeight/2)
     });
+
+    if( 0 ){
+      $("#otThreeLogo").height(currentHeight);
+      $("#otThreeLogo").width(currentWidth);
+      $("#otThreeLogo").css({
+        'position':'absolute',
+        'top': Math.round(availableHeight/2 -currentWidth/2),
+        'left': Math.round(availableWidth/2 - currentHeight/2)
+      });
+    }
+
     //z-index:10;position:relative;top:0;left:0;
 
     //sdp.width(availableWidth-100);
@@ -509,7 +473,7 @@ function setSvgFit(){
 }
 
 
-testFunctionsPart();
+//testFunctionsPart();
 
 
 function otdm( args ){
@@ -591,32 +555,32 @@ function getTagname(state, event) {
 
             <button title="full screen"
               onclick="mkfullscreen()">
-              <img src="./icons/fullscreen.svg">
+              <img src="./icons/fullscreen.svg">‎
             </button>
 
-            <button title="invert"
+            <button title="invert" id="mBtShaInv"
               onclick="mkShader('invert')">
-              <img src="./icons/arrow-down-up.svg">
+              <img src="./icons/arrow-down-up.svg">‎
             </button>
 
-            <button title="black red"
+            <button title="black red" id="mBtShaBlaRed"
               onclick="mkShader('blackRed')">
-              <img src="./icons/moon-stars.svg">
+              <img src="./icons/moon-stars.svg">‎
             </button>
 
             <button title="normal"
               onclick="mkShader('normal')">
-              <img src="./icons/journal-check.svg">
+              <img src="./icons/journal-check.svg">‎
             </button>
 
             <button title="Screens manager"
               onclick="sm.startIt()">
-              <img src="./icons/cast.svg">
+              <img src="./icons/cast.svg">‎
             </button>
 
             <button title="rotate"
               onclick="mkShader('rotate')">
-              <img src="./icons/bootstrap-reboot.svg">
+              <img src="./icons/bootstrap-reboot.svg">‎
             </button>
 
 

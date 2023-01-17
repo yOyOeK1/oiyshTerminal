@@ -1,0 +1,61 @@
+<html>
+<script>
+
+
+// Set the frame rate to 24 fps
+const frameRate = 1000 / 10;
+
+// Set the width of the sine wave in characters
+const width = 1;
+
+// Set the starting position of the sine wave
+let x = 0;
+
+// Set the frequency of the sine wave
+const frequency = 0.1;
+
+// Set the amplitude of the sine wave
+const amplitude = 10;
+
+// Create a function to draw the sine wave
+const drawSineWave = () => {
+  // Clear the console
+  //console.clear();
+
+  // Create an empty string to hold the sine wave
+  let sineWave = "";
+
+  // Loop through the width of the sine wave
+  for (let i = 0; i < width; i++) {
+    // Calculate the y value of the sine wave at this position
+    let y = Math.sin((x + i) * frequency) * amplitude + amplitude;
+
+    // Round the y value to the nearest integer
+    y = Math.round(y);
+
+    // Add a "*" character at the calculated y position
+    for (let j = 0; j < y; j++) {
+      sineWave += " ";
+    }
+    sineWave += "*\n";
+  }
+
+  // Increment the x position of the sine wave
+  x++;
+
+  // Log the sine wave to the console
+  console.log(sineWave);
+};
+
+// Call the drawSineWave function at a regular interval
+function a(){
+  setInterval(drawSineWave, frameRate);
+}
+
+
+a();
+</script>
+<body>
+<button onclick="a()">a</button>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <style>
+      canvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.117.1/build/three.min.js"></script>
+    <script>
+
+
+
+    // Set up the scene
+    const scene = new THREE.Scene();
+
+    // Set up the camera
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    // Set up the renderer
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Set up the cube
+    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+    const cubeMaterial = new THREE.MeshLambertMaterial({color: 0x00ff00});
+    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    scene.add(cube);
+
+    // Set up the light source
+    const light = new THREE.PointLight(0xffffff, 1, 100);
+    light.position.set(5, 5, 5);
+    scene.add(light);
+
+    // Set up the shadow renderer
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    light.castShadow = true;
+    cube.receiveShadow = true;
+
+    // Set up the orbit controls
+    //const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    // Render loop
+    const animate = function () {
+      requestAnimationFrame(animate);
+
+      // Rotate the cube
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+
+      // Update the orbit controls
+      //controls.update();
+
+      // Render the scene
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+
+
+</script>
+
+
+</html>

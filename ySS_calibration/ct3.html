@@ -1,0 +1,79 @@
+<html>
+<style>
+#sine-wave-canvas {
+  background-color: white;
+}
+
+</style>
+<body>
+  <canvas id="sine-wave-canvas" width="800" height="200"></canvas>
+
+</body>
+
+
+
+
+<script>
+
+
+
+
+// Get the canvas element
+const canvas = document.getElementById("sine-wave-canvas");
+
+// Get the canvas context
+const ctx = canvas.getContext("2d");
+
+// Set the frame rate to 24 fps
+const frameRate = 1000 / 24;
+
+// Set the width of the sine wave in characters
+const width = 80;
+
+// Set the starting position of the sine wave
+let x = 0;
+
+// Set the frequency of the sine wave
+const frequency = 0.1;
+
+// Set the amplitude of the sine wave
+const amplitude = 20;
+
+// Create a function to draw the sine wave
+const drawSineWave = () => {
+  // Clear the canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Set the font and text alignment
+  ctx.font = "16px monospace";
+  ctx.textAlign = "center";
+
+  // Loop through the width of the sine wave
+  for (let i = 0; i < width; i++) {
+    // Calculate the y value of the sine wave at this position
+    let y = Math.sin((x + i) * frequency) * amplitude + amplitude;
+
+    // Round the y value to the nearest integer
+    y = Math.round(y);
+
+    // Draw a "*" character at the calculated y position
+    ctx.fillText("*", (i + 0.5) * (canvas.width / width), y * (canvas.height / (amplitude * 2)));
+  }
+
+  // Increment the x position of the sine wave
+  x++;
+};
+
+// Call the drawSineWave function at a regular interval
+function a(){
+  setInterval(drawSineWave, frameRate);
+}
+
+a();
+
+
+
+</script>
+
+
+</html>
