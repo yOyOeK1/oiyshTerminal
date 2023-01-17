@@ -1,11 +1,11 @@
 ![Welcome in oiyshTerminal - Logo](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/images/otWorld1.png?raw=true)
 
-**yss** Set of helping functions and mechanisms to get web browser page with menu, shaders, colors invert, red-black, rotation, ... Also provide a remote Screens Managment functionality (in action: https://www.youtube.com/watch?v=fz_WaZtpGYo).
+**yss** Is a set of helping functions and mechanisms to get a web browser page with menu, shaders, colors invert, red-black, rotation, ... It also provides a remote Screens Managment functionality (in action: https://www.youtube.com/watch?v=fz_WaZtpGYo).
 
 
 # What is in it ?
 
-It give you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js, websocket, rapheal, ml5, .....
+It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js, websocket, rapheal, ml5, .....
 
 ![yss menu open](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/screenShots/ilooNav_withJQMobile.png?raw=true)
 
@@ -41,7 +41,7 @@ class s_blankPage{
 
 }
 ```
-You need to add your stuff in sections.
+You need to add your stuff in adequate sections.
 
 
 # On top off .svg files
@@ -50,7 +50,7 @@ examples: ./s_testFunctsPage.js or ./s_basicSailPage.js
 
 ![yss basic sail page](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/screenShots/basicSailing_newMenu.png?raw=true)
 
-This is a s_basicSailPage.js as a .svg page example.
+This is a s_basicSailPage.js it is a .svg page example.
 
 
 
@@ -60,17 +60,17 @@ examples: ./s_illoNav3D.js or ./s_3dCompass1.js
 
 ![yss iloo nav 3d page](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/screenShots/ilooNav3D_ver0.1.png?raw=true)
 
-This is a s_basicSailPage.js as a .svg page example.
+This is a s_threeTestPage.js it is a Three.js page example.
 
 
-Main Atraction is handled by instance in "t4y"
+Main Atraction is handled by instance in "t4y" variable.
 
-###Function / methodes:
+##Functions / methodes of t4y:
 
 ```
 t4y.getHtml();
 ```
-Return getHtml data needet in getHtml() of your page
+Returns string getHtml data needed in getHtml() of your page.
 
 ```
 t4y.getHtmlAfterLoad( 's_ilooNav3D.glb',
@@ -82,7 +82,7 @@ t4y.getHtmlAfterLoad( 's_ilooNav3D.glb',
     'camDeb': false
   });
 ```
-To getHtmlAfterLoad in page building step. To get working 3d model from file, 's_ilooNav3D.glb' - file name to load in page. And set some attributes.
+To getHtmlAfterLoad in page building step. To get working 3d model from file, 's_ilooNav3D.glb' and set some attributes.
 
 ```
 t4y.doAni( t4y.otsce.getObjectByName("Empty"), {
@@ -105,14 +105,14 @@ t4y.putText( "heel: 11",{
     extrude: .5
 });
 ```
-Replace text in current scean. Will look for HeelText to replace it with this one with name HeelText. handle: [cb|lb|lt].
+Replace text in current scean. Will look for HeelText to replace it with this one with name HeelText. handle: [cb|lb|lt|rt|rb] aligning.
 
 
 
 # TODO
 
 * 3d compass is super hi load on ecosia.
-* three.js don't scale dawn frame when it's not in aspect. When it's to narrow it's bed.
+* three.js don't scale down frame when it's not in aspect. When it's to narrow it's bed.
 * t4y need sequence loader to unify variables for async actions :/ or some callback system that it's ready after t4y.getHtmlAfterLoad();
 * otdm-tools integration to make query about what is possible to use now.
 
