@@ -1,0 +1,163 @@
+echo "START postrm args"$*
+tr="------------postrm
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+------------- postrm END"
+
+echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg_postrm.log"
+echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
+
+
+
+case "$1" in
+    configure)
+     ;;
+    abort-install)
+      echo "DETECT ABORD-INSTALL"
+    ;;
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+
+
+
+
+#is a path to otdm home
+OTAPPHOME="/data/data/com.termux/files/home/.otdm/grafana-ds-MySql"
+
+# test
+#dbName="MySQLatNex7"
+# production
+dbName="MySQL-OT"
+
+
+echo "include oiyshTerminal tools..."
+. /data/data/com.termux/files/usr/bin/otdmGra.sh
+echo "try 2..."
+. ../data/data/com.termux/files/usr/bin/otdmGra.sh
+
+
+
+echo "otTest... postrm"
+tR=`otTest`
+tE=$?
+echo $tR
+
+echo "test Exit: ["$tE"]"
+if [[ "$tE" == "1" ]]; then
+  echo "test ok."
+
+else
+  otDE "Error exit 69"
+  exit 69
+fi
+
+otGraPreCheck
+r=$?
+if [ $r ]; then
+  echo "  OK"
+else
+  echo "Error - pre check grafana faild. No response at [http://"$otGraHost"]. exit 30"
+  exit 30
+fi
+
+
+echo "colecting variables...."
+
+jFromGra=`otGraDBByName "$dbName"`
+jFromGraDSUid=`otJUidByName "$jFromGra" "$dbName"`
+jFromInsFN=$OTAPPHOME"/aferInject_org.json"
+
+echo "working with installation file ["$jFromInsFN"]"
+
+if [ -f $jFromInsFN ]; then
+  echo "- org json in in file system!"
+else
+  echo "Error - no org json from installation proces. ["$jFromInsFN"] . exit 31"
+  exit 31
+fi
+
+jFromIns=`cat $jFromInsFN`
+jFromInsDSUid=`otJUidByName "$jFromIns" "$dbName"`
+
+jUidSame=`otIsEq "$jFromGraDSUid" "$jFromInsDSUid"`
+
+jFromGraWC=`echo "$jFromGra" | wc`
+jFromInsWC=`echo "$jFromIns" | wc`
+jWCSame=`otIsEq "$jFromGraWC" "$jFromInsWC"`
+
+jGmd5=`echo $jFromIns | md5sum`
+jImd5=`echo $jFromGra | md5sum`
+jMd5Same=`otIsEq "$jGmd5" "$jImd5"`
+
+idI=`otJIdByName "$jFromIns" "$dbName"`
+idG=`otJIdByName "$jFromGra" "$dbName"`
+idSame=`otIsEq "$idG" "$idI"`
+echo "
+datasource: ["$dbName"]
+uid from [grafana]:[installation]
+  same: "$jUidSame" ["$jFromGraDSUid"]:["$jFromInsDSUid"]
+  id:
+  same: "$idSame" ["$idG"]:["$idI"]
+  md5sums:
+  same: "$jMd5Same" ["$jGmd5"]:["$jImd5"]
+  wc compare ....
+  same: "$jWCSame" ["$jFromGraWC"]:["$jFromInsWC"]"
+
+
+if [[ "$jFromInsDSUid" == "" ]]; then
+  echo "Error - jFromInsDSUid can't be empty! exit 40"
+  exit 40
+fi
+
+if [[ "$jFromGraDSUid" == "" ]]; then
+  echo "Error - jFromGraDSUid can't be empty! I was not able to find it in grafana
+    exit 41."
+  exit 41
+fi
+
+if [[ "$jUidSame" == "0" ]]; then
+  echo "Error - installation and graphana uid's are different :/ ["$jFromGraDSUid"]:["$jFromInsDSUid"]  [gra:ins] exit 42"
+  exit 42
+fi
+
+if [[ "$jMd5Same" == "0" ]]; then
+  echo "ERROR - Diff from grafana vs installer stored data."
+  diff  <(echo "$jFromGra" | jq '.' ) <(echo "$jFromIns"  | jq '.')
+  echo -e "\n exit 43"
+  exit 43
+fi
+
+
+
+echo "what else?"
+
+
+echo "inject query to delete datasource from grafana...."
+
+u=$otGraApiUrl"/datasources/"$idG
+r=`curl -X DELETE \
+-H 'Accept: application/json' \
+-H 'Content-Type: application/json' \
+"$u" 2> /dev/null`
+
+echo "result of injectniot \n\n$r\n "
+
+
+
+echo "postrm DONE"
+echo "START postrm args"$*

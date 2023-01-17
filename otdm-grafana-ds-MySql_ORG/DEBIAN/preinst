@@ -1,0 +1,133 @@
+
+
+echo "- making directory..."
+mkdir -p "/data/data/com.termux/files/home/tmp"
+echo "DONE"
+
+tr=$DPKG_MAINTSCRIPT_PACKAGE"------------peinst
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+"$DPKG_MAINTSCRIPT_PACKAGE"------------- preinst END"
+echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg_preinst.log"
+echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
+
+
+#is a path to otdm home
+OTAPPHOME="/data/data/com.termux/files/home/.otdm/graInjDatSouMysql"
+
+# test
+#dbName="MySQLatNex7"
+# production
+dbName="MySQL-OT"
+
+
+
+echo "include oiyshTerminal tools..."
+. /data/data/com.termux/files/usr/bin/otdmGra.sh
+echo "try 2..."
+. ../data/data/com.termux/files/usr/bin/otdmGra.sh
+
+
+otDI "otTest... preinstall"
+tR=`otTest`
+tE=$?
+echo $tR
+
+echo "test Exit: ["$tE"]"
+if [[ "$tE" == "1" ]]; then
+  echo "test ok."
+
+else
+  otDE "Error exit 79"
+  exit 79
+fi
+
+
+
+u=$otGraApiUrl"/datasources"
+otDI "url from deb is ["$u"]"
+
+otDI "checking if grafana is there al good ..."
+jDBS=`otCurlGET "$u"`
+echo "got response\n"$jDBS"\n"
+#echo "["$jDBS"]"
+
+otIsJSON "$jDBS"
+r=$?
+#echo "res[$r]"
+if [[ "$jDBS" == "" ]]; then
+  echo "Error - no response from grafana host. exit 101"
+  exit 101
+fi
+
+
+
+
+if [[ "$r" == "1" ]]; then
+  otDIs "  - yes it's a json"
+  dbsList=`otJGetVBK "$jDBS" ".[].name"`
+  if [[ "$dbsList" == "" ]]; then
+    otDIs "grafana datasource is empty."
+  else
+    otDIs "got some grafana datasource!"
+    otDIs "list of databases in grafana:
+    ["$dbsList"]"
+  fi
+
+else
+  otDE "ERROR - no grafana at ["$otGraHost"] or no json in
+    response. exit 1"
+  exit 1
+fi
+
+
+otDI "getting json from grafana for storage and checks ..."
+
+# test
+dbName="MySQLatNex7"
+# production
+dbName="MySQL-OT"
+qr=`otGraDBByName "$dbName"`
+
+
+otIsJSON "$qr"
+r=$?
+if [[ "$r" == "1" ]]; then
+  otDIs "got json."
+  #echo $qr
+else
+  otDE "Error - no there is no json uuu not good. Abord!
+    exit 2"
+  exit 2
+fi
+
+dbuid=`otJGetVBK "$qr" ".uid"`
+otD "for datasource name:[$dbName] got -> dbUid:["$dbuid"]"
+if [[ "$dbuid" == "null" || "$dbuid" == "" ]]; then
+  otDIs "OK ---------------\n
+  It's looking that we have green light ! no
+  db at that name.\n\n
+  go go go GO go..\n"
+else
+  otDE "ERROR - you are trying to install injection of
+  mysql datasource in grafana. But there is one datasource
+  with the same name. [$dbName]
+  Abord!
+exit 3"
+  exit 3
+
+fi
+
+
+
+
+echo "preinst DONE"

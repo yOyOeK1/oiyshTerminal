@@ -1,0 +1,10 @@
+Package: otdm-grafana-ds-mysql
+Version: 0.1
+Section: base
+Priority: optional
+Architecture: all
+#Depends: jq
+Pre-Depends: otdm-tools (>=0.12)
+Maintainer: yoyoek@wp.pl
+Description: Grafana datasource injection to have predictable datasource. When It will dpkg will add different otdm-stuffs then it will have fast comon ds to mysql. It's adding mysql datasource in
+  to a Grafana. It will be used in rest of otdm stuff.

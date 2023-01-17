@@ -1,0 +1,112 @@
+#! /bin/bash
+
+#set -e
+
+OTAPPNAME="grafana-ds-MySql"
+
+
+dbName="MySQL-OT"
+envio=`env`
+# itWillDo - operations around grafana / datasource by name injection
+# - check if there is grafana
+# - check if there is NO ds with the name
+# - making backup"
+otdmTools.py -dpkg "$envio" -args "$*" -w gdsByName -by "$dbName"
+
+echo "For now That it..."
+exit 1
+## OTDM ##
+
+
+
+
+
+
+
+
+
+
+
+# include otdmSh.sh as a library to use
+if [[ -f "/data/data/com.termux/files/usr/bin/otdmSh.sh" ]]; then
+  . /data/data/com.termux/files/usr/bin/otdmSh.sh
+fi
+#dev
+if [[ -f "/home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin/otdmSh.sh" ]]; then
+  . /home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin/otdmSh.sh
+fi
+
+
+
+
+
+echo -n "checking if there is grafana ..."
+otdmTools.py -testCurl grafana > /dev/null
+exitIf "$?" "Grafana not responding chk config file? Internet connection?"
+echo "OK"
+
+echo "for now --------------"
+exit 1
+
+
+
+#is a path to otdm home
+OTHOME="/data/data/com.termux/files/home/.otdm"
+OTAPPHOME=$OTHOME"/"$OTAPPNAME
+mTitle="preinst "$OTAPPNAME" args:"$1
+# test
+#dbName="MySQLatNex7"
+# production
+dbName="MySQL-OT"
+
+tr=$mTitle"\n------------------------------
+"$DPKG_MAINTSCRIPT_PACKAGE"\n"`date`"\n\nargs:
+"$*"\n\npwd:\n"`pwd`"\n\nenv:\n"`env`"\n
+"$DPKG_MAINTSCRIPT_PACKAGE"------------- postinst END" >> $OTAPPHOME"/dpkg_envs_args.log"
+
+
+
+############################################################3
+
+echo " [ START ] "$mTitle
+
+
+tDir=`mktemp -d`
+#echo "tmp dir [$tDir]"
+
+
+echo "Expecting error..."
+#set -b
+echo "otdmTools.py -export grafana -expW dsByName -file "$tDir"/is_there_res.json -eBy "$dbName
+sr=`otdmTools.py -export grafana -expW dsByName -file $tDir"/is_there_res.json" -eBy $dbName`
+r=$?
+#echo "got [$r]"
+echo -e $sr | grep Err
+if [[ "$r" == "2" ]]; then
+  exitMsg "Not good response from server." 1
+elif [[ "$r" == "1" ]]; then
+  echo "It was expected. All good, grafana / datasource with name ["$dbName"] is not there."
+elif [[ "$r" == "0" ]]; then
+  exitMsg "There is grafana / datasource with name ["$dbName"]." 1
+fi
+#set -e
+#if ; then
+#  echo "Error - there is one grafana / datasource with name ["$dbName"]. Abord."
+#  exit 1
+#fi
+
+echo "All good?"
+echo "exit for now neet to write it.."
+exit 1
+
+echo "We will make backup ... of orginal status of a datasources."
+otdmTools.py -mkbp gds
+
+echo "go go go ...."
+
+echo "preinst DONE"
+
+
+echo "ENDS preinst args:"$*
+
+echo " [ END ] "$mTitle

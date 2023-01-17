@@ -1,4 +1,5 @@
 
+
 tr=$DPKG_MAINTSCRIPT_PACKAGE"------------postints
 "`date`"
 
@@ -20,7 +21,7 @@ echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
 echo "check if jq is postinst..."
 if which jq 2> /dev/null; then
   echo "  OK"
-  
+
 else
   echo "  no luck :(\ntrying if there is pkg?"
   if which pkg 2> /dev/null; then
@@ -49,4 +50,3 @@ else
   pip install requests
 fi
 echo "pip section .......OK"
-

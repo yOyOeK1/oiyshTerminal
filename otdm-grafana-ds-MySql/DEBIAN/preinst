@@ -1,0 +1,37 @@
+#! /bin/bash
+set -e
+# to disable exit on error
+#set +e
+echo "---------------------------------------"
+echo "|  preinst args: [$*]-c($#)         "
+echo "---------------------------------------"
+
+
+function otdmGDSpreinst(){
+  # OTDM -- inject grafana / datasource / byName ##
+  # itWillDo:
+  # - check if there is grafana host
+  # - check if there is NO ds with the name
+  # - making backup
+  denv=`env`
+  otdmTools.py -dpkg "$denv" -args "$*" -w gdsByName -by "MySQL-OT"
+}
+
+
+case "$1" in
+    install)
+
+      #install if clean
+      if [[ "$#" == 1 ]]; then
+        otdmGDSpreinst $*
+      else
+        echo "If you want to install from removed.
+          It will not work. Need to purge it."
+      fi
+
+    ;;
+    *)
+        echo "preinst called with unknown argument \`$1'" >&2
+        #exit 1
+    ;;
+esac

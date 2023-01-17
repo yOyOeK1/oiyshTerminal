@@ -1,0 +1,66 @@
+#! /bin/bash
+set -e
+echo "---------------------------------------"
+echo "|  postinst args: [$*]-c($#)         "
+echo "---------------------------------------"
+
+
+OTDMHOME="/data/data/com.termux/files/home/.otdm"
+APPNAME="grafana-ds-MySql"
+dsByName="MySQL-OT"
+TD=$OTDMHOME"/"$APPNAME
+injectFile=$TD"/gds_mysql_ot_injReady.json"
+injResFile=$TD"/mysql-ot_injRes_`date '+%Y%m%d%H%M%S'`.json"
+rFile=$TD"/mysql-ot.json"
+if [[ -d /OT ]]; then
+  injectFile="/OT/otdm-grafana-ds-MySql"$TD"/gds_mysql_ot_injReady.json"
+fi
+
+
+function otdmGDSpostinst(){
+  # OTDM -- inject grafana / datasource ##
+  # itWillDo:
+  # - check if not installed now
+  # - inject gds
+  # - get how it's stored
+  # - extract data for other apps
+  #
+  # checking if for sure can ?
+  if [[ -f $rFile"_uid" ]]; then
+    echo "There is a installed version now so what you are doing?"
+    echo "Purge it purge. first if want to upgrade in grafana"
+  else
+    # inject gds
+    echo "[ 1 / 4 ] Injecting...."
+    otdmTools.py -import grafana -impW ds -iFile "$injectFile" -file "$injResFile"
+    # get how it's stored
+    echo "[ 2 / 4 ] Getting it as it was added."
+    otdmTools.py -export grafana -expW dsByName -eBy "$dsByName" -file "$rFile"
+    # extracting data
+    echo "[ 3 / 4 ] Extracting data from result."
+    otdmTools.py -extract gdsInjRes -if "$rFile"
+
+    echo "[ 4 / 4 ] Adding note about installation."
+    otdmTools.py -addNote "Installed: "$APPNAME" :)"
+  fi
+
+}
+
+
+case "$1" in
+    "configure "|configure)
+
+      if [[ "$#" == "2" ]]; then
+        #installation
+        otdmGDSpostinst
+        echo "no upgrades.."
+        
+      fi
+
+      ## configure END
+    ;;
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        #exit 1
+    ;;
+esac

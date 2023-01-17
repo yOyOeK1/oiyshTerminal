@@ -1,0 +1,32 @@
+dpkg (0.22.1) unstable; urgency=low
+
+  [ B.Ceglik ]
+  TODO - conversion from export to injection.
+  * checking new path:
+  vanilla -> install
+  installed -> remove
+  installed -> purge
+  installed -> upgrade
+  installed -> reinstall
+  removed -> install not workin ....
+
+  * good deb flow info https://wiki.debian.org/MaintainerScripts
+  * good deb flow info https://people.debian.org/~srivasta/MaintainerScripts.html
+  * Up version to same as otdmTools.py
+
+  -- B.Ceglik <yoyoek@wp.pl  22-12-30
+
+dpkg (0.6) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * Up version analizing stats...
+  only preinst and it's full by otdmTools.py
+
+  -- B.Ceglik <yoyoek@wp.pl  22-12-28
+
+dpkg (0.5) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * deb_stats. Step one make it! F%#@() drawing in ./
+
+  -- B.Ceglik <yoyoek@wp.pl  22-12-28

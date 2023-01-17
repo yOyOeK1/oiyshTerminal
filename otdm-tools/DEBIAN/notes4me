@@ -1,2 +1,13 @@
 #force to remove
 #dpkg -r --force-remove-reinstreq otdmgrainjdatsoumysql
+
+
+
+'
+#install OK
+preinst install   ->    postinst install
+
+#OK remove
+
+
+'

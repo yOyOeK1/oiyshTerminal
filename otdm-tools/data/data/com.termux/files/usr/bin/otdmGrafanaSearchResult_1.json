@@ -1,0 +1,282 @@
+[
+  {
+    "id": 10,
+    "uid": "Osr8UUzgz",
+    "title": "iloo dashboards",
+    "uri": "db/iloo-dashboards",
+    "url": "/dashboards/f/Osr8UUzgz/iloo-dashboards",
+    "slug": "",
+    "type": "dash-folder",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 5,
+    "uid": "1wEK_1kgk",
+    "title": "Weather stuff",
+    "uri": "db/weather-stuff",
+    "url": "/dashboards/f/1wEK_1kgk/weather-stuff",
+    "slug": "",
+    "type": "dash-folder",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 14,
+    "uid": "-Oh3cViRz",
+    "title": "ajax uff to db source :P",
+    "uri": "db/ajax-uff-to-db-source-p",
+    "url": "/d/-Oh3cViRz/ajax-uff-to-db-source-p",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "playground"
+    ],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 7,
+    "uid": "Ks_fQ-kRz",
+    "title": "Dexter laboratory - huahahahaha",
+    "uri": "db/dexter-laboratory-huahahahaha",
+    "url": "/d/Ks_fQ-kRz/dexter-laboratory-huahahahaha",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 9,
+    "uid": "BlridskRk",
+    "title": "Dexter laboratory - location",
+    "uri": "db/dexter-laboratory-location",
+    "url": "/d/BlridskRk/dexter-laboratory-location",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 13,
+    "uid": "pM75ygmRz",
+    "title": "e01Mux",
+    "uri": "db/e01mux",
+    "url": "/d/pM75ygmRz/e01mux",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "e01Mux"
+    ],
+    "isStarred": true,
+    "sortMeta": 0
+  },
+  {
+    "id": 8,
+    "uid": "b-DPUfzRk",
+    "title": "Home",
+    "uri": "db/home",
+    "url": "/d/b-DPUfzRk/home",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 18,
+    "uid": "72rN-n-7z",
+    "title": "Influx - playground",
+    "uri": "db/influx-playground",
+    "url": "/d/72rN-n-7z/influx-playground",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 1,
+    "uid": "tIWINtkgz",
+    "title": "Machines psutil",
+    "uri": "db/machines-psutil",
+    "url": "/d/tIWINtkgz/machines-psutil",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "diagnostics"
+    ],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 15,
+    "uid": "l9Z1DvmRz",
+    "title": "Mysql query playground",
+    "uri": "db/mysql-query-playground",
+    "url": "/d/l9Z1DvmRz/mysql-query-playground",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "playground"
+    ],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 17,
+    "uid": "-k0pDSgRk",
+    "title": "node RED",
+    "uri": "db/node-red",
+    "url": "/d/-k0pDSgRk/node-red",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "playground"
+    ],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 11,
+    "uid": "ss3u88zRz",
+    "title": "Playground",
+    "uri": "db/playground",
+    "url": "/d/ss3u88zRz/playground",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "folderId": 10,
+    "folderUid": "Osr8UUzgz",
+    "folderTitle": "iloo dashboards",
+    "folderUrl": "/dashboards/f/Osr8UUzgz/iloo-dashboards",
+    "sortMeta": 0
+  },
+  {
+    "id": 19,
+    "uid": "xr-Fhs-7z",
+    "title": "Resources",
+    "uri": "db/resources",
+    "url": "/d/xr-Fhs-7z/resources",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": true,
+    "sortMeta": 0
+  },
+  {
+    "id": 12,
+    "uid": "9sthsXkgz",
+    "title": "Server diagnostics",
+    "uri": "db/server-diagnostics",
+    "url": "/d/9sthsXkgz/server-diagnostics",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "diagnostics"
+    ],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 23,
+    "uid": "tXSvGr8nz",
+    "title": "Stream autopilot - debug",
+    "uri": "db/stream-autopilot-debug",
+    "url": "/d/tXSvGr8nz/stream-autopilot-debug",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 16,
+    "uid": "QMVZvWWgk",
+    "title": "To do",
+    "uri": "db/to-do",
+    "url": "/d/QMVZvWWgk/to-do",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 3,
+    "uid": "tRXxshzRk",
+    "title": "Weather place",
+    "uri": "db/weather-place",
+    "url": "/d/tRXxshzRk/weather-place",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "weather"
+    ],
+    "isStarred": true,
+    "folderId": 5,
+    "folderUid": "1wEK_1kgk",
+    "folderTitle": "Weather stuff",
+    "folderUrl": "/dashboards/f/1wEK_1kgk/weather-stuff",
+    "sortMeta": 0
+  },
+  {
+    "id": 4,
+    "uid": "sTlw11zgk",
+    "title": "Wind guru forcast",
+    "uri": "db/wind-guru-forcast",
+    "url": "/d/sTlw11zgk/wind-guru-forcast",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "weather"
+    ],
+    "isStarred": true,
+    "folderId": 5,
+    "folderUid": "1wEK_1kgk",
+    "folderTitle": "Weather stuff",
+    "folderUrl": "/dashboards/f/1wEK_1kgk/weather-stuff",
+    "sortMeta": 0
+  },
+  {
+    "id": 25,
+    "uid": "yTzOz47Vz",
+    "title": "ws tests",
+    "uri": "db/ws-tests",
+    "url": "/d/yTzOz47Vz/ws-tests",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 20,
+    "uid": "wuB9PnBnz",
+    "title": "ySS",
+    "uri": "db/yss",
+    "url": "/d/wuB9PnBnz/yss",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  },
+  {
+    "id": 24,
+    "uid": "ZeBOz5mVz",
+    "title": "yss debuging mag error on heel",
+    "uri": "db/yss-debuging-mag-error-on-heel",
+    "url": "/d/ZeBOz5mVz/yss-debuging-mag-error-on-heel",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "sortMeta": 0
+  }
+]

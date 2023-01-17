@@ -1,0 +1,5 @@
+It's a prototype for otdmDriver to do work at *
+
+
+class otdmProto:
+  def 

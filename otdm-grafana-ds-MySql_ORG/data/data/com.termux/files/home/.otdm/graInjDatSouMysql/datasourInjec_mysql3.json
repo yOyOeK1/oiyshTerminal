@@ -1,0 +1,22 @@
+{
+  "name": "MySQL-OT",
+  "type": "mysql",
+  "access": "proxy",
+  "url": "127.0.0.1:3306",
+  "password": "pimpimpampam",
+  "user": "ykpu",
+  "database": "svoiysh",
+  "basicAuth": false,
+  "basicAuthUser": "",
+  "basicAuthPassword": "",
+  "withCredentials": false,
+  "isDefault": true,
+  "secureJsonFields": {
+    "password": true
+  },
+  "secureJsonData":{
+  	"password": "pimpimpampam"
+  },
+  "version": 10,
+  "readOnly": false
+}

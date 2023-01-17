@@ -11,7 +11,6 @@
     "host":"localhost",
     "port": 3000,
     "apiPath": "/api",
-    "dbname": "svoiysh",
     "user": "admin",
     "passwd": "admin"
   },

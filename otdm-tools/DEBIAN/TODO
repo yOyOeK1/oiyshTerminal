@@ -1,0 +1,11 @@
+
+- backups system for grafana and node-red exports from api and files
+#
+# tar -cvf ./grafana_2212261415.tar.bz --exclude=debiar_rootfs/usr/share/grafana/public/prc --exclude=debiar_rootfs/usr/share/grafana/public/pwf debiar_rootfs/usr/share/grafana
+#
+
+[started]- backups system for node-red exports from api and files
+  * started in progress add what will be needed in new use cases
+
+- otdmMake.sh [DIR] - to check if there is no tasks for odtm prebuilder and
+  all stack

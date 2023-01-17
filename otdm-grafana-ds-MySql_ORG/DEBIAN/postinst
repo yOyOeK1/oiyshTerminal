@@ -1,0 +1,119 @@
+tr=$DPKG_MAINTSCRIPT_PACKAGE"------------postinst
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+"$DPKG_MAINTSCRIPT_PACKAGE"------------- postinst END"
+
+echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg_postinst.log"
+echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
+
+
+#is a path to otdm home
+OTAPPHOME="/data/data/com.termux/files/home/.otdm/graInjDatSouMysql"
+
+# test
+#dbName="MySQLatNex7"
+# production
+dbName="MySQL-OT"
+
+
+echo "include oiyshTerminal tools..."
+. /data/data/com.termux/files/usr/bin/otdmGra.sh
+echo "try 2..."
+. ../data/data/com.termux/files/usr/bin/otdmGra.sh
+
+
+qr=`otGraDBByName "$dbName"`
+
+otDI "otTest...  postinstall"
+tR=`otTest`
+tE=$?
+echo $tR
+
+echo "test Exit: ["$tE"]"
+if [[ "$tE" == "1" ]]; then
+  echo "test ok."
+
+else
+  otDE "Error postinst exit 99"
+  exit 99
+fi
+
+
+
+
+otDI "set oiyshTerminal Deb Manager app home path."
+otDIs "$OTAPPHOME"
+
+
+
+
+otDI "injection time ...."
+u=$otGraApiUrl"/datasources"
+r=`curl -X POST \
+-H 'Accept: application/json' \
+-H 'Content-Type: application/json' \
+"$u" \
+-d @$OTAPPHOME"/datasourInjec_mysql3.json" 2> /dev/null`
+
+otDIs "result of injectniot \n\n$r\n "
+
+fn='injectRes_'`date +%y%m%d%H%M`".res"
+otDI "store injection result...[$fn]"
+echo "$r" > $OTAPPHOME"/"$fn
+cp $OTAPPHOME"/"$fn $OTAPPHOME"/injectRes_last.res"
+
+
+
+otIsJSON "$r"
+rj=$?
+otDI "is it a json response? \n\n"$r" \n"
+if [[ "$rj" == "1" ]]; then
+  otDIs "yes it's a json."
+else
+  otDE "Error 11 - got after injection not json !"
+  exit 11
+fi
+
+
+
+
+otDI "injection done. now checking response if it's correct ..."
+
+
+otDI "looking for uid in response to query grafana ..."
+dbuid=`otJGetVBK "$r" ".datasource.uid"`
+r=$?
+otDIs "dbuid:["$dbuid"] res:[$r]"
+if [[ "$dbuid" == "null" || "$dbuid" == "" ]]; then
+  otDE "ERROR - got json but no uid
+  Abord!
+  exit 13"
+  exit 13
+else
+  otDIs "ok uid [$dbuid] for name:[$dbName] datasource in grafana.
+    It's there! Call it DONE"
+
+  otDIs "storing:["$OTAPPHOME"/DSuid.json]"
+  echo $dbuid > $OTAPPHOME"/DSuid.json"
+
+  otDIs "getting current state of grafana datasource for it and
+    storing it as ["$OTAPPHOME"/aferInject_org.json] org for
+    uninstall step to know if it's the same."
+  otGraDBByName "$dbName" > $OTAPPHOME"/aferInject_org.json"
+  otDI "\n\nAll good!\n\n
+    You can visit http://"$otGraHost"/datasources/edit/"$dbuid"\n
+
+  "
+
+fi
+
+echo "postinst DONE"

@@ -1,21 +1,66 @@
-dpkg (0.12 unstable; urgency=low
+dpkg (0.20) unstable; urgency=low
 
   [ B.Ceglik ]
+  * Bumping version. Having some problems winh repo updater now it will be fixt!
+  * Making first full auto deploy of path working:
+   [instance of grafana datasource by name is taken] --> [packt] --> [installd] 
+
+  -- B.Ceglik <yoyoek@wp.pl  22-12-28
+
+dpkg (0.16) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * otdmSh.sh for some cinda library for installation and uninstall process.
+  for now:
+  exitIf 1 2 3
+  Exit with message "2" if 1 is != "0" exit "3" as exit 3
+  * Unify argument testing mechanisms and error raporting.
+
+  -- B.Ceglik <yoyoek@wp.pl  22-12-28
+
+
+dpkg (0.15 unstable; urgency=low
+
+  [ B.Ceglik ]
+  $ otdmTools.py -extract gdsInjRes -if /tmp/injRes.json Will now extract name,id,uid,orgId and put it in files as suffix using name of the value. So file /tmp/injRes.json will generate /tmp/injRes.json_uid with uid from input json. It's like this for rest of variables.
+  * printNote() now unify all notes :)
+  $ otdmTools.py -lastNote 2 displays two last notes :)
+  * clipIt system implemented. Plan is to have a way to pass / find / store notes / store objects. Even if instance finished. It is readable by next one. More about it.
+  Use case:
+  -addNote "Add a important note to cliper"
+  or:
+  in code clipIt( obj, note )
+  * past 1K lines marker in otdmTools.py :)
+  * yes / no dylema. Overrite or not overrite. I added a dialog for now. It's in otdmTools.py so it's for automation not for someone sitting in front of running script. I will see how it will work.
+  * $ otdmTools.py -tasks ./DEBIAN/otdmTasker.json - now you can set a tasker file for tools to do. It's reading it from file and executing one by one. In same instance so you have option to get some values what normally is difficult.
+  * $ otdmMake.sh [DIR] - is a script to start building process of deb file. Dir is a working debian sourc director. It is making pre run if any ./DEBIAN/otdm
   * changing place of python dependencis to be able to install on wanilla dpkg instance. Ok it's settle down on. It will shout on partial dpkg instance. It means than if you have a dpkg not really use in your system there is no way to go around postist execution problem. otdm-tools needs pip that comes with python. So option on system widhout dpkg system. Installing dpkg, then lot of --force-depends
-  
+  * U can now do
+  $ otdmTools.py -mkbp "flows"
+  Makes backup of all flows and put it with date to .otdm/Backups
+  $ otdmTools.py -mkbp "gds"
+  or
+  $ otdmTools.py -forceHost "192.168.43.1" -mkbp "gds"
+  Makes backup of all datasources in grafana puts it to .otdm/Backups
+  if -forceHost added files gets prefix from host name.
+
+  -- B.Ceglik <yoyoek@wp.pl  22-12-26
+
+  [ B.Ceglik ]
+  * added dependencies to start installation tool chain if needed. it needs otdm-installer or otdm-installer-dummy
+
   -- B.Ceglik <yoyoek@wp.pl  22-12-26
 
 
 dpkg (0.11)
 
   [ B.Ceglik ]
-  * added dependencies to start installation tool chain if needed. it needs otdm-installer or otdm-installer-dummy
   * -testAll 1 - new arg set. It's going by grafana and node-red doing test if function are ok.
-  * new release to see if I can deploy node-red flow from 
+  * new release to see if I can deploy node-red flow from
   $ apt install otdm-nrf-testmqttmysql
   starting from unknown status of system deb based. To get to point where I will see in front of me browser with that flow.
   * preinst now go checking of pip and try to install deps if needed. checking jq if there is no checking if there is a pkg, then use it to install jq.
-  
+
   -- B.Ceglik <yoyoek@wp.pl  22-12-26
 
 

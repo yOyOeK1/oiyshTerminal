@@ -1,0 +1,86 @@
+#! /bin/bash
+set -e
+echo "---------------------------------------"
+echo "|  prerm args: [$*]-c($#)  arg1:[$1]         "
+echo "---------------------------------------"
+
+
+OTDMHOME="/data/data/com.termux/files/home/.otdm"
+APPNAME="grafana-ds-MySql"
+TD=$OTDMHOME"/"$APPNAME
+iFile=$TD"/mysql-ot.json"
+tFile=`mktemp -u`
+tF=`mktemp -u`
+
+function otdmGDSprerm(){
+  # OTDM -- remove grafana / datasource / byName ##
+  # itWillDo:
+  # - check if there is uid from installation
+  # - check if it's there dsByName
+  # - get current dsByName
+  # - extract data from it.
+  # - compare if are equale
+  # - make backup before removing it
+  # checking after installation files
+  dsByUid=""
+  if [[ -f $iFile"_uid" ]]; then
+    dsByUid=`cat $iFile"_uid"`
+    iGdsuid=`cat $iFile"_uid"`
+    iMd5=`cat $iFile"_md5"`
+    echo "Work with gdsByUid: [$dsByUid]"
+  else
+    echo "Error No files from installation."
+    echo "So someone was doing somthing not ok. Still
+      will remove stuff. You are trying to remove it..."
+    #exit 1
+    #return 1
+  fi
+  # checking if it's in gdsByUid
+  otdmTools.py -export grafana -expW dsByUid -file "$tF" -eBy "$dsByUid"
+  # getting current dsByName to tFile
+  otdmTools.py -export grafana -expW dsByUid -eBy "$dsByUid" -file "$tFile"
+  # extracting data from it
+  otdmTools.py -extract gdsInjRes -if "$tFile"
+  tMd5=`cat $tFile"_md5"`
+  # compare it if same / not changed since install
+  if [[ "$rMd5" == "$tMd5" ]];then
+    echo "Not changed since last install. OK"
+  else
+    echo "There was a modification since installation. You need to deletet in
+      Manually."
+    return 1
+  fi
+  # make backup befor removing
+  otdmTools.py -mkbp gds -bSuffix "Backup_before_removing_operation"
+
+
+
+
+}
+
+
+case "$1" in
+    remove)
+
+      #from no problem status
+      if [[ "$#"  == "1" ]]; then
+        set +e
+        otdmGDSprerm
+        set -e
+      fi
+
+
+  ## remove END
+    ;;
+
+    upgrade)
+
+  echo "$1 ... skip"
+
+    ;;
+
+    *)
+        echo "prerm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
