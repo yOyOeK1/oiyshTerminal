@@ -2,7 +2,7 @@
 
 # What is in it ?
 
-It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js, websocket, rapheal, ml5, ..... It will be a base to start with your site for your need. It's now comming with some examples. But nothing is obligatory :) You can fill free to edit any section of the project and if you create something cool share with all of as! 
+It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js, websocket, rapheal, ml5, ..... It will be a base to start with your site for your need. It's now coming with some examples. But nothing is obligatory :) You can fill free to edit any section of the project and if you create something cool share with all of as!
 
 ![yss menu open](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/screenShots/ilooNav_withJQMobile.png?raw=true)
 
@@ -17,8 +17,8 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 * [.svg - site](#on-top-off-svg-files)
 
 * [three.js - site](#on-top-off-threejs)
-  
-  * [functions / methodes](#function-/-methodes-of-t4y:)
+
+  * [functions / methodes](#function--methodes-of-t4y:)
 
 * [currently on TODO](#todo)
 
@@ -35,6 +35,70 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 **!! It's in progress !!** current version of yss in in a process of big transformation.
 
 It is a part of a oiyshTerminal ecosystem. As a solution to have a alterative to node-dashboard ore other custom build web page this is providing you with set of helpers to make your page live fast !
+
+
+
+---
+
+
+
+# Installing it - stand alone
+
+**Have in minde it's ongoing project.**
+
+It's a description of a instalation steps for you. And it's a hard way. It's a stand alone installation. So I'm assuming that you have Node-red, file system on whitch this instance is running.
+
+1. Importing flow from this repository:
+
+   https://github.com/yOyOeK1/oiyshTerminal/tree/main/nodeRedFlow_ySS
+
+   You will find there json files of flow to import. It will create:
+
+       - hosting for your yss instance
+
+       - add all stuff necessery for having Screens Manager working
+
+       - give you link in, link out to send recive data from yss.
+
+2. Download yss directory with all the files goodnes from
+
+        https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration
+
+3. Copy ySS_calibration directory to your file system where Node-red have access to it.
+
+4. In folder you will find index.html remember where it is! (path)
+
+5. In Node-red in flow edit node "Main engine". In it you will find a section on start.
+
+```javascript
+// path to your index.html directory ! from step 4
+var bPath = "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/";
+// set ip address (only ip address) of your instance
+msg.yssWSUrl = "ws://192.168.43.220:1880/ws/yss";
+
+msg.yssPages = [
+    {
+      "oName": "s_calibrationPage",
+      "o": null,
+      "jssrc":["s_calibration.js", "s_calibrationPage.js"]
+    },
+    {
+      "oName": "s_ilooNavPage",
+      "o": nul
+........
+```
+
+**Edit bPath** and **msg.yssWSUrl** if needed! Flow is provading you with webSocket at :1880/ws/yss and :1880/ws/yss_IN So it' a mether of ip if you want to have correct communication from a instance running on a different device then Node-red instance.
+
+
+
+**DEPLOY**
+
+
+
+6. Go check how it's doing :) on http://ipAddressOfYourNodeRed:1880/yss <- you will have it running :)
+
+
 
 
 
@@ -74,7 +138,7 @@ class s_blankPage{
 }
 ```
 
-You need to add your stuff in adequate sections. In future there will be a prototype to enheret from but for now it's like it's. Those are the functions / methodes as a minimum on site of your thing to make site working. 
+You need to add your stuff in adequate sections. In future there will be a prototype to enheret from but for now it's like it's. Those are the functions / methodes as a minimum on site of your thing to make site working.
 
 
 
@@ -248,19 +312,19 @@ yoyoek1
 # BENCHTABLE
 
 * 2301151128  3d com ani 1    0 0m3.966s    0m9.143s    0m44.140s
-  
+
                          0    0 0m2.102s    0m6.042s    0m44.164s
               three.js   1    0 0m4.342s    0m9.397s    0m44.178s
                          0    0 0m2.262s    0m5.803s    0m44.187s
 
 * 2301151049  3d com ani 1    0 0m4.360s    0m10.830s    0m44.126s
-  
+
                          0    0 0m2.250s    0m6.249s    0m44.150s
               three.js   1    0 0m4.453s    0m9.410s    0m44.152s
                          0    0 0m2.693s    0m6.347s    0m44.225s
 
 * 2301150926  3d com ani 1    0 0m4.307s    0m8.728s    0m44.099s
-  
+
                          0    0 0m4.164s    0m8.421s    0m44.142s
               three.js   1    0 0m4.574s    0m9.476s    0m44.123s
                          0    0 0m4.746s    0m9.310s    0m44.200s
@@ -270,14 +334,14 @@ yoyoek1
                          1    0 0m4.882s  0m9.353s
 
 * 2301142005  fps limit 18 -------------------------
-  
+
               3d com ani 5 aa 0 0m10.407s  0m18.143s
                          0    0 0m1.902s  0m5.375s
               three.js   5    0 0m4.385s  0m16.266s
                          0    0 0m2.102s  0m5.723s
 
 * 2301141232  3d com ani 5 aa 0 0m11.106s 0m18.397s
-  
+
                      ani 0.7  0 0m10.531s 0m17.760s
                      ani 0    0 0m2.560s  0m6.746s
               three.js   0    0 0m2.398s  0m6.094s
@@ -285,20 +349,20 @@ yoyoek1
                         5     0 0m4.270s  0m15.443s  
 
 * 2301141057  3d com ani 0 aa 0 0m2.449s  0m5.957s
-  
+
                                 0m2.405s  0m6.038s
               three.js 0 0      0m2.267s  0m5.909s
               three.js 0.7 0    0m5.320s  0m16.776s
               3d com   0.7 0    0m5.320s  0m16.776s
 
 * 2301140839  3d com ani 1 aa 0 0m4.476s  0m12.612s
-  
+
                 ani 0 aa 0      0m1.879s  0m5.274s
 
 * 2301140813  3d com ani 0 aa 0 0m2.029s  0m5.890s <-- asyncs
 
 * 2301131458  3d com alias off  0m2.726s  0m7.320s
-  
+
                 ani 0.3         0m2.796s  0m6.380s
                 ani 0.1         0m2.464s  0m6.477s
                                 0m2.558s  0m5.983s
