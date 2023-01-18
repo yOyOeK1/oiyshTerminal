@@ -8,7 +8,8 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 
 # Table of Contents
 
-* [intrudaction](#intrudaction)
+* [introduction](#introduction)
+* [master plan](#master-plan)
 * Instalation 
   * [stand alone](#user-content-instalation-stand-alone)
 * [yss panel site Prototype](#yss-panel-prototype)
@@ -48,17 +49,105 @@ putText("textDef", r.payload+"'C" );
 
 To change **textDef** element in your .svg to **32.5'C**
 
+---
+
+# Master plan
+
+As one  of my favorite role models said "Take over the World!".
+
+Now
+
+##### Below is the definition what will be loaded. It's a temporary solution.
+
+In Node-reds' flow in the "Main engine" node is a definition of array 
+
+```javascript
+msg.yssPages = [
+    {
+      "oName": "s_calibrationPage",
+      "o": null,
+      "dir": "calibration",
+      "jssrc":["s_calibration.js", "s_calibrationPage.js"]
+    },
+    {
+      "oName": "s_apV3SvgPage",
+      "o": null,
+
+
+
+```
+
+**oName** - is a class name of your main class site
+
+**dir** - name of a the sites' home directory 
+
+**jssrc** - array of .js files to import during the load process of the yss page
+
+
+
+
+
+It's only a draft. What I'm aiming for.
+
+In main directory of the yss you have directory **./sites** in it you have directory per site. In every directory is only stuff for one site. 
+
+In Node-red flow we have a section responsible for pomping those directories and files to get imports of .js files and others when interface is loading.
+
+Every **site** has a site.json file describing it's relation to your instance of yss.
+
+```json
+{
+    "oName": "s_calibrationPage",
+    "o": null,
+    "dir": "calibration",
+    "jssrc":["s_calibration.js", "s_calibrationPage.js"],
+    "enable": true
+    "otdm":{
+        "playground": false,
+        "name": "yss-calibration-page",
+        "ver": "0.1"
+    }
+}
+```
+
+This will bind the worlds of **site** and .deb (otdm). oiyshTerminal **Debian Manager**. I want all this to come from this source. Wrap everything to the level that it will apeare after installation no mater in what status your machine is. If you don't have a mysql and site requires it as a dependency it will be handle by dpkg, apt, ....
+
+###### Branching a site.
+
+One button branching solution. 
+
+Example. You see a nice site. It's nice but it's not in your colors. You know how to use inkscape. Site is in .svg. Branch. You will get full prepared directory not only to modify your site. So edit .svg file to your taste. But what about the ability to deploy your version of .deb. If you are not doing big changes it allready knows what the site needs in dependencies. It knows how it was build/deploid in the first place. Using otdm-tools preparation of a **playground** directory still needs to be down-sized to "one click".
+
+###### Sites manager.
+
+Not existing now but it needs to.
+
+You can see all installed sites.
+
+Enable / disable specific one.
+
+Make Branching of a selected one.
+
+List all posible to install / upgrade / uninstall from local instance and repositoy. (Somehow this needs to talk to dpkg on your system or get data from yy git ?)
+
+
+
+This section is coming.
+
+
 
 ---
 
 
+
 # Instalation (stand alone)
 
-**Have in minde it's an ongoing project.**
+**Have in mind it's an ongoing project.**
 
 It's a description of instalation steps for you. And it's the hard way. It's a stand alone installation if your kung-fu is weak we would suggest the .deb route (currently under construction). 
 
 ## Requirements:
+
 - access to Node-red
 - access to the file system that the Node-red instance is running on
 
