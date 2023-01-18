@@ -32,7 +32,9 @@ body{
 	font-family: Helvetica, sans-serif;
 }
 
-
+.background-invert{
+  background-color: #333333;
+}
 
 
 #svgDyno{

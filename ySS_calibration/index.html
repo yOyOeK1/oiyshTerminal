@@ -33,27 +33,12 @@ class moduleCollector{
 }
 var module = new moduleCollector();
 
-</script>
-<div id="justGuageTmp"></div>
+</script
 
+<div id="justGuageTmp"></div>
 <!-- noderedinjectpoint -->
 <script src="s_nodeRedSupport.js"></script>
-
-<script>
-
-// 4 Three.js section
-var t4y = 0;
-var ott = "not set";
-const otcam = 0;
-const otsce = 0;
-const otren = 0;
-const otcom = 0;
-const otframeC=0;
-const threes = {};
-var pager;
-var sm;
-</script>
-
+<script src="index.js"></script>
 <script type="importmap">
     {
         "imports": {
@@ -76,40 +61,14 @@ var sm;
             "T4y_console": "./libs/t4y_console.js"
         }
     }
-
-
 </script>
-
- <!--moving to dynamic load node-red-->
- <!--
-  <script src="s_calibration.js"></script>
-  <script src="s_calibrationPage.js"></script>
-  <script src="s_basicSail.js"></script>
-  <script src="s_basicSailPage.js"></script>
-  <script src="s_ilooNav.js"></script>
-  <script src="s_ilooNavPage.js"></script>
-
-  <script src="s_windEffordDebug.js"></script>
-  <script src="s_windEffordPage.js"></script>
-
-  <script src="s_apV3Svg.js"></script>
-  <script src="s_apV3SvgPage.js"></script>
-  <script src="s_apV3Page.js"></script>
--->
-
-
 <!-- ap playground area START-->
 <!--
 <script src="apSimulator.js"></script>
 <script src="apV3.js"></script>
--->
-<!--
+
 <script src="apML5v1.js"></script>
--->
-<!--
-<script src="PIDController.js"></script>
--->
-<!--
+
 <script src="PID2.js"></script>
 
 <script src="brain.js"></script>
@@ -119,20 +78,6 @@ var sm;
 <script src="apVBrain2.js"></script>
 -->
 <!-- ap playground area END -->
-
-
-<!--
-
-<script src="apSolver.js"></script>
-<script src="s_apPage.js"></script>
--->
-
-<!--
-<script src="s_fitscreen.js"></script>
-<script src="s_blankPage.js"></script>
-<script src="nr_reqTest1.js"></script>
--->
-
 <script src="libs/raphael-2.1.4.min.js"></script>
 <script src="libs/justgage.js"></script>
 <!--<script src="libs/ml5.min.js"></script>-->
@@ -155,118 +100,24 @@ var sm;
 <link rel="stylesheet" href="libs/jquery.mobile-1.4.5.min.css" />
 <link rel="stylesheet" href="main.css">
 
-
-
 <script type="module">
 import { Three4Yss } from "./libs/three4yss.js";
 console.log("Three4Yss loaded... :)");
 t4y = new Three4Yss();
 </script>
 
-
 <script>
-
-
-var doneFlag = 0;
-
-
-function klikPageNo( No ){
-  pager.setPage(No);
-}
-
-function sendSetAccCor(){
-  //console.log("sendSetAccCor: "+$("#sliX").val());
-  var ts = $("#sliX").val()+","+
-    $("#sliY").val()+","+
-    $("#sliZ").val();
-  //cl("ts:"+ts);
-  sOutSend("action:setAccCor:"+ts);
-  $("#accCorrV").text( ts );
-
-}
-
-// for tests
-
-
-function svgTests(  ){
-
-  var tt = SVG.find("#textTest");
-  tt.text("");
-
-	$( "#sliRotTest" ).slider({
-			slide: function( event, ui ) {
-				cl(ui.value);
-				rotateSvg( "boatHeel", true, ui.value );
-					},
-				min:-180,
-				max:180,
-				value:10
-			});
-
-}
-
-
-
-
-function looperIter(){
-  cl("looper iter ....");
-
-  pager.makeLooperIter();
-  setTimeout( looperIter, 5000 );
-}
-
-
-function doMqtt(){
-  cl("--------------mqtt");
-  cl(mqtt);
-  const url = 'mqtt://192.168.43.1:10883/';
-  const options = {
-    // Clean session
-    clean: true,
-    connectTimeout: 4000,
-    clientId: 'emqx_test'
-  };
-  const client  = mqtt.connect(url, options)
-  client.on('connect', function () {
-  console.log('Connected')
-  // Subscribe to a topic
-  client.subscribe('test', function (err) {
-      if (!err) {
-        // Publish a message to a topic
-        client.publish('test', 'Hello mqtt')
-      }
-    })
-  });
-  cl("--------------mqtt");
-
-
-}
-
+// ON LOAD ------------------
 $( document ).ready(function() {
 
   jQuery.fx.interval = Math.round(1000/18);
-
-  cl("document ready !");
-  cl("is t4y ready?");
-  cl(t4y);
-  cl("t4y.getCameraUse");
-  cl(t4y.getOtCam);
-
-
-  //t4y = new Three4Yss();
+  cl("yss index.html document ready !");
   pager = new sPager();
   try{
     nodeRedInjectionAddPages();
   }catch(e){
     //pager.addPage( new s_calibrationPage() );
     //pager.addPage( new s_basicSailPage() );
-    //pager.addPage( new s_ilooNavPage() );
-    //pager.addPage( new s_apV3SvgPage() );
-    //pager.addPage( new s_apV3Page() );
-    //pager.addPage( new s_apPage() );
-    //pager.addPage( new s_windEffordPage() );
-    //pager.addPage( new s_blankPage() );
-
     cl("nodeRedInjectionAddPages() not pressent running on grafana not node-red?");
     cl(e);
   }
@@ -280,10 +131,6 @@ $( document ).ready(function() {
   pager.setScreenManager(sm);
   pager.addPage( sm );
 
-
-
-
-
   if( doneFlag++ == 1 ){
     cl("ready! abord double init ?");
     return 0;
@@ -292,10 +139,8 @@ $( document ).ready(function() {
 
   //doMqtt();
   svgTests();
-
 	wsConnectIn( pager );
 	wsConnectOut();
-
 	pager.getPage( -1 );
 
   // store last sean page on browser
@@ -306,33 +151,12 @@ $( document ).ready(function() {
   if( lastPageNo != "" )
     pager.setPage( parseInt( lastPageNo ) );
 
-  //pager.setPage( 3 );
-
-  //mkShader('invert');
-  //mkShader('normal');
-  //mkShader('blackRed');
-
   looperIter();
-
   navBatteryPercentSignUp( pager );
 
   console.log("mouseup set times");
   $(".bottomPanelHandle").mouseup( function(){
-
-    cl("unclick");
-
-    /*
-    cl("panelMenu open / close status:"+$("#panelMenu").panel());
-    if( $(".bottomPanelContainer").is(":visible") ){
-        $(".bottomPanelContainer").hide();
-        $("#panelMenu").panel("close");
-    }else{
-      $(".bottomPanelContainer").show();
-      $("#panelMenu").panel("open");
-    }
-    */
     $("#panelMenu").panel("open");
-
   });
 
   $( window ).resize( function(){
@@ -341,174 +165,8 @@ $( document ).ready(function() {
 
   setSvgFit();
 
-
-  //cl('---------------------');
-  //cl( THREE );
-  //cl('---------------------');
-
-
-
 });
 
-
-var svgDynoCssOrg = 0;
-function setSvgFit(){
-  var d = 0;
-  //console.log("resize :"+$(document.body).width()+" h:"+$(document.body).height());
-  //$('#svgDyno').css('width', $(document.body).width() );
-  //$('#svgDyno').css('height', $(document.body).height() );
-
-  //return 0;
-  if( d )
-    console.log(
-      "childrens:"+$('#svgDyno').children().length+' length\n'+
-      "[0]: "+$('#svgDyno').children()[0]
-    );
-  var div = $('#svgDyno').parent();
-
-  var currentWidth = div.outerWidth();
-  var currentHeight = div.outerHeight();
-
-  if( d ) console.log('--------\nresize current:'+currentWidth+' x '+currentHeight);
-
-  var availableHeight = window.innerHeight;
-  var availableWidth = window.innerWidth;
-
-  var scaleX = availableWidth / currentWidth;
-  var scaleY = availableHeight / currentHeight;
-
-  if (0) {
-    scaleX = Math.min(scaleX, scaleY);
-    scaleY = scaleX;
-  }
-
-  var translationX = Math.round((availableWidth - (currentWidth * scaleX)) / 2);
-  var translationY = Math.round((availableHeight - (currentHeight * scaleY)) / 2);
-
-  /*div.parent().css({
-    "position": "fixed",
-    "left": "0px",
-    "top": "0px",
-    "-webkit-transform": "translate(" + translationX + "px, "
-                                      + translationY + "px) scale3d("
-                                      + scaleX + ", " + scaleY + ", 1)",
-    "-webkit-transform-origin": "0 0"
-
-  });
-  */
-  //$('#svgSizing').width(availableWidth);
-  //$('#svgSizing').height(availableHeight);
-
-  if( d ){
-    console.log("resize scale:"+scaleX+" x "+scaleY);
-    console.log("resize availabe:"+availableWidth+" x "+availableHeight);
-    console.log('resize translation: '+translationX+' x '+translationY);
-  }
-
-  var sd = $('#svgDyno');
-
-
-
-  var sdp = sd.parent();
-  var lo = 'mkRotation Action: ';
-  if( mkRotationAngCurrent == 90 || mkRotationAngCurrent == 270 ){
-
-
-    if( svgDynoCssOrg == 0 ){
-      console.log("no svgDynoCssOrg making it ....");
-      try{
-        svgDynoCssOrg = {
-          'w': sd.width(),
-          'h': sd.height()
-        };
-        if( d )console.log(' ok done :) now we can restore :)');
-      }catch(e){
-        console.log(' no :( no css error)');
-      }
-    }
-    if( d ){
-      console.log("svgDynoCssOrg:");
-      console.log(svgDynoCssOrg);
-    }
-
-
-    sd.height(currentWidth);
-    sd.width(currentHeight);
-    sd.css({
-      'position':'absolute',
-      'top': Math.round(availableHeight/2 -currentWidth/2),
-      'left': Math.round(availableWidth/2 - currentHeight/2)
-    });
-
-    if( 0 ){
-      $("#otThreeLogo").height(currentHeight);
-      $("#otThreeLogo").width(currentWidth);
-      $("#otThreeLogo").css({
-        'position':'absolute',
-        'top': Math.round(availableHeight/2 -currentWidth/2),
-        'left': Math.round(availableWidth/2 - currentHeight/2)
-      });
-    }
-
-    //z-index:10;position:relative;top:0;left:0;
-
-    //sdp.width(availableWidth-100);
-    //sdp.height(availableHeight-100);
-
-    lo+= ' Yes ';
-  }else{
-    lo+= ' No ';
-    if( svgDynoCssOrg ){
-      sd.width( '100%' );
-      sd.height( '100%' );
-      sd.css({
-        'top':0,
-        'left':0
-      });
-
-    }
-  }
-  if( d ) console.log(lo);
-
-}
-
-
-//testFunctionsPart();
-
-
-function otdm( args ){
-  $("#otdmResDyno").html("loading....");
-  sOutSend( {
-    "otdmRequest": args
-  } );
-}
-
-var tml = 0;
-
-function getTagname(state, event) {
-  if( state == "move" ){
-    var tn = new Date().getTime();
-    if( tml > (tn-200) ){
-      return 0;
-    }
-  }
-  tml=tn;
-  var x = event.targetTouches[0].target.tagName;
-  //cl("getTagname");
-  //cl(event);
-  var tr = {
-    "state": state,
-    //"ontouchstart": JSON.stringify(event),
-    "eC": event.touches.length
-
-  }
-  for( var t=0,tc=event.touches.length; t<tc; t++ ){
-    tr["x"+t] = parseInt(event.touches[0].clientX);
-    tr["y"+t] = parseInt(event.touches[0].clientY);
-  }
-
-  sOutSend( tr );
-}
 
 </script>
 </head>
