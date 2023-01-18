@@ -6,8 +6,6 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 
 ![yss menu open](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/screenShots/ilooNav_withJQMobile.png?raw=true)
 
-
-
 # Table of Contents
 
 * [intrudaction](#intrudaction)
@@ -17,30 +15,46 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 * [.svg - site](#on-top-off-svg-files)
 
 * [three.js - site](#on-top-off-threejs)
-
+  
   * [functions / methodes](#user-content-functions--methodes-of-t4y)
 
 * [currently on TODO](#todo)
 
 * [changelog](#changelog)
 
-
-
 ---
-
-
 
 # Intrudaction
 
 **!! It's in progress !!** current version of yss in in a process of big transformation.
 
-It is a part of a oiyshTerminal ecosystem. As a solution to have a alterative to node-dashboard ore other custom build web page this is providing you with set of helpers to make your page live fast !
+It is a part of a oiyshTerminal ecosystem. As a solution to have a alterative to node-dashboard ore other custom build web page this is providing you set of helpers to make your page live fast! Fact that you don't touch css for me is perfect! My plan is to make your eye candy instrument / view / site easy youst by drowing it in svg :) or in blender making glb file. As you draw it that way it's. 
+
+**Example scenario:** Something what you will like to monitor and you have some "live" view of some reading from sensors in sleek form. You know how to make nice image in .svg or .glb. You draw it. Numbers are temporary in drawing app. They need to be a text not curvs. They need have name set up as a objects for identification. This .svg can be animating using yss. Data is comming from your sensor can be passed to Node-red. Then "link it" in the flow nodes. **msg** is as expected :) 
+
+*In Node-red*
+
+```javascript
+msg = { topic: "your/sensor/temp", payload: 32.5 };
+```
+
+Then in your [yssDirectory]/sites/[yourSite]/s_[yourSite].js you have section:
+
+```javascript
+onMessageCallBack( r ){
+```
+
+It will be invoce with **r** - argument is your **msg** from Node-red. Then if your if statment or switch what you preffer will be triggerd you can do with one line change in your graphic.
+
+```javascript
+putText("textDef", r.payload+"'C" );
+```
+
+To change **textDef** to **32.5'C**
 
 
 
 ---
-
-
 
 # Installing it - stand alone
 
@@ -49,15 +63,15 @@ It is a part of a oiyshTerminal ecosystem. As a solution to have a alterative to
 It's a description of a instalation steps for you. And it's a hard way. It's a stand alone installation. So I'm assuming that you have Node-red, file system on whitch this instance is running.
 
 1. Importing flow from this repository:
-
+   
    https://github.com/yOyOeK1/oiyshTerminal/tree/main/nodeRedFlow_ySS
-
+   
    You will find there json files of flow to import. It will create:
-
+   
        - hosting for your yss instance
-
+   
        - add all stuff necessery for having Screens Manager working
-
+   
        - give you link in, link out to send recive data from yss.
 
 2. Download yss directory with all the files goodnes from
@@ -90,21 +104,11 @@ msg.yssPages = [
 
 **Edit bPath** and **msg.yssWSUrl** if needed! Flow is provading you with webSocket at :1880/ws/yss and :1880/ws/yss_IN So it' a mether of ip if you want to have correct communication from a instance running on a different device then Node-red instance.
 
-
-
 **DEPLOY**
-
-
 
 6. Go check how it's doing :) on http://ipAddressOfYourNodeRed:1880/yss <- you will have it running :)
 
-
-
-
-
 ---
-
-
 
 # yss panel Prototype
 
@@ -140,11 +144,7 @@ class s_blankPage{
 
 You need to add your stuff in adequate sections. In future there will be a prototype to enheret from but for now it's like it's. Those are the functions / methodes as a minimum on site of your thing to make site working.
 
-
-
 ---
-
-
 
 # On top off .svg files
 
@@ -154,11 +154,7 @@ You need to add your stuff in adequate sections. In future there will be a proto
 
 This is a s_basicSailPage.js it is a .svg page example.
 
-
-
 ---
-
-
 
 # On top off Three.js
 
@@ -169,8 +165,6 @@ This is a s_basicSailPage.js it is a .svg page example.
 This is a s_threeTestPage.js it is a Three.js page example.
 
 Main Atraction is handled by instance in "t4y" variable.
-
-
 
 ## Functions / methodes of t4y:
 
@@ -218,11 +212,7 @@ t4y.putText( "heel: 11",{
 
 Replace text in current scean. Will look for HeelText to replace it with this one with name HeelText. handle: [cb|lb|lt|rt|rb] aligning.
 
-
-
 ---
-
-
 
 # TODO
 
@@ -312,19 +302,19 @@ yoyoek1
 # BENCHTABLE
 
 * 2301151128  3d com ani 1    0 0m3.966s    0m9.143s    0m44.140s
-
+  
                          0    0 0m2.102s    0m6.042s    0m44.164s
               three.js   1    0 0m4.342s    0m9.397s    0m44.178s
                          0    0 0m2.262s    0m5.803s    0m44.187s
 
 * 2301151049  3d com ani 1    0 0m4.360s    0m10.830s    0m44.126s
-
+  
                          0    0 0m2.250s    0m6.249s    0m44.150s
               three.js   1    0 0m4.453s    0m9.410s    0m44.152s
                          0    0 0m2.693s    0m6.347s    0m44.225s
 
 * 2301150926  3d com ani 1    0 0m4.307s    0m8.728s    0m44.099s
-
+  
                          0    0 0m4.164s    0m8.421s    0m44.142s
               three.js   1    0 0m4.574s    0m9.476s    0m44.123s
                          0    0 0m4.746s    0m9.310s    0m44.200s
@@ -334,14 +324,14 @@ yoyoek1
                          1    0 0m4.882s  0m9.353s
 
 * 2301142005  fps limit 18 -------------------------
-
+  
               3d com ani 5 aa 0 0m10.407s  0m18.143s
                          0    0 0m1.902s  0m5.375s
               three.js   5    0 0m4.385s  0m16.266s
                          0    0 0m2.102s  0m5.723s
 
 * 2301141232  3d com ani 5 aa 0 0m11.106s 0m18.397s
-
+  
                      ani 0.7  0 0m10.531s 0m17.760s
                      ani 0    0 0m2.560s  0m6.746s
               three.js   0    0 0m2.398s  0m6.094s
@@ -349,20 +339,20 @@ yoyoek1
                         5     0 0m4.270s  0m15.443s  
 
 * 2301141057  3d com ani 0 aa 0 0m2.449s  0m5.957s
-
+  
                                 0m2.405s  0m6.038s
               three.js 0 0      0m2.267s  0m5.909s
               three.js 0.7 0    0m5.320s  0m16.776s
               3d com   0.7 0    0m5.320s  0m16.776s
 
 * 2301140839  3d com ani 1 aa 0 0m4.476s  0m12.612s
-
+  
                 ani 0 aa 0      0m1.879s  0m5.274s
 
 * 2301140813  3d com ani 0 aa 0 0m2.029s  0m5.890s <-- asyncs
 
 * 2301131458  3d com alias off  0m2.726s  0m7.320s
-
+  
                 ani 0.3         0m2.796s  0m6.380s
                 ani 0.1         0m2.464s  0m6.477s
                                 0m2.558s  0m5.983s
