@@ -18,7 +18,7 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 
 * [three.js - site](#on-top-off-threejs)
 
-  * [functions / methodes](#function--methodes-of-t4y:)
+  * [functions / methodes](#function--methodes-of-t4y)
 
 * [currently on TODO](#todo)
 
