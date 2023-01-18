@@ -9,28 +9,24 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 # Table of Contents
 
 * [intrudaction](#intrudaction)
-
+* Instalation 
+  * [stand alone](#instalation--stand alone-)
 * [yss panel site Prototype](#yss-panel-prototype)
-
 * [.svg - site](#on-top-off-svg-files)
-
-* [three.js - site](#on-top-off-threejs)
-  
+* [three.js - site](#on-top-off-threejs) 
   * [functions / methodes](#user-content-functions--methodes-of-t4y)
-
 * [currently on TODO](#todo)
-
 * [changelog](#changelog)
 
 ---
 
-# Intrudaction
+# Introduction
 
-**!! It's in progress !!** current version of yss in in a process of big transformation.
+**!! It's in progress !!** current version of yss in the process of big transformation.
 
-It is a part of a oiyshTerminal ecosystem. As a solution to have a alterative to node-dashboard ore other custom build web page this is providing you set of helpers to make your page live fast! Fact that you don't touch css for me is perfect! My plan is to make your eye candy instrument / view / site easy youst by drowing it in svg :) or in blender making glb file. As you draw it that way it's. 
+It is a part of a oiyshTerminal ecosystem. As a solution to have an alterative to node-dashboard or other custom-built web pages. It is providing you a set of helpers to make your page live fast! The fact that you don't have to touch css for me is perfect! My plan is to make your eye candy instrument / view / site easy simply by drawing it in svg :) or in blender making glb file. As you draw it that way it is. 
 
-**Example scenario:** Something what you will like to monitor and you have some "live" view of some reading from sensors in sleek form. You know how to make nice image in .svg or .glb. You draw it. Numbers are temporary in drawing app. They need to be a text not curvs. They need have name set up as a objects for identification. This .svg can be animating using yss. Data is comming from your sensor can be passed to Node-red. Then "link it" in the flow nodes. **msg** is as expected :) 
+**Example scenario:** Something that you would like to monitor and you have some "live" view of sensor readings in sleek form. You know how to make nice image in .svg or .glb. You draw it. Numbers are temporary in drawing app. They need to be text not curves. They need to have a name set up as objects for identification. This .svg can be animated using yss. Data comming from your sensor can be passed to Node-red. Then you "link it" in the flow nodes. **msg** is as expected :) 
 
 *In Node-red*
 
@@ -38,29 +34,35 @@ It is a part of a oiyshTerminal ecosystem. As a solution to have a alterative to
 msg = { topic: "your/sensor/temp", payload: 32.5 };
 ```
 
-Then in your [yssDirectory]/sites/[yourSite]/s_[yourSite].js you have section:
+Then in your [yssDirectory]/sites/[yourSite]/s_[yourSite].js you have this section:
 
 ```javascript
 onMessageCallBack( r ){
 ```
 
-It will be invoce with **r** - argument is your **msg** from Node-red. Then if your if statment or switch what you preffer will be triggerd you can do with one line change in your graphic.
+It will be invoked with **r** argument, which is your **msg** from Node-red. Then if your if-statment or switch (which ever you preffer) will be triggerd you can change your graphic using one line of code
 
 ```javascript
 putText("textDef", r.payload+"'C" );
 ```
 
-To change **textDef** to **32.5'C**
-
+To change **textDef** element in your .svg to **32.5'C**
 
 
 ---
 
-# Installing it - stand alone
 
-**Have in minde it's ongoing project.**
+# Instalation (stand alone)
 
-It's a description of a instalation steps for you. And it's a hard way. It's a stand alone installation. So I'm assuming that you have Node-red, file system on whitch this instance is running.
+**Have in minde it's an ongoing project.**
+
+It's a description of instalation steps for you. And it's the hard way. It's a stand alone installation if your kung-fu is weak we would suggest the .deb route (currently under construction). 
+
+## Requirements:
+- access to Node-red
+- access to the file system that the Node-red instance is running on
+
+## Instalation steps
 
 1. Importing flow from this repository:
    
@@ -70,19 +72,19 @@ It's a description of a instalation steps for you. And it's a hard way. It's a s
    
        - hosting for your yss instance
    
-       - add all stuff necessery for having Screens Manager working
+       - all the stuff necessery for having Screens Manager working
    
-       - give you link in, link out to send recive data from yss.
+       - give you a link in and link out to send and recive data from yss.
 
-2. Download yss directory with all the files goodnes from
+2. Download yss directory with all the file-goodnes from
 
         https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration
 
-3. Copy ySS_calibration directory to your file system where Node-red have access to it.
+3. Copy ySS_calibration directory to your file system that the Node-red has access to.
 
-4. In folder you will find index.html remember where it is! (path)
+4. In the folder you will find index.html remember where it is! (path)
 
-5. In Node-red in flow edit node "Main engine". In it you will find a section on start.
+5. In Node-red in the flow, edit the "Main engine" node. In it you will find a section start.
 
 ```javascript
 // path to your index.html directory ! from step 4
@@ -102,11 +104,11 @@ msg.yssPages = [
 ........
 ```
 
-**Edit bPath** and **msg.yssWSUrl** if needed! Flow is provading you with webSocket at :1880/ws/yss and :1880/ws/yss_IN So it' a mether of ip if you want to have correct communication from a instance running on a different device then Node-red instance.
+Edit **bPath** and **msg.yssWSUrl** if needed! Flow will provide you with webSocket at :1880/ws/yss and :1880/ws/yss_IN. So it's a matter of ip. If you want to have correct communication with a instance running on a different device then Node-red instance.
 
 **DEPLOY**
 
-6. Go check how it's doing :) on http://ipAddressOfYourNodeRed:1880/yss <- you will have it running :)
+6. Go check how it's doing :) on http://ipAddressOfYourNodeRed:1880/yss <- you should have it running :)
 
 ---
 
@@ -142,7 +144,7 @@ class s_blankPage{
 }
 ```
 
-You need to add your stuff in adequate sections. In future there will be a prototype to enheret from but for now it's like it's. Those are the functions / methodes as a minimum on site of your thing to make site working.
+You need to add your stuff in coresponding sections. In future there will be a prototype to inherit from but for now it is what it is. Those are the functions/methodes as a minimum  to make site working.
 
 ---
 
@@ -164,7 +166,7 @@ This is a s_basicSailPage.js it is a .svg page example.
 
 This is a s_threeTestPage.js it is a Three.js page example.
 
-Main Atraction is handled by instance in "t4y" variable.
+The Main Atraction is handled by instance in "t4y" variable.
 
 ## Functions / methodes of t4y:
 
