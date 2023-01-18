@@ -10,7 +10,7 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 
 * [intrudaction](#intrudaction)
 * Instalation 
-  * [stand alone](#instalation--stand alone-)
+  * [stand alone](#user-content-instalation-stand-alone)
 * [yss panel site Prototype](#yss-panel-prototype)
 * [.svg - site](#on-top-off-svg-files)
 * [three.js - site](#on-top-off-threejs) 
