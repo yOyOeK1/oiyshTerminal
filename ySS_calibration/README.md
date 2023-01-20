@@ -10,11 +10,11 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 
 * [introduction](#introduction)
 * [master plan](#master-plan)
-* Instalation 
+* Instalation
   * [stand alone](#user-content-instalation-stand-alone)
 * [yss panel site Prototype](#yss-panel-prototype)
 * [.svg - site](#on-top-off-svg-files)
-* [three.js - site](#on-top-off-threejs) 
+* [three.js - site](#on-top-off-threejs)
   * [functions / methodes](#user-content-functions--methodes-of-t4y)
 * [currently on TODO](#todo)
 * [changelog](#changelog)
@@ -25,9 +25,9 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 
 **!! It's in progress !!** current version of yss in the process of big transformation.
 
-It is a part of a oiyshTerminal ecosystem. As a solution to have an alterative to node-dashboard or other custom-built web pages. It is providing you a set of helpers to make your page live fast! The fact that you don't have to touch css for me is perfect! My plan is to make your eye candy instrument / view / site easy simply by drawing it in svg :) or in blender making glb file. As you draw it that way it is. 
+It is a part of a oiyshTerminal ecosystem. As a solution to have an alterative to node-dashboard or other custom-built web pages. It is providing you a set of helpers to make your page live fast! The fact that you don't have to touch css for me is perfect! My plan is to make your eye candy instrument / view / site easy simply by drawing it in svg :) or in blender making glb file. As you draw it that way it is.
 
-**Example scenario:** Something that you would like to monitor and you have some "live" view of sensor readings in sleek form. You know how to make nice image in .svg or .glb. You draw it. Numbers are temporary in drawing app. They need to be text not curves. They need to have a name set up as objects for identification. This .svg can be animated using yss. Data comming from your sensor can be passed to Node-red. Then you "link it" in the flow nodes. **msg** is as expected :) 
+**Example scenario:** Something that you would like to monitor and you have some "live" view of sensor readings in sleek form. You know how to make nice image in .svg or .glb. You draw it. Numbers are temporary in drawing app. They need to be text not curves. They need to have a name set up as objects for identification. This .svg can be animated using yss. Data comming from your sensor can be passed to Node-red. Then you "link it" in the flow nodes. **msg** is as expected :)
 
 *In Node-red*
 
@@ -59,7 +59,7 @@ Now
 
 ##### Below is the definition what will be loaded. It's a temporary solution.
 
-In Node-reds' flow in the "Main engine" node is a definition of array 
+In Node-reds' flow in the "Main engine" node is a definition of array
 
 ```javascript
 msg.yssPages = [
@@ -79,7 +79,7 @@ msg.yssPages = [
 
 **oName** - is a class name of your main class site
 
-**dir** - name of a the sites' home directory 
+**dir** - name of a the sites' home directory
 
 **jssrc** - array of .js files to import during the load process of the yss page
 
@@ -89,7 +89,7 @@ msg.yssPages = [
 
 It's only a draft. What I'm aiming for.
 
-In main directory of the yss you have directory **./sites** in it you have directory per site. In every directory is only stuff for one site. 
+In main directory of the yss you have directory **./sites** in it you have directory per site. In every directory is only stuff for one site.
 
 In Node-red flow we have a section responsible for pomping those directories and files to get imports of .js files and others when interface is loading.
 
@@ -114,7 +114,7 @@ This will bind the worlds of **site** and .deb (otdm). oiyshTerminal **Debian Ma
 
 ###### Branching a site.
 
-One button branching solution. 
+One button branching solution.
 
 Example. You see a nice site. It's nice but it's not in your colors. You know how to use inkscape. Site is in .svg. Branch. You will get full prepared directory not only to modify your site. So edit .svg file to your taste. But what about the ability to deploy your version of .deb. If you are not doing big changes it allready knows what the site needs in dependencies. It knows how it was build/deploid in the first place. Using otdm-tools preparation of a **playground** directory still needs to be down-sized to "one click".
 
@@ -144,7 +144,7 @@ This section is coming.
 
 **Have in mind it's an ongoing project.**
 
-It's a description of instalation steps for you. And it's the hard way. It's a stand alone installation if your kung-fu is weak we would suggest the .deb route (currently under construction). 
+It's a description of instalation steps for you. And it's the hard way. It's a stand alone installation if your kung-fu is weak we would suggest the .deb route (currently under construction).
 
 ## Requirements:
 
@@ -154,15 +154,15 @@ It's a description of instalation steps for you. And it's the hard way. It's a s
 ## Instalation steps
 
 1. Importing flow from this repository:
-   
+
    https://github.com/yOyOeK1/oiyshTerminal/tree/main/nodeRedFlow_ySS
-   
+
    You will find there json files of flow to import. It will create:
-   
+
        - hosting for your yss instance
-   
+
        - all the stuff necessery for having Screens Manager working
-   
+
        - give you a link in and link out to send and recive data from yss.
 
 2. Download yss directory with all the file-goodnes from
@@ -324,11 +324,29 @@ Replace text in current scean. Will look for HeelText to replace it with this on
 
 # CHANGELOG
 
+230119
+
+- start to watch hash :| it can do som stuff #&page=1 will go to page 1. or #&pageByName=OTDM <--- yeees :) or #pageByName=OTDM&action=appDetials&src=yssPages&i=1 will open yssPages source item 1, app details.
+- otdm in yss. It can get list of of yssPages / rebuild / view / showDetail of site / GoTo
+- Node-red flow can rebuild by it self yssPages
+
+yoyoek1
+
+
+230118
+
+- otdm in yss.
+- readme on git hub update contents.
+
+yoyoek1
+
+
 230117
 
 - mkShader from yss on the wallpaper / fixing it. Still some elements are not going over shader :/ iloonav and guages
 
 yoyoek1
+
 
 230116
 
@@ -393,19 +411,19 @@ yoyoek1
 # BENCHTABLE
 
 * 2301151128  3d com ani 1    0 0m3.966s    0m9.143s    0m44.140s
-  
+
                          0    0 0m2.102s    0m6.042s    0m44.164s
               three.js   1    0 0m4.342s    0m9.397s    0m44.178s
                          0    0 0m2.262s    0m5.803s    0m44.187s
 
 * 2301151049  3d com ani 1    0 0m4.360s    0m10.830s    0m44.126s
-  
+
                          0    0 0m2.250s    0m6.249s    0m44.150s
               three.js   1    0 0m4.453s    0m9.410s    0m44.152s
                          0    0 0m2.693s    0m6.347s    0m44.225s
 
 * 2301150926  3d com ani 1    0 0m4.307s    0m8.728s    0m44.099s
-  
+
                          0    0 0m4.164s    0m8.421s    0m44.142s
               three.js   1    0 0m4.574s    0m9.476s    0m44.123s
                          0    0 0m4.746s    0m9.310s    0m44.200s
@@ -415,14 +433,14 @@ yoyoek1
                          1    0 0m4.882s  0m9.353s
 
 * 2301142005  fps limit 18 -------------------------
-  
+
               3d com ani 5 aa 0 0m10.407s  0m18.143s
                          0    0 0m1.902s  0m5.375s
               three.js   5    0 0m4.385s  0m16.266s
                          0    0 0m2.102s  0m5.723s
 
 * 2301141232  3d com ani 5 aa 0 0m11.106s 0m18.397s
-  
+
                      ani 0.7  0 0m10.531s 0m17.760s
                      ani 0    0 0m2.560s  0m6.746s
               three.js   0    0 0m2.398s  0m6.094s
@@ -430,20 +448,20 @@ yoyoek1
                         5     0 0m4.270s  0m15.443s  
 
 * 2301141057  3d com ani 0 aa 0 0m2.449s  0m5.957s
-  
+
                                 0m2.405s  0m6.038s
               three.js 0 0      0m2.267s  0m5.909s
               three.js 0.7 0    0m5.320s  0m16.776s
               3d com   0.7 0    0m5.320s  0m16.776s
 
 * 2301140839  3d com ani 1 aa 0 0m4.476s  0m12.612s
-  
+
                 ani 0 aa 0      0m1.879s  0m5.274s
 
 * 2301140813  3d com ani 0 aa 0 0m2.029s  0m5.890s <-- asyncs
 
 * 2301131458  3d com alias off  0m2.726s  0m7.320s
-  
+
                 ani 0.3         0m2.796s  0m6.380s
                 ani 0.1         0m2.464s  0m6.477s
                                 0m2.558s  0m5.983s

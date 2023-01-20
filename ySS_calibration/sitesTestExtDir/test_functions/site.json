@@ -1,0 +1,10 @@
+{
+    "oName": "s_testFuncsPageEP",
+    "o": null,
+    "dir": "test_functions",
+    "jssrc":["s_testFuncsEP.js", "s_testFuncsPageEP.js"],
+    "enable": false,
+    "otdm":{
+        "playground": false
+    }
+}

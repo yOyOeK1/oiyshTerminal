@@ -1,0 +1,10 @@
+{
+    "oName": "s_otdmPage",
+    "o": null,
+    "dir": "otdm",
+    "jssrc":["s_otdmPage.js"],
+    "enable": true,
+    "otdm":{
+        "playground": false
+    }
+}

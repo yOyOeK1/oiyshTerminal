@@ -1,0 +1,10 @@
+{
+    "oName": "s_ilooNav3D",
+    "o": null,
+    "dir": "iloo_nav_3d",
+    "jssrc":["s_ilooNav3D.js"],
+    "enable": true,
+    "otdm":{
+        "playground": false
+    }
+}

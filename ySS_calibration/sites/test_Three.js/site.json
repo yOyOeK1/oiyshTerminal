@@ -1,0 +1,10 @@
+{
+    "oName": "s_threeTestPage",
+    "o": null,
+    "dir": "test_Three.js",
+    "jssrc":["s_threeTestPage.js"],
+    "enable": true,
+    "otdm":{
+        "playground": false
+    }
+}

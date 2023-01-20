@@ -97,11 +97,13 @@ function shaderColor( hex ){
 }
 
 function mkLightOperationFromStyle( obj ){
-  //var lookFor = ['fill','stroke','background-color','color'];
+  //cl("obj");
+  //obj = $(obj);
+  //cl(obj.attr("id"));
   // setting up org for return option to orginal
   if( mkShaderType == 'normal' ){
-    //if( obj.attr("id") == 'path8763'){
-      if( obj.attr("mkShOrg") == undefined ){
+      // first run no mkShOrg set up. setting it up
+      if( obj !=undefined && obj.attr("mkShOrg") == undefined ){
         var org = {
           'style': obj.attr("style"),
           'class': obj.attr("class")
@@ -117,16 +119,8 @@ function mkLightOperationFromStyle( obj ){
           cl("css");
           cl(obj.css());
         }
-
         obj.attr("mkShOrg", JSON.stringify(org) );
-
-        //if( JSON.stringify(org).search("rgb") != -1 ){
-        //  cl("GOT RGB --------------------------");
-        //  cl(JSON.stringify(org));
-        //}
       }
-
-      //cl("----------- shader analisys END ");
 
       var mkShOrg = JSON.parse( obj.attr("mkShOrg") );
       obj.attr( "style",
@@ -480,22 +474,116 @@ function mkShaderExecutor( shType ){
     });
   }
 
-  // TODO fix menu
+  cl("doing shader over menu.--------");
   /*
-  cl("bottom menu ------- START ");
+  // do menu
+  $("#panelMenu").each(function(o, e){
+    console.log("a");
+    console.log(this);
+    console.log(typeof this );
+    console.log( $( this ).attr("id") );
+    console.log("o");
+    console.log(o);
+    console.log("e");
+    console.log(e);
+    //mkLightRun( $( this )), 0 );
+    mkShaderMenu( $(this) , 0);
+    $("#panelMenu").enhanceWithin();
+
+  });
+  */
+  cl("doing shader over menu.--------END");
+  // TODO fix menu
+  /*  cl("bottom menu ------- START ");
   var sm = SVG("#bottomPanelMenuImg");
   sm.each(function(){
     console.log("a");
     console.log(this);
     if( this['type'] != "mask")
       mkLightRun( this, 0 );
-
   });
-  cl("bottom menu ------- END ");
-  */
-
+  cl("bottom menu ------- END ");  */
   if( !mkShaderResuming )
     mkShaderStoreSettings();
+}
+
+function mkShaderMenu(obj, l){
+  $(obj).children().each( function( a, o ){
+
+    cl("obj");
+    cl(o);
+    cl("class");
+    var s = $(o).attr('class');
+    cl(s);
+    //if( o.attr() )
+    var sOrg;
+    if( $(o).attr("mkShOrg") == undefined ){
+      $(o).attr("mkShOrg", s );
+      sOrg = s;
+    }else
+      sOrg = $(o).attr("mkShOrg");
+
+    if( mkShaderStack['red'] == false && mkShaderStack['invert'] == false  ){
+      $(o).attr('class', sOrg );
+    }
+
+    if( mkShaderStack['invert'] ){
+      mkShaderForMonuItem( $(o), sOrg, 'invert' );
+      ///$("#panelMenu").attr("class",sOrg);
+    }
+
+
+    mkShaderMenu( $(o), l+1 );
+  });
+}
+function mkShaderForMonuItem( obj, org, what ){
+  if( org == undefined )
+    return 0;
+
+
+  cl("obj to work with ");
+  cl( obj );
+  var btnB = org.indexOf("ui-btn-b");
+  var btn = org.indexOf("ui-btn");
+  cl("btn B:"+btnB+" b:"+btn);
+
+  var barA = org.indexOf("ui-bar-a");
+  var barB = org.indexOf("ui-bar-b");
+  var bar = org.indexOf("ui-bar");
+  cl("bar A:"+barA+" B:"+barB+" b:"+bar);
+
+  var bodyA = org.indexOf("ui-body-a");
+  var bodyB = org.indexOf("ui-body-b");
+  var body = org.indexOf("ui-body");
+  cl("body A:"+bodyA+" B:"+bodyB+" b:"+body);
+
+  var tr = org;
+
+  switch( what ){
+    case 'invert':
+      if( btnB == -1 && btn != -1 ){
+        tr+= ' ui-btn-b';
+      }else if( btnB != -1 && btn != -1 ){
+        tr = org.split("ui-btn-b").join("ui-btn-a");
+      }else if( bodyA == -1 && bodyB != -1 && body != -1 ){
+        tr = org.split("ui-body-b").join("ui-body-a");
+      }else if( bodyA != -1 && bodyB == -1 && body != -1 ){
+        tr = org.split("ui-body-a").join("ui-body-b");
+      }else if( barA == -1 && barB != -1 && bar != -1 ){
+        tr = org.split("ui-bar-b").join("ui-bar-a");
+      }else if( barA != -1 && barB == -1 && bar != -1 ){
+        tr = org.split("ui-bar-a").join("ui-bar-b");
+      }
+      break;
+  };
+
+  cl("org is ");
+  cl(org);
+  cl("new tr ");
+  cl(tr);
+  obj.attr('class',String(tr));
+
+
 
 }
 
@@ -514,6 +602,9 @@ function mkLightRun( obj, level ){
     if( this['type'] != "mask")
       mkLightRun( this, level+1);
   });
+
+
+
 
   return 0;
 }

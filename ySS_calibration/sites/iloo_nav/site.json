@@ -1,0 +1,10 @@
+{
+    "oName": "s_ilooNavPage",
+    "o": null,
+    "dir": "iloo_nav",
+    "jssrc":["s_ilooNavPage.js", "s_ilooNav.js"],
+    "enable": true,
+    "otdm":{
+        "playground": false
+    }
+}

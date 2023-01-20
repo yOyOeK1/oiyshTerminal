@@ -379,7 +379,7 @@ fitCanvasToScreen(){
      //t4y.onWindowResize();
      //return 0;
    }
-   if( window.innerWidth >= 1090 ){
+   if( window.innerWidth >= 1390 ){
      t4y.subPixel = 4;
      //t4y.onWindowResize();
      //return 0;

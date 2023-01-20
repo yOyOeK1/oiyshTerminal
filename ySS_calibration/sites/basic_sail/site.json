@@ -1,0 +1,16 @@
+{
+    "oName": "s_basicSailPage",
+    "o": null,
+    "dir": "basic_sail",
+    "jssrc":["s_basicSailPage.js", "s_basicSail.js"],
+    "enable": true,
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "ver": "0.1",
+    "desc": "Numerical based instrument panel for sailing. Big magnetic heading and some aditional drawings. For sailing.",
+    "screenShot": ["screen01.png"],
+    "otdm":{
+        "playground": false,
+        "icon": "ico_sailboat_256_256.png",
+        "url-home": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/basic_sail"
+    }
+}

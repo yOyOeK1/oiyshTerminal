@@ -1,0 +1,10 @@
+{
+    "oName": "s_apV3SvgPage",
+    "o": null,
+    "dir": "autopilot_v3_svg",
+    "jssrc":["s_apV3SvgPage.js", "s_apV3Svg.js"],
+    "enable": true,
+    "otdm":{
+        "playground": false
+    }
+}

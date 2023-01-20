@@ -1,0 +1,10 @@
+{
+    "oName": "s_calibrationPage",
+    "o": null,
+    "dir": "calibration",
+    "jssrc":["s_calibrationPage.js", "s_calibration.js"],
+    "enable": true,
+    "otdm":{
+        "playground": false
+    }
+}

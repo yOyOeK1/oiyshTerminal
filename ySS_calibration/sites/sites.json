@@ -1,0 +1,18 @@
+{
+  "dirs": [
+
+    "autopilot_v3_svg",
+    "basic_sail",
+    "iloo_nav",
+
+    "iloo_nav_3d",
+    "3d_compass1",
+    "test_Three.js",
+
+    "test_functions"
+  ],
+  "externals":[
+    "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/test_functions",
+    "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/otdm"
+  ]
+}

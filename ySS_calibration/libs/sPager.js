@@ -114,11 +114,25 @@ class sPager {
 
 
   setPage( pageNo ){
-
+    cl("setPage"+pageNo);
     $.mobile.panel();
-
     this.currentPage = pageNo;
     this.pageHistory.push( pageNo );
+
+    /*
+    $('.pageItemsLi').each(function(i){
+      if( i == pager.currentPage ){
+        $(this).attr({
+          'class':"pageItemsLi ui-bar ui-bar-b"
+        });
+      }else{
+        $(this).attr({
+          'class':"pageItemsLi ui-bar ui-bar-a"
+        });
+      }
+    });
+    */
+    cl("TODO  - page selector !");
     //console.log("pageHistory:");
     //console.log(this.pageHistory)
 
@@ -136,17 +150,6 @@ class sPager {
     navBatteryPercent( this );
     $('#panelMenu').panel('close');
 
-    $('.pageItemsLi').each(function(i){
-      if( i == pager.currentPage ){
-        $(this).attr({
-          'class':"pageItemsLi ui-bar ui-bar-b"
-        });
-      }else{
-        $(this).attr({
-          'class':"pageItemsLi ui-bar ui-bar-a"
-        });
-      }
-    });
 
     setSvgFit();
 

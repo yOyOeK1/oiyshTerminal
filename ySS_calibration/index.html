@@ -107,6 +107,7 @@ t4y = new Three4Yss();
 </script>
 
 <script>
+var urlArgs = {};
 // ON LOAD ------------------
 $( document ).ready(function() {
 
@@ -114,6 +115,12 @@ $( document ).ready(function() {
   cl("yss index.html document ready !");
   pager = new sPager();
   try{
+    //cl("current yssPages setting is ----------------");
+    //yssPages.find(p=>{
+    //  cl(p);
+    //  cl("      -------------------------");
+    //});
+    //cl("current yssPages setting is ----------------END");
     nodeRedInjectionAddPages();
   }catch(e){
     //pager.addPage( new s_calibrationPage() );
@@ -143,6 +150,7 @@ $( document ).ready(function() {
 	wsConnectOut();
 	pager.getPage( -1 );
 
+
   // store last sean page on browser
   var lastUse = document.cookie;
   cl("have cookie from last use: ["+lastUse+"]");
@@ -150,7 +158,6 @@ $( document ).ready(function() {
   cl("lastPage: ["+lastPageNo+"]")
   if( lastPageNo != "" )
     pager.setPage( parseInt( lastPageNo ) );
-
   looperIter();
   navBatteryPercentSignUp( pager );
 
@@ -165,12 +172,54 @@ $( document ).ready(function() {
 
   setSvgFit();
 
+  window.addEventListener('hashchange', function () {
+    chkUrl();
+  });
+  chkUrl();
+
 });
 
+function chkUrl(){
+  var has = window.location.href;
+  cl("chkUrl ["+has+"]");
+  urlArgs = {};
+  cl("looking for hash -------------------------");
+  has = has.split("#")[1];
+  if( has != undefined && has.length > 0 ){
+    has = has.split("&");
+    for( var h=0,hc=has.length; h<hc; h++ ){
+      var t = has[h].split('=');
+      if( t[0] != "" )
+        urlArgs[ t[0] ] = decodeURI(t[1]);
+    }
+
+  }
+  cl("urlArgs");
+  cl(urlArgs);
+
+  if( urlArgs['page'] != undefined )
+    pager.setPage( urlArgs['page'] );
+
+  else if( urlArgs['pageByName'] != undefined ){
+
+      var n = undefined;
+      for( var p=0,pc=pager.pages.length; p<pc; p++){
+        if( pager.pages[p].getName == urlArgs['pageByName'] ){
+          n = pager.pages[p];
+          break;
+        }
+      }
+      cl("get n ");
+      cl(n);
+
+      pager.setPage( pager.pages.indexOf( n ) );
+  }
+
+}
 
 </script>
 </head>
-<body id="mainBodyOfySS"
+<body id="mainBodyOfySS">
 <!--
   ontouchstart="getTagname('start', event)"
   ontouchend="getTagname('end', event)"

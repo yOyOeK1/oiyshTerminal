@@ -1,0 +1,10 @@
+{
+    "oName": "s_3dcompass1",
+    "o": null,
+    "dir": "3d_compass1",
+    "jssrc":["s_3dcompass1.js"],
+    "enable": true,
+    "otdm":{
+        "playground": false
+    }
+}
