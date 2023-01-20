@@ -34,22 +34,22 @@ It need some explanation what is going on!?!@#  yss is a web site helping in hos
 
 Otdm in menu. If all is ok you should see it in side menu.
 
-<img title="" src="file:///home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/otdm/screenshots/01inMenu.png" alt="otdm in menu" data-align="inline">
+<img title="" src="https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/ySS_calibration/sitesTestExtDir/otdm/screenshots/01inMenu.png" alt="otdm in menu" data-align="inline">
 
 ---
 
 List of installed sites on your instance.
 
-![list of installed](/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/otdm/screenshots/02InstalledApps.png)
+![list of installed](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/ySS_calibration/sitesTestExtDir/otdm/screenshots/02InstalledApps.png)
 
 ---
 
 Example of finding key word in sites. Site installed [off] (disabled) and color is saing it's external directory site.
 
-![looking for](/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/otdm/screenshots/03LokingFor.png)
+![looking for](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/ySS_calibration/sitesTestExtDir/otdm/screenshots/03LokingFor.png)
 
 ---
 
 Application detail view.
 
-![app details](/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/otdm/screenshots/04AppDetails.png)
+![app details](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/ySS_calibration/sitesTestExtDir/otdm/screenshots/04AppDetails.png)
