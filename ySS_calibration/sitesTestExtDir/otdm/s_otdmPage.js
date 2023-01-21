@@ -10,35 +10,55 @@ class s_otdmPage{
 	}
 
 
-  appDetails( appObj ){
-    var aUrl = appObj['external'] == true ? '' : 'sites/'+appObj['dir'];
+  appDetails( appObj, iNo, itSrc ){
+    var aUrl = appObj['external'] == true ? '/yss/external/'+appObj['dir'] : 'sites/'+appObj['dir'];
+    var urlToGo = appObj['o'] != undefined ? 'pageByName='+appObj['o'].getName : 'page='+iNo;
+    var myRand = parseInt( Math.random()*100000 );
+    cl("aUrl");
+    cl(aUrl);
+
     var name = appObj['o'] != undefined ? appObj['o'].getName : appObj['oName'];
     var det = {};
-    if( appObj['desc'] )
-      det['Desctription'] = appObj['desc'];
+    var author = '';
     if( appObj['author'] )
-      det['Author'] = encodeURI( appObj['author'] );
+      author = 'by '+( appObj['author'].indexOf('<') != -1 ? ( '<a href="mailto:'+appObj['author'].split("<")[1].replace('>','')+'?subject=Form yss.">'+appObj['author'].split("<")[0]+'</a>' ) : strToHtmlSafe( appObj['author'] ) );
+    var icon = '';
+    if( appObj['otdm']['icon']!=undefined )
+      icon = '<li><img class="ui-shadow ui-corner-all" style="background-color:gray; border:1px solid white;width:85%;" src="'+aUrl+'/'+appObj['otdm']['icon']+'" /></li>\n';
+    if( appObj['screenShots'] != undefined )
+      appObj['screenShots'].find( s => {
+        icon+= '<li><img class="ui-shadow ui-corner-all" style="background-color:gray; border:1px solid white;width:85%;" src="'+aUrl+'/'+s+'" /><li>\n';
+      });
+    var versionIs = '';
     if( appObj['ver'] )
-      det['Version site'] = appObj['ver'];
+      versionIs = 'ver: '+appObj['ver']+' ';
+    if( appObj['otdm']['url-home']!=undefined )
+      det['Home page']= `<a href="`+appObj['otdm']['url-home']+`">link...</a>`;
     det["Status"] = ( appObj['enable'] == true ? 'on' : 'off' );
     det["External"] = (appObj['external'] == true ? 'yes' : 'no' );
     det["Home dir"] = appObj['dir'];
     det["JSSRC files"] = appObj['jssrc'].length;
     det["oName"] = appObj['oName'];
-
-
+    var urlToGoDisable = appObj['o'] == undefined ? 'disabled="disabled"': '';
     if( appObj['otdm'] )
       det['otdm'] = JSON.stringify( appObj['otdm'] );
 
+    det['Source'] = itSrc;
+    det['IndexNo'] = iNo;
+
     var tr = `
-<div date-role="header">
+<div date-role="header" data-position="inline">
   <button
-    onclick="window.location.hash='pageByName=OTDM&`+(Math.random())+`'"
+    onclick="pager.goToByHash('pageByName=OTDM')"
     class="ui-btn-left ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">
     Back to list.</button>
 
+
+
+
   <button
-    onclick="window.location.hash='pageByName=`+(appObj['o'].getName)+`'"
+    `+urlToGoDisable+`
+    onclick="pager.goToByHash('`+(urlToGo)+`')"
     class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-forward">
     Go TO
   </button>
@@ -46,20 +66,49 @@ class s_otdmPage{
 </div>
 
 
-<div role="main" class="ui-content" >
-  <div data-role="controlgroup"
-    >
-    <!--style="background-image: url('`+aUrl+'/'+`screen01.png');"-->
-    <h1>`+name+`</h1>
-    `+( appObj['otdm']['icon']!=undefined ?
-      '<img height="25%" src="'+aUrl+'/'+appObj['otdm']['icon']+'">' :
-      '' )+`
-    <hr/>
+<div role="main" class="ui-content">
+  <br><br>
+  <div data-role="controlgroup" >
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+
+        <div class="imgSlider`+myRand+`">
+          <ul class="slides">
+          `+icon+`
+          </ul>
+        </div>
+<!--
+<button
+  onclick="mkSlid`+myRand+`()">mk slide</button>
+-->
+<script>
+function mkSlid`+myRand+`(){
+  /*$('.imgSlider`+myRand+`').sss({
+    slideShow: false
+  });*/
+  cl("maaaake flex slider")
+  $('.imgSlider`+myRand+`').flexslider({
+    //animation: "slide"
+  });
+
+}
+$( document ).ready(function() {
+  mkSlid`+myRand+`();
+});
+</script>
+
+      </div>
+      <div class="ui-block-b">
+        <h1>`+name+`</h1>
+        <small>`+versionIs+author+`</small>
+      </div>
+    </div>
+
   </div>
 
   <div data-role="controlgroup">
     <!--style="background-color:#00cc00;"-->
-    
+
 
   <form>
     <input type="checkbox"
@@ -74,21 +123,23 @@ class s_otdmPage{
     <hr/>
 
 
+    `;
 
+    if( appObj['desc'] )
+      tr+= appObj['desc']+'<hr/>';
+
+    tr+=`
 
     <div class="ui-grid-a">
       `;
-      var k = Object.keys( det );
-      k.find(key => {
-        tr+= `<div class="ui-block-a"><b>`+key+`:</b></div>`+
-          `<div class="ui-block-b">`+det[key]+`</div>`;
-      });
+    var k = Object.keys( det );
+    k.find(key => {
+      tr+= `<div class="ui-block-a"><b>`+key+`:</b></div>`+
+        `<div class="ui-block-b">`+det[key]+`</div>`;
+    });
 
-      tr+=`
+    tr+=`
     </div>
-    `+( appObj['otdm']['url-home']!=undefined ? 'Home page: <a href="'+appObj['otdm']['url-home']+'">link...</a>' : '')+`
-
-
   </div>
 </div>
 
@@ -99,7 +150,7 @@ class s_otdmPage{
   doAppDetails( srcApp, appNo){
     tr = '';
     if( srcApp == 'yssPages' ){
-      tr = pager.getCurrentPage().appDetails( yssPages[appNo] );
+      tr = this.appDetails( yssPages[appNo], appNo, 'yssPages' );
     }
 
     $("#htmlDyno").html( tr ).enhanceWithin();
@@ -118,7 +169,8 @@ class s_otdmPage{
       //cl(yssPages[p]);
 
       tr+= '<a href="#" '+
-        'onclick="pager.getCurrentPage().doAppDetails(\'yssPages\','+p+')" '+
+        //'onclick="pager.getCurrentPage().doAppDetails(\'yssPages\','+p+')" '+
+        `onclick="pager.goToByHash('pageByName=OTDM&action=appDetials&src=yssPages&i=`+p+`')" `+
         'class="ui-btn '+
           ( yssPages[p]['enable'] == true ? 'ui-btn-a' : 'ui-btn-b' )+
           ( yssPages[p]['external'] == true ? 'ui-btn-c' : '' )+
@@ -175,22 +227,22 @@ class s_otdmPage{
     -->
 
 
-    `+pager.getCurrentPage().getPageSwitcher()+`
-    `+pager.getCurrentPage().getYssPages()+`
+    `+this.getPageSwitcher()+`
+    `+this.getYssPages()+`
 
     </div>
     `;
   }
 
-  getHtml(){
+  get getHtml(){
     tr = '';
 
     if( urlArgs['action'] == 'appDetials' ){
-      tr = pager.getCurrentPage().doAppDetails(
-        urlArgs['src'],urlArgs['i']
+      tr = this.doAppDetails(
+        urlArgs['src'], urlArgs['i']
       );
     }else{
-      tr = pager.getCurrentPage().pageMain();
+      tr = this.pageMain();
     }
 
 

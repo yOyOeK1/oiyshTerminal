@@ -1,6 +1,7 @@
 {
   "dirs": [
 
+    "calibration",
     "autopilot_v3_svg",
     "basic_sail",
     "iloo_nav",
@@ -12,7 +13,9 @@
     "test_functions"
   ],
   "externals":[
+    "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/imageHistory",
     "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/test_functions",
     "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/otdm"
+
   ]
 }

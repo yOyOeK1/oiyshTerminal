@@ -14,7 +14,9 @@ function mkLightHex( hexIn, operationType ){
   var doShader = ( operationType != undefined ) ?
     operationType : mkShaderType;
 
-  //console.log("invert["+hexIn+"]");
+  if( hexIn == undefined )
+    return 0;
+  console.log("invert["+hexIn+"]");
   if( hexIn.substring(0,4) == "rgb("){
     rgb = hexIn.replace("rgb(","").replace(")",'').split(",");
     tr = "rgb(";

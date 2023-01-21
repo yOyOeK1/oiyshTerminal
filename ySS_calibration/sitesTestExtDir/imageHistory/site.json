@@ -1,0 +1,19 @@
+{
+    "oName": "s_imageHistoryPage",
+    "o": null,
+    "dir": "imageHistory",
+    "jssrc":["s_imageHistoryPage.js"],
+    "files": ["icon.png","screenshot01.png"],
+
+    "enable": true,
+
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "ver": "0.1",
+    "desc": "It's one of image history viewers. This one is now for panamaCanal weather radar.",
+    "screenShots": ["screenshot01.png"],
+
+    "otdm":{
+        "playground": false,
+        "icon": "icon.png"
+    }
+}

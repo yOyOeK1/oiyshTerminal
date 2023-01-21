@@ -3,8 +3,19 @@
     "o": null,
     "dir": "otdm",
     "jssrc":["s_otdmPage.js"],
+    "files": ["ico_arch_256_256.png"],
+
     "enable": true,
+
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "ver": "0.1",
+    "desc": "otdm for yss.",
+
+
     "otdm":{
-        "playground": false
+        "playground": false,
+        "icon": "ico_arch_256_256.png",
+        "url-home": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sitesTestExtDir/otdm"
+
     }
 }

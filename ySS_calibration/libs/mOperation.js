@@ -4,6 +4,12 @@ function cl( msg ){
 	console.log(msg);
 }
 
+function strToHtmlSafe(input) {
+    input = input.replace(/&/g, '&amp;');
+    input = input.replace(/</g, '&lt;');
+    input = input.replace(/>/g, '&gt;');
+    return input;
+}
 
 function rotateImage(obj, degree) {
 	obj.css({

@@ -226,6 +226,10 @@ class sPager {
     return this.pages;
   }
 
+  goToByHash( url ){
+    window.location.hash=url+`&`+(Math.random());
+  }
+
   getMenu(){
     var ta = "";
 
@@ -238,8 +242,10 @@ class sPager {
       */
       ta+= `
 <li class="pageItemsLi">
-  <a href="" data-rel="close"
-    onclick="pager.setPage(`+i+`)">`+this.pages[i].getName+`</a>
+  <a href="" data-rel="close"`+
+    //`onclick="pager.setPage(`+i+`)"`+
+    `onclick="pager.goToByHash('page=`+i+`')"`+
+    `>`+this.pages[i].getName+`</a>
 </li>`;
     }
 
