@@ -97,15 +97,19 @@ Every **site** has a site.json file describing it's relation to your instance of
 
 ```json
 {
-    "oName": "s_calibrationPage",
+    "oName": "s_basicSailPage",
     "o": null,
-    "dir": "calibration",
-    "jssrc":["s_calibration.js", "s_calibrationPage.js"],
-    "enable": true
+    "dir": "basic_sail",
+    "jssrc":["s_basicSailPage.js", "s_basicSail.js"],
+    "enable": true,
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "ver": "0.1",
+    "desc": "Numerical based instrument panel for sailing. Big magnetic heading and some aditional drawings. For sailing.",
+    "screenShot": ["screen01.png"],
     "otdm":{
         "playground": false,
-        "name": "yss-calibration-page",
-        "ver": "0.1"
+        "icon": "ico_sailboat_256_256.png",
+        "url-home": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/basic_sail"
     }
 }
 ```
@@ -212,7 +216,7 @@ class s_blankPage{
     return "blank page";
   }
 
-  getHtml(){
+  get getHtml(){
     return 'blank page';
   }
 
@@ -323,6 +327,22 @@ Replace text in current scean. Will look for HeelText to replace it with this on
   https://medium.com/@lachlantweedie/animation-in-three-js-using-tween-js-with-examples-c598a19b1263
 
 # CHANGELOG
+
+230120
+
+- pimping site detail site.
+
+yoyoek1
+
+230120
+
+- fixing menu button fixed to bottom of the screen
+- in otdm \ app details top bar now can do back and go to site if it's running
+- removing wrong referenc to "this" if it's posible
+- switching in menu to use hash instade setPage now you can use back / forward as browser is serving. So now if you want to change site use pager.goToByHash('pageByName=OTDM')
+
+yoyoek1
+
 
 230119
 
