@@ -1,0 +1,487 @@
+[
+    {
+        "id": "332849e3e8657538",
+        "type": "tab",
+        "label": "ySS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c7e341a0.381cc",
+        "type": "http in",
+        "z": "332849e3e8657538",
+        "name": "",
+        "url": "/yss/*",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 240,
+        "wires": [
+            [
+                "68f3ae55cd07c2d3"
+            ]
+        ]
+    },
+    {
+        "id": "2fb1c354.d04e3c",
+        "type": "file in",
+        "z": "332849e3e8657538",
+        "name": "",
+        "filename": "",
+        "format": "",
+        "encoding": "utf8",
+        "allProps": false,
+        "x": 1360,
+        "y": 240,
+        "wires": [
+            [
+                "4cafb182bdd5879e"
+            ]
+        ]
+    },
+    {
+        "id": "88974243.7768c",
+        "type": "http response",
+        "z": "332849e3e8657538",
+        "name": "",
+        "x": 1770,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c184f62456566da0",
+        "type": "debug",
+        "z": "332849e3e8657538",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1550,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "68f3ae55cd07c2d3",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "Main engine",
+        "func": "msg.bPath = \"/home/yoyo/Apps/oiyshTerminal/ySS_calibration/\";\nmsg.yssWSUrl = \"ws://192.168.43.220:1880/ws/yss\";\nmsg.bTmp = \"/tmp/\";\n\nmsg.yssPages = flow.get(\"yssPages\")||[\n    {\n      \"oName\": \"s_calibrationPage\",\n      \"o\": null,\n      \"dir\": \"calibration\",\n      \"jssrc\":[\"s_calibration.js\", \"s_calibrationPage.js\"]\n    },\n    {\n      \"oName\": \"s_apV3SvgPage\",\n      \"o\": null,\n      \"dir\": \"autopilot_v3_svg\",\n      \"jssrc\":[\"s_apV3Svg.js\", \"s_apV3SvgPage.js\"]\n    },\n    \n    {\n      \"oName\": \"s_ilooNavPage\",\n      \"o\": null,\n      \"dir\": \"iloo_nav\",\n      \"jssrc\":[\"s_ilooNav.js\", \"s_ilooNavPage.js\"]\n    },\n    {\n      \"oName\": \"s_basicSailPage\",\n      \"o\": null,\n      \"dir\": \"basic_sail\",\n      \"jssrc\":[\"s_basicSailPage.js\", \"s_basicSail.js\"]\n    },\n    {\n      \"oName\": \"s_testFuncsPage\",\n      \"o\": null,\n      \"dir\": \"test_functions\",\n      \"jssrc\":[\"s_testFuncs.js\", \"s_testFuncsPage.js\"]\n    },\n    {\n      \"oName\": \"s_3dcompass1\",\n      \"o\": null,\n      \"dir\": \"3d_compass1\",\n      \"jssrc\":[\"s_3dcompass1.js\"]\n    },\n    {\n      \"oName\": \"s_ilooNav3D\",\n      \"o\": null,\n      \"dir\": \"iloo_nav_3d\",\n      \"jssrc\":[\"s_ilooNav3D.js\"]\n    },\n    {\n      \"oName\": \"s_threeTestPage\",\n      \"o\": null,\n      \"dir\": \"test_Three.js\",\n      \"jssrc\":[\"s_threeTestPage.js\"]\n    },\n    \n];\n\n\nif( msg.otdmProcessRes && msg.otdmProcessRes == true ){\n    node.status({text:\"got otdmloop res\"+msg.filename});\n    \n    console.log(\"otdmProcessRes -----------------\");\n    console.log(msg);\n    var orgMsg = flow.get( msg.orgMsgName );\n    orgMsg['payload'] = msg.payload;\n    return [null,orgMsg];\n}\nif( msg.otdmLoop && msg.otdmLoop == true ){\n    node.status({text:\"got otdmloop back\"+msg.otdmArgs});\n    console.log(\"got loop back\");\n    console.log(msg);\n    \n    return [null,null,null,{\n        otdmProcessRes:true,\n        orgMsgName: msg.orgMsgName,\n        filename:msg.oFile\n    }];\n}\n\n\n\nif( msg.req == undefined )\n    return [null,null,{}];\n\nvar u=msg.req.url.substring(5);\nif ( u == \"\" )\n    u = \"index.html\";\n\n\n\n\nconsole.log(\"Main engine process u:[\"+u+\"] API GET\");\nif( u.substring(0,8) == '?otdmQ:{'){\n    console.log(\" API HANDLE ACTION -------------\");\n    var args = JSON.parse( decodeURI( u.substring( 7 ) ) );\n    console.log(\"args: \");\n    console.log(args);\n    args['oFile'] = msg.bTmp+\"otdmq_\"+(new Date().getTime() )+\"_\"+(Math.random())+\".json\";\n    node.status({text:\"API :\"+JSON.stringify(args) });\n    \n    var as = \"\";\n    var keys = Object.keys( args );\n    for( var k=0,kc=keys.length; k<kc; k++ )\n        as+= '-'+keys[k]+' \"'+args[keys[k]]+'\" ';\n    \n    flow.set( 'msgOrg_'+args['oFile'], msg );\n    \n    return [null,null,null,null,{\n        otdmLoop: true,\n        oFile: args['oFile'],\n        orgMsgName: 'msgOrg_'+args['oFile'],\n        oName: 'msgOrg_'+args['oFile'],\n        otdmOrgArgs:args,\n        otdmArgs: as\n    }];\n}\n\n\n\n\nmsg.filename = msg.bPath+\"\"+u;\n\n\n// checking if registerd external\nvar isExt = false;\nvar psExt = null;\nvar ps = msg.yssPages;\nfor( var p=0,pc=ps.length; p<pc && isExt==false; p++ ){\n    if( ps[p]['external'] ){\n        for( var s=0,sc=ps[p]['jssrc'].length; s<sc; s++){\n            if( msg.req.url == String( \"/yss/external/\"+ps[p]['fDir']+\"/\"+ps[p]['jssrc'][s] ) ){ \n                isExt = true;\n                psExt = ps[p]['fDir']+\"/\"+ps[p]['jssrc'][s];\n                console.log(\"url[\"+msg.req.url+\"]\");\n                console.log(\"url to external is correct as jssrc\");\n                console.log(psExt)\n                break;\n            }\n        }   \n        if( ps[p]['files'] ){\n            for( s=0,sc=ps[p]['files'].length; s<sc && isExt == false; s++){\n                console.log('files external chk......');\n                console.log(\"msg.req.url\"+msg.req.url);\n                console.log(\"build for comp:\"+\n                    String( \"/yss/external/\"+ps[p]['fDir']+\"/\"+ps[p]['files'][s] ) \n                    );\n                    \n                \n                \n                if( msg.req.url == String( \"/yss/external/\"+ps[p]['fDir']+\"/\"+ps[p]['files'][s] ) ){ \n                    isExt = true;\n                    psExt = ps[p]['fDir']+\"/\"+ps[p]['files'][s];\n                    console.log(\"url[\"+msg.req.url+\"]\");\n                    console.log(\"url to external is correct as files\");\n                    console.log(psExt)\n                    break;\n                }\n            }   \n        }\n    }\n}\n\n\nif( isExt  ){\n    console.log(\"isExternalFile:\");\n    console.log(psExt);\n    msg.filename = psExt;\n}\n\nvar ext = u.split('.');\next = ext[ ext.length-1 ];\n\nif( ext == \"js\" || ext == \"map\" )\n    mimeStr = \"text/javascript\";\nelse if( ext == \"png\" )\n    mimeStr = \"image/png\";\nelse if( ext == \"hdr\" )\n    mimeStr = \"application/octet-stream\";\nelse if( ext == \"ico\" )\n    mimeStr = \"image/png\";\nelse if( ext == \"svg\" )\n    mimeStr = \"image/svg+xml\";\nelse if( ext == \"css\" )\n    mimeStr = \"text/css\";\nelse if( ext == \"glb\" )\n    mimeStr = \"application/octet-stream\";\nelse if( ext == \"html\" )\n    mimeStr = \"text/html\";\nelse{\n    mimeStr = \"text/html\";\n\n    node.status({ text: \"ext:\"+ext });\n}\n//mimeStr = \"text/javascript\";\n\nmsg.headers = {\n    'Content-type': String(mimeStr),\n    'Content-Length': 1\n};\n\n\n\nif( msg.req.url == \"/yss/s_nodeRedSupport.js\"){\n    msg.payload='console.log(\"its a inject from node-red.\");';\n    node.send([null,msg]);\n    \n\n}else{\n    console.log(\"msg send to read file.filename\");\n    console.log(msg.filename);\n    return msg;\n}",
+        "outputs": 6,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "554ff4ff3d51d409"
+            ],
+            [
+                "88974243.7768c"
+            ],
+            [],
+            [
+                "5fc5f1d01bf491e8"
+            ],
+            [
+                "8b87b8767fba058b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9451c53cd16cf926",
+        "type": "debug",
+        "z": "332849e3e8657538",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4cafb182bdd5879e",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "inject to index.html",
+        "func": "if( msg.req == undefined ){\n    \n}else if( msg.req.url == \"/yss/libs/mWebSockets.js\"){\n    \n    msg.payload = String( msg.payload ).replace(\n        new RegExp(\"ws://192.168.43.1:1880/ws/accel/oriCal\", 'g'),\n        //\"ws://192.168.43.1:1880/ws/accel/oriCal\"\n        msg.yssWSUrl\n        );\n    \n    node.status({text:\"is mWebSocket !\"});\n    return msg;\n        \n}else if( msg.req.url == \"/yss/\" ||  msg.req.url == \"/yss/index.html\"  ){\n    trsrc = [];\n    trjs = [];\n    \n    for( var p=0,pc=msg.yssPages.length; p<pc; p++ ){\n        var plug = msg.yssPages[p];\n        if( plug['enable'] == false ){\n            trsrc.push( '<!-- IS DISABLED ' );\n            trjs.push('/* IS DISABLED ');\n        }\n        \n        for( var s=0,sc=plug['jssrc'].length; s<sc; s++ ){\n            if( plug['external'] == false )\n                trsrc.push(`<script src=\"sites/`+plug['dir']+`/`+plug['jssrc'][s]+`\"></script>`);   \n            else \n                trsrc.push(`<script src=\"external/`+plug['fDir']+`/`+plug['jssrc'][s]+`\"></script>`);   \n        }\n        \n        trjs.push( \"// -- start of\"+plug['oName']);\n        trjs.push( 'cl(\"adding: '+plug['oName']+'\"); ' );\n        trjs.push( 'yssPages['+p+'][\"o\"] = new '+plug['oName']+'();' );\n        trjs.push( 'pager.addPage( yssPages['+p+'][\"o\"] );' );\n        trjs.push( \"// -- end of\"+plug['oName']+\"\\n\" );\n        \n        if( plug['enable'] == false ){\n            trsrc.push( ' IS DISABLED -->' );\n            trjs.push( ' IS DISABLED */' );\n        }\n    }\n    \n    \n    \n    tr = ` built automaticli in node-red -->\n`+trsrc.join(\"\\n\")+`\n<script>\n\nvar yssPages = `+JSON.stringify(msg.yssPages)+`;\n\nfunction nodeRedInjectionAddPages(){\n    cl(\"node red injection add page .......\");\n    `+trjs.join(\"\\n\\t\")+`\n}\n</script>\n<!--build automaticli in node-red `;\n    \n    node.status({text:\"is index !\"});\n    msg.payload = String(msg.payload).replace( \"noderedinjectpoint\", tr);\n    \n    return msg;\n}else\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1570,
+        "y": 220,
+        "wires": [
+            [
+                "88974243.7768c"
+            ]
+        ]
+    },
+    {
+        "id": "716f0f50f417974a",
+        "type": "http in",
+        "z": "332849e3e8657538",
+        "name": "",
+        "url": "/yss",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 140,
+        "wires": [
+            [
+                "ee4a37926348b77a"
+            ]
+        ]
+    },
+    {
+        "id": "d21ea999ddb9d752",
+        "type": "http response",
+        "z": "332849e3e8657538",
+        "name": "",
+        "x": 1450,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ee4a37926348b77a",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "redirect to ./yss/",
+        "func": "mimeStr = \"text/html\";\nmsg.headers = {\n    'Content-type': String(mimeStr),\n    'Content-Length': 1\n};\nmsg.payload = `<!DOCTYPE html>\n<html>\n  <head>\n    <meta http-equiv=\"refresh\" content=\"0; url='./yss/'\" />\n  </head>\n  <body>\n    <p>Please follow <a href=\"./yss/\">./yss/</a>.</p>\n  </body>\n</html>`;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 140,
+        "wires": [
+            [
+                "d21ea999ddb9d752"
+            ]
+        ]
+    },
+    {
+        "id": "150c5ffc557d90b1",
+        "type": "websocket in",
+        "z": "332849e3e8657538",
+        "name": "/ws/yss_In",
+        "server": "7d55711ded41b9c7",
+        "client": "",
+        "x": 180,
+        "y": 920,
+        "wires": [
+            [
+                "54f8bc05e74e2e23",
+                "5bd0c7a0667d33b1",
+                "38ce264307c8d699"
+            ]
+        ]
+    },
+    {
+        "id": "7a1c94972d8c34d0",
+        "type": "websocket out",
+        "z": "332849e3e8657538",
+        "name": "/ws/yss",
+        "server": "b330159b18442ccf",
+        "client": "",
+        "x": 1060,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "54f8bc05e74e2e23",
+        "type": "link out",
+        "z": "332849e3e8657538",
+        "name": "ws_yss_In",
+        "mode": "link",
+        "links": [],
+        "x": 315,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "cb632b9922b2a62e",
+        "type": "link in",
+        "z": "332849e3e8657538",
+        "name": "ws_yss",
+        "links": [
+            "b8536a11eae51b52"
+        ],
+        "x": 935,
+        "y": 880,
+        "wires": [
+            [
+                "7a1c94972d8c34d0"
+            ]
+        ]
+    },
+    {
+        "id": "5bd0c7a0667d33b1",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "ScreenManager",
+        "func": "if( msg.status ){\n    if( msg.status.event == \"connect\" ){\n        screenCount = (global.get(\"SMScreenCount\")||0) + 1;\n        if(parseInt(screenCount)>99)\n            screenCount = 0;\n        global.set(\"SMScreenCount\", screenCount);\n        node.status({ text: \"SMs:\"+screenCount });\n        \n        return {\n            topic: \"SMForYou\",\n            payload:screenCount+\"\"\n        };\n        \n    }\n}\n\n\nif( msg.payload ){\n    if( msg.payload.substring(0,3) == \"SM:\" ){\n        var c = msg.payload.substring(3);\n        node.status({ text: \"SM: [\"+c+\"]\" });\n        \n        \n        if( c == \"identifyOn\" ){\n            return {\n                topic: \"SMidentifyOn\",\n                payload: \"1\"\n            };\n        }\n        \n        \n    }else if( msg.payload.substring(0,8) == \"SMToAll:\" ){\n        var c = msg.payload.substring(8);\n        node.status({ text:\"SM to all:[\"+c+\"]\" });\n        \n        return {\n            topic: \"SMToAll\",\n            payload: c\n        };\n    //SMStat    \n    }else if( msg.payload.substring(0,7) == \"SMStat:\" ){\n        var c = msg.payload.substring(7);\n        node.status({ text:\"SMStat:[\"+c+\"]\" });\n        \n        return {\n            topic: \"SMStat\",\n            payload: c\n        };\n    \n    //SMCmdTo\n    }else if( msg.payload.substring(0,7) == \"SMCmdTo\" ){\n        var c = msg.payload.substring(7).split(',');\n        c.shift();\n        node.status({ text:\"SMCmdTo:[\"+c[0]+\"] cmd:\"+c[1] });\n        \n        return {\n            topic: \"SMCmdTo\",\n            No: c[0],\n            payload: c[1]\n        };\n    }\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 980,
+        "wires": [
+            [
+                "7a1c94972d8c34d0"
+            ]
+        ]
+    },
+    {
+        "id": "65e6caaae480d499",
+        "type": "status",
+        "z": "332849e3e8657538",
+        "name": "",
+        "scope": [
+            "150c5ffc557d90b1"
+        ],
+        "x": 180,
+        "y": 1000,
+        "wires": [
+            [
+                "5bd0c7a0667d33b1",
+                "6c193329fe0d5f0c"
+            ]
+        ]
+    },
+    {
+        "id": "6c193329fe0d5f0c",
+        "type": "link out",
+        "z": "332849e3e8657538",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "52f734b330961380"
+        ],
+        "x": 315,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "9e574133e2a333ab",
+        "type": "comment",
+        "z": "332849e3e8657538",
+        "name": "check note of this flow !!",
+        "info": "",
+        "x": 300,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "dc98c66dfb42bd5e",
+        "type": "comment",
+        "z": "332849e3e8657538",
+        "name": "configs in this one ->>",
+        "info": "",
+        "x": 280,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "5fc5f1d01bf491e8",
+        "type": "file in",
+        "z": "332849e3e8657538",
+        "name": "",
+        "filename": "",
+        "format": "",
+        "encoding": "utf8",
+        "allProps": false,
+        "x": 560,
+        "y": 420,
+        "wires": [
+            [
+                "68f3ae55cd07c2d3"
+            ]
+        ]
+    },
+    {
+        "id": "9dfbca6077eb8e02",
+        "type": "inject",
+        "z": "332849e3e8657538",
+        "name": "rebuild yssPages",
+        "props": [
+            {
+                "p": "filename",
+                "v": "/OT/ySS_calibration/sites/",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "start0",
+        "x": 200,
+        "y": 580,
+        "wires": [
+            [
+                "c7792b0ceb8f5bfd"
+            ]
+        ]
+    },
+    {
+        "id": "2247aa164dd25969",
+        "type": "file in",
+        "z": "332849e3e8657538",
+        "name": "read sites.json",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1060,
+        "y": 660,
+        "wires": [
+            [
+                "c7792b0ceb8f5bfd"
+            ]
+        ]
+    },
+    {
+        "id": "c7792b0ceb8f5bfd",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "yssPages json builder",
+        "func": "if( msg.req && msg.req.url && (\n    msg.req.url == \"/yss/\" ||\n    msg.req.url == \"/yss/index.html\"\n    ) ){\n    \n    msg.topic = \"start0\";\n    msg.filename = msg.bPath+\"sites/\";\n    \n}\n\nif( msg.topic == 'start0' ){\n    \n    msg.topic = 'start1';\n    msg.pathOrg = msg.filename;\n    msg.filename = msg.filename+'sites.json';\n    node.send([null,msg]);\n    \n}else if( msg.topic == 'start1' ){\n    msg.dIn = JSON.parse( msg.payload );\n    msg.sites = [];\n    \n    for( var e=0,ec=msg.dIn.dirs.length; e<ec; e++ ){\n        msg.sites.push( {\n            \"dir\": msg.dIn.dirs[e],\n            \"fDir\": msg.pathOrg+msg.dIn.dirs[e],\n            \"external\": false\n        } );\n    }\n        \n    for( e=0,ec=msg.dIn.externals.length; e<ec; e++ ){\n        msg.sites.push( {\n            \"dir\": msg.dIn.externals[e],\n            \"fDir\": msg.dIn.externals[e],\n            \"external\": true\n        } );\n    }\n    \n    msg.topic = 'fillDataUp';\n    msg.siteDo = 0;\n    msg.filename = msg.sites[msg.siteDo]['fDir']+\"/site.json\";\n    node.send([ null, msg ]);\n    \n} else if ( msg.topic == 'fillDataUp' ){\n    \n    \n    \n    //node.status({text:\n        //msg.sites[ msg.siteDo ]['dir'] \n        //msg.payload\n    //});\n    \n    //console.log(\"abc\");\n    //console.log( msg.payload );\n    var j = JSON.parse( msg.payload );\n    \n    var k = Object.keys( j );\n    for( var kk=0,kc=k.length; kk<kc; kk++ ){\n        if( k[kk] != 'dir' )\n            msg.sites[ msg.siteDo ][ k[kk] ] = j[ k[kk] ];\n    }\n    \n    msg.siteDo++;\n    msg.topic = 'fillDataUp';\n    if( msg.siteDo >= msg.sites.length ){\n        flow.set(\"yssPages\", msg.sites);\n        msg['itIsDone'] = true;\n        return msg;\n    }\n    //console.log(\"will do \"+msg.siteDo);\n    //console.log(msg.sites[ msg.siteDo ]);\n    msg.filename = msg.sites[msg.siteDo]['fDir']+\"/site.json\";\n    node.send([ null, msg ]);\n    \n}\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 580,
+        "wires": [
+            [
+                "554ff4ff3d51d409"
+            ],
+            [
+                "2247aa164dd25969"
+            ]
+        ]
+    },
+    {
+        "id": "38ce264307c8d699",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "yssPages msg handler",
+        "func": "if( msg.payload.substring(0,8) == 'yssPage:' ){\n    var m = msg.payload.substring(8);\n    \n    node.status({text:\"got yssPages msg\"});\n    \n    \n    if( m == 'rebuild' ){\n        node.send([null, {\n            topic: 'start0',\n            filename: '/OT/ySS_calibration/sites/'\n        }]);\n        node.status({text:\"got yssPages rebuild\"});\n    }\n    \n}else\n    node.status({text:\"diff\"});",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 900,
+        "wires": [
+            [
+                "7a1c94972d8c34d0"
+            ],
+            [
+                "c7792b0ceb8f5bfd"
+            ]
+        ]
+    },
+    {
+        "id": "554ff4ff3d51d409",
+        "type": "function",
+        "z": "332849e3e8657538",
+        "name": "if index rebuild yssPages",
+        "func": "if( msg.req && ( msg.req.url == '/yss/' || msg.req.url == \"/yss/index.html\" ) ){\n    \n    flow.set(\"yssPagesUpdateWorking\", true);\n    flow.set(\"yssPagesPreUpdateMsg\", msg);\n    node.send([ null, {\n        topic:'start0',\n        filename: msg.bPath+\"sites/\",\n    } ]);\n    node.status({text:\"request yssPages update....\"});\n   \n}else if( msg.itIsDone && flow.get(\"yssPagesUpdateWorking\") == true ) {\n    flow.set(\"yssPagesUpdateWorking\", false);\n    node.send([ flow.get(\"yssPagesPreUpdateMsg\"), null ]);\n    \n    node.status({text:\"go normal index after update...\"});\n    \n}else if( flow.get(\"yssPagesUpdateWorking\") == true ){\n    node.status({text:\"got msg but its updater.\"});\n}else{\n    node.status({text:\"reg trafic...\"});\n    return msg;\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 220,
+        "wires": [
+            [
+                "2fb1c354.d04e3c"
+            ],
+            [
+                "c7792b0ceb8f5bfd"
+            ]
+        ]
+    },
+    {
+        "id": "a09a979025841878",
+        "type": "debug",
+        "z": "332849e3e8657538",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "8b87b8767fba058b",
+        "type": "exec",
+        "z": "332849e3e8657538",
+        "command": "cd /home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin; ./otdmTools.py",
+        "addpay": "otdmArgs",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "5",
+        "winHide": false,
+        "oldrc": false,
+        "name": "otdmTool query handler",
+        "x": 810,
+        "y": 400,
+        "wires": [
+            [
+                "68f3ae55cd07c2d3"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7d55711ded41b9c7",
+        "type": "websocket-listener",
+        "path": "/ws/yss_In",
+        "wholemsg": "false"
+    },
+    {
+        "id": "b330159b18442ccf",
+        "type": "websocket-listener",
+        "path": "/ws/yss",
+        "wholemsg": "true"
+    }
+]

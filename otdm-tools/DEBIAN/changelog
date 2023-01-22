@@ -1,9 +1,17 @@
+dpkg (0.23.01) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * Bumping version.
+  * ddpkg driver proto to talk with dpkg-query ma by do some more thinks but for now it's a bridge for otdm-yss-otdm. So otdm installed yss and in it you have otdm so it will be a part of otdm-yss-* family. So web site app will have knolage about appps from repository :) 
+
+  -- B.Ceglik <yoyoek@wp.pl  23-01-22
+
 dpkg (0.20) unstable; urgency=low
 
   [ B.Ceglik ]
   * Bumping version. Having some problems winh repo updater now it will be fixt!
   * Making first full auto deploy of path working:
-   [instance of grafana datasource by name is taken] --> [packt] --> [installd] 
+   [instance of grafana datasource by name is taken] --> [packt] --> [installd]
 
   -- B.Ceglik <yoyoek@wp.pl  22-12-28
 

@@ -2,6 +2,12 @@
 #dpkg -r --force-remove-reinstreq otdmgrainjdatsoumysql
 
 
+# some info from dpkg
+for p in `apt-cache search otdm | awk '{print $1}'`; do
+  dpkg-query -W -f='${binary:Package} ${fields} Version:${Version} Tag:${Tag} Section:[${Section}]\n' $p;
+done
+
+
 
 '
 #install OK

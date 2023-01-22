@@ -1,12 +1,13 @@
 Package:otdm-tools
-Version: 0.22.9
-Section: base
+Version: 0.23.01
+Section: otdm
 Priority: optional
 Architecture: all
 Depends: jq, python (>=3.0) | python3
 #Recommends: jq, python (>=3.0) | python3
 Pre-Depends: otdm-installer (>=0.1) | otdm-installer-dummy (>=0.1)
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Tag: oiyshTerminal, otdm
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
 Description: It's a set of tool to help with the work
   of downloding http jsons parsing extracting importing

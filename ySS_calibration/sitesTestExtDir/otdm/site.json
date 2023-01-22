@@ -2,7 +2,7 @@
     "oName": "s_otdmPage",
     "o": null,
     "dir": "otdm",
-    "jssrc":["s_otdmPage.js"],
+    "jssrc":["s_otdmPage.js", "otdm.js"],
     "files": ["ico_arch_256_256.png"],
 
     "enable": true,
