@@ -52,8 +52,11 @@ Application detail view.
 
 Connecting web page user expirience with dpkg **.deb** user space. Integration with [otdm-tools](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-tools/DEBIAN/README.md).
 
-
+![from dpkg passing otdmtools](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/ySS_calibration/sitesTestExtDir/otdm/screenshots/05ListFromDpkgSearchOtdm.png)
 
 ---
 
 Details form [otdm-tools](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-tools/DEBIAN/README.md) -> dpkg.
+
+![details of deb](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/ySS_calibration/sitesTestExtDir/otdm/screenshots/06DebPackageDetails.png)
+
