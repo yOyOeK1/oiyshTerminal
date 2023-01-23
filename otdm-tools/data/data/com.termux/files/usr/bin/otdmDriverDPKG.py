@@ -65,18 +65,19 @@ It's a set of helper to work with dpkg as it's in system on what otdmTools is ru
 
     def GETAll( self ):
         #print(f" GETAll from dpkg-query --search otdm  with base:otdm by tag *")
-        reAllOtdm = self.subExe('dpkg-query --search otdm')
+        #reAllOtdm = self.subExe('dpkg-query --search otdm')
+        reAllOtdm = self.subExe('apt-cache search otdm')
         #print(reAllOtdm['sto'])
         rAllOtdm = []
         tr = {}
         for d in reAllOtdm['sto'].split("\n"):
             t = d.split(" ")
-            if t[0] != "" and tr.get( t[0][:-1], '' ) == '':
+            if t[0] != "" and tr.get( t[0], '' ) == '':
                 #res
                 #otdm-tools: /data/data/com.termux/files/home/.otdm/tools
                 #otdm-installer-dummy: /data/data/com.termux/files/home/.otdm/i
                 # name passt
-                rd = self.GET( t[0][:-1] )
+                rd = self.GET( t[0] )
                 tr[ rd['name'] ] = rd
 
         #print("result --------------------------")
@@ -87,34 +88,106 @@ It's a set of helper to work with dpkg as it's in system on what otdmTools is ru
         return tr
 
     def GET( self, name ):
+        d = 1
         #print(f"GET  -> {name}")
-        a = {
-            "name":"${binary:Package}",
-            "section":"${Section}",
-            "ver":"${Version}",
-            "tag":"${Tag}",
-            "status":"${Status}",
-            "author":"${Maintainer}",
-            "Homepage": "${Homepage}",
-            "Size": "${Size}",
-            "Tag": "${Tag}",
-            "desc": "${Description}",
-            "Depends": "${Depends}",
-            "Pre-Depends": "${Pre-Depends}",
-            "Recommends": "${Recommends}"
-            }
-        r = self.subExe(
-            ["dpkg-query",
-                "-W",
-                '-f='+json.dumps(a),
-                name ]
-            )
+        if( 0 ):
+            a = {
+                "name":"${binary:Package}",
+                "section":"${Section}",
+                "ver":"${Version}",
+                "tag":"${Tag}",
+                "status":"${Status}",
+                "author":"${Maintainer}",
+                "Homepage": "${Homepage}",
+                "Size": "${Size}",
+                "Tag": "${Tag}",
+                "desc": "${Description}",
+                "Depends": "${Depends}",
+                "Pre-Depends": "${Pre-Depends}",
+                "Recommends": "${Recommends}"
+                }
+            r = self.subExe(
+                ["dpkg-query",
+                    "-W",
+                    '-f='+json.dumps(a),
+                    name ]
+                )
 
-        #print( "have r ")
-        #print( r )
+            tr = json.loads( r['sto'].replace("\n", " ").replace("\t", " ").replace("  ", " ") )
+            if tr.get('status','') == 'install ok installed':
+                tr['installed'] = True
+            else:
+                tr['installed'] = False
+        else:
+            if d:print("using apt-cache....")
+            m = {
+                "name":"Package",
+                "section":"Section",
+                "ver":"Version",
+                "tag":"Tag",
+                "status":"Status",
+                "author":"Maintainer",
+                "Homepage": "Homepage",
+                "installSize": "Installed-Size",
+                "Size": "Size",
+                "Tag": "Tag",
+                "desc": "Description",
+                "debFile": "Filename",
+                "Pre-Depends": "Pre-Depends",
+                "Depends": "Depends",
+                "Recommends": "Recommends"
+                }
+            r = self.subExe( ["apt-cache", "show", name] )
+            ls = r['sto'].split("\n")
+            tr = {}
+            vals = list( m.values() )
+            keys = list( m.keys() )
+            descLast = False
+            packageWas = 0
+            for l in ls:
+                if packageWas >= 2:
+                    print("have all package... skip rest...[%s]"%packageWas)
+                    break
 
-        tr = json.loads( r['sto'].replace("\n", " ").replace("\t", " ").replace("  ", " ") )
-        if tr['status'] == 'install ok installed':
+                found = -1
+                val = ""
+                for v in vals:
+                    try:
+                        found = l.index( f"{v}:" )
+                        val = v
+                        break
+                    except:
+                        pass
+                if d:
+                    print(f"found is found:{found} val:{val} descLast:{descLast}")
+                    print("line                                             %s"%l)
+                    print("desc detecte[%s]"%l[:2])
+                if descLast and l[:2] == "  ":
+                    if d:print(" add missing desc....")
+                    tr['desc'] = f"{tr['desc']} {l[2:]}"
+                else:
+                    descLast = False
+
+                if found == 0:
+                    if val == "Description":
+                        descLast = True
+                    tr[ keys[ vals.index( val ) ]  ] = l.split(": ")[1]
+                    if val == "Package" :
+                        packageWas+=1
+
+
+
+        if d:
+            print( "have r ")
+            print( r )
+            print("------------------------------------")
+            #sys.exit(11)
+            print("tr")
+            print(tr)
+            print("is it installed ?")
+
+        instStat = self.subExe( ["dpkg-query", "-W", "-f=${Status}", name] )['sto']
+        if instStat == 'install ok installed':
             tr['installed'] = True
         else:
             tr['installed'] = False

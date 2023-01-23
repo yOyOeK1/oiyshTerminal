@@ -46,8 +46,14 @@ class s_otdmPage{
     if( homeUrl != '' )
       det['Home page'] = `<a href="`+homeUrl+`">link...</a>`;
 
+
     if( appObj['installed'] != undefined )
       det['Installed'] = appObj['installed'];
+
+    if( appObj['debFile'] != undefined )
+      det['Filename'] = appObj['debFile'];
+    if( appObj['tag'] != undefined )
+      det['Tag'] = appObj['tag'];
 
     if( appObj['Depends'] != undefined && appObj['Depends'] != "" )
       det['Depends'] = otdmMakeLinks( appObj['Depends'] );
