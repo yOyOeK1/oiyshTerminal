@@ -12,8 +12,6 @@ If you are not willing to put in the minimal effort this is probably not a proje
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B0DFYGS)
 
-
-
 # Practical use cases
 
 _( again some of these are boat specific but the system can be used elsewhere as well )_
@@ -70,3 +68,20 @@ Depending on the functionalities you might need some jellybean parts e.g.
 Most of them are extremely cheap ( couple of $) or can be salvaged from things you already have. More details in particular use case descriptions.
 
 ***
+
+### Some examples and videos of use cases
+
+- on youtube https://www.youtube.com/results?search_query=oiyshTerminal
+- on [SV Oiysh Channel](https://www.youtube.com/@svoiysh)
+
+- - - - 
+
+### Can help
+
+Contact me or [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B0DFYGS)
+
+
+
+
+
+Wiki is a good place to [start...](https://github.com/yOyOeK1/oiyshTerminal/wiki)
