@@ -11,6 +11,32 @@ class s_otdmPage{
 		return "#cccccc";
 	}
 
+  appFrame( content, goTo = '' ){
+    return `
+<div date-role="header" data-position="inline">
+
+  <button
+    onclick="history.back()"
+    class="ui-btn-left ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">
+    Back to list.</button>
+    `+(
+      goTo != '' ? `
+  <button
+    onclick="pager.goToByHash('`+(goTo)+`')"
+    class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-forward">
+    Go TO
+  </button> `: ''
+      )+`
+</div>
+
+
+<div role="main" class="ui-content">
+<br><br>
+  `+content+`
+</div>
+    `;
+  }
+
 
   appDetails( appObj, iNo, itSrc ){
     var aUrl = appObj['external'] == true ? '/yss/external/'+appObj['dir'] : 'sites/'+appObj['dir'];
@@ -70,6 +96,7 @@ class s_otdmPage{
       det["oName"] = appObj['oName'];
     }
     var urlToGoDisable = appObj['o'] == undefined ? 'disabled="disabled"': '';
+    urlToGo = urlToGoDisable != '' ? '' : urlToGo;
     if( appObj['otdm'] )
       det['otdm'] = JSON.stringify( appObj['otdm'] );
 
@@ -77,28 +104,8 @@ class s_otdmPage{
     det['IndexNo'] = iNo;
 
 //onclick="pager.goToByHash('pageByName=OTDM')"
+
     var tr = `
-<div date-role="header" data-position="inline">
-  <button
-    onclick="history.back()"
-    class="ui-btn-left ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">
-    Back to list.</button>
-
-
-
-
-  <button
-    `+urlToGoDisable+`
-    onclick="pager.goToByHash('`+(urlToGo)+`')"
-    class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-forward">
-    Go TO
-  </button>
-
-</div>
-
-
-<div role="main" class="ui-content">
-  <br><br>
   <div data-role="controlgroup" >
     <div class="ui-grid-a">
       <div class="ui-block-a">
@@ -169,28 +176,27 @@ $( document ).ready(function() {
         `<div class="ui-block-b">`+det[key]+`</div>`;
     });
 
-    tr+=`
-    </div>
-  </div>
-</div>
 
-    `;
-    return tr;
+    tr+= urlToGo+ `
+    </div>
+  </div>`;
+
+    return { "tr": tr, "urlToGo": urlToGo };
   }
 
   doAppDetails( srcApp, appNo){
-    if( this.otdmMyList == undefined ){
+    tr = {'tr':''};
+    if( this.otdmMyList == undefined  ){
       // direct request page
-      $("#htmlDyno").html( "Loading ...." );
       var res = otdmArgs(
         { "ddpkg": "*" },
         this.otdmCallBackDoAppDetails
       );
-      return 0;
-    }
+      tr = {
+        "tr": 'Loading ....all dpkg otdm packages'
+      };
 
-    tr = '';
-    if( srcApp == 'yssPages' ){
+    }else if( srcApp == 'yssPages' ){
       tr = this.appDetails( yssPages[appNo], appNo, 'yssPages' );
 
     }else if( srcApp == 'dpkgDetails' ){
@@ -201,26 +207,73 @@ $( document ).ready(function() {
 
     }
 
-    $("#htmlDyno").html( tr ).enhanceWithin();
+    $("#htmlDyno").html( this.appFrame(
+      tr['tr'], tr['urlToGo']
+    ) ).enhanceWithin();
   }
 
-  otdmCallBackOnlyDataProcess( data, res ){
-    if( 0 ){
-      cl("otdmCallBack");
-      cl("data");
-      cl(data);
-      cl("res");
-      cl(res);
+
+  doCmdTest(){
+
+    var res = otdmArgs(
+      { "testSubProcAndProm": "abc" },
+      this.otdmCallBackDoCmdTest
+    );
+  }
+  otdmCallBackDoCmdTest( data, res ){
+    cl("data");
+    cl(data)
+  }
+
+  doAptUpdate(){
+    this.doCmd( "[/usr/bin/pkexec,--disable-internal-agent,apt,update]" );
+  }
+
+  cmdWork;
+  pH;
+
+  doCmdUpdate(){
+    var cmd = "["+$("#cmd").val()+"]";
+    this.doCmd( cmd );
+  }
+
+  doCmd( cmd ){
+    if( this.cmdWork == true ){
+      cl( 'cmd running can sand some stuff to stdin.' );
+      cl($("#cmd").val());
+      sOutSend('otdmCmd:'+this.pH+':'+$("#cmd").val() );
+      return 0;
     }
 
+    cl("do Apt Update :)");
+    var pH = "pH"+(Math.round( Math.random()*100000 ) )+"_"+(Math.round( Math.random()*100000 ) );
+    this.pH = pH;
+    cl("pH: ["+pH+"]");
+    $("#spRes").html("doing it.....["+cmd+"]<br>");
+
+    //cmd = JSON.stringify(["ls", "/tmp"]),
+    this.cmdWork = true;
+    otdmArgs(
+      {
+        "webCmdSubProcess": cmd,
+        'pH': pH
+      },
+      this.otdmCallBackWebCmdSubProcess
+    );
+  }
+  otdmCallBackWebCmdSubProcess( data, res ){
+    cl("otdmCallBackWebCmdSubProcess");
+    cl("data");
+    cl(data);
+  }
+
+
+  otdmCallBackOnlyDataProcess( data, res ){
     var ps = [];
     var ks = Object.keys( data );
     for( var k=0,kc=ks.length; k<kc; k++ ){
       ps.push( data[ ks[k] ] );
     }
-    //cl("ps now ");
-    //cl(ps);
-
     pager.getCurrentPage().otdmMyList = ps;
 
   }
@@ -246,7 +299,21 @@ $( document ).ready(function() {
       "</div>"
     );
 
+  }
 
+
+  otdmCallBackDoConfig( data, res ){
+    data = mDict( data, (k,v)=>{
+      return mDict( v, ( kk, vv )=>{
+            if( kk == 'passwd' )
+              vv = "7".repeat( String(vv).length );
+            return vv;
+        });
+    });
+    $("#htmlDyno").html( pager.getCurrentPage().appFrame(
+      '<h1>otdm - config:</h1><hr/>'+
+      '<pre>'+JSON.stringify(data, 1, 1 )+'</pre>'
+    ));
   }
 
   makeLVItems( doPages, src='yssPages' ){
@@ -301,7 +368,7 @@ $( document ).ready(function() {
         );
         cl("res from otdmArgs---------");
         cl( res );
-        tr+='Loading...';
+        tr+='Loading... dpkg data';
 
       }
 
@@ -332,7 +399,9 @@ setTimeout(()=>{
     <label for="select-otdmPages">Loking at:</label>
     <select name="select-otdmPages" id="select-otdmPages" data-mini="true">
       <option value="installed" >Installed</option>
-      <option value="dpkg" `+(urlArgs['action'] ? 'selected': '')+`>dpkg repository</option>
+      <option value="dpkg" `+(urlArgs['action']=='dpkg' ? 'selected': '')+`>dpkg repository</option>
+      <option value="cmd" `+(urlArgs['action']=='cmd' ? 'selected': '')+`>cmd</option>
+      <option value="config" >config</option>
     </select>
   </div>
 </form>
@@ -351,6 +420,12 @@ $("#select-otdmPages").on(
       case "dpkg":
         pager.goToByHash('pageByName=OTDM&action=dpkg');
         break;
+      case "config":
+        pager.goToByHash('pageByName=OTDM&action=config');
+        break;
+      case "cmd":
+        pager.goToByHash('pageByName=OTDM&action=cmd');
+        break;
     };
 
   }
@@ -368,6 +443,28 @@ $("#select-otdmPages").on(
     return `
     <div id="otdmPage">
     <h1>OTDM</h1>
+
+    `+(
+      urlArgs['action'] == 'cmd' ?
+      `<input id="cmd" type="text"
+        value="`+( urlArgs['action'] == 'cmd' ? '/usr/bin/pkexec,--disable-internal-agent,whoami': '')+`"
+         />
+        <div id="spRes"></div>`:''
+    )+`
+    `+(
+      urlArgs['action'] == 'cmd' ?
+      `<button class="ui-btn"
+        onclick="pager.getCurrentPage().doCmdUpdate()">
+        do cmd</button>`: ''
+    )+`
+
+    `+(
+      urlArgs['action']=='dpkg' ?
+      `<button class="ui-btn"
+        onclick="pager.getCurrentPage().doAptUpdate()">
+        update repository</button>
+      <div id="spRes"></div>`:''
+    )+`
 
     <!--
     <button class="ui-btn"
@@ -391,12 +488,43 @@ $("#select-otdmPages").on(
   }
 
   get getHtml(){
-    tr = '';
+    var tr = '';
 
     if( urlArgs['action'] == 'appDetials' ){
       tr = this.doAppDetails(
         urlArgs['src'], urlArgs['i']
       );
+      cl("app details");
+      cl(tr);
+
+    }else if( urlArgs['action'] == 'cmd' ){
+      var trB = (
+        urlArgs['action'] == 'cmd' || urlArgs['action'] == 'dpkg' ?
+        `<input id="cmd" type="text"
+          value="`+( urlArgs['action'] == 'cmd' ?
+            //'./otdmTools.py,-testDialog,yes': ''
+            'mplayer,/home/yoyo/Music/AWS/3sirCWDglG4ZY.128.mp3': ''
+            )+`"
+           />
+          <div id="spRes">res..</div>`:''
+        )+`
+        `+(
+        urlArgs['action'] == 'cmd' ?
+        `<button class="ui-btn"
+          onclick="pager.getCurrentPage().doCmdUpdate()">
+          do cmd</button>`: ''
+        );
+      tr = this.appFrame( trB );
+
+
+    }else if( urlArgs['action'] == 'config' ){
+      tr = this.appFrame( 'Loading .... config' );
+
+      otdmArgs(
+        { "dfs": "/data/data/com.termux/files/home/.otdm/config.json" },
+        this.otdmCallBackDoConfig
+      );
+
     }else{
       tr = this.pageMain();
     }
@@ -418,14 +546,73 @@ $("#select-otdmPages").on(
   }
 
   onMessageCallBack( r ){
-    console.log("s_otdmPage got msg ");
+    //console.log("s_otdmPage got msg ");
+    //cl(r);
     if( r.topic == 'e01Mux/adc0' ){
-      putText("houBatVol", (""+(r.payload*(0.02771809)) ).substring(0,5) );
-
+      //putText("houBatVol", (""+(r.payload*(0.02771809)) ).substring(0,5) );
 
     }else if( r.topic == 'thisDevice/bat/perc' ){
       //putText("batPercent", r.payload+"%");
+
+    }else if( pager.getCurrentPage().cmdWork &&
+      r.topic == String("subP/"+pager.getCurrentPage().pH+"/status") ){
+        cl("got status update on "+pager.getCurrentPage().pH+" msg:"+r.payload);
+        if( r.payload == 'done' ){
+          pager.getCurrentPage().cmdWork = false;
+          cl("END web sub process work -----");
+          $("#spRes").append('DONE');
+        }
+
+
+    }else if( r.topic.substring(0,5) == 'subP/'){
+
+      var workS = pager.getCurrentPage().cmdWork;
+      //cl("payload data");
+      //cl(r.payload);
+
+      if( typeof r.payload == 'object' ){
+        var tr = [];
+        var d = r.payload['data'];
+        for( var b=0,bc=d.length; b<bc; b++ )
+          tr.push( String.fromCharCode( d[b] ) );
+
+        pager.getCurrentPage().addToRes( (tr.join("")) );
+      }else
+        pager.getCurrentPage().addToRes( r.payload.toString() );
+
+
+
     }
+  }
+
+  resL=0;
+  resRet = false;
+  addToRes( msg ){
+    $("#spRes").append(
+      `<div id="resL`+this.resL+`">`+
+      msg+
+      `</div>`
+    );
+
+    //cl("got["+( msg.charCodeAt( msg.length-1 ).toString(16) )+"]");
+
+
+    if( msg.charCodeAt( msg.length-1 ).toString(16) == 'd' ){
+      //cl("back to same line");
+      $("#resL"+(this.resL-1)).hide();
+      this.resRet = true;
+    }else{
+      //cl("back ok");
+      this.resRet = false
+    }
+
+    //$("#resL"+this.resL).slideDown();
+
+    this.resL++;
+    //cl("resLine:"+this.resL);
+    var max = 10;
+    if( this.resL > max )
+      $("#resL"+(this.resL-max-1)).hide();
   }
 
 }

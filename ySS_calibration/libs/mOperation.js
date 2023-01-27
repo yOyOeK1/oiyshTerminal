@@ -228,7 +228,19 @@ function getCookie(cname) {
   return "";
 }
 
-
+// d = mDict( d, (key, val )=>{ /*do somthing;*/ return val; });
+function mDict( inDic, operation ){
+	for( k in inDic ){
+		inDic[ k ] = operation( k, inDic[k] );
+	}
+	/*
+	var keys = Object.keys( inDic );
+	for( var k=0,kc=keys.length; k<kc; k++ ){
+		inDic[ keys[k] ] = operation( keys[k], inDic[ keys[k] ] );
+	}
+	*/
+	return inDic;
+}
 
 function mkfullscreen() {
   var doc = window.document;

@@ -6,6 +6,8 @@
     "basic_sail",
     "iloo_nav",
 
+    "music_sync",
+
     "iloo_nav_3d",
     "3d_compass1",
     "test_Three.js",
