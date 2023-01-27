@@ -1,8 +1,17 @@
+
+
 dpkg (0.23.01) unstable; urgency=low
 
   [ B.Ceglik ]
+  * ./otdmTools.py -webCmdSubProcess "[mplayer,--help]" -pH "pH93419_" -oFile "/tmp/otdmq_1674581985945_0.24472030095379482.json" it's not helthy :P
+  * sub process with autentication on system site.
+  $ otdmTools.py \
+    -webCmdSubProcess "[/usr/bin/pkexec,--disable-internal-agent,whoami]" \
+    -pH "pH93419_" \
+    -oFile "--"
+  [   sudo,--stdin,-E,-k,whoami]
   * Bumping version.
-  * ddpkg driver proto to talk with dpkg-query ma by do some more thinks but for now it's a bridge for otdm-yss-otdm. So otdm installed yss and in it you have otdm so it will be a part of otdm-yss-* family. So web site app will have knolage about appps from repository :) 
+  * ddpkg driver proto to talk with dpkg-query ma by do some more thinks but for now it's a bridge for otdm-yss-otdm. So otdm installed yss and in it you have otdm so it will be a part of otdm-yss-* family. So web site app will have knolage about appps from repository :)
 
   -- B.Ceglik <yoyoek@wp.pl  23-01-22
 

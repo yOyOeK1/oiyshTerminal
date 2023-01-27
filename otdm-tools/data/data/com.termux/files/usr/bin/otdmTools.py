@@ -91,6 +91,7 @@ def dYN( query, defReturn=False, inPrefix="i" ):
     while True:
         print( f"[ {inPrefix} ] {query} [ {yn} ]:" )
         r=input().lower()
+        print("got input [%s]"%r)
         if r in [ "y", "n" ]:
             if r == "y":
                 return True
@@ -1085,6 +1086,8 @@ def mkInjectionFile( args ):
 
 def testDialog( args ):
     if dYN( "It's a dialog test do you want to go to next one?", inPrefix=args.get("testDialog", " i ") ):
+        while dYN( "Press Y to exit loop.", inPrefix=args.get("testDialog", " i ") ) == False:
+            pass
         return 1
     else:
         return 0
@@ -1220,6 +1223,124 @@ def extractDataFrom( args ):
     return 1
 
 
+subP = 0
+subOut = []
+
+def th_subP( args ):
+    print(f"sub thread {args['name']} is starting cmd {args['cmd']}")
+    import time
+    from subprocess import Popen, PIPE, STDOUT
+    import threading
+
+    print("Popen")
+    global subP
+    global subOut
+
+    subOut = []
+    subP = Popen(args['cmd'],  stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+    #time.sleep(.2)
+    empty = 0
+    while 1:
+        #print(subP.stdout.readable())
+        #print(subP.stdout.readline())
+        #print(subP.stdout.closed)
+        #print("empty now:%s"%empty)
+        if empty > 10:
+            subOut.append( -1 )
+            break
+        if subP.stdout.readable() :
+            #print("read line ..")
+            try:
+                w = subP.stdout.readlines()
+                #print("w:%s"%w)
+                #subP.stdout.flush()
+                for l in w:
+                    subOut.append( l )
+                if w == []:
+                    #print("empty")
+                    empty+=1
+                    subOut = subOut[0:-1]
+            except:
+                print("subOut append read error ")
+        #else:
+        #    break
+
+        #print(f"sub thread {name} iter")
+        #time.sleep(.1)
+
+
+    print(f"sub thread {args['name']} is DONE")
+
+def testSubProcAndProm( args ):
+    print("testSubProcAndProm")
+    global subP
+    global subOut
+    import threading
+    import time
+
+    x = threading.Thread( target=th_subP, args=({
+        "name": "subprocess name test 1234",
+        #"cmd": ["ls", "/tmp"],
+        #"cmd": ["./otdmTools.py", "-testDialog", "abc"]
+        #"cmd": ["sleep", "10"]
+        #"cmd": ["apt-cache", "search", "mpg123"]
+        #"cmd": ["dpkg-query", "-W", "-f='{${Package} ${Status}}'", "otdm-tools"]
+        #"cmd": ["echo", "ala ma kota tink ping." ]
+        #"cmd": ["tree", "/tmp"]
+        #"cmd": ["cal"],
+        #"cmd": ["whoami"]
+        "cmd": ["sudo", "--stdin", "apt", "update"]
+        }, ))
+    x.start()
+    #time.sleep(.5)
+
+    nn = 0
+    lr = 0
+    while 1:
+        nn+= 1
+
+        if len(subOut)>0 and subOut[-1] == -1:
+            print("It's done.....")
+            for l in range( lr, len(subOut)-1,1 ):
+                #print(f"({l}) : {subOut[l].decode()}", end="")
+                print(f"({l})   : {subOut[l].decode()}", end="")
+            break
+
+        for l in range( lr, len(subOut),1 ):
+            print(f"({l})   : {subOut[l].decode()}", end="")
+            lr = l+1
+
+        #print( f"subOut len:{len(subOut)} stdout closed:{subP.stdout.closed}")
+
+
+        if len(subOut) > 0 and subOut[-1] == b'[ abc ] It\'s a dialog test do you want to go to next one? [ y / N ]:\n':
+            print("got known prompt !! send y")
+            subP.stdin.write(b'y\n')
+            subP.stdin.flush()
+
+
+        if nn in [ 50 ]:
+            print("send a")
+            subP.stdin.write(b'a\n')
+            subP.stdin.flush()
+
+        if 0 :
+            if nn in [ 16 ,21, 24 ]:
+                print("send w")
+                subP.stdin.write(b'w\n')
+                subP.stdin.flush()
+
+
+            if nn in [ 29 , 35 ]:
+                print("send y")
+                subP.stdin.write(b'y\n')
+                subP.stdin.flush()
+
+        time.sleep(.1)
+    #sys.exit(11)
+    return 1
+
+
 def printVersion( args ):
     print( ver )
     return 1
@@ -1235,6 +1356,7 @@ acts = [
         "setDebug",
         "debuging enable disable by 1 or 0"
     ],
+    [   "testSubProcAndProm",   "testSubProcAndProm", "test subprocess with args"],
     [   "testDialog", "testDialog", "Test of dialog function."],
     [
         "forceHost",
@@ -1485,13 +1607,12 @@ args from args array:''' )
 
 
 
-
 if __name__ == "__main__":
 
     args=sys.argv
     #print( args )
     args=argsParser( args )
-    #print("args after parser:{0}".format(args))
+    print("args after parser:{0}".format(args))
 
     print( f". . o o O O  oiyshTerminal - tools  O O o o . .ver {ver}\n" )
 

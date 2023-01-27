@@ -2,8 +2,6 @@
 
 With grate power comse grate responsibility. It's a power user tool.
 
-
-
 ---
 
 ## Why I need it?
@@ -14,56 +12,57 @@ otdm-tools is a My attempt to eliminate a idea of precise work type. My underste
 
 It's becoming your universal worker, qualiffy for the exact work you have.
 
-
-
 **knowing what to do with:**
 
 - [ ] (**-ddpkg**) dpkg
-
+  
   - [x] **"*"** otdm package list
-
+  
   - [x] **"app"** get package details
-
+  
   - [ ] install package
-
+  
   - [ ] uninstall package
 
 - [x] (**-dfs**) file system
-
+  
   - [x] read file / directory
-
+  
   - [x] write to file
-
+  
   - [x] make directory
 
 - [x] Grafana:
-
+  
   - [x] (**-dganById**) annotations
-
+  
   - [x] (**-dgdbByUid**) dashboards by uid
-
+  
   - [x] datasources by uid
 
 - [x] Node-red:
-
+  
   - [x] (**-dnrfByUid**) flow(s)
 
 - [x] Internal cliper
 
-- [x] Makes backups of (**-mkbp**):
+- [x] (**-webCmdSubProcess**) Shell command wraper to mqtt / webSocket
+  
+  - [x] with live stdio and stdout to mqtt :) 
 
+- [x] Makes backups of (**-mkbp**):
+  
   - [x] ds|gdsuid|gdsid|gdsname|gdhs|gdhuid|gdhid|gdhname|*
 
 - [x] Deb files:
-
+  
   - [x] pre deploy actions
-
+  
   - [x] build .deb
-
+  
   - [x] deploy .deb to repository
-
+  
   - [x] update repository
-
 
 ---
 
@@ -73,13 +72,9 @@ Yes. It's there to have any chance for me to have it working on android :). If y
 
 I'm using it on ubuntu and it's fine. Main part is in python3 so it's makin not so big differenc wher it's running. But it **expect from you to have:** python3, pip, jq
 
-
-
 **Config file:** /data/data/com.termux/files/home/.otdm/config.json
 
 Some info for drivers and what to use as a defoults. If you use otdm-tools by installing otdm-installer-dummy This is a place where you need to set up ip, ports and other setting to mache your system.  Setting for Node-red, grafana, mysql. If you don't have some of those services on your system ma by you have access to it on different machine? Set it up in this file.
-
-
 
 ---
 
@@ -106,18 +101,16 @@ By expanding otdmDriverProto.py you can have worker knowing what to do with:
 - file system
 
 - Grafana:
-
+  
   - annotations
-
+  
   - dashboards by uid
-
+  
   - datasources by uid
 
 - Node-red:
-
+  
   - flow(s)
-
-
 
 ---
 
@@ -131,39 +124,48 @@ otdmTools.py -ddpkg '*' -oFile '/tmp/debs_status.json'
 
 It will ask dpkg for all .deb's in repository / current package data base maching otdm. Result go to oFile path.
 
-
-
 * **add note** to internal cliper .otdm/cliper.json
 
 ```bash
-tdmTools.py -addNote "This is a example note 1."
+otdmTools.py -addNote "This is a example note 1."
 ```
-
-
 
 - it will try to **help**.
 
 ```bash
-tdmTools.py -h
+otdmTools.py -h
 ```
-
-
 
 - make **backup** of all
 
 ```bash
-tdmTools.py -mkbp "*"
+otdmTools.py -mkbp "*"
 ```
 
+* wrap bash command to mqtt or webSocket
 
+```bash
+otdmTools.py \
+ -webCmdSubProcess "[/usr/bin/pkexec,--disable-internal-agent,whoami]" \
+ -pH "pH93419_" \
+ -oFile "--"
+```
+
+It will start system authentication proces then run "whoami". Will start mqtt topic:
+
+- subP/pH93419_/status - will public **starting** or **done**
+
+- subP/pH93419_/line - will give line by line from command
+
+- subP/pH93419_/in - it's a stdin of command so if you have prompt or something you can interact with app.
+
+In action: https://www.youtube.com/watch?v=7Kc2dpNmxh4
 
 ---
 
 ## CHANGELOG
 
 * migration in ddpkg from dpkg-query to apt-cache
-
-
 
 ---
 

@@ -1,14 +1,8 @@
 # Node-red flow for doing ySS.
 
-
-
 Part of a [otdm-yss-otdm](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sitesTestExtDir/otdm/README.md)
 
-
-
 This .json builds flow in Node-red to give all nesseseri support to make [otdm-yss](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/README.md) runing.
-
-
 
 ## Providing...
 
@@ -17,8 +11,6 @@ This .json builds flow in Node-red to give all nesseseri support to make [otdm-y
 - makes **WebSocket** ws://ipOfYourNode/ws/yss_In and ws://ipOfYourNode/ws/yss
 
 - run **API** over **HTTP** using http://ipOfYourNodeRed:1880/yss/?otdmQ:{args like otdm-tools} binds it with shell layar of machine.
-
-
 
 ## HTTP API :1880/yss/?otdmQ:
 
@@ -31,8 +23,6 @@ It's only a bridge to [otdm-tools](https://github.com/yOyOeK1/oiyshTerminal/blob
 ```
 
 Return - json with annotation with id 2 from grafana, otdm-tool config file settings.
-
-
 
 - To list /tmp directory:
 
@@ -60,6 +50,14 @@ Return - json with listed /tmp directory and some extra data. It's a request han
     {
     ...
 ```
+
+
+
+### ver 0.3.1 - Now I know kungfu!
+
+This update brings suport to bing yss-otdm to otdm-tool on level of bash. You have bash in website now! 
+
+**yss-music-sync** premiere ! more about it at [link...](https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/music-sync)
 
 
 
