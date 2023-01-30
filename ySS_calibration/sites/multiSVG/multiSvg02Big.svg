@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="multiSvg02Big.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="258.57142"
+     inkscape:cy="573.01058"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="704"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:41.83296204px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ff6d7f;stroke-width:3.44448638;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       x="-264.86469"
+       y="141.07945"
+       id="and_mag"
+       inkscape:label="#text817"
+       transform="matrix(0.00126267,-1.1255377,0.88846878,-0.00407703,0,0)"><desc
+         id="desc832">{
+&quot;use&quot;:&quot;putText( this,  degToHdg( val )+'`' )&quot;
+}</desc><tspan
+         sodipodi:role="line"
+         id="tspan815"
+         x="-264.86469"
+         y="141.07945"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:196.09202576px;font-family:'FFX LCD';-inkscape-font-specification:'FFX LCD';stroke:#ff6d7f;stroke-width:3.44448638;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">000</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:20.08792496px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ff6d7f;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       x="-218.26768"
+       y="233.78409"
+       id="and_zRot"
+       inkscape:label="#text817"
+       transform="matrix(-0.01023032,-1.168833,0.85543187,-0.01397837,0,0)"><desc
+         id="desc832-6">{
+&quot;use&quot;:&quot;putText( this,  degToHdg( val )+'`' )&quot;
+}</desc><tspan
+         sodipodi:role="line"
+         id="tspan815-7"
+         x="-218.26768"
+         y="233.78409"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:94.16215515px;font-family:LCDDotMatrix5x8;-inkscape-font-specification:LCDDotMatrix5x8;stroke:#ff6d7f;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">000</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.13991785px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ff6d7f;stroke-width:0.41217971;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       x="-310.27173"
+       y="195.15953"
+       id="and_bt0"
+       inkscape:label="#text817"
+       transform="matrix(-0.01246485,-0.95930029,1.0422774,-0.01147252,0,0)"><desc
+         id="desc1430">{
+&quot;use&quot;:&quot;putText( this,  val )&quot;
+}</desc><tspan
+         sodipodi:role="line"
+         id="tspan815-7-8"
+         x="-310.27173"
+         y="195.15953"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.40586472px;font-family:aakar;-inkscape-font-specification:aakar;stroke:#ff6d7f;stroke-width:0.41217971;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">000</tspan></text>
+  </g>
+</svg>

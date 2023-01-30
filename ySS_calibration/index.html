@@ -88,14 +88,16 @@ var module = new moduleCollector();
 <script src="libs/d3.v4.js"></script>
 <script src="libs/svg.min.js"></script>
 <script src="libs/SM.js"></script>
+<script src="libs/PID2.js"></script>
 <script src="libs/m_d3Plot.js"></script>
 <script src="libs/m_MyJustGage.js"></script>
 <script src="libs/sPager.js"></script>
 <script src="libs/mShaders.js"></script>
 <script src="libs/mMath.js"></script>
-<script src="libs/mOperation.js"></script>
 <script src="libs/mWebSockets.js"></script>
 <script src="libs/aggregation.js"></script>
+<script src="libs/mOperation.js"></script>
+
 
 
 <script src="libs/jquery.flexslider.js"></script>
@@ -114,6 +116,18 @@ t4y = new Three4Yss();
 var urlArgs = {};
 // ON LOAD ------------------
 $( document ).ready(function() {
+  /*
+  console.log("loading .... mOperation");
+  jQuery.ajax({
+      url: "libs/mOperation.js",
+      dataType: "script",
+      cache: true
+  }).done(function() {
+      console.log("  mOperation DONE");
+      doRest();
+  });
+  */
+
 
   jQuery.fx.interval = Math.round(1000/18);
   cl("yss index.html document ready !");

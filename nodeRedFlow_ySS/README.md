@@ -53,15 +53,17 @@ Return - json with listed /tmp directory and some extra data. It's a request han
 
 
 
+### ver 0.3.3 - multiSvg and musicSync
+
+Sync music player across web clients :) [link...](https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/music_sync)
+
+MultiSvg easy way of adding faaast new sites / pages / controlls [link...](https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/multiSvg)
+
 ### ver 0.3.1 - Now I know kungfu!
 
 This update brings suport to bing yss-otdm to otdm-tool on level of bash. You have bash in website now! 
 
 **yss-music-sync** premiere ! more about it at [link...](https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/music-sync)
-
-
-
-
 
 ### ver 0.3 - More integration with otdmTols.
 

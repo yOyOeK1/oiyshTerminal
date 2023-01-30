@@ -1,0 +1,15 @@
+{
+    "oName": "s_multiSVGPage",
+    "o": null,
+    "dir": "multiSVG",
+    "jssrc":["s_multiSVGPage.js"],
+    "enable": true,
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "ver": "0.1",
+    "desc": "Automaticli generated sites on only .svg files and names of objects in it.",
+    "screenShots": [],
+    "otdm":{
+        "playground": false,
+        "url-home": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/multiSVG"
+    }
+}

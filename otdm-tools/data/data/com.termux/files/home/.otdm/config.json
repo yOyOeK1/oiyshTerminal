@@ -20,6 +20,10 @@
     "dbname": "svoiysh",
     "user": "ykpu",
     "passwd": "pimpimpampam"
+  },
+  "mqtt": {
+    "host": "localhost",
+    "port": 10883
   }
 
 }

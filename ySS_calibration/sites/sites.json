@@ -3,6 +3,9 @@
 
     "calibration",
     "autopilot_v3_svg",
+
+    "multiSVG",
+
     "basic_sail",
     "iloo_nav",
 
