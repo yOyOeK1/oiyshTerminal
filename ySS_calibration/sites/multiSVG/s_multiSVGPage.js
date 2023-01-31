@@ -9,7 +9,9 @@ class s_multiSVGPage{
   svgsList = [
     "multiSvg01.svg",
     "multiSvg02Big.svg",
-    "multiSvgFastScreen.svg"
+    "multiSvgFastScreen.svg",
+    "monsterL.svg",
+    "monsterR.svg"
   ];
 
 

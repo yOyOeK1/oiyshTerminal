@@ -50,6 +50,7 @@ char *topicDrop[] = {
 	"and/",
 	"NR/",
 	"cIMU/",
+	"subP/",
 	0
 	};
 
@@ -185,7 +186,7 @@ int sqlInsert( char *query ){
 		return (long) mysql_insert_id(con);
 	}
 
-	return NULL;
+	return 0;
 }
 
 

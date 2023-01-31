@@ -1,18 +1,12 @@
 # multi SVG
 
-
-
 You can use any .svg drawing app. I'm using inkscape. It's nice, known, opensource vector editor.
 
 Text if you want to change text in them they need to be as text not paths. Object should be a paths not objects if you whant to do any thing with them different then "onclick".
 
-
-
 ## adding your svg to list
 
 In ./ySS/sites/multiSVG you have **s_multiSVGPage.js** there is a "**svgsList**" for now you can add your name of a file :)
-
-
 
 ## supported triks
 
@@ -47,3 +41,15 @@ So you can see it's a wrapper for all possible action to use with .svg :)
   ```
 
     It will send to mqtt, topic "and/bt0" with value "click".
+
+
+
+### TODO
+
+- [ ] now on on ws message callback parser do only one object.
+
+- [ ] interactivity do it need a name of a function? I'm all ready parsing .svg
+
+- [ ] more examples
+
+- [ ] shader don't work good it can be yss-bug
