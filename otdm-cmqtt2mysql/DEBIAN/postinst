@@ -1,0 +1,136 @@
+
+
+echo "postinst [$*]"
+set -e
+
+tr=$DPKG_MAINTSCRIPT_PACKAGE"------------postints
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+"$DPKG_MAINTSCRIPT_PACKAGE"------------- postinst END"
+
+#echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
+
+cd "/data/data/com.termux/files/home/src/cMqtt2Mysql2"
+
+
+echo "clean...."
+set +e
+rm ./cMqtt2Mysql2
+rm ./build.log
+set -e
+
+
+
+cf="/data/data/com.termux/files/home/.otdm/config.json"
+echo "build patch config ...."
+echo "expecting congif in "$cf
+echo "pwd now "`pwd`
+echo "ls ../../.otdm/"
+ls ../../.otdm/
+
+
+tr='--- ./main.c	2023-02-01 06:56:43.497093238 -0500
++++ ./main4Diff.c	2023-02-01 07:25:45.281166156 -0500
+@@ -33,15 +33,15 @@
+
+ #include "myWords.h"
+
+-char *mysqlHost = "127.0.0.1";
+-int mysqlPort = 3306;
+-char *mysqlDb = "svoiysh";
+-char *mysqlUser = "ykpu";
+-char *mysqlPasswd = "pimpimpampam";
++char *mysqlHost = "'`cat $cf | jq -r '.mysql.host'`'";
++int mysqlPort = '`cat $cf | jq -r '.mysql.port'`';
++char *mysqlDb = "'`cat $cf | jq -r '.mysql.dbname'`'";
++char *mysqlUser = "'`cat $cf | jq -r '.mysql.user'`'";
++char *mysqlPasswd = "'`cat $cf | jq -r '.mysql.passwd'`'";
+
+-char *mqttHost = "127.0.0.1";
+-int mqttPort = 10883;
+-char *mqttClientId = "cMqtt2Mysql";
++char *mqttHost = "'`cat $cf | jq -r '.mqtt.host'`'";
++int mqttPort = '`cat $cf | jq -r '.mqtt.port'`';
++char *mqttClientId = "cMqtt2Mysql2";
+
+ char *sufixTest = "topic_";
+'
+echo -E "$tr" > ./mainConfigFixt.patch
+
+
+
+echo "apply patch config....."
+patch ./main.c ./mainConfigFixt.patch
+#echo "FIX IT !!!! IT HAVE IT OFF FOR TEST ##"
+
+
+echo "building it ......"
+. ./makeIt.sh 2> ./build.log
+
+
+if [ -f "./cMqtt2Mysql2" ]; then
+  ls -alh ./cMqtt2Mysql2
+  echo "it's ready! now make it as a service...."
+
+else
+  echo "Something went wrong......"
+  cat ./build.log
+  exit 1
+fi
+
+
+echo "moving it to bin ..... /data/data/com.termux/files/usr/bin"
+mv ./cMqtt2Mysql2 "/data/data/com.termux/files/usr/bin"
+#echo "FIX ME ITS DISABLE FOR TEST"
+
+echo "chk what distro it's ......."
+cDist=""
+
+if [ -f "/etc/os-release" ]; then
+  cDist=`. /etc/os-release; echo "$NAME"`
+fi
+
+
+#echo "-----------------------"
+#echo "shell "$SHELL
+#echo "pwd "`pwd`
+#echo "eeeeenv -------"
+#env
+
+
+if [ ${cDist} = "" ]
+then
+  echo "Unknown distro! To not make damage installer will live it as it's."
+  echo "in /data/data/com.termux/files/home/src/cMqtt2Mysql2"
+  echo "There is a ./cMqtt2Mysql2 binary file it's it!"
+  echo "You need to make it running as service."
+
+elif [ ${cDist} = "Ubuntu" ]
+then
+  echo "  - it's ubuntu. OK will set up it as a service using systemd."
+
+  echo "  copy .service file to /etc/systemd/system/"
+  cp "/data/data/com.termux/files/home/src/cMqtt2Mysql2/systemd.service" "/etc/systemd/system/cmqtt2mysql.service"
+  echo "  reload systemd ..."
+  systemctl daemon-reload
+  echo "  make it enable ..."
+  systemctl enable cmqtt2mysql
+  echo "  start ..."
+  systemctl start cmqtt2mysql
+
+fi
+
+
+
+exit 0
+
+#cd /OT/otdm-cmqtt2mysql/DEBIAN/

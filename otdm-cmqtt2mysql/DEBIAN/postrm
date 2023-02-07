@@ -1,0 +1,37 @@
+echo "postrm [$*]"
+tr=$DPKG_MAINTSCRIPT_PACKAGE"------------postrm
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+"$DPKG_MAINTSCRIPT_PACKAGE"------------- postrm END"
+
+#echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
+
+set +e
+
+echo "disable service ....."
+if [ which systemctl = 0 ]
+then
+  echo "  there is systemctl."
+  echo "  sending disable"
+  systemctl disable cmqtt2mysql
+
+fi
+
+echo "remove binary ...."
+rm /data/data/com.termux/files/usr/bin/cMqtt2Mysql2
+
+echo "src is still in /data/data/com.termux/files/home/src/cMqtt2Mysql2/"
+echo "THX for trying OTDM !"
+
+set -e
+
+exit 0

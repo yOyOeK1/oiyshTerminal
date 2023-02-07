@@ -1,0 +1,12 @@
+Package:otdm-cmqtt2mysql
+Version: 0.1.50
+Section: otdm
+Priority: optional
+Architecture: all
+#Depends: jq, otdm-installer (>=0.1) | otdm-installer-dummy
+#Recommends: jq, python (>=3.0) | python3
+Depends: otdm-db-init | otdm-db-init-dummy, libmysqlclient-dev, libmosquitto-dev
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Tag: oiyshTerminal, otdm, mysql, mqtt
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/otdm-cmqtt2mysql
+Description: Connection app to connect data from mqtt 2 mysql.

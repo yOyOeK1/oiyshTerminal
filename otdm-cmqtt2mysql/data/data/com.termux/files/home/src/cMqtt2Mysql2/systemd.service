@@ -1,0 +1,11 @@
+[Unit]
+Description=binder mqtt 2 mysql part of otdm
+
+[Service]
+User=root
+WorkingDirectory=/data/data/com.termux/files/usr/bin
+ExecStart=/data/data/com.termux/files/usr/bin/cMqtt2Mysql2
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

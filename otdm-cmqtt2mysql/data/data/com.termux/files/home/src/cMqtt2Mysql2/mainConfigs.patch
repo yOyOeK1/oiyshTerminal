@@ -1,0 +1,25 @@
+--- ./main.c	2023-02-01 06:56:43.497093238 -0500
++++ ./main4Diff.c	2023-02-01 07:25:45.281166156 -0500
+@@ -33,15 +33,15 @@
+
+ #include "myWords.h"
+
+-char *mysqlHost = "127.0.0.1";
+-int mysqlPort = 3306;
+-char *mysqlDb = "svoiysh";
+-char *mysqlUser = "ykpu";
+-char *mysqlPasswd = "pimpimpampam";
++char *mysqlHost = "#MysqlHost#";
++int mysqlPort = #MysqlPort#;
++char *mysqlDb = "#MysqlDb#";
++char *mysqlUser = "#MysqlUser#";
++char *mysqlPasswd = "#MysqlPasswd";
+
+-char *mqttHost = "127.0.0.1";
+-int mqttPort = 10883;
+-char *mqttClientId = "cMqtt2Mysql";
++char *mqttHost = "#MqttHost#";
++int mqttPort = #MqttPort#;
++char *mqttClientId = "cMqtt2Mysql2";
+
+ char *sufixTest = "topic_";
