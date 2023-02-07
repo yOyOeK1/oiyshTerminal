@@ -1,12 +1,79 @@
+Package: otdm-cmqtt2mysql
+Version: 0.1.50
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Depends: otdm-db-init | otdm-db-init-dummy, libmysqlclient-dev, libmosquitto-dev
+Filename: ./otdm-cmqtt2mysql_0.1.50-46_all.deb
+Size: 6692
+MD5sum: 9cc8dd08cb5ce150542edaba6e7f3c4a
+SHA1: cbcdb54d5aa1f21e96b46dbb959843e67d2ec490
+SHA256: 127b4599caf38ebe15ce41d877eb016a8e079956fd26073fbac8d55d94a587b6
+Section: otdm
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/otdm-cmqtt2mysql
+Description: Connection app to connect data from mqtt 2 mysql.
+Tag: oiyshTerminal, otdm, mysql, mqtt
+
+Package: otdm-db-init
+Version: 0.1.12
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Depends: otdm-tools, mariadb-static | mariadb-server | mariadb
+Recommends: mariadb-client
+Filename: ./otdm-db-init_0.1.12-45_all.deb
+Size: 1848
+MD5sum: 1e5d9c1f8dca311dc870bccc90c40c37
+SHA1: 395b08887b4f66565578a5880d0afe1c08d9f2aa
+SHA256: a6dac3a09458bb06db833ea8a2b133f0a754fadad3d80d2afd4790f4f623d92c
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It will install if not installed then setup mariadb or mysql
+  ass it's settup in .otdm/config.json in section .mysql
+
+Package: otdm-db-init-dummy
+Version: 0.1
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Depends: otdm-tools
+Filename: ./otdm-db-init-dummy_0.1-3_all.deb
+Size: 1352
+MD5sum: 922645ba8a4ec6792924993d3e16f50b
+SHA1: 9425ae29dbadc729d4e7659d6ba4277875e182f8
+SHA256: 48ef58e4aecb2f67f5345112cb15a0fd6287712033259ed96757690fd8451870
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It's a dummy package to break a tool of dependencis
+ on system not termux based. Like ubuntu can use otdm-* :)
+ To make it working you need to have mariadb or mysql at same settings as in
+ .otdm/config.json file
+ NICE !
+
+Package: otdm-grafana-ds-mysql
+Version: 0.22.17
+Architecture: all
+Maintainer: yoyoek@wp.pl
+Pre-Depends: otdm-tools (>=0.20)
+Filename: ./otdm-grafana-ds-MySql_0.22.17-59_all.deb
+Size: 8768
+MD5sum: 69dffbc50ddca26f86b6b07cedbb3d1f
+SHA1: ea0fae2620dc259274f3ebba4d952c3623eae4d8
+SHA256: 710fa4e92a5455b1682853463e69ff7bdb1980bda26ca7e53adfa9d153c4950a
+Section: base
+Priority: optional
+Description: Grafana datasource injection to have predictable datasource. When It will dpkg will add different otdm-stuffs then it will have fast comon ds to mysql. It's adding mysql datasource in
+  to a Grafana. It will be used in rest of otdm stuff.
+
 Package: otdm-installer-dummy
 Version: 0.1
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
-Filename: ./otdm-installer-dummy_0.1-1_all.deb
-Size: 1236
-MD5sum: 7a4a7fc73920739b1db8fe0f3beb6e9b
-SHA1: 9bbe7b0708f522ee2c7e8d64a6b2e9fb51d0c56c
-SHA256: 5d1fff04ca7e730da2013d6e8623dd07159214a57941e263a23b0d9423c696dd
+Filename: ./otdm-installer-dummy_0.1-2_all.deb
+Size: 1272
+MD5sum: 0832dd7f17f7f7c5633f6b7b23374eed
+SHA1: 40905b766bb642fa69cf1fdd14511d929cbb0a21
+SHA256: 02cc282e7558fc71d4343f14d7f39e9c8e924248dd84c3155247a0ec93572640
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -14,18 +81,126 @@ Description: It's a dummy package to break a tool of dependencis
  on system not termux based. Like ubuntu can use otdm-* :)
  NICE !
 
+Package: otdm-intranetrepo-debianish
+Version: 0.1.3
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Filename: ./otdm-intranetrepo-debianish_0.1.3-15_all.deb
+Size: 1340
+MD5sum: 053d51becb0f05027299c91ebcd7ebb3
+SHA1: fcca27564b13336a6c225f5ceea40faa15db4017
+SHA256: b21470ac875c486865aa7540338672f491cfbaae56ba243125dc100d9e25c1e2
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: Only for debianish like systems. Add otdm repository to http://192.168.43.220:8081/.
+
+Package: otdm-intranetrepo-termux
+Version: 0.1.15
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Filename: ./otdm-intranetrepo-termux_0.1.15-18_all.deb
+Size: 11092
+MD5sum: 7339b3efe5f8f56ad91b82d2101b3384
+SHA1: 3117a1da0618af5a95c6d6915682f9b029e544fe
+SHA256: 510a529447854e716d808731c964579e7db061db626884dc483728202159ed88
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: Only for termux like systems. Add otdm repository to http://192.168.43.220:8081/.
+
+Package: otdm-mqtt-installer
+Version: 0.1.21
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Depends: otdm-tools, mosquitto
+Recommends: mosquitto-clients
+Filename: ./otdm-mqtt-installer_0.1.21-32_all.deb
+Size: 1828
+MD5sum: 469c134929e695ede370ce80cd2cc4c6
+SHA1: 1ecd22d334b0a1f701736b99cd0268f73754fe7e
+SHA256: ecdc966529c31d2accb45c2f75fa18bd72137c3e470a395de70c5cdb4a43f2d0
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It will install if not installed then setup mqtt to work with oiyshTerminal ecosystem
+X-Otdm: abc,cba,aaa,cc,{'ala':['kot','papuga']}
+
+Package: otdm-mqtt-installer-dummy
+Version: 0.1
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Depends: otdm-tools
+Filename: ./otdm-mqtt-installer-dummy_0.1-4_all.deb
+Size: 1368
+MD5sum: 8329cf66720f808b64ed054d430bc6a4
+SHA1: 017144453310771e934e21087f73960c9167902a
+SHA256: cdc93a75b60f1d6c67c81e2bf8a47b4b6ab1415ec64e32e53495a2a6f4319179
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It's a dummy package to break a tool of dependencis
+ on system not termux based. Like ubuntu can use otdm-* :)
+ NICE !
+ it asums you have mqtt broker runing at setting as in config.json
+
+Package: otdm-mrepo
+Version: 0.2.4
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Depends: otdm-tools
+Filename: ./otdm-mrepo_0.2.4-9_all.deb
+Size: 1604
+MD5sum: 839de1341277968421ea01027431fd68
+SHA1: afc4cbed9e488da6031e446c7ceb36fc5823b66c
+SHA256: de5da51113ce428d7e3ad7dc26687820016cb4002b72a85d18bea7fc4239c93d
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: Add otdm main repository to github.
+
+Package: otdm-node-red-installer
+Version: 0.1.8
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Depends: nodejs-lts | nodejs, otdm-tools
+Recommends: proot, npm
+Filename: ./otdm-node-red-installer_0.1.8-17_all.deb
+Size: 2392
+MD5sum: 8a6e766f05b394ded2c42e400ceeb771
+SHA1: 43fc7b628b348655edd39bc5186212b5a0728844
+SHA256: 886f7ba575331e327019444329af64af9be2528db1ddbab2e1a0bbcf4b8873d0
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It will install Node-red stuff around oiyshTerminal
+
+Package: otdm-nrf-yss
+Version: 0.1.5
+Architecture: all
+Maintainer: yoyoek@wp.pl
+Filename: ./otdm-nrf-yss_0.1.5-8_all.deb
+Size: 8120
+MD5sum: 3accd71a6f1b8f2d0b98972bd3f1e29d
+SHA1: aeab246a1eec7b70dbac0ca72e7a9d4b15ef5a35
+SHA256: 57af38370af2b4261365d3204fd1254208e05411247b3df8cc5401e0e6bec4dc
+Section: base
+Priority: optional
+Description: Node-red flow for making yss possible.
+
 Package: otdm-tools
-Version: 0.12
+Version: 0.23.06
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Pre-Depends: otdm-installer (>=0.1) | otdm-installer-dummy (>=0.1)
 Depends: jq, python (>=3.0) | python3
-Filename: ./otdm-tools_0.12-1_all.deb
-Size: 8712
-MD5sum: 1acad1bdfd391581dceadd16e6f46bb7
-SHA1: b62ae6170ea891a4cb9fa8409cc2dc257441542c
-SHA256: c36d8fdb7ad088e00ef66feed05d643fea769343da37c3a1c6778c941d3cbff7
-Section: base
+Recommends: python3-pip, python3-apt | python-apt
+Filename: ./otdm-tools_0.23.06-62_all.deb
+Size: 40908
+MD5sum: 908af823961bf5875233e03bf31dc8cc
+SHA1: d1a20922d046ea9199003d67cc5bcb6726e0a806
+SHA256: 8fc3242f3ef7e67ab423f10402079019844c9c1806c5eaee8a80702635fe814f
+Section: otdm
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
 Description: It's a set of tool to help with the work
@@ -33,4 +208,5 @@ Description: It's a set of tool to help with the work
   exporting injecting datasource dashboards items to
   grafana. Can do adding and removing operations from
   files in Node-red in flows.
+Tag: oiyshTerminal, otdm
 
