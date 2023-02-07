@@ -44,6 +44,8 @@ class s_otdmPage{
     var myRand = parseInt( Math.random()*100000 );
     cl("aUrl");
     cl(aUrl);
+    cl('app obj fields');
+    cl( Object.keys(appObj) );
 
     var name = appObj['o'] != undefined ? appObj['o'].getName : appObj['oName'];
     if( name == undefined && appObj['name'] != undefined )
@@ -87,6 +89,11 @@ class s_otdmPage{
       det['Pre-Depends'] = otdmMakeLinks( appObj['Pre-Depends'] );
     if( appObj['Recommends'] != undefined && appObj['Recommends'] != "" )
       det['Recommends'] = otdmMakeLinks( appObj['Recommends'] );
+    if( appObj['X-OTDM'] != undefined && appObj['X-OTDM'] != '' ){
+      cl("have x-otdm");
+      cl(appObj['X-OTDM']);
+      det['X-OTDM'] = appObj['X-OTDM'].join(', ');
+    }
 
     if( itSrc == 'yssPages' ){
       det["Status"] = ( appObj['enable'] == true ? 'on' : 'off' );

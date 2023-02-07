@@ -374,12 +374,12 @@ fitCanvasToScreen(){
  onWindowResize( renderAfter=true ) {
    cl(" t4y - > onWindowResize");
    t4y.subPixel = 1;
-   if( window.innerWidth > 500 ){
+   if( window.innerWidth > 1500 ){
      t4y.subPixel = 2;
      //t4y.onWindowResize();
      //return 0;
    }
-   if( window.innerWidth >= 1390 ){
+   if( window.innerWidth >= 1900 ){
      t4y.subPixel = 4;
      //t4y.onWindowResize();
      //return 0;

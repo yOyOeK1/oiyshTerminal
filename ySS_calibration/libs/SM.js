@@ -147,7 +147,7 @@ class SM{
   </button>
 
   <button title="rotate" onclick="sm.sendToAllCMD('reload')" >
-    <img src="./icons/arrow-clockwise.svg">‎ 
+    <img src="./icons/arrow-clockwise.svg">‎
   </button>
 
   </fieldset>
@@ -173,17 +173,17 @@ class SM{
 
 
   cbOfPages( No, selectedIs ){
-    var tr = '<select onchange="sm.sendPageChange('+No+',this.value)" id="select-native-'+No+'">';
-    tr+= '<option value="-1">menu</option>';
+    var trr = '<select onchange="sm.sendPageChange('+No+',this.value)" id="select-native-'+No+'">';
+    trr += '<option value="-1">menu</option>';
     var p = pager.getPagesList();
     for(var o=0;o<p.length;o++){
-      tr+= '<option value="'+o+'"';
+      trr += '<option value="'+o+'"';
       if( o == selectedIs )
-        tr+= ' selected';
-      tr+= '>'+p[o].getName+'</option>';
+        trr += ' selected';
+      trr += '>'+p[o].getName+'</option>';
     }
-    tr+= '</select>';
-    return tr;
+    trr+= '</select>';
+    return trr;
   }
 
   shaderBts( No ){
@@ -219,9 +219,10 @@ class SM{
       tr+= `</div>`;
       //tr+= '</div>';
 
-      $("#SMdiv").html(
-        $("#SMdiv").html() + tr
-      ).enhanceWithin();//.enhanceWithin();
+      $("#SMdiv").append(
+        '<div id="rsn'+s[0]+'">'+tr+'</div>'
+      )//.enhanceWithin();//.enhanceWithin();
+      $('#rsn'+s[0]).enhanceWithin();
     }
   }
 
