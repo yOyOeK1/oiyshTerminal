@@ -1,0 +1,10 @@
+
+echo "will not remove any thing. Ma by you have some important data in db.
+removing only user....."
+
+mysqlUser=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.mysql.user' -r`
+
+echo "executing ....."
+echo "DROP USER '${mysqlUser}'@'%', '${mysqlUser}'@'localhost';" | mysql -D 'mysql' -u $(whoami);
+echo "delete from user where User like '${mysqlUser}';" | mysql -D 'mysql' -u $(whoami);
+echo " DONE"

@@ -1,0 +1,4 @@
+otdm-db-init
+
+It will install if not installed in the system mariadb or mysql. Then it will
+set it up as it's in .otdm/config.json section mysql

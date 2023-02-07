@@ -1,0 +1,4 @@
+dpkg (0.1)
+  [ B.Ceglik ]
+  * realease to break dependensy tool chain on system not termux based. Can use it on ubuntu. Then you can use all rest of otdm- if you have used element.
+  -- B.Ceglik <yoyoek@wp.pl  22-12-25

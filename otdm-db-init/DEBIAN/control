@@ -1,0 +1,11 @@
+Package:otdm-db-init
+Version: 0.1.12
+Section: base
+Priority: optional
+Architecture: all
+Depends: otdm-tools, mariadb-static | mariadb-server | mariadb
+Recommends: mariadb-client
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It will install if not installed then setup mariadb or mysql
+  ass it's settup in .otdm/config.json in section .mysql

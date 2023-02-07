@@ -1,0 +1,4 @@
+dpkg (0.1)
+  [ B.Ceglik ]
+  * installs end setup mariadb or mysql service
+  -- B.Ceglik <yoyoek@wp.pl  22-12-25

@@ -1,0 +1,42 @@
+
+
+echo "getting tmp file ..."
+tFile=`mktemp`
+
+
+fMysqlInit(){
+  mysqlUser=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.mysql.user' -r`
+  mysqlPasswd=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.mysql.passwd' -r`
+  mysqlDbName=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.mysql.dbname' -r`
+
+
+  echo "initing mysql ...."
+  q="create user '"$mysqlUser"'@'%' identified by '"$mysqlPasswd"'; \
+create user '"$mysqlUser"'@'localhost' identified by '"$mysqlPasswd"'; \
+GRANT ALL PRIVILEGES ON *.* TO '"$mysqlUser"'@'%' WITH GRANT OPTION; \
+GRANT ALL PRIVILEGES ON *.* TO '"$mysqlUser"'@'localhost' WITH GRANT OPTION; \
+FLUSH PRIVILEGES;"
+
+  #echo "will use query------------------"
+  #echo "$q"
+  #echo "-------------do init privileges"
+  #exit 1
+  echo "executing ....."
+  echo "$q" | mysql -D 'mysql' -u $(whoami);
+  echo " DONE"
+
+  echo "create database...."
+  echo 'create database '${mysqlDbName}';' | mysql
+
+  echo "so mysql is init for:
+  user: "$mysqlUser"
+  password: * (check .otdm/config.json)
+  oiyshTerminal database: ${mysqlDbName}
+
+  it have access from localhost and all hosts and it can do all!"
+  echo "DONE"
+}
+
+echo "start main init event -----------------"
+fMysqlInit
+echo "DONE with main init event -----------------"

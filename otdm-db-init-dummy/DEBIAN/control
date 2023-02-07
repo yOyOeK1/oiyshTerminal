@@ -1,0 +1,14 @@
+Package:otdm-db-init-dummy
+Version: 0.1
+Section: base
+Priority: optional
+Architecture: all
+#Depends: jq
+Depends: otdm-tools
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It's a dummy package to break a tool of dependencis
+	on system not termux based. Like ubuntu can use otdm-* :)
+	To make it working you need to have mariadb or mysql at same settings as in
+	.otdm/config.json file
+	NICE !
