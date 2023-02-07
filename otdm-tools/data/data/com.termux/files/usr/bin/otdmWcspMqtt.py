@@ -6,8 +6,10 @@ import threading
 
 import _thread
 
-import paho.mqtt.client as mqtt
-
+try:
+    import paho.mqtt.client as mqtt
+except:
+    print("paho missing - no woris it's for test.....")
 
 class otdmWcspMqtt:
     cli = None

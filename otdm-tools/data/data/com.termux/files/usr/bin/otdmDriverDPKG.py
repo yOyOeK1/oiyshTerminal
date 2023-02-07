@@ -127,7 +127,8 @@ It's a set of helper to work with dpkg as it's in system on what otdmTools is ru
             "debFile": "Filename",
             "Pre-Depends": "Pre-Depends",
             "Depends": "Depends",
-            "Recommends": "Recommends"
+            "Recommends": "Recommends",
+            "X-OTDM": "X-Otdm"
             }
         r = self.subExe( ["apt-cache", "show", name] )
         ls = r['sto'].split("\n")
@@ -166,6 +167,15 @@ It's a set of helper to work with dpkg as it's in system on what otdmTools is ru
                 tr[ keys[ vals.index( val ) ]  ] = l.split(": ")[1]
                 if val == "Package" :
                     packageWas+=1
+                if val == 'X-Otdm':
+                    print(' ------- ')
+                    j = -1
+                    try:
+                        j = json.parse( l.split(": ")[1] )
+                        print( l.split(": ")[1] )
+                        tr[ keys[ vals.index( val ) ]  ] = j
+                    except:
+                        tr[ keys[ vals.index( val ) ]  ] = l.split(": ")[1].split(',')
 
 
 

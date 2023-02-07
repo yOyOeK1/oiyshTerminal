@@ -17,7 +17,7 @@ from otdmDriverManager import *
 #from otdmDriverGrafanaDatasourceByUid import *
 #from otdmDriverFileSystem import *
 
-ver="0.21.0-1643"
+ver="0.24.01"
 confFilePath="/data/data/com.termux/files/home/.otdm/config.json"
 deb=0
 
@@ -460,7 +460,7 @@ def doDkpg( args ):
     #otdmTools.py -dpkg `env`" -w gdsByName -by "$dbName"
 
     denv=args.get("dpkg")
-    if 1:
+    if 0:
         denv='''
 SHELL=/data/data/com.termux/files/usr/bin/bash
 HISTCONTROL=ignoreboth
@@ -1341,9 +1341,87 @@ def testSubProcAndProm( args ):
     return 1
 
 
+def bashConfigToJson( fPath ):
+    global conf
+    fs = otdmDriverFileSystem( args, conf )
+    fLines = fs.GET('/etc/os-release').split("\n")
+    fD = {}
+    for l in fLines:
+        t = l.split('=')
+        if t[1][0] == '"' and t[1][-1] == '"' and len(t[1])>1:
+            t[1] = t[1][1:-1]
+
+        if len(t) > 0:
+            fD[ t[0] ] = t[1]
+    #print("from file\n")
+    #print(fD)
+    return fD
+
+def addArgHandle_oFile( args, ts ):
+    global conf
+    fs = otdmDriverFileSystem( args, conf )
+    fs.saveIfArgs(ts)
+
+
+def osType( args ):
+    print("looking for os type.... ", end="")
+
+    tr = {
+        'os':-1,
+        'like':-1,
+        'ver':-1
+    }
+
+    if os.path.exists( '/etc/os-release' ):
+        print("debianish \ ...", end="")
+
+        fc = bashConfigToJson( '/etc/os-release' )
+
+        if fc.get('NAME', '') != '':
+            tr['os'] = str(fc.get('NAME'))
+
+        if fc.get('VERSION_ID', '') != '':
+            tr['ver'] = fc.get('VERSION_ID')
+
+        if fc.get('ID_LIKE', '') != '':
+            tr['like'] = str(fc.get('ID_LIKE'))
+
+    elif os.environ.get('TERMUX_VERSION','') != '':
+        print('termux ish \ ...', end="")
+
+        tr['os'] = 'termux'
+        tr['like'] = 'termuxDebian'
+        tr['ver'] = os.environ.get('TERMUX_VERSION','')
+
+    else:
+        print("NaN os")
+
+
+    print("\nend for now ....................\n")
+    print(tr)
+    addArgHandle_oFile(args, tr)
+    sys.exit(11)
+    a= '''
+        if dYN(
+            f"{fp}\n\ttarget file is existing. Overrite it?",
+            inPrefix=" overrite it? ",
+            defReturn=True
+        ) == False:
+            print("Abord. Exit 2")
+            exitWith=2
+            sys.exit(2)
+        print(f"Overriting {fp} ...")
+
+    f = open( fp, "w" )
+    f.write(f"{jtr}")
+    f.close()
+        '''
+
+
 def printVersion( args ):
     print( ver )
     return 1
+
 
 acts = [
     [
@@ -1481,8 +1559,15 @@ acts = [
         "testAll",
         "Run all test defined in test section."
     ],
+    [
+        "osType",
+        "osType",
+        "Check system on what is running."
+    ],
 
 ]
+
+
 
 def exeArray( args ):
     l=len(args)

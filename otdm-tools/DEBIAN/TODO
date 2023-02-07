@@ -9,3 +9,7 @@
 
 - otdmMake.sh [DIR] - to check if there is no tasks for odtm prebuilder and
   all stack
+
+
+set profile.d as file to other
+for root .bashrc

@@ -15,53 +15,59 @@ It's becoming your universal worker, qualiffy for the exact work you have.
 **knowing what to do with:**
 
 - [ ] (**-ddpkg**) dpkg
-  
+
   - [x] **"*"** otdm package list
-  
+
   - [x] **"app"** get package details
-  
+
   - [ ] install package
-  
+
   - [ ] uninstall package
 
 - [x] (**-dfs**) file system
-  
+
   - [x] read file / directory
-  
+
   - [x] write to file
-  
+
   - [x] make directory
 
+- [x] (**-osType**) recognize os
+
+  - [x] termux 117
+
+  - [x] ubuntu 22.04 and *.*
+
 - [x] Grafana:
-  
+
   - [x] (**-dganById**) annotations
-  
+
   - [x] (**-dgdbByUid**) dashboards by uid
-  
+
   - [x] datasources by uid
 
 - [x] Node-red:
-  
+
   - [x] (**-dnrfByUid**) flow(s)
 
 - [x] Internal cliper
 
 - [x] (**-webCmdSubProcess**) Shell command wraper to mqtt / webSocket
-  
-  - [x] with live stdio and stdout to mqtt :) 
+
+  - [x] with live stdio and stdout to mqtt :)
 
 - [x] Makes backups of (**-mkbp**):
-  
+
   - [x] ds|gdsuid|gdsid|gdsname|gdhs|gdhuid|gdhid|gdhname|*
 
 - [x] Deb files:
-  
+
   - [x] pre deploy actions
-  
+
   - [x] build .deb
-  
+
   - [x] deploy .deb to repository
-  
+
   - [x] update repository
 
 ---
@@ -101,15 +107,15 @@ By expanding otdmDriverProto.py you can have worker knowing what to do with:
 - file system
 
 - Grafana:
-  
+
   - annotations
-  
+
   - dashboards by uid
-  
+
   - datasources by uid
 
 - Node-red:
-  
+
   - flow(s)
 
 ---

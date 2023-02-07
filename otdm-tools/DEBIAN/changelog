@@ -1,3 +1,9 @@
+dpkg (0.24.01) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * tdmTools.py -osType "?" -oFile /tmp/os.t
+
+  -- B.Ceglik <yoyoek@wp.pl  02-02-23
 
 
 dpkg (0.23.01) unstable; urgency=low

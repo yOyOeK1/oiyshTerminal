@@ -4,16 +4,27 @@
 
 # some info from dpkg
 for p in `apt-cache search otdm | awk '{print $1}'`; do
-  dpkg-query -W -f='${binary:Package} ${fields} Version:${Version} Tag:${Tag} Section:[${Section}]\n' $p;
+  dpkg-query -W -f='${binary:Package} ${fields} \
+    Version:${Version} \
+    Tag:${Tag} \
+    Section:[${Section}] \
+    Status:[${Status}]\n' $p;
 done
 
 
+#status if installed
+dpkg-query -W -f='{Status:${Status}}' otdm-db-init-dummympg
 
-'
 #install OK
 preinst install   ->    postinst install
 
 #OK remove
+
+# bring termux to front
+am start --user 0 -n com.termux/com.termux.app.TermuxActivity
+
+# file manager with termux accessible
+am start -a android.intent.action.VIEW -d "content://com.android.externalstorage.documents/root/primary"
 
 
 '

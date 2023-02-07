@@ -50,3 +50,18 @@ else
   pip install requests
 fi
 echo "pip section .......OK"
+
+
+echo "saving os type ....."
+/data/data/com.termux/files/usr/bin/otdmTools.py -osType '?' -oFile '/data/data/com.termux/files/home/.otdm/os.json'
+
+echo "adding path to .bashrc...."
+echo 'export PATH=$PATH:"/data/data/com.termux/files/usr/bin"' >> ~/.bashrc
+
+echo 'If you have problems with no file found for otdmTool.py check path.
+Do you have path to /data/data/com.termux/files/usr/bin
+Installer is adding it to ~/.bashrc of installer but is it different then
+you?
+You can add it by running:
+$ echo "export PATH=$PATH:\"/data/data/com.termux/files/usr/bin\"" >> ~/.bashrc
+...........................................................'
