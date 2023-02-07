@@ -1,0 +1,4 @@
+dpkg (0.1)
+  [ B.Ceglik ]
+  * installs and setup Node-red on debianish operating systems
+  -- B.Ceglik <yoyoek@wp.pl  23-02-06

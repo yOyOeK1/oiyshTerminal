@@ -1,0 +1,10 @@
+Package:otdm-node-red-installer
+Version: 0.1.8
+Section: base
+Priority: optional
+Architecture: all
+Depends: nodejs-lts | nodejs, otdm-tools
+Recommends: proot, npm
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It will install Node-red stuff around oiyshTerminal

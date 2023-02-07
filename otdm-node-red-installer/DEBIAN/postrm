@@ -1,0 +1,37 @@
+
+
+
+
+echo "will try to clean some...."
+
+echo "getting tmp file ..."
+tFile=`mktemp`
+echo "checking os type ..."
+/data/data/com.termux/files/usr/bin/otdmTools.py -osType '?' -oFile $tFile
+
+echo "reading ....os info ...."
+rOs=`cat $tFile | jq -r '.os'`
+rLike=`cat $tFile | jq -r '.like'`
+rVer=`cat $tFile | jq -r '.ver'`
+cat $tFile | jq '.'
+
+
+if [ ${rOs} = "Ubuntu" ]
+then
+  echo "Ubuntuish so lets do systemd service ...."
+
+  echo "  stoping service ...."
+  systemctl stop otdm-node-red
+
+  echo "  removing service file....."
+  systemctl disable otdm-node-red
+  if [ -f '/etc/systemd/system/otdm-node-red.service' ]
+  then
+    rm /etc/systemd/system/otdm-node-red.service
+  fi
+
+  echo "  reload systemd ..."
+  systemctl daemon-reload
+
+
+fi

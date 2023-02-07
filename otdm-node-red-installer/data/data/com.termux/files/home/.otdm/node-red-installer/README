@@ -1,0 +1,4 @@
+otdm-node-red-installer
+
+Installer for Node-red on debianish operating systems. It will install nodejs and
+all stuff needed by basic oiyshTerminal installation.

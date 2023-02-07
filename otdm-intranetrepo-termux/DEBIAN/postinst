@@ -1,0 +1,13 @@
+
+echo "checking if there is sources.list.d ...."
+if [ -d '/data/data/com.termux/files/usr/etc/apt/sources.list.d'  ]
+then
+  echo "  OK"
+else
+  echo "  Not there. Making it.."
+  mkdir '/data/data/com.termux/files/usr/etc/apt/sources.list.d'
+fi
+
+
+
+cp '/data/data/com.termux/files/home/.otdm/intranetrepo/repo.list' '/data/data/com.termux/files/usr/etc/apt/sources.list.d/otdm-intranetrepo.list'

@@ -1,0 +1,13 @@
+
+set -e
+# set no problem if error
+
+echo "will try to rm: /data/data/com.termux/files/usr/etc/apt/sources.list.d/otdm-intranetrepo.list"
+if [ -f /data/data/com.termux/files/usr/etc/apt/sources.list.d/otdm-intranetrepo.list ]
+then
+  rm '/data/data/com.termux/files/usr/etc/apt/sources.list.d/otdm-intranetrepo.list'
+else
+  echo "  oiysh ther is no file."
+fi
+
+echo "NIDE DONE"

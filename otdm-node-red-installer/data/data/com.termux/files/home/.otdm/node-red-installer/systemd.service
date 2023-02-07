@@ -1,0 +1,11 @@
+[Unit]
+Description=Starting Node-red.
+
+[Service]
+User=root
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/local/bin/node-red
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

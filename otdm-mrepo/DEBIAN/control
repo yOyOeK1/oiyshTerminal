@@ -1,0 +1,10 @@
+Package:otdm-mrepo
+Version: 0.2.4
+Section: base
+Priority: optional
+Architecture: all
+#Depends: jq
+Depends: otdm-tools
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: Add otdm main repository to github.

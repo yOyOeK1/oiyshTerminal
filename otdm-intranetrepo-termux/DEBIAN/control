@@ -1,0 +1,8 @@
+Package: otdm-intranetrepo-termux
+Version: 0.1.15
+Section: base
+Priority: optional
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: Only for termux like systems. Add otdm repository to http://192.168.43.220:8081/.

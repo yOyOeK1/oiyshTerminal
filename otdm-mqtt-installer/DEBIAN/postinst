@@ -1,0 +1,43 @@
+
+
+echo "getting tmp file ..."
+tFile=`mktemp`
+
+echo "checking os type ..."
+/data/data/com.termux/files/usr/bin/otdmTools.py -osType '?' -oFile $tFile
+
+echo "reading ...."
+rOs=`cat $tFile | jq -r '.os'`
+rLike=`cat $tFile | jq -r '.like'`
+rVer=`cat $tFile | jq -r '.ver'`
+cat $tFile | jq '.'
+
+
+echo "getting expected port for config file ...."
+rPort=`cat /data/data/com.termux/files/home/.otdm/config.json | jq -r '.mqtt.port'`
+echo "  will do port "$rPort
+
+
+confStr="listener "$rPort" 0.0.0.0\nallow_anonymous true"
+
+
+if [ -d "/etc/mosquitto/conf.d" ]
+then
+  echo "  mosquitto / conf.d pressent ... putting settings there."
+  echo "$confStr" > /etc/mosquitto/conf.d/mqttForOT.conf
+  echo "restarting mosquitto service ...."
+  systemctl restart mosquitto
+
+
+elif [ -d "/data/data/com.termux/files/usr/etc/mosquitto" ]
+then
+  echo "  mosquitto / conf.d pressent ... putting settings there."
+  echo "$confStr" > /data/data/com.termux/files/usr/etc/mosquitto/mosquitto.conf
+  echo "TODO still need to set it up as service .... for termux...."
+
+else
+  echo "!!! - unknown os. but you can make it manualy!
+  install mosquitto and set it up to mathe .otdm/config.json
+  settings."
+
+fi

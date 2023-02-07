@@ -1,0 +1,1 @@
+cp /data/data/com.termux/files/home/.otdm/intranetrepo/repo.list '/etc/apt/sources.list.d/otdm-intranetrepo.list'

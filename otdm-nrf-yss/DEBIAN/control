@@ -1,0 +1,8 @@
+Package: otdm-nrf-yss
+Version: 0.1.5
+Section: base
+Priority: optional
+Architecture: all
+#Depends: otdm-node-red-installer || otdm-node-red-installer-dummy
+Maintainer: yoyoek@wp.pl
+Description: Node-red flow for making yss possible.

@@ -1,0 +1,19 @@
+[
+    {
+        "id": "7a1c94972d8c34d0",
+        "type": "websocket out",
+        "z": "332849e3e8657538",
+        "name": "/ws/yss",
+        "server": "b330159b18442ccf",
+        "client": "",
+        "x": 1060,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "b330159b18442ccf",
+        "type": "websocket-listener",
+        "path": "/ws/yss",
+        "wholemsg": "true"
+    }
+]

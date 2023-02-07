@@ -1,0 +1,95 @@
+
+
+echo "getting tmp file ..."
+tFile=`mktemp`
+echo "checking os type ..."
+/data/data/com.termux/files/usr/bin/otdmTools.py -osType '?' -oFile $tFile
+
+echo "reading ....os info ...."
+rOs=`cat $tFile | jq -r '.os'`
+rLike=`cat $tFile | jq -r '.like'`
+rVer=`cat $tFile | jq -r '.ver'`
+cat $tFile | jq '.'
+
+
+
+echo "start main init event -----------------"
+if [ ${rLike} = "debian" ]
+then
+
+  isOldTermux="1"
+
+  echo "  debianish system...."
+  echo "  assuming that nodejs is done ...."
+  echo "  setting up configs for nodejs....."
+  npm config -g set cache "/data/data/com.termux/files/home/.npmMy" -g
+  npm config set registry https://registry.npmmirror.com
+  npm cache verify -g
+  npm cache clear --force
+
+
+  if [ ${isOldTermux} = "1" ]; then
+    #npm i -g npm@8.19.1
+    echo "npm update ? skip....."
+  else
+    echo "termux version TODO"
+    #proot --link2symlink npm i -g npm@8.19.1
+  fi
+
+
+  l="termux node-red@2.1.5 node-red-dashboard node-red-node-mysql node-redcontrib-termux-api"
+  for i in $l
+  do
+    insSta=`npm list -g | grep ${i} > /dev/null; echo $?`
+    if [ ${insSta} = "1" ]
+    then
+      echo "- installing ["$i"]"
+      if [ ${isOldTermux} = "1" ]; then
+        npm i -g "$i"
+      else
+        echo "termux version TODO installisg "$i
+        #proot --link2symlink npm i -g "$i"
+      fi
+
+    else
+      echo "- skipping is in system.... [${i}]"
+    fi
+
+  done
+
+  #if [ `which ls` = '0' ]; then echo 1; fi
+  export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/data/data/com.termux/files/usr/bin"
+  echo "which node-red returns ......."
+  which node-red
+  nrS=`which node-red > /dev/null; echo $?`
+  echo " is it done ? ["${nrS}"]"
+  if [ ${nrS} = "0" ]
+  then
+    echo " OK perfecto OK"
+
+    if [ ${rOs} = "Ubuntu" ]
+    then
+      echo "Ubuntuish so lets do systemd service ...."
+      cp "/data/data/com.termux/files/home/.otdm/node-red-installer/systemd.service" "/etc/systemd/system/otdm-node-red.service"
+      echo "  reload systemd ..."
+      systemctl daemon-reload
+      echo "  make it enable ...[otdm-node-red.service]"
+      systemctl enable otdm-node-red
+      echo "  start ...[otdm-node-red.service]"
+      systemctl start otdm-node-red
+    fi
+
+
+  fi
+
+
+  echo " DONE DONE"
+
+
+else
+  echo "This is unknows system ....."
+  echo ${tFile}
+  echo "Send info to project github issue......."
+fi
+
+echo "DONE with main init event -----------------"

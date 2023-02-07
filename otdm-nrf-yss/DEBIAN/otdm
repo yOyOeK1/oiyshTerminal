@@ -1,0 +1,23 @@
+[
+
+  {
+    "task": "otdm",
+    "desc": "Dummy test echo task.",
+    "args": {
+      "testEcho2":"It's a voice from otdm-tools :) no debug"
+    }
+  },
+
+  {
+    "task": "otdm",
+    "desc": "from dell - Get json flow from Node-red by name [ySS] uid(332849e3e8657538)",
+    "args": {
+      "forceHost": "192.168.43.220",
+      "export": "node-red",
+      "file": "/OT/otdm-nrf-yss/data/data/com.termux/files/home/.otdm/nrf-yss/nrf_org.json",
+      "expW": "flow",
+      "eBy": "332849e3e8657538"
+    }
+  }
+
+]

@@ -1,0 +1,15 @@
+#! /bin/bash
+set -e
+echo "---------------------------------------"
+echo "|  postrm args: [$*]-c($#)         "
+echo "---------------------------------------"
+
+
+
+echo "* first lets make a backup of Node-red...."
+/data/data/com.termux/files/usr/bin/otdmTools.py -mkbp flows -bSuffix 'beforeRemoving_nrf-yss'
+
+echo "* removing in this version is doing nothing. If you want to delete or
+disable flow go to Node-red make it manually."
+
+echo " done "

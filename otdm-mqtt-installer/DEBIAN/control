@@ -1,0 +1,12 @@
+Package:otdm-mqtt-installer
+Version: 0.1.21
+Section: base
+Priority: optional
+Architecture: all
+#Depends: jq
+Depends: otdm-tools, mosquitto
+Recommends: mosquitto-clients
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+X-Otdm: abc,cba,aaa,cc,{'ala':['kot','papuga']}
+Description: It will install if not installed then setup mqtt to work with oiyshTerminal ecosystem

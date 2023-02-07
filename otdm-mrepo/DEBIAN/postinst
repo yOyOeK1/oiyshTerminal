@@ -1,0 +1,27 @@
+
+echo ". ~/.bashrc"
+. ~/.bashrc
+
+echo "getting tmp file ..."
+tFile=`mktemp`
+
+echo "checking os type ..."
+otdmTools.py -osType '?' -oFile $tFile
+
+echo "reading ...."
+rOs=`cat $tFile | jq -r '.os'`
+rLike=`cat $tFile | jq -r '.like'`
+rVer=`cat $tFile | jq -r '.ver'`
+cat $tFile | jq '.'
+
+
+if [ ${rOs}  = "Ubuntu" ]
+then
+  echo "copy my stuff to /etc/apt/sources.list.d/otdm-mrepo.list"
+  cp /data/data/com.termux/files/home/.otdm/mrepo/mrepo.list '/etc/apt/sources.list.d/otdm-mrepo.list'
+
+else
+  echo "!!! - unknown os. but you can make it manualy!
+  In .otdm/mrepo/mrepo.list need to be put to your apt source directory."
+
+fi

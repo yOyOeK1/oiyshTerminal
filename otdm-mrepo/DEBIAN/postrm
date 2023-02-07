@@ -1,0 +1,25 @@
+
+
+echo "getting tmp file ..."
+tFile=`mktemp`
+
+echo "checking os type ..."
+otdmTools.py -osType '?' -oFile $tFile
+
+echo "reading ...."
+rOs=`cat $tFile | jq -r '.os'`
+rLike=`cat $tFile | jq -r '.like'`
+rVer=`cat $tFile | jq -r '.ver'`
+cat $tFile | jq '.'
+
+
+if [ ${rOs} = "Ubuntu" ]
+then
+  echo "removing stuff /etc/apt/sources.list.d/otdm-mrepo.list"
+  rm /etc/apt/sources.list.d/otdm-mrepo.list
+
+else
+  echo "!!! - unknown os. but you can make it manualy!
+  remove mrepo.list file from your apt source directory"
+
+fi

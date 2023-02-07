@@ -1,0 +1,6 @@
+
+echo "check if rm ......"
+if [ -f /etc/apt/sources.list.d/otdm-intranetrepo.list ]
+then
+  rm '/etc/apt/sources.list.d/otdm-intranetrepo.list'
+fi
