@@ -1,0 +1,43 @@
+echo "---------------------"
+echo "---------------------"
+
+
+cowsay -f moose "HEllow from pre build rc !"
+
+srcPath="/OT/ySS_calibration"
+buildPath="/OT/otdm-yss"
+
+
+echo "Doing...."
+
+echo "- clean directory in package path"
+rm -rf ${buildPath}"/data/data/com.termux/files/home/.otdm/yss"
+
+echo "- copy current instance from [${srcPath}]"
+cp -rf ${srcPath} ${buildPath}"/data/data/com.termux/files/home/.otdm/"
+
+echo "- rename it to standard name"
+mv ${buildPath}"/data/data/com.termux/files/home/.otdm/ySS_calibration" \
+  ${buildPath}"/data/data/com.termux/files/home/.otdm/yss"
+
+echo "- remove all sites"
+rm -rf ${buildPath}"/data/data/com.termux/files/home/.otdm/yss/sites"
+mkdir ${buildPath}"/data/data/com.termux/files/home/.otdm/yss/sites"
+rm -rf ${buildPath}"/data/data/com.termux/files/home/.otdm/yss/sitesTestExtDir"
+rm -rf ${buildPath}"/data/data/com.termux/files/home/.otdm/yss/src"
+rm -rf ${buildPath}"/data/data/com.termux/files/home/.otdm/yss/screenShots"
+rm -rf ${buildPath}"/data/data/com.termux/files/home/.otdm/yss/yss_templates"
+rm -rf ${buildPath}"/data/data/com.termux/files/home/.otdm/yss/yss1_templates"
+
+
+echo "- copy test_functions ...."
+cp -rf ${srcPath}"/sites/test_functions" \
+  ${buildPath}"/data/data/com.termux/files/home/.otdm/yss/sites/"
+
+
+
+echo "-------- RC DONE"
+
+
+echo "---------------------"
+echo "---------------------"

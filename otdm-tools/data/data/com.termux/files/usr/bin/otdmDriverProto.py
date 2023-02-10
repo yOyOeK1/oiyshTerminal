@@ -119,6 +119,15 @@ class otdmDriverProto:
                 self.saveIfArgs(r)
                 return 1
 
+            elif act == "DELETE":
+                r = ''
+                r = self.DELETE( self.args.get( self.keyWord, '' )  )
+                print("Exception in DELETE proto ......")
+
+
+                print("DELETE STOP ...")
+                sys.exit(1)
+                return 1
 
             #sys.exit(1)
         return 0

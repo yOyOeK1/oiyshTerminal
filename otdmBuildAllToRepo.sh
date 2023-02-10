@@ -9,7 +9,10 @@ otdm-mqtt-installer \
 otdm-mqtt-installer-dummy \
 otdm-mrepo \
 otdm-node-red-installer \
+otdm-node-red-installer-dummy \
 otdm-nrf-yss \
+otdm-nrf-ot-test \
+otdm-yss \
 otdm-tools"
 
 echo "build all repository elements....."

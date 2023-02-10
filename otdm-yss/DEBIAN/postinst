@@ -1,0 +1,24 @@
+#! /bin/bash
+set -e
+echo "---------------------------------------"
+echo "|  postinst args: [$*]-c($#)         "
+echo "---------------------------------------"
+
+echo "getting tmp file ..."
+tFile=`mktemp`
+
+if [ -f /data/data/com.termux/files/home/.otdm/yss/sites/sites.json ]
+then
+  echo "sites.json if pressent! Nice!"
+else
+  echo "no sites.json file .... making one."
+  echo '{
+  "dirs": [ "test_functions" ],
+  "externals": []
+}
+  ' > /data/data/com.termux/files/home/.otdm/yss/sites/sites.json
+
+
+fi
+
+echo "DONE yss is at [.otdm/yss]"

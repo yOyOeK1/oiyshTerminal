@@ -39,3 +39,12 @@ class otdmDriverNodeRedProto( otdmDriverProto ):
         return self.CurlWResChk( "GET",
             f"http://{self.getHost()}:{self.getPort()}/flow/{d}"
             )
+
+    def DELETE( self, d ):
+        print("OO Ok delete is %s"%d)
+        if len(d) == 16: # eb12a705b6a20db2
+            return self.CurlWResChk( "DELETE",
+                f"http://{self.getHost()}:{self.getPort()}/flow/{d}"
+                )
+        else:
+            print("Wrong uid length !!!")

@@ -1,0 +1,11 @@
+#! /bin/bash
+set -e
+echo "---------------------------------------"
+echo "|  postrm args: [$*]-c($#)         "
+echo "---------------------------------------"
+
+
+echo "Remove all only manually
+stuff is in /data/data/com.termux/files/home/.otdm/yss
+If it's bed tell me.
+"

@@ -1,0 +1,54 @@
+#! /bin/bash
+set -e
+echo "---------------------------------------"
+echo "|  postinst args: [$*]-c($#)         "
+echo "---------------------------------------"
+
+echo "getting tmp file ..."
+tFile=`mktemp`
+
+export PATH="/data/data/com.termux/files/usr/bin/:"$PATH
+hp="/data/data/com.termux/files/home/.otdm/nrf-ot-test"
+
+#get nodes
+# curl -X GET -H "Content-Type: application/json" -H "Accept: application/json" "http://localhost:1880/nodes/"
+
+
+echo "* checking if Node-red is ok ...[ot Test]"
+otdmTools.py -dnrfByUid '*' -oFile ${tFile} > /dev/null
+isF=`cat ${tFile} | jq '.[] | select( .label == "ot Test" )' | grep '{' > /dev/null; echo $?`
+if [ ${isF} = "1" ]
+then
+
+  #echo "* replacing paths..."
+  #sea='msg.bPath = \"/home/yoyo/Apps/oiyshTerminal/ySS_calibration/\";'
+  #rep='msg.bPath = \"/data/data/com.termux/files/home/.otdm/yss/\";'
+  #sed -i "s|/home/yoyo/Apps/oiyshTerminal/ySS_calibration/|/data/data/com.termux/files/home/.otdm/yss/|g" /data/data/com.termux/files/home/.otdm/nrf-yss/nrf_org.json
+
+  echo "* first lets make a backup of Node-red...."
+  otdmTools.py -mkbp flows -bSuffix 'beforeInjecting_nrf-ot-test' > /dev/null
+
+  echo "* injecting it...."
+  otdmTools.py -dnrfByUid 1 -act POST -iFile ${hp}"/nrf_org.json" > /dev/null
+
+  echo "* getting it how is after adding...."
+  echo "  first getting all ...."
+  otdmTools.py -dnrfByUid '*' -oFile ${hp}"/nrf_all_afterAdd.json"
+  echo "  extracting uid...."
+  otTeUid=`cat ${hp}"/nrf_all_afterAdd.json" | jq '.[] | select( .label == "ot Test" ) | .id ' -r`
+  echo "    ot Test uid [${otTeUid}]"
+  echo "  getting correct one...."
+  otdmTools.py -dnrfByUid ${otTeUid} -oFile ${hp}"/nrf_afterAdd.json"
+  echo "  making md5sum for later..."
+  cat ${hp}"/nrf_afterAdd.json" | md5sum | awk '{print $1}' > ${hp}"/nrf_afterAdd.md5"
+  echo "    "`cat ${hp}"/nrf_afterAdd.md5"`
+
+
+else
+  echo " E!E - there is flow with 'ot Test' name in your Node-red. It's not a clean start.
+  So you can import it manually.
+  Injection / import file is in .otdm/nrf-ot-test/flow_org.json"
+
+fi
+
+echo " done "

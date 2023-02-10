@@ -1,6 +1,8 @@
 dpkg (0.24.01) unstable; urgency=low
 
   [ B.Ceglik ]
+  * now it's checking if .bashrc have path updated
+  * otdmTools.py -dnrfByUid [16charUid] -act DELETE - will delete flow
   * tdmTools.py -osType "?" -oFile /tmp/os.t
 
   -- B.Ceglik <yoyoek@wp.pl  02-02-23

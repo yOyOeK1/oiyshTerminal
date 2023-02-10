@@ -77,6 +77,25 @@ then
       systemctl enable otdm-node-red
       echo "  start ...[otdm-node-red.service]"
       systemctl start otdm-node-red
+
+      echo "... waiting for node-red to start...."
+      sleep 1
+      wget "http://localhost:1880/" -O /dev/null > /dev/null
+      if [ $? = "0" ]
+      then
+        echo "Node-red is UP!"
+
+      else
+        echo "... waiting for node-red to start...."
+        sleep 5
+        wget "http://localhost:1880/" -O /dev/null > /dev/null
+        if [ $? = "0" ]
+        then
+          echo "Node-red is UP!"
+        fi
+
+      fi
+
     fi
 
 

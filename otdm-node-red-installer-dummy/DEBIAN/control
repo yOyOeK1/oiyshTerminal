@@ -1,0 +1,13 @@
+Package:otdm-node-red-installer-dummy
+Version: 0.1.1
+Section: base
+Priority: optional
+Architecture: all
+Depends: otdm-tools
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Homepage: https://github.com/yOyOeK1/oiyshTerminal
+Description: It's a dummy package to break a tool of dependencis
+	on system not termux based. Like ubuntu can use otdm-* :)
+	To make it working you need to have Node-RED at same settings as in
+	.otdm/config.json file
+	NICE !

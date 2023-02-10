@@ -1,4 +1,7 @@
 
+- error handler for yss some fall back handler is needed
+- nrf-ot-test need to know if there was edit done since instalation in one line.
+
 - backups system for grafana and node-red exports from api and files
 #
 # tar -cvf ./grafana_2212261415.tar.bz --exclude=debiar_rootfs/usr/share/grafana/public/prc --exclude=debiar_rootfs/usr/share/grafana/public/pwf debiar_rootfs/usr/share/grafana

@@ -1,0 +1,62 @@
+
+#! /bin/bash
+set +e
+echo "---------------------------------------"
+echo "|  prerm args: [$*]-c($#)         "
+echo "---------------------------------------"
+
+
+export PATH="/data/data/com.termux/files/usr/bin/:"$PATH
+hp="/data/data/com.termux/files/home/.otdm/nrf-ot-test"
+
+
+echo "* first lets make a backup of Node-red...."
+otdmTools.py -mkbp flows -bSuffix 'beforeRemoving_nrf-ot-test'
+
+
+
+if [ -f ${hp}"/nrf_afterAdd.md5" ]
+then
+
+  echo "* there is a .md5 file checking if there was some mod since install..."
+
+  tFile=`mktemp`
+  echo "  first getting all ...."
+  # getting all from Node-red, extract by label then do md5
+  otdmTools.py -dnrfByUid '*' -oFile ${tFile}"_all_afterAdd.json"
+  otTeUid=`cat ${tFile}"_all_afterAdd.json" | jq '.[] | select( .label == "ot Test" ) | .id ' -r`
+  otdmTools.py -dnrfByUid ${otTeUid} -oFile ${tFile}"_afterAdd.json"
+  cat ${tFile}"_afterAdd.json" | md5sum | awk '{print $1}' > ${tFile}"_afterAdd.md5"
+  md5Now=`cat ${tFile}"_afterAdd.md5"`
+  md5PostInst=`cat ${hp}"/nrf_afterAdd.md5"`
+
+  echo "So sums are:
+  md5 post install: ${md5PostInst}
+  md5 md5Now      : ${md5Now}
+  "
+
+  if [ ${md5Now} = ${md5PostInst} ]
+  then
+    /usr/games/cowsay -f moose "Removing. It was not edit."
+    #otdmTools.py -dnrfByUid 1 -act DELETE  > /dev/null
+    otdmTools.py -dnrfByUid ${otTeUid} -act DELETE
+
+
+  else
+    /usr/games/cowsay -f moose "It was edit. Not removing it.
+    You can do it in Node-red manually."
+
+  fi
+
+
+else
+
+  echo "* removing in this version is doing nothing. If you want to delete or
+  disable flow go to Node-red make it manually."
+
+fi
+
+
+
+
+echo " done "

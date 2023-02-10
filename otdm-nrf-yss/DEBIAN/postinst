@@ -18,6 +18,11 @@ isF=`cat ${tFile} | jq '.[] | select( .label == "ySS" )' | grep '{' > /dev/null;
 if [ ${isF} = "1" ]
 then
 
+  echo "* replacing paths..."
+  #sea='msg.bPath = \"/home/yoyo/Apps/oiyshTerminal/ySS_calibration/\";'
+  #rep='msg.bPath = \"/data/data/com.termux/files/home/.otdm/yss/\";'
+  sed -i "s|/home/yoyo/Apps/oiyshTerminal/ySS_calibration/|/data/data/com.termux/files/home/.otdm/yss/|g" /data/data/com.termux/files/home/.otdm/nrf-yss/nrf_org.json
+
   echo "* first lets make a backup of Node-red...."
   /data/data/com.termux/files/usr/bin/otdmTools.py -mkbp flows -bSuffix 'beforeInjecting_nrf-yss' > /dev/null
 

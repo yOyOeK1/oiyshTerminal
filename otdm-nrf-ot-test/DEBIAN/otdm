@@ -1,0 +1,16 @@
+[
+
+
+  {
+    "task": "otdm",
+    "desc": "from dell - Get json flow from Node-red by name [ot Test] uid(97d0b0a6154d781c)",
+    "args": {
+      "forceHost": "192.168.43.1",
+      "export": "node-red",
+      "file": "/OT/otdm-nrf-ot-test/data/data/com.termux/files/home/.otdm/nrf-ot-test/nrf_org.json",
+      "expW": "flow",
+      "eBy": "97d0b0a6154d781c"
+    }
+  }
+
+]

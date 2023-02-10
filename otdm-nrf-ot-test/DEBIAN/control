@@ -1,0 +1,8 @@
+Package: otdm-nrf-ot-test
+Version: 0.1.7
+Section: base
+Priority: optional
+Architecture: all
+Depends: otdm-tools, otdm-node-red-installer | otdm-node-red-installer-dummy
+Maintainer: yoyoek@wp.pl
+Description: Node-red flow for testing oiyshTerminal instance.

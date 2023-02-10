@@ -55,8 +55,14 @@ echo "pip section .......OK"
 echo "saving os type ....."
 /data/data/com.termux/files/usr/bin/otdmTools.py -osType '?' -oFile '/data/data/com.termux/files/home/.otdm/os.json'
 
-echo "adding path to .bashrc...."
-echo 'export PATH=$PATH:"/data/data/com.termux/files/usr/bin"' >> ~/.bashrc
+bashRcAdd=`cat ~/.bashrc | grep '/data/data/com.termux/files/usr/bin' > /dev/null; echo $?`
+if [ ${bashRcAdd} = "0" ]
+then
+  echo ".bashrc have path! so it's update or reinstall."
+else
+  echo "adding path to .bashrc...."
+  echo 'export PATH=$PATH:"/data/data/com.termux/files/usr/bin"' >> ~/.bashrc
+fi
 
 echo 'If you have problems with no file found for otdmTool.py check path.
 Do you have path to /data/data/com.termux/files/usr/bin

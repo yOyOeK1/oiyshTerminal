@@ -14,6 +14,16 @@ else
   exit 1
 fi
 
+
+if [ -f $pd"/DEBIAN/preBuildRC" ]; then
+  echo "preBuildRC file pressent. Running it..."
+  . $pd"/DEBIAN/preBuildRC"
+
+  echo "Run by ["$pd"/DEBIAN/preBuildRC] is DONE"
+
+fi
+
+
 if [ -f $pd"/DEBIAN/otdm" ]; then
   echo "otdm file pressent. Running tools over it..."
   otdmTools.py -tasks $pd"/DEBIAN/otdm"
