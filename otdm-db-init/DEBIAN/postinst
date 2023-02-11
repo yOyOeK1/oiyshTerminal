@@ -3,6 +3,19 @@
 echo "getting tmp file ..."
 tFile=`mktemp`
 
+echo "getting tmp file ..."
+tFileOs=`mktemp`
+
+echo "checking os type ..."
+/data/data/com.termux/files/usr/bin/otdmTools.py -osType '?' -oFile $tFileOs
+
+echo "reading ...."
+rOs=`cat $tFileOs | jq -r '.os'`
+rLike=`cat $tFileOs | jq -r '.like'`
+rVer=`cat $tFileOs | jq -r '.ver'`
+cat $tFileOs | jq '.'
+
+
 
 fMysqlInit(){
   mysqlUser=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.mysql.user' -r`
@@ -17,16 +30,30 @@ GRANT ALL PRIVILEGES ON *.* TO '"$mysqlUser"'@'%' WITH GRANT OPTION; \
 GRANT ALL PRIVILEGES ON *.* TO '"$mysqlUser"'@'localhost' WITH GRANT OPTION; \
 FLUSH PRIVILEGES;"
 
-  #echo "will use query------------------"
-  #echo "$q"
-  #echo "-------------do init privileges"
+  echo "will use query------------------"
+  echo "$q"
+  echo "-------------do init privileges"
   #exit 1
   echo "executing ....."
-  echo "$q" | mysql -D 'mysql' -u $(whoami);
+  if [ ${rOs} = "termux" ]
+  then
+    echo "termux need -u 'root'"
+    echo "whoami["$(whoami)"]"
+    echo "use mysql;"${q} | mysql -D 'mysql' -u 'root'
+  else
+    echo "$q" | mysql -D 'mysql' -u $(whoami);
+  fi
   echo " DONE"
 
   echo "create database...."
-  echo 'create database '${mysqlDbName}';' | mysql
+  if [ ${rOs} = "termux" ]
+  then
+    echo "termux need -u 'root'"
+    echo "whoami["$(whoami)"]"
+    echo 'create database '${mysqlDbName}';' | mysql -u 'root'
+  else
+    echo 'create database '${mysqlDbName}';' | mysql
+  fi
 
   echo "so mysql is init for:
   user: "$mysqlUser"

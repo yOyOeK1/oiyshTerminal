@@ -1,0 +1,15 @@
+Package: otdm-ubuntu-software
+Version: 0.1
+Architecture: all
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Installed-Size: 3196
+Depends: jq
+Recommends: jq
+#Breaks: gcalctool (<< 6.7)
+#Replaces: gcalctool (<< 6.7)
+Section: math
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/otdm-ubuntu-software
+Description: OTDM starting point in Ubuntu Software :)
+ Nice !
+Original-Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>

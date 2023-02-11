@@ -1,5 +1,5 @@
 Package:otdm-mqtt-installer
-Version: 0.1.21
+Version: 0.1.27
 Section: base
 Priority: optional
 Architecture: all

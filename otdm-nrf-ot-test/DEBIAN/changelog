@@ -1,6 +1,8 @@
 dpkg (0.1.0) unstable; urgency=low
 
   [ B.Ceglik ]
+  * detects more states
+  * ui layer test pagae
   * first version
 
   -- B.Ceglik <yoyoek@wp.pl  23-02-10

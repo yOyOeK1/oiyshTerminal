@@ -1,5 +1,17 @@
 
 
+# /emulator -avd '5.1_WVGA_API_26' -writable-system
+# in termux to make tunel
+# ssh -R 10880:127.0.0.1:1880 192.168.43.1 -p 2222
+# or to me on dell
+# ssh -R 10880:0.0.0.0:1880 yoyo@192.168.43.220 -p 2222
+
+echo "---------------------------
+Postinst of yss otdm-node-red-installer
+-----------------------------"
+echo "whoami:"`whoami`
+echo "path:"${PATH}
+
 echo "getting tmp file ..."
 tFile=`mktemp`
 echo "checking os type ..."
@@ -14,6 +26,14 @@ cat $tFile | jq '.'
 
 
 echo "start main init event -----------------"
+
+if [ ${rOs} = "termux" ]
+then
+  echo "It's Termux will use debian path...."
+  rLike="debian"
+fi
+
+
 if [ ${rLike} = "debian" ]
 then
 
@@ -37,7 +57,13 @@ then
   fi
 
 
-  l="termux node-red@2.1.5 node-red-dashboard node-red-node-mysql node-redcontrib-termux-api"
+  if [ ${rOs} = "termux" ]
+  then
+    l="termux node-red node-red-dashboard node-red-node-mysql"
+  else
+    l="termux node-red@2.1.5 node-red-dashboard node-red-node-mysql"
+  fi
+
   for i in $l
   do
     insSta=`npm list -g | grep ${i} > /dev/null; echo $?`
@@ -60,6 +86,12 @@ then
   #if [ `which ls` = '0' ]; then echo 1; fi
   export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/data/data/com.termux/files/usr/bin"
   echo "which node-red returns ......."
+
+  #if [ $rOs = "termux" ]; then
+
+  #fi
+
+
   which node-red
   nrS=`which node-red > /dev/null; echo $?`
   echo " is it done ? ["${nrS}"]"
@@ -94,7 +126,67 @@ then
           echo "Node-red is UP!"
         fi
 
+      fi # $? != "0"
+
+    elif [ ${rOs} = "termux" ]
+    then
+      echo "Need to make termux service stuff for Node-red to be a service..."
+
+      echo "setting up services files ....."
+      sD=$PREFIX/var/service/
+      echo "service directory path ..."${sD}
+      if [ -d ${sD}node-red ]
+      then
+        echo "skip is there..."
+      else
+        echo "can make error now ....."
+        set +e
+        mkdir -p ${sD}node-red/log
+        ln -sf $PREFIX/share/termux-services/svlogger ${sD}node-red/log/run
+        set -e
+        echo "no more error now ....."
+        echo '#!/data/data/com.termux/files/usr/bin/sh
+      exec node-red 2>&1 >> /dev/null' > ${sD}node-red/run
+        chmod +x ${sD}node-red/run
       fi
+
+      ls ${sD}node-red
+
+      echo "can make error now ....."
+      set +e
+
+
+      echo "will wait 5 sec. for sv to pick up...."
+      sleep 5
+
+      export SVDIR=/data/data/com.termux/files/usr/var/service
+      . /data/data/com.termux/files/usr/etc/profile
+      source /data/data/com.termux/files/usr/etc/profile.d/start-services.sh
+      echo "restart service ...."
+      #sv enable node-red
+      echo "sv down node-red"
+      ${SHELL} -c 'proot sv down node-red'
+      sleep 1
+
+      echo "sv-enable node-red"
+      ${SHELL} -c 'proot sv-enable node-red'
+      sleep 1
+
+      echo "sv up node-red"
+      ${SHELL} -c 'proot sv up node-red'
+      sleep 1
+
+      echo "if all was fine node-red is at :1880"
+      echo "waiting for node-red to start ....."
+      sleep 5
+      wget http://127.0.0.1:1880 -O /dev/null > /dev/null
+      if [ $? = "0" ]
+      then
+        echo "Node-RED is UP!"
+      else
+        echo "no response frome node-red as a service.."
+      fi
+
 
     fi
 

@@ -10,6 +10,8 @@ For this document I'm using installation of ubuntu 22.04 (lts after update and u
 
 **One of a first .deb base.**
 
+
+
 ## Installation steps
 
 In terminal of your flavor run commands ...
@@ -44,8 +46,6 @@ msg.yssWSUrl = "ws://192.168.43.220:1880/ws/yss";
 
 And Deploy.
 
-
-
 Last step is to set external sites. You can do it by editing sites.json in yss directory. By running
 
 ```bash
@@ -72,8 +72,6 @@ You will in menu only two things:
 
 - Screens Manager - to have remote control to all your screens
 
-
-
 <img title="" src="./otdm-yss-ubuntu-after-install-menu.png" alt="" width="478"> 
 
 So you can start to play with it now. Or look for more .deb's in apt repository with prefix otdm-
@@ -90,17 +88,17 @@ So you can start to play with it now. Or look for more .deb's in apt repository 
 
 
 
+## First installations
+
+Installation on fresh Ubuntu
+
+![](http://img.youtube.com/vi/wwGxnr0Obqw/0.jpg)
+
+[link to video ...](https://www.youtube.com/watch?v=wwGxnr0Obqw)
 
 
 
-
-More is coming !!!
-
-
-
-
-
-
+## More is coming !!!
 
 If you like buy me a coffee
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B0DFYGS)

@@ -1,4 +1,7 @@
 
+echo "can make error now ....."
+set +e
+
 echo "try to remove....."
 if [ -f "/etc/mosquitto/conf.d/mqttForOT.conf" ]
 then
@@ -10,7 +13,7 @@ then
 elif [ -d "/data/data/com.termux/files/usr/etc/mosquitto" ]
 then
   rm '/data/data/com.termux/files/usr/etc/mosquitto/mosquitto.conf'
-  
+
 else
   echo "  oiysh no config file in /etc/mosquitto/conf.d/mqttForOT.conf"
 

@@ -35,9 +35,60 @@ then
   echo "$confStr" > /data/data/com.termux/files/usr/etc/mosquitto/mosquitto.conf
   echo "TODO still need to set it up as service .... for termux...."
 
+
 else
   echo "!!! - unknown os. but you can make it manualy!
   install mosquitto and set it up to mathe .otdm/config.json
   settings."
+
+fi
+
+
+
+if [ ${rOs} = "termux" ]
+then
+  echo "Need to make termux service stuff for Mosquitto to be a service..."
+
+
+  echo "making new config file ..."
+  echo $confStr > /data/data/com.termux/files/home/.otdm/mosquitto.conf
+
+  echo "setting up services files ....."
+  serName="mosquitto"
+  serRunLine="exec mosquitto -c /data/data/com.termux/files/home/.otdm/mosquitto.conf 2>&1 >> /dev/null"
+  sD=$PREFIX/var/service/
+  echo "service directory path ..."${sD}
+  if [ -d ${sD}${serName} ]
+  then
+    echo "skip is there..."
+  else
+    echo "can make error now ....."
+    set +e
+    mkdir -p ${sD}${serName}/log
+    ln -sf $PREFIX/share/termux-services/svlogger ${sD}${serName}/log/run
+    set -e
+    echo "no more error now ....."
+    echo "#!/data/data/com.termux/files/usr/bin/sh
+" > ${sD}${serName}/run
+    echo ${serRunLine} >> ${sD}${serName}/run
+    chmod a+x ${sD}${serName}/run
+
+  fi
+
+  echo "can make error now ....."
+  set +e
+  echo "will wait 5 sec. for sv to pick up...."
+  sleep 5
+  echo "restart service ...."
+  #sv enable node-red
+  echo "sv down "${serName}
+  ${SHELL} -c 'sv down '${serName}
+  sleep 1
+  echo "sv-enable "${serName}
+  ${SHELL} -c 'sv-enable '${serName}
+  sleep 1
+  echo "sv up "${serName}
+  ${SHELL} -c 'sv up '${serName}
+  sleep 1
 
 fi
