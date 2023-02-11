@@ -1,0 +1,130 @@
+<html>
+<!-- 
+Performs a continuous FFT on the audio signal from the microphone and renders a simple
+HTML bar chart every 50ms (although only if the signal is beyond a threshold).
+License: MIT
+-->
+
+<head>
+    <title>Audio spectrum visualisation demo</title>
+    <style>
+        body {
+            background-color: linen;
+        }
+        
+        h1 {
+            color: red;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin-left: 40px;
+        }
+        
+        #bargraph {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            height: 150px;
+            width: 100%;
+        }
+        
+        #bargraph .bar {
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: 2px;
+            padding: 0px;
+            margin: 0px;
+            background-color: lightpink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bargraph">
+    </div>
+    <h1 id="mainfrequency"></h1>
+
+    <script type="text/javascript">
+        const generateBarGraph = (numDataPoints) => {
+            var audioContext;
+
+            const bars = document.getElementById('bargraph');
+
+            var barGraphDomElements = [];
+            for (var i = 0; i < numDataPoints; ++i) {
+                let node = document.createElement('div');
+                node.className = 'bar';
+                bars.appendChild(node);
+                barGraphDomElements.push(node);
+            }
+
+            return barGraphDomElements;
+        }
+
+        const getBigBinIndex = (frequencyBins) => {
+            let biggestIndex = 0;
+            frequencyBins.forEach((bin, index) => {
+                if (bin > frequencyBins[biggestIndex]) {
+                    biggestIndex = index;
+                }
+            });
+
+            return biggestIndex;
+        }
+
+        const init = () => {
+            var fftSize = 1024;
+            var audioContext;
+
+            var analyserNode;
+            var frequencyData;
+            var lastUpdate = 0;
+
+            try {
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioContext = new AudioContext();
+            } catch (e) {
+                alert('Web Audio API is not supported in this browser');
+            }
+
+            const update = (timestamp) => {
+                if (timestamp - lastUpdate > 50) {
+                    analyserNode.getByteFrequencyData(frequencyData);
+                    const bigBinIndex = getBigBinIndex(frequencyData);
+                    const binSize = (audioContext.sampleRate) / fftSize;
+                    const mainFrequencyStart = Math.floor(bigBinIndex * audioContext.sampleRate / fftSize);
+                    const mainfrequencyDomElement = document.getElementById('mainfrequency');
+
+                    mainfrequencyDomElement.textContent = `Index: ${bigBinIndex} Bin size: ${binSize} Frequency: ${mainFrequencyStart} hz`;
+                    barGraphDomElements.forEach((element, index) => {
+                        element.style.height = (1 + frequencyData[index]) + 'px';
+                        element.style.backgroundColor = 'lightpink';
+                        if (index == bigBinIndex) {
+                            element.style.backgroundColor = 'red';
+                        }
+                    });
+                    lastUpdate = timestamp;
+                }
+                requestAnimationFrame(update);
+            }
+
+            // Acquire microphone access.
+            navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: false
+            }).then(stream => {
+                var source = audioContext.createMediaStreamSource(stream);
+                analyserNode = audioContext.createAnalyser(source);
+                analyserNode.fftSize = fftSize;
+                audioContext.resume();
+                source.connect(analyserNode);
+                console.log(analyserNode.frequencyBinCount);
+                frequencyData = new Uint8Array(analyserNode.frequencyBinCount)
+                barGraphDomElements = generateBarGraph(analyserNode.frequencyBinCount);
+                window.requestAnimationFrame(update);
+            });
+        }
+
+        window.addEventListener('load', init, false);
+    </script>
+</body>
+
+</html>
