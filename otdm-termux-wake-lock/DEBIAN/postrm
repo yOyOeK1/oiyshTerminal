@@ -1,0 +1,42 @@
+echo "getting tmpOs file ..."
+tFileOs=`mktemp`
+
+echo "checking os type ..."
+otdmTools.py -osType '?' -oFile $tFileOs
+
+echo "reading ...."
+rOs=`cat $tFileOs | jq -r '.os'`
+rLike=`cat $tFileOs | jq -r '.like'`
+rVer=`cat $tFileOs | jq -r '.ver'`
+cat $tFileOs | jq '.'
+
+if [ ${rOs} = "termux" ]
+then
+  echo "termux "
+#else
+  echo "ok It's termux. Package is for termux! go go go"
+  if [ -f ~/.bashrc ]
+  then
+
+    echo "You have ~/.bashrc.."
+    echo "Checking it...."
+    cat ~/.bashrc | grep 'termux-wake-lock' > /dev/null
+    if [ $? = "0" ]
+    then
+      echo "termux-wake-lock line is in file."
+      bPrefix="_prerm"`date +%s`
+      echo "make backup of current status "${bPrefix}
+      cp ~/.bashrc ~/.bashrc${bPrefix}
+      sed '/termux-wake-lock/d' ~/.bashrc
+    else
+      echo "no termux-wake-lock line in ~/.bashrc himmm"
+    fi
+
+  else
+    echo "There was no ~/.bashrc file. wird."
+  fi
+
+else
+  echo "This package is only for termux... it will do nothing on your not termux system."
+
+fi

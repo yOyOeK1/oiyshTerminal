@@ -1,0 +1,12 @@
+Package: otdm-nrf-audio-onhost
+Version: 0.1.8
+Section: base
+Priority: optional
+Architecture: all
+Depends: termux-api | alsa-utils, otdm-tools, otdm-node-red-installer | otdm-node-red-installer-dummy
+Maintainer: yoyoek@wp.pl
+Description: Node-red flow for playing sound / mp3 on host device.
+  !! Important step for termux! You need to install termux-api.apk !!
+  It give you a "play audio on host" node. msg.mp3 - variable can be pass to it.
+  It need to be full path of a mp3 file to play.
+  .wav files are coming from alsa big thenks for there job!

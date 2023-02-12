@@ -1,5 +1,5 @@
 Package:otdm-db-init
-Version: 0.1.19
+Version: 0.1.21
 Section: base
 Priority: optional
 Architecture: all

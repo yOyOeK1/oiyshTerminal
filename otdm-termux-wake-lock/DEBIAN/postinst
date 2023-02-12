@@ -1,0 +1,52 @@
+echo "getting tmpOs file ..."
+tFileOs=`mktemp`
+
+echo "checking os type ..."
+otdmTools.py -osType '?' -oFile $tFileOs
+
+echo "reading ...."
+rOs=`cat $tFileOs | jq -r '.os'`
+rLike=`cat $tFileOs | jq -r '.like'`
+rVer=`cat $tFileOs | jq -r '.ver'`
+cat $tFileOs | jq '.'
+
+if [ ${rOs} = "termux" ]
+then
+  echo "termux "
+  echo "ok It's termux. Package is for termux! go go go"
+  if [ -f ~/.bashrc ]
+  then
+
+    if [ -f /data/data/com.termux/files/usr/bin/termux-wake-lock ]
+    then
+      echo "termux-wake-lock ... OK"
+    else
+      echo "termux-wake-lock ... not in bin."
+      exit 1
+    fi
+
+
+    echo "You have ~/.bashrc.."
+
+    echo "Checking if it's not reinstall / update...."
+    cat ~/.bashrc | grep 'termux-wake-lock' > /dev/null
+    if [ $? = "0" ]
+    then
+      echo "termux-wake-lock line is in file. hymmmm"
+    else
+      echo "echo termux-wake-lock >> ~/.bashrc"
+      echo "\ntermux-wake-lock\n" >> ~/.bashrc
+      /data/data/com.termux/files/usr/bin/termux-wake-lock
+    fi
+
+  else
+    echo "no ~/.bashrc file... first entry :)"
+    echo "echo termux-wake-lock >> ~/.bashrc"
+    echo "\ntermux-wake-lock\n" >> ~/.bashrc
+    /data/data/com.termux/files/usr/bin/termux-wake-lock
+  fi
+
+else
+  echo "This package is only for termux... it will do nothing on your not termux system."
+
+fi

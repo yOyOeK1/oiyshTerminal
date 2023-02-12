@@ -23,6 +23,22 @@ fMysqlInit(){
   mysqlDbName=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.mysql.dbname' -r`
 
 
+  if [ ${rOs} = "termux" ]
+  then
+    echo "restart mysql service.. and set it enable..."
+    cd /data/data/com.termux/files/home
+    sv down mysqld
+    echo ".....down"
+    sleep 5
+    echo ".....enable it"
+    sv-enable mysqld
+    sleep 1
+    echo "----- up it"
+    sv up mysqld
+    sleep 5
+
+  fi
+
   echo "initing mysql ...."
   q="create user '"$mysqlUser"'@'%' identified by '"$mysqlPasswd"'; \
 create user '"$mysqlUser"'@'localhost' identified by '"$mysqlPasswd"'; \

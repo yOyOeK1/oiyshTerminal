@@ -158,6 +158,7 @@ then
 
       echo "will wait 5 sec. for sv to pick up...."
       sleep 5
+      cd /data/data/com.termux/files/home
 
       export SVDIR=/data/data/com.termux/files/usr/var/service
       . /data/data/com.termux/files/usr/etc/profile

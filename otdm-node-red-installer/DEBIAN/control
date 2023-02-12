@@ -1,5 +1,5 @@
 Package:otdm-node-red-installer
-Version: 0.1.41
+Version: 0.1.42
 Section: base
 Priority: optional
 Architecture: all

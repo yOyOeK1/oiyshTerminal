@@ -1,0 +1,16 @@
+[
+
+
+  {
+    "task": "otdm",
+    "desc": "from dell - Get json flow from Node-red by name [hhbell-binary] uid(d42e4dfde145ec63)",
+    "args": {
+      "forceHost": "192.168.43.220",
+      "export": "node-red",
+      "file": "/OT/otdm-nrf-hhbell-binary/data/data/com.termux/files/home/.otdm/nrf-hhbell-binary/nrf_org.json",
+      "expW": "flow",
+      "eBy": "d42e4dfde145ec63"
+    }
+  }
+
+]

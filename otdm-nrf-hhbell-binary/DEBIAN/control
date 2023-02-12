@@ -1,0 +1,11 @@
+Package: otdm-nrf-hhbell-binary
+Version: 0.1.2
+Section: base
+Priority: optional
+Architecture: all
+Depends: otdm-nrf-audio-onhost
+Maintainer: yoyoek@wp.pl
+Description: Node-red flow for playing in binary full hour.
+  Every full hour it will bell out in binary what time it's :)
+  1 - bell in [1]
+  2 - bells is [0]

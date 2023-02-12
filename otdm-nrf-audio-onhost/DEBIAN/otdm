@@ -1,0 +1,16 @@
+[
+
+
+  {
+    "task": "otdm",
+    "desc": "from dell - Get json flow from Node-red by name [audio-onhost] uid(3272d4cc63919ac4)",
+    "args": {
+      "forceHost": "192.168.43.220",
+      "export": "node-red",
+      "file": "/OT/otdm-nrf-audio-onhost/data/data/com.termux/files/home/.otdm/nrf-audio-onhost/nrf_org.json",
+      "expW": "flow",
+      "eBy": "3272d4cc63919ac4"
+    }
+  }
+
+]
