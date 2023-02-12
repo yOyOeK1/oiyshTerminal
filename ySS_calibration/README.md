@@ -4,7 +4,7 @@
 
 It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js, websocket, rapheal, ml5, ..... It will be a base to start with your site for your need. It's now coming with some examples. But nothing is obligatory :) You can fill free to edit any section of the project and if you create something cool share with all of as!
 
-![yss menu open](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/screenShots/ilooNav_withJQMobile.png?raw=true)
+![yss menu open](./screenShots/ilooNav_withJQMobile.png)
 
 # Table of Contents
 
@@ -72,9 +72,6 @@ msg.yssPages = [
     {
       "oName": "s_apV3SvgPage",
       "o": null,
-
-
-
 ```
 
 **oName** - is a class name of your main class site
@@ -82,10 +79,6 @@ msg.yssPages = [
 **dir** - name of a the sites' home directory
 
 **jssrc** - array of .js files to import during the load process of the yss page
-
-
-
-
 
 It's only a draft. What I'm aiming for.
 
@@ -134,15 +127,9 @@ Make Branching of a selected one.
 
 List all posible to install / upgrade / uninstall from local instance and repositoy. (Somehow this needs to talk to dpkg on your system or get data from yy git ?)
 
-
-
 This section is coming.
 
-
-
 ---
-
-
 
 # Instalation (stand alone)
 
@@ -158,15 +145,15 @@ It's a description of instalation steps for you. And it's the hard way. It's a s
 ## Instalation steps
 
 1. Importing flow from this repository:
-
+   
    https://github.com/yOyOeK1/oiyshTerminal/tree/main/nodeRedFlow_ySS
-
+   
    You will find there json files of flow to import. It will create:
-
+   
        - hosting for your yss instance
-
+   
        - all the stuff necessery for having Screens Manager working
-
+   
        - give you a link in and link out to send and recive data from yss.
 
 2. Download yss directory with all the file-goodnes from
@@ -245,7 +232,7 @@ You need to add your stuff in coresponding sections. In future there will be a p
 
 **examples:** ./s_testFunctsPage.js or ./s_basicSailPage.js
 
-![yss basic sail page](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/screenShots/basicSailing_newMenu.png?raw=true)
+![yss basic sail page](./screenShots/basicSailing_newMenu.png)
 
 This is a s_basicSailPage.js it is a .svg page example.
 
@@ -255,7 +242,7 @@ This is a s_basicSailPage.js it is a .svg page example.
 
 **examples:** ./s_illoNav3D.js or ./s_3dCompass1.js
 
-![yss iloo nav 3d page](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/screenShots/ilooNav3D_ver0.1.png?raw=true)
+![yss iloo nav 3d page](./screenShots/ilooNav3D_ver0.1.png)
 
 This is a s_threeTestPage.js it is a Three.js page example.
 
@@ -343,7 +330,6 @@ yoyoek1
 
 yoyoek1
 
-
 230119
 
 - start to watch hash :| it can do som stuff #&page=1 will go to page 1. or #&pageByName=OTDM <--- yeees :) or #pageByName=OTDM&action=appDetials&src=yssPages&i=1 will open yssPages source item 1, app details.
@@ -352,7 +338,6 @@ yoyoek1
 
 yoyoek1
 
-
 230118
 
 - otdm in yss.
@@ -360,13 +345,11 @@ yoyoek1
 
 yoyoek1
 
-
 230117
 
 - mkShader from yss on the wallpaper / fixing it. Still some elements are not going over shader :/ iloonav and guages
 
 yoyoek1
-
 
 230116
 
@@ -431,19 +414,19 @@ yoyoek1
 # BENCHTABLE
 
 * 2301151128  3d com ani 1    0 0m3.966s    0m9.143s    0m44.140s
-
+  
                          0    0 0m2.102s    0m6.042s    0m44.164s
               three.js   1    0 0m4.342s    0m9.397s    0m44.178s
                          0    0 0m2.262s    0m5.803s    0m44.187s
 
 * 2301151049  3d com ani 1    0 0m4.360s    0m10.830s    0m44.126s
-
+  
                          0    0 0m2.250s    0m6.249s    0m44.150s
               three.js   1    0 0m4.453s    0m9.410s    0m44.152s
                          0    0 0m2.693s    0m6.347s    0m44.225s
 
 * 2301150926  3d com ani 1    0 0m4.307s    0m8.728s    0m44.099s
-
+  
                          0    0 0m4.164s    0m8.421s    0m44.142s
               three.js   1    0 0m4.574s    0m9.476s    0m44.123s
                          0    0 0m4.746s    0m9.310s    0m44.200s
@@ -453,14 +436,14 @@ yoyoek1
                          1    0 0m4.882s  0m9.353s
 
 * 2301142005  fps limit 18 -------------------------
-
+  
               3d com ani 5 aa 0 0m10.407s  0m18.143s
                          0    0 0m1.902s  0m5.375s
               three.js   5    0 0m4.385s  0m16.266s
                          0    0 0m2.102s  0m5.723s
 
 * 2301141232  3d com ani 5 aa 0 0m11.106s 0m18.397s
-
+  
                      ani 0.7  0 0m10.531s 0m17.760s
                      ani 0    0 0m2.560s  0m6.746s
               three.js   0    0 0m2.398s  0m6.094s
@@ -468,20 +451,20 @@ yoyoek1
                         5     0 0m4.270s  0m15.443s  
 
 * 2301141057  3d com ani 0 aa 0 0m2.449s  0m5.957s
-
+  
                                 0m2.405s  0m6.038s
               three.js 0 0      0m2.267s  0m5.909s
               three.js 0.7 0    0m5.320s  0m16.776s
               3d com   0.7 0    0m5.320s  0m16.776s
 
 * 2301140839  3d com ani 1 aa 0 0m4.476s  0m12.612s
-
+  
                 ani 0 aa 0      0m1.879s  0m5.274s
 
 * 2301140813  3d com ani 0 aa 0 0m2.029s  0m5.890s <-- asyncs
 
 * 2301131458  3d com alias off  0m2.726s  0m7.320s
-
+  
                 ani 0.3         0m2.796s  0m6.380s
                 ani 0.1         0m2.464s  0m6.477s
                                 0m2.558s  0m5.983s

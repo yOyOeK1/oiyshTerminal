@@ -13,19 +13,22 @@ echo "wiki dir:   "${wikiDir}
 for o in ${bList}
 do
   wF=${wikiDir}"/"${o}".md"
+  cowsay "  wiki for: "${o}"
+  "
 
   echo "- "${o}" checking Description... "${wF}
   if [ -f ${rootDir}"/"${o}"/DEBIAN/control" ]
   then
     echo "" > ${wF}
 
+    homPageDone="0"
     homPage=`cat ${rootDir}"/"${o}"/DEBIAN/control" | grep Homepage`
     if [ $? = "0" ]
     then
-      #echo "  have homepage "${homPage}
+      echo "  have homepage "${homPage}
       urlIs=`echo ${homPage}|awk '{print $2}'`
-      #echo "  urlIs:"${urlIs}
-      if [ $urlIs = "https://github.com/yOyOeK1/oiyshTerminal" ]
+      echo "  urlIs:"${urlIs}
+      if [ ${urlIs} = "https://github.com/yOyOeK1/oiyshTerminal" ]
       then
         echo "skip... it's going to main manual."
       else
@@ -37,12 +40,14 @@ do
           #https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/screenShots/ilooNav3D_ver0.1.png
           cat ${rootDir}${pathToMd}"/README.md" | \
             sed -r 's|]\(./|]\(https://github.com/yOyOeK1/oiyshTerminal/raw/main/'${pathToMd}'/|g' > ${wF}
+          homPageDone=1
         fi
       fi
 
 
+
       echo "checking if can build dependency list ...."
-      depS=`cat ${rootDir}"/"${o}"/DEBIAN/control" | grep Depends`
+      depS=`cat ${rootDir}"/"${o}"/DEBIAN/control" | grep -v "#Depends:"| grep Depends`
       if [ $? = "0" ]
       then
         echo "  have dependencys: "${depS}
@@ -59,7 +64,7 @@ do
             known=`echo ${bList} | grep ${d}`
             if [ $? = "0" ]
             then
-              echo "["${d}"](./"${d}".md)" >> ${wF}
+              echo "["${d}"](./"${d}")" >> ${wF}
             else
               echo ${d} >> ${wF}
             fi
@@ -73,7 +78,30 @@ do
 
       fi
 
+    fi
 
+
+    echo "checking if have README in home directory..."
+    if [ ${homPageDone} = "1" ]; then
+      echo "  skip... main is home page"
+    else
+
+      rListInHome=`find ${rootDir}"/"${o}"/" | grep README`
+      for rH in ${rListInHome}; do
+        echo "found readmy by find... "${rootDir}"/"${o}"/"
+        echo "f: "${rH}
+        echo "wF now-------------"
+        cat ${wF}
+        echo "-------------- end wF"
+        pathToFile=`echo ${rH} | \
+          sed -r 's|'${rootDir}'|https://github.com/yOyOeK1/oiyshTerminal/raw/main|g' | \
+          sed -r 's|/README||g'`
+        cat ${rH} | \
+          sed -r 's|]\(./|]\('${pathToFile}'/|g' >> ${wF}
+        echo "
+---
+        " >> ${wF}
+      done
 
     fi
 
@@ -85,6 +113,29 @@ do
     sed ':a;N;$!ba;s/\n/\n\n/g'  ${rootDir}"/"${o}"/DEBIAN/control" >> ${wF}
     #sed -i "s/\n/\n\n/g" ${wF}
 
+    echo "checking if have changelog..."
+    if [ -f ${rootDir}"/"${o}"/DEBIAN/changelog" ]; then
+      echo "  have... ading"
+      echo "
+## CHANGELOG
+" >> ${wF}
+      cat ${rootDir}"/"${o}"/DEBIAN/changelog" >> ${wF}
+    fi
+
+    echo "
+---
+## otdm family:
+    " >> ${wF}
+    for d in ${bList}; do
+      echo -n "["${d}"](./"${d}")  " >> ${wF}
+    done
+
+
+  fi
+
+  if [ ${o} = "otdm-nrf-hhbell-binary" ]; then
+    exit 1
+    echo "exit no"
   fi
 
 done
