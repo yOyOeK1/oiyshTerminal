@@ -1,0 +1,19 @@
+bList="otdm-cmqtt2mysql \
+otdm-db-init \
+otdm-db-init-dummy \
+otdm-grafana-ds-MySql \
+otdm-installer-dummy \
+otdm-intranetrepo-debianish \
+otdm-intranetrepo-termux \
+otdm-mqtt-installer \
+otdm-mqtt-installer-dummy \
+otdm-mrepo \
+otdm-termux-wake-lock \
+otdm-node-red-installer \
+otdm-node-red-installer-dummy \
+otdm-nrf-yss \
+otdm-nrf-ot-test \
+otdm-nrf-audio-onhost \
+otdm-nrf-hhbell-binary \
+otdm-yss \
+otdm-tools"
