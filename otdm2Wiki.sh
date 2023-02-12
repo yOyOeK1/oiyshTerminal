@@ -95,7 +95,7 @@ do
         echo "-------------- end wF"
         pathToFile=`echo ${rH} | \
           sed -r 's|'${rootDir}'|https://github.com/yOyOeK1/oiyshTerminal/raw/main|g' | \
-          sed -r 's|/README||g'`
+          sed -r 's|/README.md||g' | sed -r 's|/README||g'`
         cat ${rH} | \
           sed -r 's|]\(./|]\('${pathToFile}'/|g' >> ${wF}
         echo "
@@ -127,14 +127,14 @@ do
 ## otdm family:
     " >> ${wF}
     for d in ${bList}; do
-      echo -n "["${d}"](./"${d}")  " >> ${wF}
+      echo -n "["`echo ${d}|sed 's|otdm-||g'`"](./"${d}")  " >> ${wF}
     done
 
 
   fi
 
-  if [ ${o} = "otdm-nrf-hhbell-binary" ]; then
-    exit 1
+  if [ ${o} = "otdm-termux-wake-lock" ]; then
+    #exit 1
     echo "exit no"
   fi
 

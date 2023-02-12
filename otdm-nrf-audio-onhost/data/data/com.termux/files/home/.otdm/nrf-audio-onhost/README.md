@@ -1,8 +1,18 @@
+# otdm-nrf-audio-onhost
+
+It will give you a link `play audio on host` to which you can send `msg.mp3` as a `String` path to .mp3 | .wav file.
+
+It handle platform difference debian use mplayer, aplay
+
+Termux termux-media-player
+
 Flow in Node-RED
 
 ![](./flow.png)
 
+And link geting `msg.mp3`
 
+![](./link.png)
 
 ## Installation / uninstall
 
