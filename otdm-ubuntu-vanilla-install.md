@@ -17,7 +17,7 @@ For this document I'm using installation of ubuntu 22.04 (lts after update and u
 In terminal of your flavor run commands ...
 
 ```bash
-$ echo "deb [trusted=yes] https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/fromZeroToHero/OTDM/ ./ " | sudo tee -a /etc/apt/sources.list.d/otdmFromZetoToHero.list
+$ echo "deb [trusted=yes] https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTDM/ ./ " | sudo tee -a /etc/apt/sources.list.d/otdmFromZetoToHero.list
 $ sudo apt update
 $ sudo apt install otdm-yss
 ```
@@ -49,7 +49,7 @@ And Deploy.
 Last step is to set external sites. You can do it by editing sites.json in yss directory. By running
 
 ```bash
-$ node /data/data/com.termux/files/home/oiyshTerminal/ySS_calibration/sites/sites.json
+$ node /data/data/com.termux/files/home/.odtm/yss/sites/sites.json
 ```
 
 Edit section to your needs. You can turn on / off sites or add yours!
