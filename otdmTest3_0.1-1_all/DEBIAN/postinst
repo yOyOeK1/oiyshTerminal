@@ -1,0 +1,16 @@
+
+tr="------------postinst
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+------------- postinst END"
+
+echo "$tr" >> /data/data/com.termux/files/home/tmp/otdmTest3_dpkg.log

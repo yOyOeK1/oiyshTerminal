@@ -1,0 +1,193 @@
+[
+    {
+        "id": "885cb31eb7b5f691",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6d2e9bde65602fc0",
+        "type": "debug",
+        "z": "885cb31eb7b5f691",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "bd681a70a03a15fa",
+        "type": "inject",
+        "z": "885cb31eb7b5f691",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "test",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "342a7da5773ed1a7"
+            ]
+        ]
+    },
+    {
+        "id": "42207e64d6d75a27",
+        "type": "mqtt in",
+        "z": "885cb31eb7b5f691",
+        "name": "test",
+        "topic": "test",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "65ee150b98828cf5",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "6d2e9bde65602fc0"
+            ]
+        ]
+    },
+    {
+        "id": "342a7da5773ed1a7",
+        "type": "mqtt out",
+        "z": "885cb31eb7b5f691",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "65ee150b98828cf5",
+        "x": 310,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8c74231117bf1c85",
+        "type": "mysql",
+        "z": "885cb31eb7b5f691",
+        "mydb": "ecc780278bb75ae9",
+        "name": "",
+        "x": 500,
+        "y": 340,
+        "wires": [
+            [
+                "6d2e9bde65602fc0"
+            ]
+        ]
+    },
+    {
+        "id": "46b688ea6e7537e7",
+        "type": "inject",
+        "z": "885cb31eb7b5f691",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "3330c4a7e797bad7"
+            ]
+        ]
+    },
+    {
+        "id": "3330c4a7e797bad7",
+        "type": "function",
+        "z": "885cb31eb7b5f691",
+        "name": "",
+        "func": "    \nq = `select \nid,msg,entryDate \nfrom topic_test\norder by entryDate desc\nlimit 100`;\n    \nmsg.topic = q;\nreturn msg;\n    \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 340,
+        "wires": [
+            [
+                "8c74231117bf1c85"
+            ]
+        ]
+    },
+    {
+        "id": "65ee150b98828cf5",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "10883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ecc780278bb75ae9",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "svoiysh",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]

@@ -1,0 +1,6 @@
+
+// start termux
+am start -n com.termux/com.termux.HomeActivity
+
+// stop
+am force-stop com.termux

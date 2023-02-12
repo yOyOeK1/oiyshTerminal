@@ -1,0 +1,5 @@
+otdm-db-installer-dummy
+
+It's a path to break a tool list dependency.
+It imitates mqtt is ok and its as it's in config file
+This package is for system that are not termux. Or you want to make installation manualy?

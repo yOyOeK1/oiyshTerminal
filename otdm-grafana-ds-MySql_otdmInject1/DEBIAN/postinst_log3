@@ -1,0 +1,105 @@
+~ $ apt install otdm-grafana-ds-mysql
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  otdm-grafana-ds-mysql
+0 upgraded, 1 newly installed, 0 to remove and 2 not upgraded.
+Need to get 5860 B of archives.
+After this operation, 0 B of additional disk space will be used.
+Get:1 http://192.168.43.220:8081 ./ otdm-grafana-ds-mysql 0.8 [5860 B]
+Fetched 5860 B in 0s (46.3 kB/s)
+Selecting previously unselected package otdm-grafana-ds-mysql.
+(Reading database ... 19914 files and directories currently installed.)
+Preparing to unpack .../otdm-grafana-ds-mysql_0.8_all.deb ...
+. . o o O O  oiyshTerminal - tools  O O o o . .ver 0.15-2012
+
+configuration file loading from [/data/data/com.termux/files/home/.otdm/config.json]...
+chkClipBoard .... .....   loading: 3
+   dpkg name: [otdm-grafana-ds-mysql] but will use [grafana-ds-mysql]
+      inStep: [preinst]
+    got args: [install]
+
+[ 1 / 3 ] Checking host....
+chkClipBoard ....as sub?
+grafana url: [http://admin:admin@localhost:3000/api/datasources]
+    response length: 2 elements in json
+    datasources: 2
+	- MySQL-OT_onOff
+	- TestData DB
+
+[ 2 / 3 ] Checking datasourc by name  looking for [MySQL-OT]... ! Expecting Error !
+chkClipBoard ....as sub?
+Will do export:
+        - get data from [grafana] / [dsByName] / [MySQL-OT]
+        - put to file :[--]
+
+[ Error ] Data source not found
+grafana return:
+{'message': 'Data source not found'}
+
+[ Error ] Exit (1)
+[ i ] Got expected error :) Checking if it's correct one....
+
+[ 3 / 3 ] Making backups of current before injection grafana datasourcs....
+chkClipBoard ....as sub?
+Will use prefix to archive [221229101855].
+Making tmp directory [/data/data/com.termux/files/usr/tmp/bkup_y3k57g9f_221229101855]
+backuping grafana / datasources [2] ... to [/data/data/com.termux/files/usr/tmp/bkup_y3k57g9f_221229101855/grafana_ds_221229101855grafana
+-ds-mysql_preinst_install.json]
+
+place 	 uid 		 id 	 orgId 	 name 		 type
+g/ds 	 YOh6Q1zgk 	 43 	 1 	 MySQL-OT_onOff 	 testdata
+g/ds 	 mhffrtkgz 	 38 	 1 	 TestData DB 	 testdata
+
+ DONE
+Moving it all to..
+	/data/data/com.termux/files/home/.otdm/Backups
+	[grafana_ds_221229101855grafana-ds-mysql_preinst_install.json] ,  DONE
+All good.
+
+. . o o O O  oiyshTerminal - tools  O O o o . . END ver 0.15-2012
+Unpacking otdm-grafana-ds-mysql (0.8) ...
+Setting up otdm-grafana-ds-mysql (0.8) ...
+. . o o O O  oiyshTerminal - tools  O O o o . .ver 0.15-2012
+
+configuration file loading from [/data/data/com.termux/files/home/.otdm/config.json]...
+chkClipBoard .... .....   loading: 3
+setDebug action {'debug': '1', 'dpkg': 'SHELL=/data/data/com.termux/files/usr/bin/bash\nHISTCONTROL=ignoreboth\nno_proxy=192.168.*.*,127.
+0.0.1,localhost\nDPKG_ADMINDIR=/data/data/com.termux/files/usr/var/lib/dpkg\nPREFIX=/data/data/com.termux/files/usr\nDPKG_MAINTSCRIPT_PAC
+KAGE_REFCOUNT=1\nTERMUX_MAIN_PACKAGE_FORMAT=debian\nPWD=/\nLOGNAME=u0_a239\nLOGDIR=/data/data/com.termux/files/usr/var/log\nTERMUX_VERSIO
+N=0.118.0\nDPKG_RUNNING_VERSION=1.21.13\nEXTERNAL_STORAGE=/sdcard\nLD_PRELOAD=/data/data/com.termux/files/usr/lib/libtermux-exec.so\nHOME
+=/data/data/com.termux/files/home\nLANG=en_US.UTF-8\nANDROID_RUNTIME_ROOT=/apex/com.android.runtime\nDPKG_FRONTEND_LOCKED=true\nDPKG_FORC
+E=security-mac,downgrade\nDPKG_MAINTSCRIPT_DEBUG=0\nSVDIR=/data/data/com.termux/files/usr/var/service\nDEX2OATBOOTCLASSPATH=/apex/com.and
+roid.runtime/javalib/core-oj.jar:/apex/com.android.runtime/javalib/core-libart.jar:/apex/com.android.runtime/javalib/okhttp.jar:/apex/com
+.android.runtime/javalib/bouncycastle.jar:/apex/com.android.runtime/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framew
+ork/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/m
+iuisdk@boot.jar:/system/framework/miuisystemsdk@boot.jar:/system/framework/android.test.base.jar:/system/framework/mediatek-telephony-bas
+e.jar:/system/framework/mediatek-telephony-common.jar:/system/framework/mediatek-common.jar:/system/framework/mediatek-framework.jar:/sys
+tem/framework/OPCommonTelephony.jar:/system/framework/mediatek-ims-common.jar:/system/framework/mediatek-ims-base.jar:/system/framework/m
+ediatek-telecom-common.jar\nTMPDIR=/data/data/com.termux/files/usr/tmp\nDPKG_ROOT=\nhttps_proxy=http://192.168.43.1:8118\nSSH_CONNECTION=
+192.168.43.220 45286 192.168.43.64 2222\nANDROID_DATA=/data\nTERM=xterm-256color\nUSER=u0_a239\nDPKG_MAINTSCRIPT_NAME=postinst\nNO_PROXY=
+192.168.*.*,127.0.0.1,localhost\nSHLVL=1\nDPKG_COLORS=always\nHTTPS_PROXY=http://192.168.43.1:8118\nHTTP_PROXY=http://192.168.43.1:8118\n
+DPKG_MAINTSCRIPT_PACKAGE=otdm-grafana-ds-mysql\nANDROID_ROOT=/system\nhttp_proxy=http://192.168.43.1:8118\nBOOTCLASSPATH=/apex/com.androi
+d.runtime/javalib/core-oj.jar:/apex/com.android.runtime/javalib/core-libart.jar:/apex/com.android.runtime/javalib/okhttp.jar:/apex/com.an
+droid.runtime/javalib/bouncycastle.jar:/apex/com.android.runtime/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework
+/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/system/framework/miui
+sdk@boot.jar:/system/framework/miuisystemsdk@boot.jar:/system/framework/android.test.base.jar:/system/framework/mediatek-telephony-base.j
+ar:/system/framework/mediatek-telephony-common.jar:/system/framework/mediatek-common.jar:/system/framework/mediatek-framework.jar:/system
+/framework/OPCommonTelephony.jar:/system/framework/mediatek-ims-common.jar:/system/framework/mediatek-ims-base.jar:/system/framework/medi
+atek-telecom-common.jar:/apex/com.android.conscrypt/javalib/conscrypt.jar:/apex/com.android.media/javalib/updatable-media.jar\nSSH_CLIENT
+=192.168.43.220 45286 2222\nALL_PROXY=http://192.168.43.1:8118\nANDROID_TZDATA_ROOT=/apex/com.android.tzdata\nPATH=/data/data/com.termux/
+files/usr/bin\nDPKG_MAINTSCRIPT_ARCH=all\nSSH_TTY=/dev/pts/28\n_=/data/data/com.termux/files/usr/bin/env', 'args': 'configure ', 'w': 'gd
+sByName', 'by': 'MySQL-OT'}
+[deb] acts debug return None
+------>
+   dpkg name: [otdm-grafana-ds-mysql] but will use [grafana-ds-mysql]
+      inStep: [postinst]
+    got args: [configure ]
+[ Error ] Not implemented jet :) 22342
+[ Error ] Exit (1)
+dpkg: error processing package otdm-grafana-ds-mysql (--configure):
+ installed otdm-grafana-ds-mysql package post-installation script subprocess returned error exit status 1
+Errors were encountered while processing:
+ otdm-grafana-ds-mysql
+E: Sub-process /data/data/com.termux/files/usr/bin/dpkg returned an error code (1)

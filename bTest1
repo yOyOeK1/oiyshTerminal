@@ -1,0 +1,26 @@
+
+echo "bTest1"
+
+
+
+function fRes(){
+  r=$?
+  echo "fRes:"$r
+}
+
+
+echo "t1"
+ls /tmp > /dev/null
+echo "res:"$?
+
+echo "t2"
+ls /ueouoeuoe > /dev/null
+echo "res:"$?
+
+echo "t3"
+ls /tmp >/dev/null
+fRes
+
+echo "t4"
+ls /tmpueouaoe >/dev/null
+fRes

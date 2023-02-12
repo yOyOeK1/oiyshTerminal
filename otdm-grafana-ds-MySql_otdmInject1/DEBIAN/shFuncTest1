@@ -1,0 +1,16 @@
+
+function ab(){
+  echo "ab got args:[$*] count:[$#]"
+  echo "func-> ab( $* )"
+  for i in {0..10}; do
+    v=`echo $"$i" `
+    echo "$i:[ "$v" ]"
+  done
+
+
+  echo "  val from out II:[$II]"
+}
+
+echo "hello"
+II=11
+ab "ala ma" "kota"

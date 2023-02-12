@@ -1,0 +1,2 @@
+curl -X POST http://localhost:1880/flow -H 'content-type: application/json' -d @addflow
+

@@ -1,0 +1,1 @@
+https://github.com/termux/termux-app/wiki/Termux-on-android-5-or-6

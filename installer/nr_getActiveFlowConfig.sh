@@ -1,0 +1,1 @@
+curl -X GET http://192.168.43.1:1880/flows -H 'content-type: application/json'

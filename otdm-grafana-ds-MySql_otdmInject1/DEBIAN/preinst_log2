@@ -1,0 +1,92 @@
+~ $ apt reinstall otdm-grafana-ds-mysql
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  otdm-grafana-ds-mysql
+0 upgraded, 1 newly installed, 0 to remove and 5 not upgraded.
+Need to get 5120 B of archives.
+After this operation, 0 B of additional disk space will be used.
+Get:1 http://192.168.43.220:8081 ./ otdm-grafana-ds-mysql 0.7 [5120 B]
+Fetched 5120 B in 0s (32.5 kB/s)
+(Reading database ... 19947 files and directories currently installed.)
+Preparing to unpack .../otdm-grafana-ds-mysql_0.7_all.deb ...
+---------DONE
+. . o o O O  oiyshTerminal - tools  O O o o . .ver 0.15-2012
+
+configuration file loading from [/data/data/com.termux/files/home/.otdm/config.json]...
+chkClipBoard .... .....   loading: 3
+args:[install]
+env:[SHELL=/data/data/com.termux/files/usr/bin/bash
+HISTCONTROL=ignoreboth
+no_proxy=192.168.*.*,127.0.0.1,localhost
+DPKG_ADMINDIR=/data/data/com.termux/files/usr/var/lib/dpkg
+PREFIX=/data/data/com.termux/files/usr
+DPKG_MAINTSCRIPT_PACKAGE_REFCOUNT=1
+TERMUX_MAIN_PACKAGE_FORMAT=debian
+PWD=/
+LOGNAME=u0_a239
+LOGDIR=/data/data/com.termux/files/usr/var/log
+TERMUX_VERSION=0.118.0
+DPKG_RUNNING_VERSION=1.21.13
+EXTERNAL_STORAGE=/sdcard
+LD_PRELOAD=/data/data/com.termux/files/usr/lib/libtermux-exec.so
+HOME=/data/data/com.termux/files/home
+LANG=en_US.UTF-8
+ANDROID_RUNTIME_ROOT=/apex/com.android.runtime
+DPKG_FRONTEND_LOCKED=true
+DPKG_FORCE=security-mac,downgrade
+DPKG_MAINTSCRIPT_DEBUG=0
+SVDIR=/data/data/com.termux/files/usr/var/service
+DEX2OATBOOTCLASSPATH=/apex/com.android.runtime/javalib/core-oj.jar:/apex/com.android.runtime/javali
+b/core-libart.jar:/apex/com.android.runtime/javalib/okhttp.jar:/apex/com.android.runtime/javalib/bo
+uncycastle.jar:/apex/com.android.runtime/javalib/apache-xml.jar:/system/framework/framework.jar:/sy
+stem/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/sy
+stem/framework/ims-common.jar:/system/framework/miuisdk@boot.jar:/system/framework/miuisystemsdk@bo
+ot.jar:/system/framework/android.test.base.jar:/system/framework/mediatek-telephony-base.jar:/syste
+m/framework/mediatek-telephony-common.jar:/system/framework/mediatek-common.jar:/system/framework/m
+ediatek-framework.jar:/system/framework/OPCommonTelephony.jar:/system/framework/mediatek-ims-common
+.jar:/system/framework/mediatek-ims-base.jar:/system/framework/mediatek-telecom-common.jar
+TMPDIR=/data/data/com.termux/files/usr/tmp
+DPKG_ROOT=
+https_proxy=http://192.168.43.1:8118
+SSH_CONNECTION=192.168.43.220 34528 192.168.43.64 2222
+ANDROID_DATA=/data
+TERM=xterm-256color
+USER=u0_a239
+DPKG_MAINTSCRIPT_NAME=preinst
+NO_PROXY=192.168.*.*,127.0.0.1,localhost
+SHLVL=1
+DPKG_COLORS=always
+HTTPS_PROXY=http://192.168.43.1:8118
+HTTP_PROXY=http://192.168.43.1:8118
+DPKG_MAINTSCRIPT_PACKAGE=otdm-grafana-ds-mysql
+ANDROID_ROOT=/system
+http_proxy=http://192.168.43.1:8118
+BOOTCLASSPATH=/apex/com.android.runtime/javalib/core-oj.jar:/apex/com.android.runtime/javalib/core-
+libart.jar:/apex/com.android.runtime/javalib/okhttp.jar:/apex/com.android.runtime/javalib/bouncycas
+tle.jar:/apex/com.android.runtime/javalib/apache-xml.jar:/system/framework/framework.jar:/system/fr
+amework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/fr
+amework/ims-common.jar:/system/framework/miuisdk@boot.jar:/system/framework/miuisystemsdk@boot.jar:
+/system/framework/android.test.base.jar:/system/framework/mediatek-telephony-base.jar:/system/frame
+work/mediatek-telephony-common.jar:/system/framework/mediatek-common.jar:/system/framework/mediatek
+-framework.jar:/system/framework/OPCommonTelephony.jar:/system/framework/mediatek-ims-common.jar:/s
+ystem/framework/mediatek-ims-base.jar:/system/framework/mediatek-telecom-common.jar:/apex/com.andro
+id.conscrypt/javalib/conscrypt.jar:/apex/com.android.media/javalib/updatable-media.jar
+SSH_CLIENT=192.168.43.220 34528 2222
+ALL_PROXY=http://192.168.43.1:8118
+ANDROID_TZDATA_ROOT=/apex/com.android.tzdata
+PATH=/data/data/com.termux/files/usr/bin
+DPKG_MAINTSCRIPT_ARCH=all
+SSH_TTY=/dev/pts/28
+_=/data/data/com.termux/files/usr/bin/env]
+[ Error ] For now I need to code it!
+[ Error ] Exit (0)
+For now That it...
+dpkg: error processing archive /data/data/com.termux/cache/apt/archives/otdm-grafana-ds-mysql_0.7_a
+ll.deb (--unpack):
+ new otdm-grafana-ds-mysql package pre-installation script subprocess returned error exit status 1
+Errors were encountered while processing:
+ /data/data/com.termux/cache/apt/archives/otdm-grafana-ds-mysql_0.7_all.deb
+E: Sub-process /data/data/com.termux/files/usr/bin/dpkg returned an error code (1)
+~ $

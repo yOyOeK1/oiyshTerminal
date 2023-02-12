@@ -1,0 +1,7 @@
+{
+  "name":"test_datasource",
+  "type":"graphite",
+  "url":"http://mydatasource.com",
+  "access":"proxy",
+  "basicAuth":false
+}

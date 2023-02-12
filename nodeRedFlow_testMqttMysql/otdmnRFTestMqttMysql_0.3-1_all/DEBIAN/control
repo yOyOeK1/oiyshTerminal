@@ -1,0 +1,10 @@
+Package: otdmnRFTestMqttMysql
+Version: 0.3
+Section: base
+Priority: optional
+Architecture: all
+Pre-Depends: nodejs, curl
+Maintainer: yoyoek@wp.pl
+Description: Set of actions to make a flow in localhost:1880 instance of
+  Node-Red. Flow will check mqtt at 10883 port and give you a option to send
+  query to mysql to see if it's operational.

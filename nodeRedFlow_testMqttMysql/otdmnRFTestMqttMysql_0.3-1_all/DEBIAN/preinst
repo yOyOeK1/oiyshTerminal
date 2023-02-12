@@ -1,0 +1,51 @@
+echo "----- preinst of [otdmnRFTestMqttMysql] --------"
+
+
+echo "- seting functions ...."
+chkWgetAndLookFor(){
+  echo "where we are ?"
+  pwd
+  echo "ls...."
+  ls
+  echo "where is a wget..."
+  whereis wget
+
+  echo "wget chck ..."
+  wr=`wget $1 -O -`
+  echo "checking content for ["$2"] using ["$1"]..."
+  if echo $wr | grep $2 > /dev/null; then
+    echo "  there is "$2"!"
+    return 1
+  else
+    echo "  no :("
+    return 0
+  fi
+
+}
+echo "-------------------------------------------"
+echo "go go go go...."
+
+sersOk=1
+errMsg=""
+
+echo "checking if localhost:1880 ..."
+chkWgetAndLookFor "http://localhost:1880" "node"
+staSerNodRed=$?
+echo "nodeRed is running ["$staSerNodRed"]"
+if [ $staSerNodRed -eq 0 ]; then
+  sersOk=0
+  errMsg=$errMsg"- node-red is not at http 1880 port\n"
+fi
+
+
+if [ $sersOk -eq 1 ]; then
+  echo "all is looking ok...\n
+  it's a end of preinst....."
+
+
+
+else
+  echo "Abord installation! ! !"
+  echo -e "$errMsg"
+  exit 11
+fi

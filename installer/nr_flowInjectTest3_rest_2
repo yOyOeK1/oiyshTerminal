@@ -1,0 +1,17 @@
+
+    {
+        "id": "12c4c8c6a1beb5c4",
+        "type": "tcp out",
+        "z": "b51f128d66a3b57e",
+        "host": "0.0.0.0",
+        "port": "19997",
+        "beserver": "server",
+        "base64": false,
+        "end": false,
+        "name": "",
+        "x": 580,
+        "y": 160,
+	"nodes": [ ], "configs": [ ],
+        "wires": []
+    }
+

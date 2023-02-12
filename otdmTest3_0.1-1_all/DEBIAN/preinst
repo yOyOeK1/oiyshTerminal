@@ -1,0 +1,20 @@
+
+echo "- making directory..."
+mkdir -p "/data/data/com.termux/files/home/tmp"
+echo "DONE"
+
+tr="------------peinst
+"`date`"
+
+args:
+"$*"
+
+pwd:
+"`pwd`"
+
+env:
+"`env`"
+
+------------- preinst END"
+
+echo "$tr" >> /data/data/com.termux/files/home/tmp/otdmTest3_dpkg.log

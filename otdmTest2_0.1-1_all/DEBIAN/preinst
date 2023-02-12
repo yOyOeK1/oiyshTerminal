@@ -1,0 +1,3 @@
+echo "hello from preinst" >> /tmp/log_preinst.log
+date >> /tmp/log_preinst.log
+env >> /tmp/log_preinst.log

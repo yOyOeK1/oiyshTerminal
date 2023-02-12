@@ -1,0 +1,13 @@
+echo "----- postinst of [otdmnRFTestMqttMysql] --------"
+
+
+echo "so injection time ....\n
+first we need to cheng directory...."
+p=`pwd`
+cd "/data/data/com.termux/files/home/otdmFiles/"
+
+echo "Now I will POST Node-red with json ..."
+curl -X POST http://localhost:1880/flow -H 'content-type: application/json' -d @nr_flowInjectTest4.json
+
+cd $p
+echo "DONE"

@@ -1,0 +1,9 @@
+Package: otdm-grafana-db-see-topics
+Version: 0.0.1
+Section: base
+Priority: optional
+Architecture: all
+Depends: otdm-grafana-ds-mysql
+Pre-Depends: otdm-tools (>=0.20)
+Maintainer: yoyoek@wp.pl
+Description: Grafana dashboard that let you see all flows in mysql data base.

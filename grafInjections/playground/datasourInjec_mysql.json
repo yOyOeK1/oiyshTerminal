@@ -1,0 +1,19 @@
+{
+  "name": "MySQ",
+  "type": "mysql",
+  "access": "proxy",
+  "url": "127.0.0.1:3306",
+  "password": "",
+  "user": "ykpu",
+  "database": "svoiysh",
+  "basicAuth": false,
+  "basicAuthUser": "",
+  "basicAuthPassword": "",
+  "withCredentials": false,
+  "isDefault": true,
+  "secureJsonFields": {
+    "password": true
+  },
+  "version": 10,
+  "readOnly": false
+}

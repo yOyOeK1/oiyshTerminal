@@ -1,0 +1,47 @@
+[
+
+  {
+    "task": "otdm",
+    "desc": "Dummpy test echo task.",
+    "args": {
+      "testEcho2":"It's a woice from otd-tools :)"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "Dummpy test echo task.",
+    "args": {
+      "testEcho2":"It's a voice from otd-tools :) with debug1"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "Dummpy test echo task.",
+    "args": {
+      "testEcho2":"It's a woice from otd-tools :) no debug"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "from hu - Get json datasource from grafana by name [MySQl-OT]",
+    "args": {
+      "forceHost": "192.168.43.1",
+      "export": "grafana",
+      "file": "--",
+      "expW": "dsByName",
+      "eBy": "MySQL-OT"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "from annas - Get json datasource from grafana by name [MySQl-OT]",
+    "args": {
+      "export": "grafana",
+      "file": "--",
+      "expW": "dsByName",
+      "eBy": "MySQL-OT"
+    }
+  }
+
+
+]

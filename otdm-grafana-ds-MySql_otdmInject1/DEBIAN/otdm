@@ -1,0 +1,33 @@
+[
+
+  {
+    "task": "otdm",
+    "desc": "Dummpy test echo task.",
+    "args": {
+      "testEcho2":"It's a woice from otd-tools :) no debug"
+    }
+  },
+
+  {
+    "task": "otdm",
+    "desc": "from hu - Get json datasource from grafana by name [MySQl-OT]",
+    "args": {
+      "forceHost": "192.168.43.1",
+      "export": "grafana",
+      "file": "/OT/otdm-grafana-ds-MySql/data/data/com.termux/files/home/.otdm/grafana-ds-MySql/gds_mysql_ot_org.json",
+      "expW": "dsByName",
+      "eBy": "MySQL-OT"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "Bake grafana datasource json injection file.",
+    "args":{
+      "mkInjFil":  "grafana-ds",
+      "if": "/OT/otdm-grafana-ds-MySql/data/data/com.termux/files/home/.otdm/grafana-ds-MySql/gds_mysql_ot_org.json",
+      "injToJ": {"secureJsonData":{"password": "pimpimpampam"}},
+      "of": "/OT/otdm-grafana-ds-MySql/data/data/com.termux/files/home/.otdm/grafana-ds-MySql/gds_mysql_ot_injReady.json"
+    }
+  }
+
+]

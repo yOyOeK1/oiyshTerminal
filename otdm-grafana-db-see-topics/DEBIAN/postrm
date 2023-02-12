@@ -1,0 +1,61 @@
+#! /bin/bash
+set -e
+echo "---------------------------------------"
+echo "|  postrm args: [$*]-c($#)         "
+echo "---------------------------------------"
+
+
+OTDMHOME="/data/data/com.termux/files/home/.otdm"
+APPNAME="grafana-ds-MySql"
+TD=$OTDMHOME"/"$APPNAME
+motjf="mysql-ot.json"
+rFile=$TD"/"$motjf
+
+function otdmGDSpostrm(){
+  # OTDM -- remove grafana / datasource / byName ##
+  # itWillDo:
+  # - get uid
+  # - remove dsByName
+  # - clean up ...
+  #
+  # get uid
+  if [[ -f $rFile"_uid" ]]; then
+    rGdsuid=`cat $rFile"_uid"`
+  # remove it really !
+    echo "gdsuid: [$rGdsuid]"
+    otdmTools.py -rm grafana -rmW ds -by "$rGdsuid"
+  # Note
+    otdmTools.py -addNote "Removed: $APPNAME"
+  else
+    echo "Error No files from installation."
+    echo "So someone was doing somthing not ok. Still
+      will remove stuff. You are trying to remove it..."
+    #exit 1
+    #return 1
+  fi
+  # clean up it's not installed.
+  for f in `ls $TD | grep $motjf `; do
+    echo "rm "$TD"/"$f" ..."
+    rm $TD"/"$f
+  done
+
+}
+
+case "$1" in
+    remove)
+
+      # remove only if clean remove no preveuse version or errors
+      if [[ "$#" == "1" ]]; then
+        set +e
+        otdmGDSpostrm
+        set -e
+      fi
+
+
+  ## remove END
+    ;;
+    *)
+        echo "prerm called with unknown argument \`$1'" >&2
+        #exit 1
+    ;;
+esac

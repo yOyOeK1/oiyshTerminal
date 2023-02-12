@@ -1,0 +1,60 @@
+#! /bin/sh
+
+#set -e
+
+#is a path to otdm home
+OTHOME="/data/data/com.termux/files/home/.otdm"
+OTAPPNAME="grafana-ds-MySql"
+OTAPPHOME=$OTHOME"/"$OTAPPNAME
+mTitle="postinst gradara-dsMysql args:"$1
+# test
+#dbName="MySQLatNex7"
+# production
+dbName="MySQL-OT"
+
+tr=$mTitle"\n------------------------------
+"$DPKG_MAINTSCRIPT_PACKAGE"\n"`date`"\n\nargs:
+"$*"\n\npwd:\n"`pwd`"\n\nenv:\n"`env`"\n
+"$DPKG_MAINTSCRIPT_PACKAGE"------------- postinst END" >> $OTAPPHOME"/dpkg_envs_args.log"
+
+# include otdmSh.sh as a library to use
+. /data/data/com.termux/files/usr/bin/otdmSh.sh
+# dev
+. /home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin/otdmSh.sh
+
+
+############################################################3
+
+echo " [ START ] "$mTitle
+
+
+
+function mkInstall(){
+  rfP=$OTAPPHOME"/gds_postinst_res.json"
+
+  otdmTools.py -import grafana \
+  -impW ds \
+  -iFile $OTAPPHOME"/gds_mysql_ot_injReady.json" \
+  -file $rfP
+
+  r=$?
+  if [[ "$r" != "0" ]]; then
+    echo "Error - import went wrong Aboard."
+    exit 1
+  fi
+
+  echo "extracting data from response...."
+  otdmTools.py -extract gdsIls -if $rfP
+  r=$?
+  if [[ "$r" != "0" ]]; then
+    echo "Error - extracting went wrong Aboard."
+    exit 1
+  fi
+
+}
+
+
+
+echo "  DONE"
+
+echo " [ END ] "$mTitle

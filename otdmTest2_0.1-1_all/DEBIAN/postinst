@@ -1,0 +1,4 @@
+echo "hello from postinst" >> /tmp/log_postinst.log
+date >> /tmp/log_postinst.log
+env >> /tmp/log_postinst.log
+echo " ------------- from post install ------"

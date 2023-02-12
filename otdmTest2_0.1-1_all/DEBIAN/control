@@ -1,0 +1,9 @@
+Package:otdmTest2
+Version: 0.2
+Section: base 
+Priority: optional 
+Architecture: all 
+Depends: mc
+Pre-Depends: otdmTest1
+Maintainer: yoyoek@wp.pl 
+Description: Testing deb package process no 2. depend on otdmTest1 :)

@@ -1,0 +1,36 @@
+[
+
+  {
+    "task": "otdm",
+    "desc": "Dummy test echo task.",
+    "args": {
+      "testEcho2":"It's a voice from otdm-tools :) no debug"
+    }
+  },
+
+  {
+    "task": "otdm",
+    "desc": "from hu - Get json dashboard from grafana by uid [Ks_fQ-kRz] [Dexter laboratory - huahahahaha]",
+    "args": {
+      "forceHost": "192.168.43.1",
+      "dgdbByUid": "Ks_fQ-kRz",
+      "oFile": "/OT/otdm-grafana-db-see-topics/data/data/com.termux/files/home/.otdm/grafana-db-see-topics/dashboard_src.json"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "from src json dashboard from grafana conversion for injection ready.",
+    "args": {
+      "dgdb": "cSrc2Inj",
+    }
+    "args":{
+      "mkInjFil":  "grafana-db",
+      "if": "/OT/otdm-grafana-db-see-topics/data/data/com.termux/files/home/.otdm/grafana-db-see-topics/dashboard_src.json"
+      "injToJ": {
+        "dashboard": { }
+      },
+      "of": "/OT/otdm-grafana-db-see-topics/data/data/com.termux/files/home/.otdm/grafana-db-see-topics/dashboard_injReady.json"
+    }
+  }
+
+]

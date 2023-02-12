@@ -1,0 +1,32 @@
+[
+  {
+    "task": "otdm",
+    "desc": "Dummpy test CURL",
+    "args": {
+      "testCurl":"1"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "Dummpy test CURL",
+    "args": {
+      "debug":1,
+      "testCurl":"1"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "Dummpy test echo task.",
+    "args": {
+      "testEcho2":"ala ma kota from dummy task!"
+    }
+  },
+  {
+    "task": "otdm",
+    "desc": "Dummpy2 test echo task.",
+    "args": {
+      "testEcho2":"ala ma kota from dummy task! UUUU"
+      }
+  }
+
+]

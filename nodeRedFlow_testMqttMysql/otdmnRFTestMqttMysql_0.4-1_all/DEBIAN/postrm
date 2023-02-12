@@ -1,0 +1,26 @@
+echo "----- postrm of [otdmnRFTestMqttMysql] --------"
+
+echo "check if id is there..."
+
+
+p=`pwd`
+fl="/data/data/com.termux/files/home/otdmFiles/nr_flowInjectTest4_id.json"
+if [ -f $fl ]; then
+  echo "file pressent !"
+  #{"id":"5b1170d2b1075223"}
+  idJ=`cat $fl | awk '{print substr($0, 8, length($0)-9)}'`
+  echo "id: [$idJ]"
+
+  echo "asking for deletion...."
+  curl -X DELETE http://localhost:1880/flow/$idJ -H 'content-type: application/json'
+  echo "is it ok?"
+
+
+else
+  echo "no id file :( not good"
+
+fi
+
+
+
+echo "DONE"

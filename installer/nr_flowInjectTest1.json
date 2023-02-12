@@ -1,0 +1,53 @@
+[
+    {
+        "id": "b51f128d66a3b57e",
+        "type": "tab",
+        "label": "Flow from injection",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cbc961452f51e297",
+        "type": "inject",
+        "z": "b51f128d66a3b57e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "12c4c8c6a1beb5c4"
+            ]
+        ]
+    },
+    {
+        "id": "12c4c8c6a1beb5c4",
+        "type": "tcp out",
+        "z": "b51f128d66a3b57e",
+        "host": "0.0.0.0",
+        "port": "19997",
+        "beserver": "server",
+        "base64": false,
+        "end": false,
+        "name": "",
+        "x": 580,
+        "y": 160,
+        "wires": []
+    }
+]
