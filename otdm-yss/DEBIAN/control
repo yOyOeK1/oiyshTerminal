@@ -6,4 +6,5 @@ Architecture: all
 Depends: cowsay, otdm-nrf-yss
 Maintainer: yoyoek@wp.pl
 Homepage: https://github.com/yOyOeK1/oiyshTerminal/ySS_calibration
-Description: ySS base package. In otdm family.
+Description: ySS base package. In otdm family. Web base yss interface / file.
+  Fast and easy way to build your HMI

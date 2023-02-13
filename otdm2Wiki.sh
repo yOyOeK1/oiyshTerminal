@@ -139,3 +139,32 @@ do
   fi
 
 done
+
+echo "-- build done now publishing to git hub..."
+cd ${wikiDir}
+echo "it "${wikiDir}
+fl=`git diff --raw | awk '{print $6}'`
+pushIt=0
+cmd="changes in wiki files: "
+for f in ${fl}; do
+    echo "adding ... ["${f}"]"
+  git add ${f}
+  cmd=${cmd}${f}", "
+  pushIt=1
+done
+
+if [ ${pushIt} = 1 ]
+then
+  echo "there is what to commit /push ..."
+  echo 'then git commit -m "command"'
+  git commit -m "${cmd}"
+  read -p "push it? [Y/n]" pushIt
+  case ${pushIt} in
+    "" | "y" | "Y" )
+      echo "then git push"
+      git push
+  esac
+else
+  echo "nothing to push"
+fi
+cd ${rootDir}

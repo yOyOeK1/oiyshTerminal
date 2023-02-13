@@ -2,9 +2,11 @@
 
 It will give you a link `play audio on host` to which you can send `msg.mp3` as a `String` path to .mp3 | .wav file.
 
-It handle platform difference debian use mplayer, aplay
+It handle platform difference debian use mplayer (fast no farts on start), aplay
 
 Termux termux-media-player
+
+
 
 Flow in Node-RED
 
