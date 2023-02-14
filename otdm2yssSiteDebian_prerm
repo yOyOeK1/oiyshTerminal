@@ -1,0 +1,12 @@
+
+
+echo "removing ... "${dpkgDir}
+
+
+yssSs=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.otdm.prefix' -r`"/yss/sites/sites.json"
+cp ${yssSs} ${yssSs}"_"`date +%y%m%d%H%M%S`
+echo "yss/sites/sites.json .... "${yssSs}
+jAdd=`cat $yssSs | jq '. .dirs-=["'${dpkgDir}'"]'`
+echo "jAdd"
+echo ${jAdd} | jq '.'
+echo ${jAdd} | jq '.' > ${yssSs}

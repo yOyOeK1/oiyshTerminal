@@ -1,0 +1,55 @@
+
+echo "installing ... "${dpkgDir}
+
+yssSs=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.otdm.prefix' -r `"/yss/sites/sites.json"
+cp ${yssSs} ${yssSs}"_"`date +%y%m%d%H%M%S`
+echo "yss/sites/sites.json .... "${yssSs}
+jAdd=`cat $yssSs | jq '. .dirs+=["'${dpkgDir}'"]'`
+echo "jAdd"
+echo ${jAdd} | jq '.'
+echo ${jAdd} | jq '.' > ${yssSs}
+
+if [ "0" = "1" ]; then
+  echo "update sites.json for yss ...."
+
+  otdmH=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.otdm.prefix' -r`
+  echo "otdm home: "${otdmH}
+
+  sPath=${otdmH}"/yss/sites/sites.json"
+  jBase=`cat ${sPath} | jq '.'`
+  echo "jBase"
+  echo ${jBase}
+
+
+  jBase='{"dirs":'`cat ${sPath} | jq '.dirs'`"}"
+
+  echo "jBase after sites ..."
+  echo ${jBase} | jq '.'
+
+  ds=""
+  for d in `ls /data/data/com.termux/files/home/.otdm/ | grep yss-`; do
+    #echo $d
+    if [ "$ds" == "" ]
+    then
+      ds='"'${otdmH}'/'$d'"'
+    else
+      ds='"'${otdmH}"/"$d'",'${ds}
+    fi
+  done
+  dsTrim=${ds}
+  echo "j ext trim:["${dsTrim}"]"
+
+  jBase=`echo ${jBase} | jq '. |= . + {"externals":['${dsTrim}']}'`
+
+  #echo "ds: "${ds}
+  echo "new jBase ..."
+  echo ${jBase} | jq '.'
+
+  echo "making backup of current .sites.json...."
+  cp ${sPath} ${sPath}"_"`date +%y%m%d%H%M%S`
+
+  echo "flush it ...."
+  echo ${jBase} | jq '.' > ${sPath}
+  cowsay -f moose " ok yss/sites/sites.json REBUILD !"
+
+fi
