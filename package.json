@@ -1,0 +1,37 @@
+{
+  "name": "oiyshTerminal",
+  "version": "1.0.0",
+  "description": "![Welcome in oiyshTerminal - Logo](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/images/otWorld1.png?raw=true)",
+  "main": "index.js",
+  "scripts": {
+    "doc": "jsdoc -c jsdoc.json",
+    "jsdoc2md": "jsdoc2md ./ySS_calibration/libs/*.js > ./yss-js-functions.md",
+    "jsdoc2md-mMath": "jsdoc2md ./ySS_calibration/libs/mMath.js >> ./yss-js-functions.md",
+    "jsdoc2md-mOperation": "jsdoc2md ./ySS_calibration/libs/mOperation.js >> ./yss-js-functions.md",
+    "jsdoc2md-t4y_ani": "jsdoc2md ./ySS_calibration/libs/t4y_ani.js >> ./yss-js-functions.md",
+    "jsdoc2md-t4y_console": "jsdoc2md ./ySS_calibration/libs/t4y_console.js >> ./yss-js-functions.md",
+    "jsdoc2md-t4y_putText": "jsdoc2md ./ySS_calibration/libs/t4y_putText.js >> ./yss-js-functions.md",
+    "jsdoc2md-t4y_shader": "jsdoc2md ./ySS_calibration/libs/t4y_shader.js >> ./yss-js-functions.md",
+    "jsdoc2md-three4yss": "jsdoc2md ./ySS_calibration/libs/three4yss.js >> ./yss-js-functions.md",
+    "jsdoc2md-yssPageExample": "jsdoc2md ./ySS_calibration/sites/basic_sail/s_basicSailPage.js >> ./yss-js-functions.md",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "doc": "jsdoc -c jsdocs.json",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yOyOeK1/oiyshTerminal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yOyOeK1/oiyshTerminal/issues"
+  },
+  "homepage": "https://github.com/yOyOeK1/oiyshTerminal#readme",
+  "dependencies": {
+    "jsdoc": "^4.0.0",
+    "jsdoc-to-markdown": "^8.0.0",
+    "jsdocs": "^1.0.0",
+    "node-gyp": "^9.3.1"
+  }
+}

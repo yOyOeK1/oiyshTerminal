@@ -8,7 +8,7 @@
     "enable": true,
 
     "author": "B.Ceglik <yoyoek@wp.pl>",
-    "ver": "0.1",
+    "ver": "0.2.1",
     "desc": "It's one of image history viewers. This one is now for panamaCanal weather radar.",
     "screenShots": ["screenshot01.png"],
 

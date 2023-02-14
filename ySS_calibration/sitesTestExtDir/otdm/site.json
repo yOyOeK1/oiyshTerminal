@@ -8,11 +8,12 @@
     "enable": true,
 
     "author": "B.Ceglik <yoyoek@wp.pl>",
-    "ver": "0.1",
+    "ver": "0.2.1",
     "desc": "otdm for yss.",
 
 
     "otdm":{
+        "depends": "otdm-yss, otdm-nrf-otdm",
         "playground": false,
         "icon": "ico_arch_256_256.png",
         "url-home": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sitesTestExtDir/otdm"

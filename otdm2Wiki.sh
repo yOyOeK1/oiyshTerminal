@@ -103,14 +103,14 @@ do
       echo "  have homepage "${homPage}
 
       urlIs=`echo ${homPage}|awk '{print $2}'`
-      echo "  urlIs:"${urlIs}
+      echo "  urlIs:"${urlIs}"------------------"
       if [ ${urlIs} = "https://github.com/yOyOeK1/oiyshTerminal" ]
       then
         echo "skip... it's going to main manual."
-
       else
         echo "ok try to extract some info...."
         pathToMd=`echo ${urlIs} | sed -r 's|https://github.com/yOyOeK1/oiyshTerminal||g'`
+        echo "  loking in ... "${rootDir}${pathToMd}"/README.md"
         if [ -f ${rootDir}${pathToMd}"/README.md" ]
         then
           echo "have readmy!"
@@ -118,7 +118,9 @@ do
           cat ${rootDir}${pathToMd}"/README.md" | \
             sed -r 's|]\(./|]\(https://github.com/yOyOeK1/oiyshTerminal/raw/main/'${pathToMd}'/|g' >> ${wF}
           homPageDone=1
+
         fi
+
       fi
 
 
@@ -148,11 +150,26 @@ do
         #cat ${wF}
         #echo "-------------- end wF"
 
+
+        echo "checking if have .isYssSite .... "${rootDir}"/"${o}"/DEBIAN/isYssSite"
+        if [ -f ${rootDir}"/"${o}"/DEBIAN/isYssSite" ];
+        then
+          echo "using url from ./DEBIAN/isYssSite"
+          urlToSwap=`cat ${rootDir}"/"${o}"/DEBIAN/isYssSite"`
+          echo "  got url to swap from file: "${urlToSwap}
+          pathToFile2="https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/"${urlToSwap}
+        else
+
+          urlToSwap="https://github.com/yOyOeK1/oiyshTerminal/raw/main"
+          pathToFile2=$pathToFile
+        fi
+
         pathToFile=`echo ${rH} | \
-          sed -r 's|'${rootDir}'|https://github.com/yOyOeK1/oiyshTerminal/raw/main|g' | \
+          sed -r 's|'${rootDir}'|'${urlToSwap}'|g' | \
           sed -r 's|/README.md||g' | sed -r 's|/README||g'`
         cat ${rH} | \
-          sed -r 's|]\(./|]\('${pathToFile}'/|g' >> ${wF}
+          sed -r 's|]\(./|]\('${pathToFile2}'/|g' | \
+          sed -r 's|]\(../|]\('${pathToFile2}'/../|g' >> ${wF}
         echo "
 ---
         " >> ${wF}
@@ -211,7 +228,8 @@ do
             ##automatic-information-from--otdm-nrf-yss-debcontrol
 
             s=`echo ${li}| sed 's|- ||g'`
-            l=`echo ${s}|sed 's| |-|g'|sed 's|/||g'| sed 's|\.||g' | sed 's|(||g'| sed 's|)||g' | sed "s|'||g" | sed 's|?||g'`
+            l=`echo ${s}|sed 's| |-|g'|sed 's|/||g'| sed 's|\.||g' | sed 's|(||g'| \
+              sed 's|)||g' | sed "s|'||g" | sed 's|?||g' | sed 's|!||g' `
 
             ## making profix for count of shashes
             pref=""
@@ -261,12 +279,16 @@ do
 
   fi
 
-  if [ ${o} = "otdm-yss" ]; then
+  if [ ${o} = "otdm-yss-basic-sail" ]; then
     #exit 1
     echo "exit no"
   fi
 
 done
+
+
+#echo "--------- exit"
+#exit 1
 
 echo -e ${bIndex} > ${wikiDir}"/otdm-index.md"
 echo -e "

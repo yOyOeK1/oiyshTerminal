@@ -21,7 +21,10 @@ import { T4y_ani } from "T4y_ani";
 import { T4y_console } from "T4y_console";
 
 
-
+/**
+ * Three.js for yss - Main class
+ * is accessable by t4y global object. It's a instance of it to use.
+ */
 class Three4Yss extends aggregation(
   T4y_console,
   T4y_shadersDefs,
@@ -73,6 +76,18 @@ class Three4Yss extends aggregation(
   }
 
 
+  /**
+   * methode to init your scene frome file.
+   * @param {string} glbFileModel - The path to .glb file
+   * @param {json} extras - extsas to pass:
+   *{
+     //'camPos': [12.530088021598306, 62.72307047093599, 26.921712853935578],
+     //'camRot': [-0.945604247598529, 0.16391450066952107, 0.22234511182624667],
+     'controls': false,
+     'lightPos': [0,80,-80],
+     'camDeb': false
+   }
+   */
   getHtmlAfterLoad( glbFileModel, extras = {} ){
     //cl("---------------- extras!");
     //cl(extras);

@@ -1,18 +1,47 @@
+/**
+ * @class
+ * @classdesc It is init on start by pager.
+ * Example yss site with description how to do it your self.
+ * This class need to be in directory of your project.
+ *
+ * This is minimum of overwriting to set up your page. or grab blank :)
+ *
+ * @see {@link https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/basic_sail|this code on - GitHub}
+ */
 class s_basicSailPage{
 
+  /**
+   * @returns [string] - name of your site
+   *
+   * overtire function and set your site title
+   */
   get getName(){
     return 'basic sail';
   }
 
+  /**
+   @returns [string] - html hex color definition of your background
+   *
+   * overtire function and set default background color of your site
+   */
   get getDefaultBackgroundColor(){
     return "#ffffff";
   }
 
+  /**
+   @returns [string] - to put in htmlDyno
+   *
+   * overtire function
+   * need to return html of your site
+   */
   get getHtml(){
     return ``;
   }
 
-
+  /**
+   * overtire methode and set
+   * looper if you need one
+   */
   looperIter(){
     //cl("basic sailing looperIter...");
     //navBatteryPercent(this.navBatteryUpdate);
@@ -35,16 +64,31 @@ class s_basicSailPage{
 
   }
 
+  /**
+   * overtire methode and set
+   * will be called after .getHtml
+   *
+   */
   getHtmlAfterLoad(){
 
   }
 
+  /**
+   @returns [xmlObject] - xml object
+   *
+   * overtire functon and set
+   * need to return xml object of .svg or nothing
+   */
   get svgDyno(){
     cl("s_basicSailPage get svgDyno");
     return s_basicSail;
   }
 
   hdgPlotUpdater = null;
+  /**
+   * overtire methode and set
+   * invoke after .svgDyno()
+   */
   svgDynoAfterLoad(){
     this.hdgPlotUpdater = m_d3PlotInit("hdgPlot",  {
       'direction': 'upDown',
@@ -97,10 +141,26 @@ class s_basicSailPage{
   }
 
 
-
+  /**
+   * overtire function / methode
+   * call on every msg comming from webSocket /ws/yss
+   * it's a place to put your callbacks
+   * @param {json} r - incomming msg to process.
+   *  this is a place to put your callbacks.
+   *  expocting incomming message to be
+   * r = { "topic": "abc/cd", "payload": "11.3" }
+   *
+   */
   onMessageCallBack( r ){
     //cl("s_basicSailPage onMessageCallBack ");
     //cl("s_bas... :"+r.topic);
+
+    /**
+     * handling msg from webSocket
+     * r.topic in ok
+     * r.payload is substringd and send to gpsLat .svg object on screen
+     * stored for later
+     */
     if( r.topic == 'and/lat' ){
       putText("gpsLat", r.payload.substring(0,11) );
       storeIt( 'lat', parseFloat(r.payload),  min5);

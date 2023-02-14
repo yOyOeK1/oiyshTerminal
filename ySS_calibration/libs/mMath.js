@@ -2,10 +2,20 @@
 //var a = new Array(0, 150, 30, 20, -8, -200);
 //Math.min.apply(null,a);
 
+/**
+ * function to  radian to convert to degrees
+ * @param {number} rad - The radian to convert to degrees
+ * @returns {number} - The degrees
+ */
 function toDegrees ( rad ) {
   return rad * (180 / Math.PI);
 }
 
+/**
+ * function to  degrees to convert to radians
+ * @param {number} angle - The degrees to convert to radian
+ * @returns {number} - The radian
+ */
 function toRad (angle) {
   return angle * (Math.PI / 180);
 }
@@ -33,6 +43,11 @@ function getAngleLL( lastLat, lastLon, lat, lon ){
   return toDegrees( Math.atan2( dx, dy ) );
 }
 
+/**
+ * function to  get degrees to "001" 3 char str
+ * @param {number} deg - The degrees
+ * @returns {String} - The 3 char degrees "001"
+ */
 function degToHdg( deg ){
   deg = String(Math.round( deg360Pos( deg ) ));
   deg = "0".repeat( 3-deg.length )+deg;
@@ -67,7 +82,18 @@ function deg360delta( deg0, deg1 ){
   return deg0;
 }
 
+
 // mMapVal( ui.value, 0, 180, -90,90 )
+/**
+ * function to  making map in range
+ * @param {number} val - The value to convert
+ * @param {number} minI - The minimum on input
+ * @param {number} maxI - The maximum on input
+ * @param {number} minO - The minimum on output
+ * @param {number} maxO - The maximum on output
+ * @param {bool} inLimits = (def: false) - The maximum on output
+ * @returns {number} - The value with map set ..
+ */
 function mMapVal( val, minI, maxI, minO, maxO, inLimits = false){
   var dI = maxI - minI;
   var dO = maxO - minO;
@@ -95,6 +121,14 @@ var min1 = 2*sec30;
 var min5 = min1*5;
 
 var storeData = {};
+
+/**
+ * function to store data for later...
+ * @param {number} key - The key to identyfy this value
+ * @param {number} val - The value to store
+ * @param {number} forMs - The store for how many ms.
+ * @param {bool} inLimits = (def: false) - The maximum on output
+ */
 function storeIt( key, val, forMs ){
   var t = new Date().getTime();
   //new Date().getTime() / 1000
@@ -154,6 +188,14 @@ if only forMs set thin
 if forMs and toMs set thin
 [0] |___[forMs]++++[forMS+toMs]____________| [now]
 */
+
+/**
+ * function to avg it - to avg key value in storage
+ * @param {number} key - The key to identyfy the value in storage
+ * @param {number} forMs - The ms of sample to avg
+ * @param {number} toMs - The ms o point
+ * @returns {number} - The avg of key value ..
+ */
 function avgIt( key, forMs, toMs ){
   var now = new Date().getTime();
 

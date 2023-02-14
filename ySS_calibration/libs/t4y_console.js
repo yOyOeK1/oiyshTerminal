@@ -1,4 +1,9 @@
-
+/**
+ * Three.js for yss - console.log infos
+ * by hitting "h" on Three.js site it will responce as terminal in
+ * console.
+ * is accessable by t4y global object. It's a instance of it to use.
+ */
 class T4y_console{
 
   constructor( fromw ){

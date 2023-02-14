@@ -4,6 +4,10 @@
     "dir": "test_Three.js",
     "jssrc":["s_threeTestPage.js"],
     "enable": true,
+    "ver": "0.2.1",
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "desc": "Site testing three.js functions in yss. Orbit and osd",
+
     "otdm":{
         "playground": false
     }

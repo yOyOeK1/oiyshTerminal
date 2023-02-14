@@ -5,8 +5,8 @@
     "jssrc":["s_multiSVGPage.js"],
     "enable": true,
     "author": "B.Ceglik <yoyoek@wp.pl>",
-    "ver": "0.1",
-    "desc": "Automaticli generated sites on only .svg files and names of objects in it.",
+    "ver": "0.2.1",
+    "desc": "yss Site for starting clean .svg files and fast fast HMI !",
     "screenShots": [],
     "otdm":{
         "playground": false,

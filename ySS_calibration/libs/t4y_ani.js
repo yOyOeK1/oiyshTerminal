@@ -1,6 +1,9 @@
 import * as THREE from "three";
 
-
+/**
+ * Three.js for yss - animation helper and tasker
+ * is accessable by t4y global object. It's a instance of it to use.
+ */
 class T4y_ani{
 
   mixer = 0;
@@ -142,7 +145,13 @@ class T4y_ani{
   }
 
 
-
+  /**
+   * methode to animate object in scene
+   * @param {object} itd - The object t4y.otsce.getObjectByName("nameOfObjectInScane")
+   * @param {json} whatToDo - can make:
+   * { 'rotateY': mag }
+   *
+   */
   doAni( itd, whatToDo ){
     t4y.doingNowAni = true;
     t4y.delta = t4y.clock.getDelta();

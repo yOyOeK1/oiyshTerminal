@@ -1,12 +1,12 @@
-# music sinc
+# music sync
 
-Bum bumbum bum bum. It's nice to have nice sound system rigdup. In my case I have a car stereo with bluethooth, bluetooth speaker and many other devices with wifi and spekers. YYY what? Phone/ tablet / laptop / every thing with web brawser and working speaker will do!
+Bum bumbum bum bum. It's nice to have nice sound system rigdup. In my case I have a car stereo with bluethooth, bluetooth speaker and many other devices with wifi and spekers. YYY what? Phone/ tablet / laptop / every thing with web browser and working speaker will do!
 
 ## Master plan! bum bum.
 
 ![](./sMainList.png)
 
-All devices are on music sinc site. Someone is becoming **Me master!** Selecting song from list and on all connected devices speakers are is use now, ~~sync and playing in union!
+All devices are on music sync site. Someone is becoming **Me master!** Selecting song from list and on all connected devices speakers are is use now, ~~sync and playing in union!
 
 Bum bum.
 

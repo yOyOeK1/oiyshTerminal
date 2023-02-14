@@ -5,7 +5,7 @@
     "jssrc":["s_basicSailPage.js", "s_basicSail.js"],
     "enable": true,
     "author": "B.Ceglik <yoyoek@wp.pl>",
-    "ver": "0.1",
+    "ver": "0.2.1",
     "desc": "Numerical based instrument panel for sailing. Big magnetic heading and some aditional drawings. For sailing.",
     "screenShots": ["screen01.png"],
     "otdm":{

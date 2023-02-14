@@ -4,6 +4,10 @@
     "dir": "test_functions",
     "jssrc":["s_testFuncs.js", "s_testFuncsPage.js"],
     "enable": true,
+    "ver": "0.2.1",
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "desc": "Site to check all functions in .svg s",
+
     "otdm":{
         "playground": false
     }

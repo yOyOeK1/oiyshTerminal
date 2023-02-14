@@ -1,7 +1,10 @@
 import * as THREE from "three";
 import { FontLoader } from "FontLoader";
 
-
+/**
+ * Three.js for yss - put text
+ * is accessable by t4y global object. It's a instance of it to use.
+ */
 class T4y_putText{
 
   bindToCam=0;
@@ -144,6 +147,25 @@ class T4y_putText{
     return 0;
   }
 
+  /**
+   * methode to put text on screen
+   * @param {string} msg - The msg to put
+   * @param {json} args - The arguments
+   * example:
+   {
+   * name :"HDGText", - name of object in scren
+       color: 0xf0a32a,
+       size: 5,
+       replace: "HDGText",
+       handle: 'cb',
+       x:-20,
+       y:2,
+       z: -43,
+       ry:-20,
+       extrude: .5
+   }
+   *
+   */
   putText( msg, args = {}){
     args['msgToDo'] = msg;
     pager.myCallCheet().then( t4y.putTextInThene1( msg, args ) );

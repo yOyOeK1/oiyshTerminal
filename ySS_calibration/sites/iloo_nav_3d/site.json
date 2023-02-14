@@ -4,6 +4,10 @@
     "dir": "iloo_nav_3d",
     "jssrc":["s_ilooNav3D.js"],
     "enable": true,
+    "ver": "0.2.1",
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "desc": "yss Site cloning otdm-yss-iloo-nav but in Three.js :)",
+
     "otdm":{
         "playground": false
     }

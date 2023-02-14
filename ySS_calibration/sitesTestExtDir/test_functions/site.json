@@ -4,6 +4,9 @@
     "dir": "test_functions",
     "jssrc":["s_testFuncsEP.js", "s_testFuncsPageEP.js"],
     "enable": false,
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "desc": "Site to test .svg and externel location in yss.",
+    "ver": "0.2.1",
     "otdm":{
         "playground": false
     }

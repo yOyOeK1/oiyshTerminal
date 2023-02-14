@@ -4,6 +4,10 @@
     "dir": "iloo_nav",
     "jssrc":["s_ilooNavPage.js", "s_ilooNav.js"],
     "enable": true,
+    "ver": "0.2.3",
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "desc": "Clean analog instrument for sailing. .svg",
+
     "otdm":{
         "playground": false
     }

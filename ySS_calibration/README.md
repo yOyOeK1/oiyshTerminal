@@ -1,23 +1,8 @@
-**yss** Is a set of helping functions and mechanisms to get a web browser page with menu, shaders, colors invert, red-black, rotation, ... It also provides a remote Screens Managment functionality (in action: https://www.youtube.com/watch?v=fz_WaZtpGYo).
-
 # What is in it ?
 
+**yss** Is a set of helping functions and mechanisms to get a web browser page with menu, shaders, colors invert, red-black, rotation, ... It also provides a remote Screens Managment functionality (in action: https://www.youtube.com/watch?v=fz_WaZtpGYo).
+
 It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js, websocket, rapheal, ml5, ..... It will be a base to start with your site for your need. It's now coming with some examples. But nothing is obligatory :) You can fill free to edit any section of the project and if you create something cool share with all of as!
-
-![yss menu open](./screenShots/ilooNav_withJQMobile.png)
-
-# Table of Contents
-
-* [introduction](#introduction)
-* [master plan](#master-plan)
-* Instalation
-  * [stand alone](#user-content-instalation-stand-alone)
-* [yss panel site Prototype](#yss-panel-prototype)
-* [.svg - site](#on-top-off-svg-files)
-* [three.js - site](#on-top-off-threejs)
-  * [functions / methodes](#user-content-functions--methodes-of-t4y)
-* [currently on TODO](#todo)
-* [changelog](#changelog)
 
 ---
 
@@ -26,6 +11,10 @@ It gives you access to librarys: three.js, jquery, jquery mobile, d3.js, svg.js,
 **!! It's in progress !!** current version of yss in the process of big transformation.
 
 It is a part of a oiyshTerminal ecosystem. As a solution to have an alterative to node-dashboard or other custom-built web pages. It is providing you a set of helpers to make your page live fast! The fact that you don't have to touch css for me is perfect! My plan is to make your eye candy instrument / view / site easy simply by drawing it in svg :) or in blender making glb file. As you draw it that way it is.
+
+## Videos with yss in action:
+
+Use url: https://www.youtube.com/results?search_query=yoyoke1+yss
 
 **Example scenario:** Something that you would like to monitor and you have some "live" view of sensor readings in sleek form. You know how to make nice image in .svg or .glb. You draw it. Numbers are temporary in drawing app. They need to be text not curves. They need to have a name set up as objects for identification. This .svg can be animated using yss. Data comming from your sensor can be passed to Node-red. Then you "link it" in the flow nodes. **msg** is as expected :)
 
@@ -57,59 +46,23 @@ As one  of my favorite role models said "Take over the World!".
 
 Now
 
-##### Below is the definition what will be loaded. It's a temporary solution.
-
-In Node-reds' flow in the "Main engine" node is a definition of array
-
-```javascript
-msg.yssPages = [
-    {
-      "oName": "s_calibrationPage",
-      "o": null,
-      "dir": "calibration",
-      "jssrc":["s_calibration.js", "s_calibrationPage.js"]
-    },
-    {
-      "oName": "s_apV3SvgPage",
-      "o": null,
-```
-
-**oName** - is a class name of your main class site
-
-**dir** - name of a the sites' home directory
-
-**jssrc** - array of .js files to import during the load process of the yss page
-
-It's only a draft. What I'm aiming for.
-
-In main directory of the yss you have directory **./sites** in it you have directory per site. In every directory is only stuff for one site.
-
-In Node-red flow we have a section responsible for pomping those directories and files to get imports of .js files and others when interface is loading.
-
-Every **site** has a site.json file describing it's relation to your instance of yss.
+In main directory of the yss you have directory **./sites** in it you have file `.sites.json`
 
 ```json
 {
-    "oName": "s_basicSailPage",
-    "o": null,
-    "dir": "basic_sail",
-    "jssrc":["s_basicSailPage.js", "s_basicSail.js"],
-    "enable": true,
-    "author": "B.Ceglik <yoyoek@wp.pl>",
-    "ver": "0.1",
-    "desc": "Numerical based instrument panel for sailing. Big magnetic heading and some aditional drawings. For sailing.",
-    "screenShot": ["screen01.png"],
-    "otdm":{
-        "playground": false,
-        "icon": "ico_sailboat_256_256.png",
-        "url-home": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/basic_sail"
-    }
+  "dirs": [
+    "test_functions"
+  ],
+  "externals":[
+    "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/imageHistory",
+
+  ]
 }
 ```
 
-This will bind the worlds of **site** and .deb (otdm). oiyshTerminal **Debian Manager**. I want all this to come from this source. Wrap everything to the level that it will apeare after installation no mater in what status your machine is. If you don't have a mysql and site requires it as a dependency it will be handle by dpkg, apt, ....
+Currently you need to mod file by hand. It will change.
 
-###### Branching a site.
+## Branching a site.
 
 One button branching solution.
 
@@ -127,26 +80,36 @@ Make Branching of a selected one.
 
 List all posible to install / upgrade / uninstall from local instance and repositoy. (Somehow this needs to talk to dpkg on your system or get data from yy git ?)
 
-This section is coming.
+This section is coming as **otdm-yss-otdm** [link...](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sitesTestExtDir/otdm/README.md)
 
 ---
 
-# Instalation (stand alone)
+### Installation from dpkg / apk / pkg / ....
+
+If you don't have repository setup on your system select one for you: [ubuntu](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-ubuntu-vanilla-install.md), [termux](https://github.com/yOyOeK1/oiyshTerminal/blob/main/OTDM_Termux.md). Then...
+
+Assuming you have repository setup. Run command...
+
+```bash
+$ apt install otdm-yss
+```
+
+### Instalation (stand alone)
 
 **Have in mind it's an ongoing project.**
 
-It's a description of instalation steps for you. And it's the hard way. It's a stand alone installation if your kung-fu is weak we would suggest the .deb route (currently under construction).
+It's a description of installation steps for you. And it's the hard way. It's a stand alone installation if your kung-fu is weak we would suggest the .deb route (currently under construction).
 
-## Requirements:
+#### Requirements:
 
 - access to Node-red
 - access to the file system that the Node-red instance is running on
 
-## Instalation steps
+#### Installation manually
 
 1. Importing flow from this repository:
    
-   https://github.com/yOyOeK1/oiyshTerminal/tree/main/nodeRedFlow_ySS
+   https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-nrf-yss/data/data/com.termux/files/home/.otdm/nrf-yss/nrf_org.json
    
    You will find there json files of flow to import. It will create:
    
@@ -171,16 +134,6 @@ It's a description of instalation steps for you. And it's the hard way. It's a s
 var bPath = "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/";
 // set ip address (only ip address) of your instance
 msg.yssWSUrl = "ws://192.168.43.220:1880/ws/yss";
-
-msg.yssPages = [
-    {
-      "oName": "s_calibrationPage",
-      "o": null,
-      "jssrc":["s_calibration.js", "s_calibrationPage.js"]
-    },
-    {
-      "oName": "s_ilooNavPage",
-      "o": nul
 ........
 ```
 
@@ -194,7 +147,36 @@ Edit **bPath** and **msg.yssWSUrl** if needed! Flow will provide you with webSoc
 
 # yss panel Prototype
 
-Most basic page is ./s_blankPage.js
+How to make your site section. Some explanation how you can start using it Now! You have all you need on your computer. 
+
+## 1. site.json to .deb
+
+Every **site** has a site.json file describing it's relation to your instance of yss.
+
+```json
+{
+    "oName": "s_basicSailPage",
+    "o": null,
+    "dir": "basic_sail",
+    "jssrc":["s_basicSailPage.js", "s_basicSail.js"],
+    "enable": true,
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "ver": "0.1",
+    "desc": "Numerical based instrument panel for sailing. Big magnetic heading and some aditional drawings. For sailing.",
+    "screenShot": ["screen01.png"],
+    "otdm":{
+        "playground": false,
+        "icon": "ico_sailboat_256_256.png",
+        "url-home": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/basic_sail"
+    }
+}
+```
+
+This will bind the worlds of **site** and .deb (otdm). oiyshTerminal **Debian Manager**. I want all this to come from this source. Wrap everything to the level that it will apeare after installation no mater in what status your machine is. If you don't have a mysql and site requires it as a dependency it will be handle by dpkg, apt, ....
+
+## 2. The basic page
+
+Most basic site. 
 
 ```javascript
 class s_blankPage{
@@ -224,23 +206,41 @@ class s_blankPage{
 }
 ```
 
-You need to add your stuff in coresponding sections. In future there will be a prototype to inherit from but for now it is what it is. Those are the functions/methodes as a minimum  to make site working.
+You need to add your stuff in corresponding sections. In future there will be a prototype to inherit from but for now it is what it is. Those are the functions/methods as a minimum  to make site working.
+
+**example site**: [s_basic_sail.js - source as a example code on - GitHub](https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/basic_sail)
 
 ---
 
-# On top off .svg files
+## Build in yss helper functions
 
-**examples:** ./s_testFunctsPage.js or ./s_basicSailPage.js
+My plan was to skip the beginning of your project. Setting up stuff how you like it is a time consuming process. In this case you do Bum Bum bum and you see things showing up in front of you eyes. yss is coming with some build in javascript functions to help you manipulate objects form .svg, .obj, .gbl, .html
+
+List of function with description can be found in wiki: [yss-js-functions](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions)
+
+---
+
+## On top off .svg files
+
+example site: [s_basic_sail.js - source as a example code on - GitHub](https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/basic_sail)
+
+full documentation to example site: [s_basic_sail - function by function](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#yss-page-example)
+
+it use: [.svg mOperation helper](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#for-svg-mOperation-helper), [mMath and string helper](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#mMath-and-string-helper)
+
+
 
 ![yss basic sail page](./screenShots/basicSailing_newMenu.png)
 
-This is a s_basicSailPage.js it is a .svg page example.
+
 
 ---
 
-# On top off Three.js
+## On top off Three.js
 
-**examples:** ./s_illoNav3D.js or ./s_3dCompass1.js
+source code for this one: [otdm-yss-iloo-nav-3d - GitHub](https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/iloo_nav_3d)
+
+it use: [Three.js sites with .obj .stl .gbl files](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#for-Threejs-sites-to-help-with-animation-taskers), [mMath and string helper](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#mMath-and-string-helper)
 
 ![yss iloo nav 3d page](./screenShots/ilooNav3D_ver0.1.png)
 
@@ -248,13 +248,19 @@ This is a s_threeTestPage.js it is a Three.js page example.
 
 The Main Atraction is handled by instance in "t4y" variable.
 
-## Functions / methodes of t4y:
+## Functions / methods of t4y:
+
+In depth documentation is at [link ... - Three.js sites to help with animation taskers](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#for-Threejs-sites-to-help-with-animation-taskers)
+
+Fast over view what it can do.
 
 ```javascript
 t4y.getHtml();
 ```
 
 Returns string getHtml data needed in getHtml() of your page.
+
+([documentation](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#s_basicsailpagegethtml))
 
 ```javascript
 t4y.getHtmlAfterLoad( 's_ilooNav3D.glb',
@@ -269,13 +275,17 @@ t4y.getHtmlAfterLoad( 's_ilooNav3D.glb',
 
 To getHtmlAfterLoad in page building step. To get working 3d model from file, 's_ilooNav3D.glb' and set some attributes.
 
+([documentation](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#s_basicsailpagegethtmlafterload))
+
 ```javascript
 t4y.doAni( t4y.otsce.getObjectByName("Empty"), {
     'rotateY': 10
 });
 ```
 
-Will find object Empty and rotate by Y axis to angle deg 10. Do animation setup.
+Will find object Empty and rotate by Y axis to angle deg 10. Do animation setup. 
+
+([documentation](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#t4y_anidoaniitd-whattodo)) 
 
 ```javascript
 t4y.putText( "heel: 11",{
@@ -293,6 +303,8 @@ t4y.putText( "heel: 11",{
 ```
 
 Replace text in current scean. Will look for HeelText to replace it with this one with name HeelText. handle: [cb|lb|lt|rt|rb] aligning.
+
+([documentation](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#t4y_puttextputtextmsg-args))
 
 ---
 

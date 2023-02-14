@@ -7,8 +7,9 @@
     "screenShots": ["sMainList.png","sSpeakers.png"],
     "desc": "It's a party! bum bum. Sync all audio devices watching the site!",
     "author": "B.Ceglik <yoyoek@wp.pl>",
-    "ver": "0.1",
+    "ver": "0.2.1",
     "otdm":{
+        "depends": "otdm-yss, otdm-nrf-music-sync",
         "playground": false,
         "url-home": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/music_sync"
     }

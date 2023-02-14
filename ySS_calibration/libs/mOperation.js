@@ -1,5 +1,10 @@
 var makeWithAnimation = false;
 
+/**
+ * function to  console.log ing.... try to use this one to
+ * 	silence down interface
+ * @param {string} msg - The msg to console.log
+ */
 function cl( msg ){
 	console.log(msg);
 }
@@ -21,6 +26,13 @@ function rotateImage(obj, degree) {
 }
 
 //rotateSvgSetRC( "objRot2Shadow", "objRot2RC", ui.value );
+/**
+ * function to  rotate object over center of other object in .svg object by name
+ * @param {string} objName - The object name in .svg
+ * @param {stirng} objNameRc - The object2 name to rotate over it center
+ * @param {number} ang - The angle in deg
+ * @returns {nothing} - Set rotation of object over obejct in .svg on screen
+ */
 function rotateSvgSetRC( objName, objNameRc, ang ){
 	lAng = lAngels[objName];
 
@@ -45,6 +57,13 @@ function rotateSvgSetRC( objName, objNameRc, ang ){
 
 
 var lAngels = {}
+/**
+ * function to  rotate object over center point in .svg object by name
+ * @param {string} objName - The object name in .svg
+ * @param {bool} haveRotateCenter - if true then look for [object name]RC (rotation center)
+ * @param {number} ang - The angle in deg
+ * @returns {nothing} - Set rotation of object over obejct in .svg on screen
+ */
 function rotateSvg( objName, haveRotateCenter, ang ){
 
   lAng = lAngels[objName];
@@ -90,7 +109,13 @@ function morpheFromTo( objMin, objMax, norm ){
 posNormal - 0.0 - 1.0
 */
 var movePathStartOffset = {};
-
+/**
+ * function to  move object over path in .svg object by name
+ * @param {string} objToMove - The object name in .svg to move
+ * @param {string} objPath - The object name in .svg to path over
+ * @param {number} posNormal - The position on the path 0...1
+ * @returns {nothing} - Set position of object on the path in .svg on screen
+ */
 function moveOnPath( objToMove, objPath, posNormal ){
 
 	if( movePathStartOffset[ objToMove ] == undefined ){
@@ -158,6 +183,14 @@ function moveOnPath( objToMove, objPath, posNormal ){
 
 var putTextStorage = {};
 // putText("textCen", "test"+ui.value, 'c', 11);
+/**
+ * function to  put text in .svg object by name
+ * @param {string} objName - The object name in .svg
+ * @param {string} text - The text to put in .svg
+ * @param {string} align - The aligment definition [c|r|]
+ * @param {number} chars - The to limit length
+ * @returns {nothing} - Set text to .svg on screen
+ */
 function putText( objName, text, align, chars ){
 
 	if( putTextStorage[ objName ] == text ){

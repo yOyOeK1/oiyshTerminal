@@ -62,6 +62,8 @@ class s_3dcompass1{
 
 
 		t4y.getHtmlAfterLoad( 'sites/3d_compass1/s_3dcompass_blender4.glb',
+		// /yss/external/
+		//t4y.getHtmlAfterLoad( '/yss/external/3d_compass1/s_3dcompass_blender4.glb',
 		 	{
 				//'camPos': [12.530088021598306, 62.72307047093599, 26.921712853935578],
 				//'camRot': [-0.945604247598529, 0.16391450066952107, 0.22234511182624667],

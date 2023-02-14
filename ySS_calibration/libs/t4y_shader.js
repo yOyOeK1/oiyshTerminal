@@ -1,6 +1,11 @@
 
 
-
+/**
+ * Three.js for yss - postprocessor actions.
+ * can invert / red black all things on scren and is compatible with
+ * yss shader.
+ * is accessable by t4y global object. It's a instance of it to use.
+ */
 class T4y_shader {
 
 

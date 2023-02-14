@@ -4,7 +4,10 @@
     "dir": "calibration",
     "jssrc":["s_calibrationPage.js", "s_calibration.js"],
     "enable": true,
+    "ver": "0.2.1",
+    "desc": "yss Calibration site of orientation of IMU.",
     "otdm":{
-        "playground": false
+      "depends": "otdm-yss, otdm-nrf-calibration",
+      "playground": false
     }
 }

@@ -1,0 +1,16 @@
+{
+  "source": {
+	"include": ["ySS_calibration/libs"],
+	"includePattern": "mMath.js$",
+	"excludePattern": "(node_modules/|docs)"
+    },
+    "plugins": ["plugins/markdown"],
+    "templates": {
+	"cleverLinks": true,
+	"monospaceLinks": true
+    },
+    "opts": {
+	"recurse": true,
+	"destination": "./documentation/"
+    }
+}
