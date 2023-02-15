@@ -1,4 +1,4 @@
-# OTDM installation for termux (android devices)  
+# OTDM installation on termux (android devices)  
 
 This is a step by step manual how to get from Vanilla termux on android to running otdm-yss on it. It's an entry point to start to use otdm- family  
 
