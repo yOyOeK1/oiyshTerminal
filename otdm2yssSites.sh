@@ -57,6 +57,9 @@ function buildYssSite(){
     ln -s ${lSrc} ${lDest}
   fi
 
+  echo '*' > ${sDir}"/.gitignore"
+  echo `date +%y%m%d%H%M%S` > ${sDir}"/DEBIAN/otdm_bNR"
+
   # clear and copy all stuff
   rm -rf ${phDir}"/"
   echo "src: "${srcDir}" to "${phDir}
