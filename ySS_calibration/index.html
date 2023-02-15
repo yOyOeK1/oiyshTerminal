@@ -19,7 +19,11 @@ https://github.com/fulup-bzh/GeoGate/blob/master/encoder/lib/GG-AisEncode.js
 
 <script>
 class moduleCollector{
-  mod = {};
+
+  conntructor (){
+    this.mod={};
+  }
+
   set exports( a ){
     console.log("moduleCollector gos some");
     console.log(a.name);
