@@ -3,11 +3,11 @@ Version: 0.1.50
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: otdm-db-init | otdm-db-init-dummy, libmysqlclient-dev, libmosquitto-dev
-Filename: ./otdm-cmqtt2mysql_0.1.50-46_all.deb
-Size: 6684
-MD5sum: f02fc152fde0aaefa2dfc32e18aadb60
-SHA1: 2f7900c53c4b6699d9b9c2b03e56e485e427b480
-SHA256: 5ce3db4e3701b621af217b27e8055859ec6ad9aa04ec6fa0a55cf3a53656bdbc
+Filename: ./otdm-cmqtt2mysql_0.1.50-48_all.deb
+Size: 6896
+MD5sum: 7937edefca53a31119124a29f817cc3e
+SHA1: 991f63db45e1f1f2dd55809e23db89fe50e0f381
+SHA256: a3032a803a8a7009f2eaae9183fcbf7854177850ec8adc99b11aea96a538bdfd
 Section: otdm
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal/otdm-cmqtt2mysql
@@ -20,11 +20,11 @@ Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: otdm-tools, mariadb-static | mariadb-server | mariadb
 Recommends: mariadb-client
-Filename: ./otdm-db-init_0.1.21-47_all.deb
+Filename: ./otdm-db-init_0.1.21-48_all.deb
 Size: 2116
-MD5sum: a0f05d368664d2f67e3d9c2acc288a1d
-SHA1: 30efa3aa59b9b7daa1d124241d36ced3f1d70454
-SHA256: 1bb22cb35f118d10a560d999bbf61f2c855a5d93d8eaa5a4ce9bf71927ad6548
+MD5sum: 971779460abe2a32c2020a43b129b94c
+SHA1: 0e88df09ccffc3adb211e4078b2829adba493c4e
+SHA256: 243e81457ee67f5bf869d4a9a3508057a0436a2da4b6f10d73509fce4bd79a66
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -36,11 +36,11 @@ Version: 0.1
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: otdm-tools
-Filename: ./otdm-db-init-dummy_0.1-3_all.deb
-Size: 1352
-MD5sum: dd2c960681dbbe5dc00fc95e67fa8e2a
-SHA1: 8eb094d0599d99876afd6a23ec49d4ea11df20d3
-SHA256: 08de0e57331e9195e0b8e6a36129c62d541a0563049aa8b3e2d457078d6fde27
+Filename: ./otdm-db-init-dummy_0.1-4_all.deb
+Size: 1348
+MD5sum: 32ad369ef0d22bcf8f354e948ce6aefc
+SHA1: 15ab5154e56d967f4f8d92c5ac8bf7e92e8e249e
+SHA256: 9e299db2ef3c7d5176349d93055b0383daee17ffc977ecc9465e4ed3508c3cb6
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -55,11 +55,11 @@ Version: 0.22.17
 Architecture: all
 Maintainer: yoyoek@wp.pl
 Pre-Depends: otdm-tools (>=0.20)
-Filename: ./otdm-grafana-ds-MySql_0.22.17-59_all.deb
-Size: 8804
-MD5sum: ba447d299cd9ffbe8b7b0bc6d4651bb9
-SHA1: d08e60ae55494e671312acb061ad3c301870f9ef
-SHA256: 01de221c0b636ad487fceda3d360a77e709df4872dd11e2eb9a9a1c97aa4f4d2
+Filename: ./otdm-grafana-ds-MySql_0.22.17-60_all.deb
+Size: 8800
+MD5sum: 8ef508d2645271087ed0963d609568c4
+SHA1: 932202a91a60f981beea8128b1313dd808f431b5
+SHA256: 6a543bd844927ad8187f0c46804a7aeeae4dfc1b4de3e161842fcd2327edbfbb
 Section: base
 Priority: optional
 Description: Grafana datasource injection to have predictable datasource. When It will dpkg will add different otdm-stuffs then it will have fast comon ds to mysql. It's adding mysql datasource in
@@ -69,11 +69,11 @@ Package: otdm-installer-dummy
 Version: 0.1
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
-Filename: ./otdm-installer-dummy_0.1-9_all.deb
-Size: 1304
-MD5sum: 5d03d5519f8893612d0cf119491f505d
-SHA1: 9b72e4dfbc7c4cc10bae76fa8b3fbb0aa356a6ad
-SHA256: 0a81a93e33dd20a035ff6e720330e842f3b89704824231a284eece74ca74a50f
+Filename: ./otdm-installer-dummy_0.1-10_all.deb
+Size: 1300
+MD5sum: a12f9976801e9c34050906aa26240014
+SHA1: 133c3f6a2c175ecbc3577756e9a38d9d45bb88a5
+SHA256: 098becaa4be2550afce7873b75bfa068b6438feccb0f36a7955dc7f757d91132
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -85,11 +85,11 @@ Package: otdm-intranetrepo-debianish
 Version: 0.1.3
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
-Filename: ./otdm-intranetrepo-debianish_0.1.3-15_all.deb
-Size: 1328
-MD5sum: 8e0d2e5a1d95614f85c9fa167765fa38
-SHA1: 5645c0a529e3ca592a646c91c64521a94a2d246e
-SHA256: 5bc596d9788df3ccb6f58523de1d57e94539720d3477640b47f9c423a1bfe182
+Filename: ./otdm-intranetrepo-debianish_0.1.3-17_all.deb
+Size: 1324
+MD5sum: d4df6c57f5d8efc89b8b1628198398cf
+SHA1: 2a8593e2d7fd117cef11f8c2178e65b10cdad1b9
+SHA256: e7ebf30b5b966a7deb5b94f4eeec4e5dc3dd0e8d288224b4ffca2c9d5514cc02
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -99,11 +99,11 @@ Package: otdm-intranetrepo-termux
 Version: 0.1.15
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
-Filename: ./otdm-intranetrepo-termux_0.1.15-17_all.deb
-Size: 1452
-MD5sum: df247d8debe617169983f328b8be7711
-SHA1: 48aeac3e43caf2258af6f38033462b5d4d327d50
-SHA256: 326f260db5c0cb4ac85c8e3efbe48265a6b8db499b25e852f77946bc7020f034
+Filename: ./otdm-intranetrepo-termux_0.1.15-19_all.deb
+Size: 1456
+MD5sum: d50f98859b4119483129a19fe1d4a6dc
+SHA1: d1f46bb08cc2c40420a973b065f32eb8d2f1bba8
+SHA256: 80ac335a1f7efdeb9be6a5e43887f30f0ed4673f13873a5a99705cd6efccd714
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -115,11 +115,11 @@ Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: otdm-tools, mosquitto
 Recommends: mosquitto-clients
-Filename: ./otdm-mqtt-installer_0.1.27-31_all.deb
-Size: 2224
-MD5sum: 0909b8262d80280b14539a881c05371b
-SHA1: b53837574dc0b11aa47a5d789be3ab51af8fa7f5
-SHA256: 049b94cf0851f39f020ffcf14e3ab51042a02e70ea1deeaf6ef6559d7acaca20
+Filename: ./otdm-mqtt-installer_0.1.27-32_all.deb
+Size: 2284
+MD5sum: b49e5654e967863ba08636f7269459c8
+SHA1: c6d7345bda331c9568e2b86de6adbb415d577cb2
+SHA256: fda850f70c6eada28f0ac0d64f115158523f78f2d3c0c1cb0451a577cc07083c
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -131,11 +131,11 @@ Version: 0.1
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: otdm-tools
-Filename: ./otdm-mqtt-installer-dummy_0.1-3_all.deb
-Size: 1364
-MD5sum: 200c200c7eb1413b8df01d62af7438a0
-SHA1: f3163f357744feaf0d9d4585ca59f4a690de9ce9
-SHA256: c0511ec226ffb72dbb79290b472ebb28cf79bdc3fda03e47266f2c01dbf8f990
+Filename: ./otdm-mqtt-installer-dummy_0.1-4_all.deb
+Size: 1360
+MD5sum: 8bd559c75db5af43dbb62937024741ef
+SHA1: a2d8afc53b17270787f025ffc0c2966219e1b492
+SHA256: 71ebe90bceb390a10d5afee92d36610f9e517eb6365337331800873b6d06783b
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -149,11 +149,11 @@ Version: 0.2.4
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: otdm-tools
-Filename: ./otdm-mrepo_0.2.4-8_all.deb
+Filename: ./otdm-mrepo_0.2.4-9_all.deb
 Size: 1600
-MD5sum: 6dc0e3738e84bfe8600796956e9d2909
-SHA1: 1ae8ac40a1242b7998e9c66b9bfb9d2f24ec5cf1
-SHA256: fe828cb9aa75a52fc9a186e60a681603b07b409baba219764f0d243ba4210161
+MD5sum: a654257c3850f7961e3d32d3b503cc25
+SHA1: 7363c72d746883f97b83443ea43f9d2dcc314b34
+SHA256: a121ca8216452cb019a55845addbb00a4b77d8fca50ee12ed30739ec173c357f
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -165,11 +165,11 @@ Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: nodejs-lts | nodejs, otdm-tools, wget
 Recommends: proot, npm
-Filename: ./otdm-node-red-installer_0.1.42-17_all.deb
-Size: 3192
-MD5sum: 6ede9104f92b8ca3163abbb22d65b8a7
-SHA1: d8a704ee0cf93718f97ce7c4f0244149389dec31
-SHA256: b2e1d1fbb064b52db239b40da898dabbc34296ecf638b23da9febe084206472b
+Filename: ./otdm-node-red-installer_0.1.42-18_all.deb
+Size: 3188
+MD5sum: 55544ba5125bbe6af36f70f9bdf4b8ae
+SHA1: 1705be4f8bb92ef982ee3c5fadaab5c8563911ac
+SHA256: 2ae5e0874cfbf1448ef73c54e1d6ed47ea249bdc6225998b11102b0ec1060953
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -180,11 +180,11 @@ Version: 0.1.1
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: otdm-tools
-Filename: ./otdm-node-red-installer-dummy_0.1.1-7_all.deb
+Filename: ./otdm-node-red-installer-dummy_0.1.1-8_all.deb
 Size: 1356
-MD5sum: 65756bbc718b86076cec12e48241c7ea
-SHA1: 19c2461028cbfeb08dd23f40b09d84cbad843fa7
-SHA256: 87961bd97a6c1098f16fc6bf8a3c0c2105f7ae2a13a86fc8ee7dff10f4f1abbb
+MD5sum: cf762e216e38ec2d2776422ee93979a5
+SHA1: 07a9c5fda832633800ec32b7275268772c32f384
+SHA256: 5509d89b2a7bc24cca2564c01d5ae55a91cce5779c4bbc3a1c75550deca292f8
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -199,11 +199,11 @@ Version: 0.1.8
 Architecture: all
 Maintainer: yoyoek@wp.pl
 Depends: termux-api | alsa-utils, otdm-tools, otdm-node-red-installer | otdm-node-red-installer-dummy
-Filename: ./otdm-nrf-audio-onhost_0.1.8-13_all.deb
-Size: 742960
-MD5sum: f4f5fdbe209c64cb4b901ab4f0357e76
-SHA1: 6c2f252a1fe0f77dd4e0237e34cdbd34b591f6c7
-SHA256: 605d6e7a7acb5ee183ad6536ceb84e847a73a72e44c39380c804d5e2e91dad14
+Filename: ./otdm-nrf-audio-onhost_0.1.8-14_all.deb
+Size: 785044
+MD5sum: 991c9b0cc94436f30a019b7a825f1870
+SHA1: 334965337f33207e533c6de840f7479a575000af
+SHA256: 20e97d424a8ac95f7cfe2e66d5ea996820ad71e339bc70475aff1374dc66ffd9
 Section: base
 Priority: optional
 Description: Node-red flow for playing sound / mp3 on host device.
@@ -217,11 +217,11 @@ Version: 0.1.2
 Architecture: all
 Maintainer: yoyoek@wp.pl
 Depends: otdm-nrf-audio-onhost
-Filename: ./otdm-nrf-hhbell-binary_0.1.2-6_all.deb
-Size: 42236
-MD5sum: c3f3f8ae1abd184d59e0dce1f4b94c2f
-SHA1: 2180b908236530863bf5634a212df8724e0fe0c0
-SHA256: 28ac98ab5001c0fc7b467db01f27bb8a3476350bec432f1fe0a027ad211bdc8c
+Filename: ./otdm-nrf-hhbell-binary_0.1.2-7_all.deb
+Size: 63304
+MD5sum: 4bea04023d01f89c5771101e874f72f7
+SHA1: 98cdd9e1d4b3e76cae28591aa65fff4824694c00
+SHA256: ac5b11e0521c55658720d2f99176b774589f118dcd8aaa73a9d0a24a69a5a5a0
 Section: base
 Priority: optional
 Description: Node-red flow for playing in binary full hour.
@@ -234,11 +234,11 @@ Version: 0.1.9
 Architecture: all
 Maintainer: yoyoek@wp.pl
 Depends: otdm-tools, otdm-node-red-installer | otdm-node-red-installer-dummy
-Filename: ./otdm-nrf-ot-test_0.1.9-10_all.deb
-Size: 4928
-MD5sum: 60d9b56b28d4512ee8074080eb711bc3
-SHA1: 6187fe8f82a02bcb9dd34c6db82cd1a0b544509c
-SHA256: 66c8c62e756b011dd8ba0d62e60de30cf4049dab302665d85854383f71dbba81
+Filename: ./otdm-nrf-ot-test_0.1.9-11_all.deb
+Size: 51360
+MD5sum: b3f3bdb0407905e0dc135d9fbea60680
+SHA1: 8e79ad80ff5ef2490af5f4d706a737935cf6b49d
+SHA256: 7df9cc5e3e81f8f873eadccbc5663d1b4193a2b7ba7d90b61c7d0c00fa99e9c0
 Section: base
 Priority: optional
 Description: Node-red flow for testing oiyshTerminal instance.
@@ -248,11 +248,11 @@ Version: 0.1.17
 Architecture: all
 Maintainer: yoyoek@wp.pl
 Depends: otdm-tools, otdm-node-red-installer | otdm-node-red-installer-dummy
-Filename: ./otdm-nrf-yss_0.1.17-23_all.deb
-Size: 8412
-MD5sum: 02c8163bb6ff9ba064dd97080b48c4d7
-SHA1: 9cbb41187e18b40cca7bf92c018c81c8733f9e41
-SHA256: d5e16f967ad8f910a068b1cb08538830c49b7b3cf08f086d68bda8ce41f9a62b
+Filename: ./otdm-nrf-yss_0.1.17-24_all.deb
+Size: 79076
+MD5sum: 4f84b4e4cd905d4b242199d083792379
+SHA1: 6ca505076edbbb78f3dbeb77465c1d68c594c010
+SHA256: fec690a794f347ee8054c38473cec6ee699175e91979cc961b52a6834de383f0
 Section: base
 Priority: optional
 Description: Node-red flow for making yss possible.
@@ -262,11 +262,11 @@ Version: 0.1.3
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: otdm-tools
-Filename: ./otdm-termux-wake-lock_0.1.3-6_all.deb
-Size: 1800
-MD5sum: 97432cf05d8b7709c5d2a42f420d4c8e
-SHA1: 6e1116a8cf71717abfcc839073a80a7d4f94843e
-SHA256: 73a42ffc51e0bd3a7b4d1cc20bad07f88d9a5c73ef7686220308fcc9931caf65
+Filename: ./otdm-termux-wake-lock_0.1.3-7_all.deb
+Size: 64876
+MD5sum: f202223357288cc46f28c8b927916a8e
+SHA1: dafff505102ef23c97a06d9982f29ff24cc9a2a4
+SHA256: 82685a8327ceb8566aee6546732669c86e0327517111a1d1efbdad48d5f10ef5
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -278,11 +278,11 @@ Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: jq, python (>=3.0) | python3
 Recommends: python3-pip, python3-apt | python-apt
-Filename: ./otdm-tools_0.23.9-68_all.deb
-Size: 41192
-MD5sum: 0b315bd5b692152a957ec4ef704ec427
-SHA1: 6686bfccebad4a11ca2c37f0df1ae85fa06bad49
-SHA256: c840fc787567cf7618335d05bfb1c7da507f64270564b5dc993424ea693afe5d
+Filename: ./otdm-tools_0.23.9-69_all.deb
+Size: 41304
+MD5sum: 6dd348b66bc9e84b03c299279eb26f04
+SHA1: 02e4e0494efa79f0c91f78f65f3d0d03808d7721
+SHA256: 1b40c6fc933cfb8c559133140b5052cc128820a3dab4acccb20a1146ea2540ef
 Section: otdm
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
@@ -298,13 +298,209 @@ Version: 0.1.4
 Architecture: all
 Maintainer: yoyoek@wp.pl
 Depends: cowsay, otdm-nrf-yss
-Filename: ./otdm-yss_0.1.4-11_all.deb
-Size: 10560048
-MD5sum: 0e71ed7ad1d6b8a23e27ab29f4e1e6eb
-SHA1: 14b297098872f1adef52fbc9a794477c1258d949
-SHA256: d6648a34dfa83d0114fc96e61a8958a23fea1e53709541bb9c3d979b711f9db9
+Filename: ./otdm-yss_0.1.4-12_all.deb
+Size: 10560984
+MD5sum: a62517ba31c019b0fe25cc9db0f5ed4e
+SHA1: 18ec7552bcf65058b9bfe6d89e10410088310371
+SHA256: 7d88aad665fafa02a4f82da06c92a9e4ec30016eb6c75a657aabbecf0e9d6e51
 Section: base
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal/ySS_calibration
-Description: ySS base package. In otdm family.
+Description: ySS base package. In otdm family. Web base yss interface / file.
+  Fast and easy way to build your HMI
+
+Package: otdm-yss-3d-compass1
+Version: 0.2.9
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-3d-compass1_0.2.9-1_all.deb
+Size: 1064724
+MD5sum: c695c9f6041c8d71a0573dc7d95dd700
+SHA1: 17e2e3293efda060bf5c7cbee7cf2fb9758615ef
+SHA256: b4909339e3c5e0ced22fbcccc9d502e8f71b2718fbc534b6fbb082b96a47b148
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/3d_compass1
+Description: Site testing three.js options. Shadows and rotations.
+
+Package: otdm-yss-autopilot-v3-svg
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-autopilot-v3-svg_0.2.1-1_all.deb
+Size: 7888
+MD5sum: b71cd9c458b0a1a8dd3baa2b52bd1cc9
+SHA1: 1ee7f37c0129e69e0dc127de1b473e0c40f5b14d
+SHA256: e34f68430c896d77252373b0b04a31e888e96886cd282e841bc57816df4126ca
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/autopilot_v3_svg
+Description: yss Autopilot interface.
+
+Package: otdm-yss-basic-sail
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-basic-sail_0.2.1-1_all.deb
+Size: 69648
+MD5sum: d0f942b4d9556283d44c9b78d6fa23ea
+SHA1: f9f69fef185a74fa6c2f29089964225b80337ce4
+SHA256: 6c6ea4f8da7762c1ca1511bb753b5f72d8f78eccb8b5fee57971ae6240a566bc
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/basic_sail
+Description: Numerical based instrument panel for sailing. Big magnetic heading and some aditional drawings. For sailing.
+
+Package: otdm-yss-calibration
+Version: 0.2.1
+Architecture: all
+Maintainer: null
+Depends: otdm-yss, otdm-nrf-calibration
+Filename: ./otdm-yss-calibration_0.2.1-1_all.deb
+Size: 24108
+MD5sum: a6d42ff69f8b6b07a592cd9db5e7cb94
+SHA1: 8c2a35e0581d0b6dfa3cc7065d0b724759deef3e
+SHA256: 460e5a91ec18f365b0eb524f30ebbd1e084956840175ef6c486fc635023398b8
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/calibration
+Description: yss Calibration site of orientation of IMU.
+
+Package: otdm-yss-iloo-nav
+Version: 0.2.3
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-iloo-nav_0.2.3-1_all.deb
+Size: 24548
+MD5sum: fb03966f7aa182cddbd4985c1d4d5653
+SHA1: 8966ead68b8b6b297b9154c151d10397a15546e1
+SHA256: 63d569f3392a639fdd3393fd0d331f30e75cff97999f31b6a928aee5399a7456
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/iloo_nav
+Description: Clean analog instrument for sailing. .svg
+
+Package: otdm-yss-iloo-nav-3d
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-iloo-nav-3d_0.2.1-1_all.deb
+Size: 272476
+MD5sum: 9237b57aaa1ec9bbe45629265dc45862
+SHA1: 72aa40ccf9be72bfae0bd1a9955108224deaca71
+SHA256: 7f36cf62bc46a15db2fd5b5e61fbef8826c98f7ffc5748e9f5da4e98ae6e708e
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/iloo_nav_3d
+Description: yss Site cloning otdm-yss-iloo-nav but in Three.js :)
+
+Package: otdm-yss-imagehistorye
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-imagehistorye_0.2.1-1_all.deb
+Size: 416172
+MD5sum: 05f6a6328149ca04e8ab61100c1e12b6
+SHA1: 2c27fc7ca0ba7259a210ac23d3f84fe76b28bacd
+SHA256: 97fffa4bb8f1dba3f754f67cea446e702da1059014381de66c76f88447f5ca6d
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/imageHistory
+Description: It's one of image history viewers. This one is now for panamaCanal weather radar.
+
+Package: otdm-yss-multisvg
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-multisvg_0.2.1-1_all.deb
+Size: 10264
+MD5sum: 895f1294a6fb3a2efa515bc22752c012
+SHA1: 1150d51408448e90608fafc8f5f61a1ff98285e5
+SHA256: 8dabf6ae5a745d30c22d5c2ac5c9817a7884f4746e6ba1b10e00c1b550a1b812
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/multiSVG
+Description: yss Site for starting clean .svg files and fast fast HMI !
+
+Package: otdm-yss-music-sync
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss, otdm-nrf-music-sync
+Filename: ./otdm-yss-music-sync_0.2.1-1_all.deb
+Size: 61004
+MD5sum: 67ac2b316a21d092a5ae52d50067b8d7
+SHA1: 93618fd40985a78a8701ddc06cbfccc1aeaa3a54
+SHA256: 0fe5780e3d14d62078bf6a0948832e844e74f90fc744e9e60de853ab3e76e49b
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/music_sync
+Description: It's a party! bum bum. Sync all audio devices watching the site!
+
+Package: otdm-yss-otdme
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss, otdm-nrf-otdm
+Filename: ./otdm-yss-otdme_0.2.1-1_all.deb
+Size: 312744
+MD5sum: 4da635b2e337cdb52f5f48cc4c113130
+SHA1: 0dd35ee1780fffd0b7d5478a82cff328a6328283
+SHA256: 66268ea84a232fb2c4bd427387f010fc657c7a1303dcabdcf179215d7c400f25
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sitesTestExtDir/otdm
+Description: otdm for yss.
+
+Package: otdm-yss-test-functions
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-test-functions_0.2.1-1_all.deb
+Size: 8908
+MD5sum: 3d90441e54a0b8aba3ebd7b7378e3856
+SHA1: 8cc5b60345aac2de8ec6504a58ed136dee6ed499
+SHA256: 96abd6a125b33933d4519ee45fbf61404efab9a70835d3bd3c919a74c40e768b
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/test_functions
+Description: Site to check all functions in .svg s
+
+Package: otdm-yss-test-functionse
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-test-functionse_0.2.1-1_all.deb
+Size: 8964
+MD5sum: f850314135715826df1c2423b8c5da4a
+SHA1: e37272a4534aee36ea2a5d26147e41fa1dc18dfb
+SHA256: 9f302510df7fc9015d9f45c0dc74e52d65293901a274090ac4c63bef1f664e06
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/test_functions
+Description: Site to test .svg and externel location in yss.
+
+Package: otdm-yss-test-three-js
+Version: 0.2.1
+Architecture: all
+Maintainer: B.Ceglik <yoyoek@wp.pl>
+Depends: otdm-yss
+Filename: ./otdm-yss-test-three-js_0.2.1-1_all.deb
+Size: 634488
+MD5sum: b44bb5a86356a9be51210fe4e60951e8
+SHA1: b682cfb448fc49a21244dcbd2efe640e5079b808
+SHA256: 2531e7d1312004c7cf893854e6d536d229be6d3d995c8d4fa59ae10a6a611b7b
+Section: base
+Priority: optional
+Homepage: https://github.com/yOyOeK1/oiyshTerminal/tree/main/ySS_calibration/sites/test_Three.js
+Description: Site testing three.js functions in yss. Orbit and osd
 

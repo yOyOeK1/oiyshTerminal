@@ -5,7 +5,7 @@
     "jssrc":["s_3dcompass1.js"],
     "files": ["s_3dcompass_blender4.glb"],
     "enable": true,
-    "ver": "0.2.8",
+    "ver": "0.2.9",
     "author": "B.Ceglik <yoyoek@wp.pl>",
     "desc": "Site testing three.js options. Shadows and rotations.",
     "otdm":{
