@@ -41,7 +41,7 @@ So **what we have** what **TODO**:
 
 ## Screenshots of the site
 
-|                                                           | whats on the photo                                                                                               |
-| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| <img title="" src="./ss_mainPage.png" alt="" width="225"> | Main page of Pack it so. Super touch friendly using mApp. You can start new pack it so or edit on from directory |
-| ![](./ss_editingPackitso.png)                             | Editing pack it so ./p-nameOfPack/packitso.json This is a gate to have .deb with packitso solution               |
+|                               | whats on the photo                                                                                               |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| ![](./ss_mainPage.png)        | Main page of Pack it so. Super touch friendly using mApp. You can start new pack it so or edit on from directory |
+| ![](./ss_editingPackitso.png) | Editing pack it so ./p-nameOfPack/packitso.json This is a gate to have .deb with packitso solution               |
