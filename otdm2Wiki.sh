@@ -109,7 +109,9 @@ do
         echo "skip... it's going to main manual."
       else
         echo "ok try to extract some info...."
-        pathToMd=`echo ${urlIs} | sed -r 's|https://github.com/yOyOeK1/oiyshTerminal||g'`
+        pathToMd=`echo ${urlIs} | \
+          sed -r 's|https://github.com/yOyOeK1/oiyshTerminal||g' | \
+          sed -r 's|tree/main/||g' `
         echo "  loking in ... "${rootDir}${pathToMd}"/README.md"
         if [ -f ${rootDir}${pathToMd}"/README.md" ]
         then

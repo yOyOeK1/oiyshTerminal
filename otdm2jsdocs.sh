@@ -7,7 +7,7 @@ wikiDir="/home/yoyo/Apps/oiyshTerminal.wiki"
 
 #
 #https://github.com/jsdoc2md/jsdoc-to-markdown/wiki/How-to-document-a-ToDo-list
-#
+# https://jsdoc.app/index.html
 
 list='{
   "mMath": {
@@ -33,7 +33,13 @@ list='{
     "file": "./ySS_calibration/libs/t4y_putText.js"},
   "t4y_shader": {
     "title": "for Three.js sites invert / red black / postprocessor",
-    "file": "./ySS_calibration/libs/t4y_shader.js"}
+    "file": "./ySS_calibration/libs/t4y_shader.js"},
+  "mDoCmd": {
+    "title": "for communication with tools and bash from any layer ( stdout / stdin )",
+    "file": "./ySS_calibration/libs/mDoCmd.js"},
+  "mApp": {
+    "title": "for fast touche GUI - jQuery Mobile in yss",
+    "file": "./ySS_calibration/libs/mApp.js"}
 }'
 
 echo $list | jq '.'
