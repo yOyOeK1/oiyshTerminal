@@ -13,8 +13,15 @@ class otdmDriverManager:
 
         self.args=args
         self.conf=conf
+        self.drivers=[]
 
 
+    def ifNoArgExit( self, arg, msgOnErr ):
+        if self.args.get( arg, "" ) == "":
+            print(f"No argument [-{arg}] found in argument. {msgOnErr}")
+            sys.exit(1)
+        else:
+            return self.args.get( arg )
 
     def lookForDrivers( self, acts ):
         #self.deb = 1
@@ -61,6 +68,7 @@ class otdmDriverManager:
 
     def injectDrivers( self, acts ):
         dl=self.lookForDrivers( acts )
+        self.drivers=dl
         print(f"[ i ] InjectDrivers acts len {len(acts)} found drives {len(dl)}...", end=" ")
 
         for d in dl:

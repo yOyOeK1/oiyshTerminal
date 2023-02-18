@@ -94,10 +94,27 @@ class otdmDriverProto:
                 #print(r)
                 return 1
 
+
+            #self.MKTEST(111)
+            self.difAct=-1
+            if act not in ["GET","POST","DELETE","ADD"]:
+                print("trying if have arg like: [%s]"%act)
+                try:
+                    self.difAct = eval( f"self.{act}('{arg}')" )
+
+                except:
+                    print(" NO don't have ....")
+
+                if self.difAct != -1:
+                    self.saveIfArgs( {} )
+                    sys.exit( self.difAct )
+
             if act not in ["GET","POST","DELETE","ADD"]:
                 print("Wrong -act")
                 self.getHelp()
                 sys.exit(1)
+
+
 
             if act == "GET":
                 if self.args.get("oFile","") == "":
@@ -105,17 +122,36 @@ class otdmDriverProto:
                     sys.exit(1)
                 r=self.GET( by )
                 self.saveIfArgs( r )
-                #print(r)
                 return 1
+
             elif act == "POST":
+                ifile=-1
                 if self.args.get("iFile","") == "":
                     print("Error no -iFile")
+                    #sys.exit(1)
+                else:
+                    print("Using -iFile ....")
+                    ifile=args.get("iFile","")
+                    import otdmDriverFileSystem as dfsc
+                    dfs=dfsc.otdmDriverFileSystem( self.args, self.conf )
+                    iJ=dfs.GET( ifile )
+
+                if ifile == -1 and self.args.get("iStr","") == "":
+                    print("Error no -iStr")
                     sys.exit(1)
-                ifile=args.get("iFile","")
-                import otdmDriverFileSystem as dfsc
-                dfs=dfsc.otdmDriverFileSystem( self.args, self.conf )
-                iJ=dfs.GET( ifile )
-                r=self.POST(iJ)
+                else:
+                    iJ=self.args.get("iStr","")
+                    print(f"Using -iStr .... [{len(iJ)}]")
+
+                try:
+                    r=self.POST(iJ)
+                except:
+                    print("single arg faild trying double ....")
+                    try:
+                        r = self.POST( self.args.get( self.keyWord, ""), iJ)
+                    except:
+                        print("Error exit 2")
+                        return 2
                 self.saveIfArgs(r)
                 return 1
 

@@ -1,3 +1,11 @@
+dpkg (0.1.18) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * for hosting files now fix if requesting file.js?abc=13 as GET. Now can handle :).
+
+  -- B.Ceglik <yoyoek@wp.pl  23-02-15
+
+
 dpkg (0.1.0) unstable; urgency=low
 
   [ B.Ceglik ]

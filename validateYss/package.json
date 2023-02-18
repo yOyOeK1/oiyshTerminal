@@ -1,0 +1,21 @@
+{
+  "name": "w",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "html-validate": "^7.13.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "html":"html-validate 'index.html'",
+    "rem": "rm ./index.html",
+    "get": "wget http://localhost:1880/yss/",
+    "getPisNew": "wget 'http://localhost:1880/yss/#pageByName=pack%20it%20so&action=startNew&pisName=test1&pisDeps=otdm-tool&pisDesc=Description%20of%20project%20from%20GET%20at%20time:1676612726535&pisAuth=B.%20Ceglik%20%3Cyoyoek@wp.pl%3E&0.060954044941353036' -O ./index.html",
+    "all": "npm run rem;npm run get;npm run html",
+    "allPisNew": "npm run rem;npm run getPisNew;npm run html"
+  },
+  "author": "",
+  "license": "ISC"
+}

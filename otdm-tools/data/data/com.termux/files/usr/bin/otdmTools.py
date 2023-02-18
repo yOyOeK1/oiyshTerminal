@@ -17,6 +17,8 @@ from otdmDriverManager import *
 #from otdmDriverGrafanaDatasourceByUid import *
 #from otdmDriverFileSystem import *
 
+from otdmPackitso import *
+
 ver="0.24.01"
 confFilePath="/data/data/com.termux/files/home/.otdm/config.json"
 deb=0
@@ -1422,12 +1424,25 @@ def printVersion( args ):
     print( ver )
     return 1
 
+def packitsoQuery( args ):
+    pis = otdmPackitso()
+    global otdl
+    r = pis.query( args, otdl, conf )
+    if r == 1:
+        return pis.packitso( args, conf )
+    elif r == 2:
+        return 1
 
 acts = [
     [
         "v",
         "printVersion",
         f"Prints version of oiyshTerminal - tools. now is ver: {ver}"
+    ],
+    [
+        "packitso",
+        "packitsoQuery",
+        "To make automatic sets of works bast on driver proto. README.otdm-tools-packitso.md"
     ],
     [
         "debug",

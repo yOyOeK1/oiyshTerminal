@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
 check libs:
 https://www.movable-type.co.uk/scripts/geodesy-library.html
@@ -7,7 +8,7 @@ https://github.com/fulup-bzh/GeoGate/blob/master/encoder/lib/GG-AisEncode.js
 
 -->
 
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -18,53 +19,36 @@ https://github.com/fulup-bzh/GeoGate/blob/master/encoder/lib/GG-AisEncode.js
 
 
 <script>
+  /*
+var mod = {};
 class moduleCollector{
 
   conntructor (){
-    this.mod={};
+
   }
 
   set exports( a ){
     console.log("moduleCollector gos some");
     console.log(a.name);
-    this.mod[ a.name ] = a;
+    mod[ a.name ] = a;
+
   }
 
   getModule( name ){
-    return this.mod[name];
+    console.log(" getModule ! - name "+name);
+    return mod[name];
   }
 
 }
 var module = new moduleCollector();
-
+*/
+//var t4y;
 </script>
 
 <!-- noderedinjectpoint -->
 <script src="s_nodeRedSupport.js"></script>
 <script src="index.js"></script>
-<script type="importmap">
-    {
-        "imports": {
-            "three": "./three/three.module.js",
-            "OrbitControls": "./three/jsm/controls/OrbitControls.js",
-            "GLTFLoader": "./three/jsm/loaders/GLTFLoader.js",
-            "RGBELoader": "./three/jsm/loaders/RGBELoader.js",
-            "FontLoader": "./three/jsm/loaders/FontLoader.js",
-            "SVGLoader":  "./three/jsm/loaders/SVGLoader.js",
-            "EffectComposer": "./three/jsm/postprocessing/EffectComposer.js",
-            "RenderPass": "./three/jsm/postprocessing/RenderPass.js",
-            "GlitchPass": "./three/jsm/postprocessing/GlitchPass.js",
-            "ShaderPass": "./three/jsm/postprocessing/ShaderPass.js",
-            "OutlinePass": "./three/jsm/postprocessing/OutlinePass.js",
 
-            "T4y_putText": "./libs/t4y_putText.js",
-            "T4y_shadersDefs": "./libs/t4y_shadersDefs.js",
-            "T4y_shader": "./libs/t4y_shader.js",
-            "T4y_ani": "./libs/t4y_ani.js",
-            "T4y_console": "./libs/t4y_console.js"
-        }
-    }
-</script>
 <!-- ap playground area START-->
 <!--
 <script src="apSimulator.js"></script>
@@ -85,9 +69,6 @@ var module = new moduleCollector();
 <script src="libs/justgage.js"></script>
 <!--<script src="libs/ml5.min.js"></script>-->
 <script src="libs/kalman.min.js"></script>
-<script src="libs/jquery.min.js"></script>
-<script src="libs/jquery-ui.js"></script>
-<script src="libs/jquery.mobile-1.4.5.min.js"></script>
 <script src="libs/d3.v4.js"></script>
 <script src="libs/svg.min.js"></script>
 <script src="libs/SM.js"></script>
@@ -97,28 +78,116 @@ var module = new moduleCollector();
 <script src="libs/sPager.js"></script>
 <script src="libs/mShaders.js"></script>
 <script src="libs/mMath.js"></script>
+<script src="libs/mApp.js"></script>
+<script src="libs/mDoCmd.js"></script>
 <script src="libs/mWebSockets.js"></script>
 <script src="libs/aggregation.js"></script>
 <script src="libs/mOperation.js"></script>
 
+<script src="libs/jquery.min.js"></script>
+<script src="libs/jquery-ui.js"></script>
+<script src="libs/jquery.mobile-1.4.5.min.js"></script>
 
+<script type="importmap">
+    {
+        "imports": {
+            "Three4Yss": "./libs/three4yss.js",
+            "Three4YssModule": "./libs/three4yssModule.mjs",
+            "three": "./three/three.module.js",
+            "OrbitControls": "./three/jsm/controls/OrbitControls.js",
+            "GLTFLoader": "./three/jsm/loaders/GLTFLoader.js",
+            "RGBELoader": "./three/jsm/loaders/RGBELoader.js",
+            "FontLoader": "./three/jsm/loaders/FontLoader.js",
+            "SVGLoader":  "./three/jsm/loaders/SVGLoader.js",
+            "EffectComposer": "./three/jsm/postprocessing/EffectComposer.js",
+            "RenderPass": "./three/jsm/postprocessing/RenderPass.js",
+            "GlitchPass": "./three/jsm/postprocessing/GlitchPass.js",
+            "ShaderPass": "./three/jsm/postprocessing/ShaderPass.js",
+            "OutlinePass": "./three/jsm/postprocessing/OutlinePass.js",
+
+            "T4y_putText": "./libs/t4y_putText.js",
+            "T4y_shadersDefs": "./libs/t4y_shadersDefs.js",
+            "T4y_shader": "./libs/t4y_shader.js",
+            "T4y_ani": "./libs/t4y_ani.js",
+            "T4y_console": "./libs/t4y_console.js"
+        }
+    }
+</script>
+<script type="module" src="./three4yssModule.mjs"></script>
 
 <script src="libs/jquery.flexslider.js"></script>
 <link rel="stylesheet" href="libs/flexslider.css" type="text/css" media="all">
 
-<link rel="stylesheet" href="libs/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" href="libs/jquery.mobile-1.4.5.min.css">
 <link rel="stylesheet" href="main.css">
+
+
+<!--
+<script>
+  console.log("pre module exec test 1... :)");
+</script>
+<script type="module">
+console.log("module exec test 1... :)");
+</script>
+<script>
+  console.log("pre module exec test 1... :)");
+</script>
 
 <script type="module">
 import { Three4Yss } from "./libs/three4yss.js";
 console.log("Three4Yss loaded... :)");
-t4y = new Three4Yss();
+if( t4y == 0 ){
+  t4y = new Three4Yss();
+
+}else
+  console.log("reinit Three4Yss ? ...");
 </script>
+
+<script type="module" src="./libs/three4yssModule.js"></script>
+-->
 
 <script>
 var urlArgs = {};
+var waitCount = 0;
+function waitForT4y(){
+  cl("waiting for ty4...."+waitCount++);
+  cl(t4y);
+
+  if( 0 && waitCount == 20 ){
+    //$.getScript("./libs/three4yss.js");
+    var tagt4y = document.createElement("script");
+    tagt4y.type = 'module';
+    tagt4y.src = "./three4yssModule.mjs";
+    document.getElementsByTagName("head")[0].appendChild(tagt4y);
+    console.log("FORCE LOAD ! three 4 yss");
+    //var scriptElement=document.createElement('script');
+    //scriptElement.src = "libs/three4yss.js";
+    //document.head.appendChild(scriptElement);
+  }
+
+  if( waitCount >= 2 ){
+    cl("Three4Yss:");
+    try{
+      cl(Three4Yss);
+
+    }catch(e){
+      cl("no Three4Yss");
+    }
+  }
+
+  if( t4y != 0 || waitCount > 5 )
+    makeInit();
+  else
+    setTimeout(waitForT4y,1000);
+}
+
 // ON LOAD ------------------
 $( document ).ready(function() {
+
+  //makeInit();
+  waitForT4y();
+});
+function makeInit(){
   /*
   console.log("loading .... mOperation");
   jQuery.ajax({
@@ -131,9 +200,12 @@ $( document ).ready(function() {
   });
   */
 
+  cl("-----------------------------------");
+  cl("t4y status:");
+  cl(t4y);
 
   jQuery.fx.interval = Math.round(1000/18);
-  cl("yss index.html document ready !");
+  console.log("yss index.html document ready !");
   pager = new sPager();
   try{
     //cl("current yssPages setting is ----------------");
@@ -198,7 +270,7 @@ $( document ).ready(function() {
   });
   chkUrl();
 
-});
+}
 
 function chkUrl(){
   var has = window.location.href;
@@ -281,6 +353,7 @@ function chkUrl(){
 
         <div class="ui-field-contain">
           <fieldset data-role="controlgroup" data-type="horizontal">
+            <legend>Shaders:</legend>
 
             <button title="full screen"
               onclick="mkfullscreen()">
@@ -343,8 +416,8 @@ function chkUrl(){
   <!--<div id="svgSizing" style="z-index:20;position:absolute;top:0;left:0;"></div>-->
 	<div id="svgDyno" data-enhance="false" data-role="none" style="display:inline;">--</div>
   <div id="htmlDyno" style="z-index:3;position:absolute;top:0;left:0;">
-<center>
-  <img src="images/otWorld1.png" /><br>
+<div style="text-align: center;">
+  <img src="images/otWorld1.png"><br>
   <h1>oiyshTerminal - ySS_calibration</h1>
   More about on: <a href="https://github.com/yOyOeK1/oiyshTerminal">github</a>
   <br>
@@ -353,7 +426,7 @@ function chkUrl(){
 
   <footer>ver: 2301091425</footer>
 
-</center>
+</div>
 
     <!--
     <button onclick='otdm({ "dganById": "*", "oFile": "/data/data/com.termux/files/home/node2otdmTools.fifo"} );'>do query to otdm</button>

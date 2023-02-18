@@ -14,7 +14,10 @@ class otdmDriverFileSystem( otdmDriverProto ):
             If pointing to directory will return list of directorys and
             files. In json form.
             Use:
-            $ otdmTools.py -dfs "/rr" -act GET''')
+            $ otdmTools.py -dfs "/rr" -act GET
+            $ otdmTools.py -dfs /tmp/abb -act MKDIR
+            $ otdmTools.py -dfs /tmp/abb2/f1 -act POST -iStr "abc"
+            ''')
 
 
     def mkPath( self, fPath ):
@@ -22,6 +25,25 @@ class otdmDriverFileSystem( otdmDriverProto ):
 
     def chkHost( self ):
         return os.path.exists( self.mkPath("") )
+
+    def MKTEST( self, d ):
+        print(f"MKTEST -> {d}")
+
+        return 1
+
+    def MKDIR( self, dir ):
+        print("MKDIR: %s"%dir)
+        uri=self.mkPath(dir)
+        print(f"  path from driver:{uri}")
+        if os.path.isdir( uri ) or os.path.isfile( uri ) or os.path.islink( uri ):
+            print("There is something with that name. ERROR")
+            return 2
+        else:
+            print("Cane make it :)..")
+            os.mkdir( uri )
+
+        return 1
+
 
     def ADD( self, fPath, d ):
         print(f"ADD {fPath} -> {d}")
@@ -34,6 +56,7 @@ class otdmDriverFileSystem( otdmDriverProto ):
         f = open( self.mkPath(fPath) , "w" )
         f.write(f"{d}")
         f.close()
+        return {}
 
     def DELETE( self, d ):
         os.remove(self.mkPath(d))

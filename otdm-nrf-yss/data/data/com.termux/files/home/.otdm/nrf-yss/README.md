@@ -1,4 +1,4 @@
-# yss-nrf-yss
+# otdm-nrf-yss
 
 This one will install if it's not there a flow for yss back-end. It sets flow with:
 
