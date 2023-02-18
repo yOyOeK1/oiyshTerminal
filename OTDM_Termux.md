@@ -1,26 +1,28 @@
-# OTDM for termux installation
+# OTDM installation on termux (android devices)  
 
-This is a step by step manual how to get from Vanilla termux on android to running otdm-yss on it. It's a entry point to start to use otdm- family
+This is a step by step manual how to get from Vanilla termux on android to running otdm-yss on it. It's an entry point to start to use otdm- family  
 
-To write this document I'm using oreo android x86_64 in virtual machine.
+Big Kudos to the Termux team !  
 
-Termux in version 0.118.0 ( [link to repository](https://github.com/termux/termux-app) ... Big Qudos for them !) on page you can find "Releases" in assets download what you need for your device.
+Termux can be downloaded from their [github repository](https://github.com/termux/termux-app). On the page you can find "Releases" and download what you need for your device. It can also be installed from [F-Droid](https://f-droid.org/en/packages/com.termux/)
+
 
 ## Steps to install
+- On Android device Install [Termux](https://termux.dev/en/) from downloaded .apk file.
 
-On Android device Install Termux from downloaded .apk file.
-
-Copy this line, start termux and past the line. Confirm with Enter.
-
-```bash
+- Copy this line:
+ ```bash
 curl https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/installer/run2.sh > ./run2.sh; . ./run2.sh
 ```
+- Start termux and past the line 
+- Confirm with Enter
 
-This command will download basic installer for termux. It will star installation process. On the way ask some questions. Fallow it.
+- This will download basic installer for termux and start the installation process 
+- On the way it will ask some questions (If you dont't know the answer, Yes will probably work best ;) ) 
 
-- [x] DONE - you have otdm-yss on your android device
-
-
+- [x] Done - you have otdm-yss on your android device  
+  
+  
 
 | ![](./otdm-onTermuxDesktop.png) | ![](./otdm-onTermuxDesktop-yss.png) |
 | ------------------------------- | ----------------------------------- |
@@ -41,6 +43,9 @@ Android emulator with oreo. On desktop firefox shortcut to http://127.0.0.1:1880
 
 ## What next?
 
-It's still a start. But it's a good start. More info on progress you can find on (debianish systems) similar to termux [link...](https://github.com/yOyOeK1/oiyshTerminal/blob/fromZeroToHero/otdm-ubuntu-vanilla-install.md)
+It's only a start. But it's a good start. More info on progress can be found [here...](https://github.com/yOyOeK1/oiyshTerminal/blob/fromZeroToHero/otdm-ubuntu-vanilla-install.md)
 
-By using command: `$ apt-cache search otdm` you will get all packages in current moment in repository.
+
+By using command: `$ apt-cache search otdm` you will get all packages currently in the repository.
+***
+To write this document I used oreo android x86_64 in virtual machine and Termux in version 0.118.0.

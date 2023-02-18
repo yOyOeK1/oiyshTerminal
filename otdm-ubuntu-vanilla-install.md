@@ -1,14 +1,10 @@
-# otdm on fresh ubuntu 22.04
-
+# OTDM installation on ubuntu 
 *( branch: From zero to Hero )*
 
-This is a description with step by step process to get from fresh ubuntu 22.04 to running yss on it.
+This is a description of the process to get from fresh ubuntu 22.04 (lts after update and upgrade of system)  to running yss on it.
 
-For this document I'm using installation of ubuntu 22.04 (lts after update and upgrade of system)  
 
-**it's not final version**.
-
-**One of a first .deb base.**
+**This is not the final version but one of a first .deb based installation guides.**
 
 
 
