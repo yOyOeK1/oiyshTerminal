@@ -42,18 +42,21 @@ So you can see it's a wrapper for all possible action to use with .svg :)
 
     It will send to mqtt, topic "and/bt0" with value "click".
 
-
-
 ### Examples
-[yss and Faaast site! (youtube) ](https://www.youtube.com/watch?v=7A5ByLkzaOA)  [yss Faaast Attack - as chrome extension (youtube) ](https://www.youtube.com/watch?v=ySlGNTGg7iQ)
 
+[yss and Faaast site! (youtube) ](https://www.youtube.com/watch?v=7A5ByLkzaOA)  [yss Faaast Attack - as chrome extension (youtube)](https://www.youtube.com/watch?v=ySlGNTGg7iQ)
 
-
-
+|                                   | what is on the picture                                                                                                |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| ![](./ss_mainMenu.png)            | Main menu of posible .svg to select from. Read section how to add one or fill free to update it! TODO - auto reindex? |
+| ![](./ss_oneOfSvgs.png)           | Direct load of .svg and it's updating our text from image NICE!                                                       |
+| ![](./ss_workingGlobalShader.png) | Last check of shaders if we can invert it globally ? YES! So Screens Manager is fine with multi-svg !                 |
 
 ### TODO
 
 - [ ] now on on ws message callback parser do only one object.
+
+- [ ] for update index a Node-red flow? there is a http API
 
 - [ ] interactivity do it need a name of a function? I'm all ready parsing .svg
 
