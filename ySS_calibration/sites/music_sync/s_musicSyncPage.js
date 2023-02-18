@@ -1,5 +1,67 @@
 class s_musicSyncPage{
 
+	constructor(){
+		this.fList = [
+			"http://192.168.43.1:3000/public/tmp/secondNotLast.mp3",
+			"http://192.168.43.1:3000/public/tmp/-1st trimester gift.mp3",
+			"http://192.168.43.1:3000/public/tmp/lofi/fall in love with your solitude [relaxing lofi_chill beats]-WEiT1sObe8o.webm",
+			"http://192.168.43.1:3000/public/tmp/lofi/I think I’ll stay at home today ~ lofi cute_chill mix-_0aatnWjAMY.mp3",
+			"http://192.168.43.1:3000/public/tmp/lofi/fall in love with your solitude [relaxing lofi_chill beats]-WEiT1sObe8o.mp3",
+			"http://192.168.43.1:3000/public/tmp/lofi/You left me alone ~ lofi hip hop mix-UnB6ck40aCw.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Arp Ascent - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Back To The Future - Ofshane.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Beijaflor - Quincas Moreira.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Beyond - Patrick Patrikios.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Commander Impulse - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Cosmic Drift - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Cupids Tubes - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Dreamer - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Dusk - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Find Your Way Beat - Nana Kwabena.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Icelandic Arpeggios - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/I Feel It All So Deeply -",
+			"http://192.168.43.1:3000/public/tmp/youtube/Koto San - Ofshane.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Landing - Godmode.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Lunar Landing - Silent Partner.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Make You Move - Ofshane.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Meet & Fun! - Ofshane.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Midnight Sun - Dyalla.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Mover - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Namaster Trip - Ofshane.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/One More Time - Ofshane.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Parisian Funk - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Polymetric Juggling - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Road Tripzzz - Ofshane.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Spring Field - Godmode.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Sun Awakening - Futuremono.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Sunday Rain - Cheel.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Sunrise Over Big Data Country - Dan",
+			"http://192.168.43.1:3000/public/tmp/youtube/Tea Time - Ofshane.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/The Empty Moons of Jupiter - DivKid.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/The Symmetry of Sleeplessness - Dan Bodan.mp3",
+			"http://192.168.43.1:3000/public/tmp/youtube/Wellington Coffee Shop - Dyalla.mp3",
+		];
+
+
+		this.msFile = 'http://192.168.43.1:3000/public/tmp/m.mp3';
+		this.dyrigent = false;
+
+		this.cAdv = 0;
+
+		this.loopObj = -1;
+		this.lStart = 0;
+		this.msClients = [];
+		this.msPings = {};
+		this.msPLast = {};
+		this.msSpekersA = {};
+		this.msTimeNow = 0;
+		this.msNowPlay = true;
+		this.msLoopsEverySec = 4;
+		this.fNamePlayng = "";
+		this.msPid = 0;
+		
+	}
+
 	get getName(){
 		return 'music sync';
 	}
@@ -8,47 +70,6 @@ class s_musicSyncPage{
 		return "#ffffff";
 	}
 
-
-	fList = [
-		"http://192.168.43.1:3000/public/tmp/secondNotLast.mp3",
-		"http://192.168.43.1:3000/public/tmp/-1st trimester gift.mp3",
-		"http://192.168.43.1:3000/public/tmp/lofi/fall in love with your solitude [relaxing lofi_chill beats]-WEiT1sObe8o.webm",
-		"http://192.168.43.1:3000/public/tmp/lofi/I think I’ll stay at home today ~ lofi cute_chill mix-_0aatnWjAMY.mp3",
-		"http://192.168.43.1:3000/public/tmp/lofi/fall in love with your solitude [relaxing lofi_chill beats]-WEiT1sObe8o.mp3",
-		"http://192.168.43.1:3000/public/tmp/lofi/You left me alone ~ lofi hip hop mix-UnB6ck40aCw.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Arp Ascent - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Back To The Future - Ofshane.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Beijaflor - Quincas Moreira.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Beyond - Patrick Patrikios.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Commander Impulse - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Cosmic Drift - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Cupids Tubes - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Dreamer - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Dusk - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Find Your Way Beat - Nana Kwabena.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Icelandic Arpeggios - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/I Feel It All So Deeply -",
-		"http://192.168.43.1:3000/public/tmp/youtube/Koto San - Ofshane.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Landing - Godmode.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Lunar Landing - Silent Partner.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Make You Move - Ofshane.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Meet & Fun! - Ofshane.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Midnight Sun - Dyalla.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Mover - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Namaster Trip - Ofshane.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/One More Time - Ofshane.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Parisian Funk - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Polymetric Juggling - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Road Tripzzz - Ofshane.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Spring Field - Godmode.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Sun Awakening - Futuremono.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Sunday Rain - Cheel.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Sunrise Over Big Data Country - Dan",
-		"http://192.168.43.1:3000/public/tmp/youtube/Tea Time - Ofshane.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/The Empty Moons of Jupiter - DivKid.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/The Symmetry of Sleeplessness - Dan Bodan.mp3",
-		"http://192.168.43.1:3000/public/tmp/youtube/Wellington Coffee Shop - Dyalla.mp3",
-	];
 
 	doFileList(){
 		var tr=`
@@ -142,10 +163,6 @@ var msaabc = document.getElementById('aabc');
 	}
 
 
-	dyrigent = false;
-
-	msFile = 'http://192.168.43.1:3000/public/tmp/m.mp3';
-
 	msSetFile( file ){
 		this.msFile = file;
 		sOutSend('musicSync:setFile='+file);
@@ -166,22 +183,9 @@ var msaabc = document.getElementById('aabc');
 		sOutSend('musicSync:stop=1');
 	}
 
-	cAdv = 0;
 	msSetAdvance(){
 		this.cAdv = $("#msAdv").val()/1000;
 	}
-
-	loopObj = -1;
-	lStart = 0;
-	msClients = [];
-	msPings = {};
-	msPLast = {};
-	msSpekersA = {};
-	msTimeNow = 0;
-	msNowPlay = true;
-	msLoopsEverySec = 4;
-	fNamePlayng = "";
-	msPid = 0;
 	msLoop( ){
 		//msaabc.playbackRate = 1.00;
 		let t = pager.getCurrentPage();
