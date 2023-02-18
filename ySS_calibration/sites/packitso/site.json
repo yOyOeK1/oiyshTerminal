@@ -1,0 +1,15 @@
+{
+    "oName": "s_packitsoPage",
+    "o": null,
+    "dir": "packitso",
+    "jssrc":["s_packitsoPage.js"],
+    "enable": true,
+    "ver": "0.0.1",
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "desc": "yss site Front end for otdm-tools-packitso",
+
+    "otdm":{
+        "depends": "otdm-yss, otdm-tools-packitso",
+        "playground": false
+    }
+}

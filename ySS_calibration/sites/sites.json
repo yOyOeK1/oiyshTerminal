@@ -15,7 +15,9 @@
     "3d_compass1",
     "test_Three.js",
 
-    "test_functions"
+    "test_functions",
+    "packitso"
+
   ],
   "externals":[
     "/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sitesTestExtDir/imageHistory",
