@@ -11,6 +11,13 @@
 class s_basicSailPage{
 
   /**
+   * overtire with your constructions...
+   */
+  constructor(){
+    this.hdgPlotUpdater = null;
+  }
+
+  /**
    * @returns [string] - name of your site
    *
    * overtire function and set your site title
@@ -84,7 +91,6 @@ class s_basicSailPage{
     return s_basicSail;
   }
 
-  hdgPlotUpdater = null;
   /**
    * overtire methode and set
    * invoke after .svgDyno()
