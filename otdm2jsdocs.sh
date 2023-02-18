@@ -13,14 +13,17 @@ list='{
   "mMath": {
     "title": "mMath and string helper",
     "file": "./ySS_calibration/libs/mMath.js"},
-  "yssPageExample": {
-    "title": "example ( Make your site ) - yss site .svg base data from mqtt",
-    "file": "./ySS_calibration/sites/basic_sail/s_basicSailPage.js"},
   "mOperation": {
     "title": "for .svg mOperation helper",
     "file": "./ySS_calibration/libs/mOperation.js"},
+  "mDoCmd": {
+    "title": "mDoCmd. for communication with tools and bash from any layer ( stdout / stdin )",
+    "file": "./ySS_calibration/libs/mDoCmd.js"},
+  "mApp": {
+    "title": "mApp. for fast touche GUI - jQuery Mobile in yss",
+    "file": "./ySS_calibration/libs/mApp.js"},
   "three4yss": {
-    "title": "for Three.js sites with .obj .stl .gbl files",
+    "title": "t4y. for Three.js sites with .obj .stl .gbl files",
     "file": "./ySS_calibration/libs/three4yss.js"},
   "t4y_ani": {
     "title": "for Three.js sites to help with animation taskers",
@@ -34,12 +37,9 @@ list='{
   "t4y_shader": {
     "title": "for Three.js sites invert / red black / postprocessor",
     "file": "./ySS_calibration/libs/t4y_shader.js"},
-  "mDoCmd": {
-    "title": "for communication with tools and bash from any layer ( stdout / stdin )",
-    "file": "./ySS_calibration/libs/mDoCmd.js"},
-  "mApp": {
-    "title": "for fast touche GUI - jQuery Mobile in yss",
-    "file": "./ySS_calibration/libs/mApp.js"}
+  "yssPageExample": {
+    "title": "example ( Make your site ) - yss site .svg base data from mqtt",
+    "file": "./ySS_calibration/sites/basic_sail/s_basicSailPage.js"}
 }'
 
 echo $list | jq '.'
