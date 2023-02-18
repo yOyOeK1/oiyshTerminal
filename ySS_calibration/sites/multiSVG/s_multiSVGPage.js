@@ -5,14 +5,24 @@ function mulSvgOnClick( cmd ){
 
 class s_multiSVGPage{
 
+  constructor(){
+    this.svgsList = [
+      "multiSvg01.svg",
+      "multiSvg02Big.svg",
+      "multiSvgFastScreen.svg",
+      "monsterL.svg",
+      "monsterR.svg",
+      "chromeStartMenu1.svg"
+    ];
 
-  svgsList = [
-    "multiSvg01.svg",
-    "multiSvg02Big.svg",
-    "multiSvgFastScreen.svg",
-    "monsterL.svg",
-    "monsterR.svg"
-  ];
+    this.msOid = -1;
+    this.msO = -1;
+
+    this.muSvMa = {};
+    this.hdgPlotUpdater = null;
+
+    this.app = new mApp();
+  }
 
 
   get getName(){
@@ -20,7 +30,7 @@ class s_multiSVGPage{
   }
 
   get getDefaultBackgroundColor(){
-    return "#ffffff";
+    return "#cccccc";
   }
 
 
@@ -63,8 +73,6 @@ class s_multiSVGPage{
 
 
 
-  msOid = -1;
-  msO = -1;
 
   get getHtml(){
     cl("multiSVG getHTML ------------");
@@ -97,7 +105,7 @@ class s_multiSVGPage{
       }
     }
 
-    return tr;
+    return this.app.appFrame({"content": tr});
   }
 
 
@@ -131,8 +139,6 @@ class s_multiSVGPage{
     cl("s_multiSVGPage get svgDyno");
     return '';//s_basicSail;
   }
-
-  hdgPlotUpdater = null;
   svgDynoAfterLoad(){
   /*
     this.hdgPlotUpdater = m_d3PlotInit("hdgPlot",  {
@@ -187,7 +193,6 @@ class s_multiSVGPage{
 
 
 
-  muSvMa = {};
 
 
 
