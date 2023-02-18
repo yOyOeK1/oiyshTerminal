@@ -31,8 +31,10 @@ function apv3bt( cmd ){
 
 class s_apV3SvgPage{
 
-	apInDebug = true;
-	lastHDM = 0;
+	constructor(){
+		this.apInDebug = true;
+		this.lastHDM = 0;
+	}
 
 	get getName(){
 		return 'auto pilot V3 Svg';
