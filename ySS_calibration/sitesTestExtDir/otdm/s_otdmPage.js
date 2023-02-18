@@ -1,7 +1,16 @@
 
 class s_otdmPage{
 
-  otdmMyList;
+  constructor(){
+    this.otdmMyList;
+
+    this.cmdWork;
+    this.pH;
+
+    this.resL=0;
+    this.resRet = false;
+    this.mDoCmd = new mDoCmd();
+  }
 
   get getName(){
     return "OTDM";
@@ -236,19 +245,18 @@ $( document ).ready(function() {
     this.doCmd( "[/usr/bin/pkexec,--disable-internal-agent,apt,update]" );
   }
 
-  cmdWork;
-  pH;
-
   doCmdUpdate(){
     var cmd = "["+$("#cmd").val()+"]";
     this.doCmd( cmd );
   }
 
   doCmd( cmd ){
+    //this.mDoCmd.doCmd( cmd, 'spRes' );
+    //return 1;
     if( this.cmdWork == true ){
       cl( 'cmd running can sand some stuff to stdin.' );
-      cl($("#cmd").val());
-      sOutSend('otdmCmd:'+this.pH+':'+$("#cmd").val() );
+      cl(cmd);
+      sOutSend('otdmCmd:'+this.pH+':'+cmd );
       return 0;
     }
 
@@ -268,7 +276,9 @@ $( document ).ready(function() {
       this.otdmCallBackWebCmdSubProcess
     );
   }
-  otdmCallBackWebCmdSubProcess( data, res ){
+
+
+  otdmCallBackWebCmdSubProcess_4del( data, res ){
     cl("otdmCallBackWebCmdSubProcess");
     cl("data");
     cl(data);
@@ -510,7 +520,8 @@ $("#select-otdmPages").on(
         `<input id="cmd" type="text"
           value="`+( urlArgs['action'] == 'cmd' ?
             //'./otdmTools.py,-testDialog,yes': ''
-            'mplayer,/home/yoyo/Music/AWS/3sirCWDglG4ZY.128.mp3': ''
+            //'mplayer,/home/yoyo/Music/AWS/3sirCWDglG4ZY.128.mp3': ''
+            'cal,2025': ''
             )+`"
            />
           <div id="spRes">res..</div>`:''
@@ -591,9 +602,6 @@ $("#select-otdmPages").on(
 
     }
   }
-
-  resL=0;
-  resRet = false;
   addToRes( msg ){
     $("#spRes").append(
       `<div id="resL`+this.resL+`">`+

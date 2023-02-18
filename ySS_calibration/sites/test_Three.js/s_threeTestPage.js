@@ -1,5 +1,12 @@
 class s_threeTestPage{
 
+	constructor(){
+		this.lastData = -1;
+		this.lObj = -1;
+		this.lSend= -1;
+	}
+
+
 	get getName(){
 		return 'Three.js test page';
 	}
@@ -7,10 +14,6 @@ class s_threeTestPage{
 	get getDefaultBackgroundColor(){
 		return "#ffffff";
 	}
-
-	lastData = -1;
-	lObj = -1;
-	lSend= -1;
 
 	get getHtml(){
 		cl("----- get html");

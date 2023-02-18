@@ -1,8 +1,14 @@
 
 class s_testFuncsPage{
 
-  iterCounter = 0;
-  d3plot01data = new Array();
+  constructor(){
+    this.iterCounter = 0;
+    this.d3plot01data = new Array();
+    this.d3plot01 = null;
+    this.justGage1 = null;
+    this.justGage2 = null;
+
+  }
 
   get getName(){
     return "test functions";
@@ -140,10 +146,6 @@ class s_testFuncsPage{
   get svgDyno(){
     return s_testFuncs;
   }
-
-  d3plot01 = null;
-  justGage1 = null;
-  justGage2 = null;
 
 
 
