@@ -8,6 +8,10 @@ function s_caliSetSliderVal( sliName, byVal ){
 
 class s_calibrationPage{
 
+  constructor(){
+    this.getCurrentSend = 0;
+  }
+
   get getName(){
     return 'calibration page';
   }
@@ -88,7 +92,7 @@ class s_calibrationPage{
 
   }
 
-  getCurrentSend = 0;
+
   onMessageCallBack( r ){
 
     if( this.getCurrentSend++ == 0 ){
