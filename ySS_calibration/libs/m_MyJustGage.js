@@ -36,7 +36,7 @@ function MyJustGage( args ){
 
   tObj.hide();
 
+  console.log('MyJustGage constructor .....DONE');
   return tmp;
-  cl('MyJustGage constructor .....DONE');
 
 }

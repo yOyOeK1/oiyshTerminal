@@ -2,14 +2,13 @@
 
 
 class sPager {
-  currentPage = -1;
-  sm = -1;
-  pageHistory = [];
 
   constructor(){
     this.currentPage = -1;
     this.pages = new Array();
     cl("sPager constructor done !");
+    this.sm = -1;
+    this.pageHistory = [];
   }
 
   setScreenManager(s){
@@ -200,7 +199,7 @@ class sPager {
       $("#svgDyno").html("");
     }else{
       var cp = this.getCurrentPage();
-
+      $("#svgDyno").html("");
       console.log("----------------- mobile get active page ----------------");
       $("#htmlDyno").html( cp.getHtml ).enhanceWithin();
       //console.log($(":mobile-pagecontainer").pagecontainer("getActivePage"));

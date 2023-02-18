@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "../three/three.module.js";
 
 class T4y_shadersDefs{
 
@@ -8,7 +8,7 @@ class T4y_shadersDefs{
 
 
   constructor( fromw ){
-    cl("T4y_shadersDefs constructor. fromw["+fromw+"]");
+    cl("T4y_shadersDefs  is in constructor....  fromw["+fromw+"]");
   }
 
   int_shaDef(){

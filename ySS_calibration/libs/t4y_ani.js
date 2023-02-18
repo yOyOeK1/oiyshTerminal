@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "../three/three.module.js";
 
 /**
  * Three.js for yss - animation helper and tasker
@@ -14,7 +14,7 @@ class T4y_ani{
 
 
   constructor( fromw ){
-    cl("T4y_ani constructor. fromw["+fromw+"]");
+    cl("T4y_ani  is in constructor....  fromw["+fromw+"]");
     return this;
   }
 

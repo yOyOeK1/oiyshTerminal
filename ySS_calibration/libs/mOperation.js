@@ -314,8 +314,8 @@ function navBatteryPercentSignUp( pager ){
 				});
 		};
 		});
-		console.log("navBatteryPercentSignUp ! as [thisDevice/bat/perc]");
-	}catch{
+		cl("navBatteryPercentSignUp ! as [thisDevice/bat/perc]");
+	}catch(e){
 		return false;
 	}
 }
@@ -334,7 +334,7 @@ function navBatteryPercent( pager ){
 						'payload': Math.round( battery.level*100 ).toString()
 						});},1000);
 	  });
-	}catch{
+	}catch(e){
 		return false;
 	}
 }

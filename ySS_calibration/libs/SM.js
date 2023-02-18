@@ -2,19 +2,18 @@
 
 class SM{
 
-  screens = [];
-  myNo = -1;
-  /* action
-  0 - enterd the page
-  1 - reqesting screens to raport them selfs wait 2 sec.
-    screens will display ther No's
-  2 - screens list
-
-  */
-  action = 0;
-
   constructor(){
     cl("SM constructor started!");
+    this.screens = [];
+    this.myNo = -1;
+    /* action
+    0 - enterd the page
+    1 - reqesting screens to raport them selfs wait 2 sec.
+    screens will display ther No's
+    2 - screens list
+
+    */
+    this.action = 0;
   }
 
 

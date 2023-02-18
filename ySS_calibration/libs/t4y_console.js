@@ -7,7 +7,7 @@
 class T4y_console{
 
   constructor( fromw ){
-    cl("T4y_console constructor. fromw["+fromw+"]");
+    cl("T4y_console  is in constructor....  fromw["+fromw+"]");
     return this;
   }
 

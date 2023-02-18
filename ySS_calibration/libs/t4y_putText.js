@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import { FontLoader } from "FontLoader";
+import * as THREE from "../three/three.module.js";
+import { FontLoader } from "../three/jsm/loaders/FontLoader.js";
 
 /**
  * Three.js for yss - put text
@@ -13,7 +13,7 @@ class T4y_putText{
   osdUpdate = [];
 
   constructor( fromw ){
-    cl("T4y_putText constructor. fromw["+fromw+"]");
+    cl("T4y_putText  is in constructor....  fromw["+fromw+"]");
   }
 
 

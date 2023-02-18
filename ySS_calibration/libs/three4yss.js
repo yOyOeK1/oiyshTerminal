@@ -2,23 +2,23 @@
 
 console.log("---- start import ");
 
-import * as THREE from "three";
-import { OrbitControls } from 'OrbitControls';
-import { GLTFLoader } from 'GLTFLoader';
-import { RGBELoader } from 'RGBELoader';
-import { FontLoader } from "FontLoader";
-import { SVGLoader } from "SVGLoader";
-import { EffectComposer } from "EffectComposer";
-import { RenderPass } from "RenderPass";
-import { GlitchPass } from 'GlitchPass';
-import { ShaderPass } from 'ShaderPass';
-import { OutlinePass } from "OutlinePass";
+import * as THREE from "../three/three.module.js";
+import { OrbitControls } from '../three/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from '../three/jsm/loaders/GLTFLoader.js';
+import { RGBELoader } from '../three/jsm/loaders/RGBELoader.js';
+import { FontLoader } from "../three/jsm/loaders/FontLoader.js";
+import { SVGLoader } from "../three/jsm/loaders/SVGLoader.js";
+import { EffectComposer } from "../three/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "../three/jsm/postprocessing/RenderPass.js";
+import { GlitchPass } from '../three/jsm/postprocessing/GlitchPass.js';
+import { ShaderPass } from '../three/jsm/postprocessing/ShaderPass.js';
+import { OutlinePass } from "../three/jsm/postprocessing/OutlinePass.js";
 
-import { T4y_putText } from "T4y_putText";
-import { T4y_shadersDefs } from "T4y_shadersDefs";
-import { T4y_shader } from "T4y_shader";
-import { T4y_ani } from "T4y_ani";
-import { T4y_console } from "T4y_console";
+import { T4y_putText } from "../libs/t4y_putText.js";
+import { T4y_shadersDefs } from "../libs/t4y_shadersDefs.js";
+import { T4y_shader } from "../libs/t4y_shader.js";
+import { T4y_ani } from "../libs/t4y_ani.js";
+import { T4y_console } from "../libs/t4y_console.js";
 
 
 /**
@@ -33,28 +33,46 @@ class Three4Yss extends aggregation(
   T4y_putText
   )  {
 
-  extras = {};
-  frameNo = 0;
-  ready = false;
-  clock;
-  delta = 0;
-  postScene;
-  postMaterial;
 
-  subPixel = 1;
-  maxFps = 12;
+  constructor( ){
+    super();
+    this.extras = {};
+    this.frameNo = 0;
+    this.ready = false;
+    this.clock;
+    this.delta = 0;
+    this.postScene;
+    this.postMaterial;
 
-  doLightNoLightInScene;
-  initPageNo = -1;
-  onRenderFromPage = -1;
+    this.subPixel = 1;
+    this.maxFps = 12;
 
-  constructor(){
-    cl("Three4Yss constructor");
-    cl("t4y :");
-    cl(t4y);
+    this.doLightNoLightInScene;
+    this.initPageNo = -1;
+    this.onRenderFromPage = -1;
 
-    cl("super");
-    super("t4y const.");
+    this.sceneLights = [];
+
+    this.lastRender = 0;
+    this.loadRender = 0;
+
+    this.delaydRender;
+    this.delaydAnimation;
+
+    this.sLastRender = 0;
+    this.sFCount=0;
+    this.lLastRender = 0;
+    this.tn;
+    this.tn2;
+    this.renderingNow = false;
+
+
+    cl("Three4Yss  is in constructor.... ");
+    //cl("t4y :");
+    //cl(t4y);
+
+    //cl("super");
+    //super("t4y const.");
 
     this.init_ani();
     this.int_shaDef();
@@ -126,7 +144,6 @@ class Three4Yss extends aggregation(
   }
 
 
-  sceneLights = [];
 
   init( glbFileModel ){
 
@@ -418,12 +435,6 @@ fitCanvasToScreen(){
   }
 
 
-
-  lastRender = 0;
-  loadRender = 0;
-
-
-
   removeElementFromArray( arr, index ){
     for( var i = 0; i < arr.length; i++){
         if ( i === index) {
@@ -528,8 +539,6 @@ fitCanvasToScreen(){
   */
 
 
-  delaydRender;
-  delaydAnimation;
   setDelaydRender( args ){
     //cl("setDelaydRender ");
     //cl("args");
@@ -582,12 +591,6 @@ fitCanvasToScreen(){
 
 
 
-  sLastRender = 0;
-  sFCount=0;
-  lLastRender = 0;
-  tn;
-  tn2;
-  renderingNow = false;
   renderIt( force=false ) {
     //cl("initPageNo:"+t4y.initPageNo+" Current"+pager.currentPage+" onRenderFromPage"+t4y.onRenderFromPage);
     if(t4y.initPageNo != pager.currentPage)

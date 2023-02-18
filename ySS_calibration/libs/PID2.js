@@ -1,6 +1,7 @@
 class PID2{
 
-    privateScope = {
+  constructor(){
+    this.privateScope = {
       target:null,
       gains: {
         P: null,
@@ -20,7 +21,8 @@ class PID2{
       },
       tLast: null
     };
-		updateCount = 0;
+		this.updateCount = 0;
+  }
 
     setTarget(value) {
         this.privateScope.target = value;
