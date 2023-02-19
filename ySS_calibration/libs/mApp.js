@@ -76,8 +76,11 @@ class mApp{
   */
   makeNiceList( data ){
     var mnl = [];
-    //cl("makeNiceList of element in html\ngot data -----");
-    //cl(data);
+    cl("makeNiceList of element in html\ngot data -----");
+    cl(data);
+    if( data == undefined )
+      return '';
+
     let keys = Object.keys(data);
     for( let i=0,ic=keys.length; i<ic; i++ ){
       mnl.push(
@@ -92,6 +95,7 @@ class mApp{
   * @param {string|json} content - if {string} then put as content of item
   * @namespace
   * @property {object} content - set more custome things like
+  * @property {string} content.img - url for image to put on left of item
   * @property {string|dict} content.content - put it as content or if {dict} set do automaticly a list of parameters in item. it will make `key: <strong>value</strong>`
   * @property {string|dict} content.tip - set head  tip cloud in right top corner of item
   * @namespace
@@ -109,10 +113,14 @@ class mApp{
     full path: <strong>`+this.packs[w]['fullPath']+`</strong><br>`+*/
     // nO:<strong>`+w+`</strong>
     let lve =`<!-- lvElement start --><li>`;
-    if( link != '' )
-      lve+=`<a href="#" onclick="`+link+`">`;
-    lve+=`<h2>`+head+`</h2>
-      <p>`;
+    if( link != '' ){
+      lve+=`<a href="#" onclick="`+link+`" `;
+      lve+=`>`;
+    }
+    if( content['img'] != undefined )
+      lve+= `<img src="`+content['img']+`">`;
+    lve+=`<h2>`+head+`</h2>`;
+    lve+= `<p>`;
     if( typeof content == "string" ){
       lve+= content;
 
@@ -146,8 +154,8 @@ class mApp{
   * @namespace
   * @property {object} data - if {json} set up thinks in list view to build
   * @property {string} data.header  - sets header of list view
-  * @property {string} headerTip - sets header tip / noti info
-  * @property {array} items  - array of Objects `mApp.lvElement` to list view
+  * @property {string} data.headerTip - sets header tip / noti info
+  * @property {string|array|json} data.items  - array of Objects `mApp.lvElement` to list view
   * @returns {string} to put it for example as `$('#htmlDyno').html( returnStr )`;
   * @description Build in easy way list view customizable and fast touch freandly!
   */
@@ -159,8 +167,10 @@ class mApp{
     //cl("buildListView calld !!!");
     //cl(data);
     let lvtr = `<div class="ui-body ui-corner-all ui-body-a">
-  <div>
-    <ul data-role="listview" data-insert="true">
+
+    <ul data-role="listview"
+      data-filter="true" data-filter-placeholder="Search ..."
+      data-insert="true">
       <li data-role="list-divider">`+
         data['header']+
         `<span class="ui-li-count">`+
@@ -171,7 +181,7 @@ class mApp{
     for(let d=0,dc=data['items'].length;d<dc;d++)
       lvtr+= data['items'][d];
 
-    lvtr+= `</ul></div></div>`;
+    lvtr+= `</ul></div>`;
 
     return lvtr;
   }
