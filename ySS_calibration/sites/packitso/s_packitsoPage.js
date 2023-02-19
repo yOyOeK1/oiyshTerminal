@@ -697,13 +697,17 @@ class s_packitsoPage{
     if( operation == 'edit' )
       this.pisNew = editD;
 
-    return this.pagePackForm(
-      operation == 'new' ? 'new one' : operation,
+    return `<div class="ui-body ui-corner-all ui-body-a">`+
+        this.pagePackForm(
+          (operation == 'new' ? 'new one' : operation)
+        )+
+      `</div>`+
       `<div class="ui-body ui-corner-all ui-body-a">`+
-        this.workForm()+`<hr>`+
-        this.workersList()+`
-      </div>
-      <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+        this.workForm()+
+      `</div>`+
+      //`<hr>`+
+        this.workersList()+
+      `<div data-role="controlgroup" data-type="horizontal" data-mini="true">
         <button
           class="ui-btn ui-corner-all ui-btn-icon-left ui-icon-delete"
           onclick="pager.getCurrentPage().formClear()"
@@ -713,15 +717,12 @@ class s_packitsoPage{
           >Save</button>
       </div>
       <br><br><br>
-      `
-    );
+      `;
   }
 
 
-  pagePackForm( title, afterForm ){
+  pagePackForm( title ){
     return `<h1>Pack it so - `+title+`</h1>
-
-
 <form class="pisForm" name="packitso">
 
   <div class="ui-field-contain">
@@ -759,14 +760,7 @@ class s_packitsoPage{
 
   </div>
 
-</form>
-
-
-`+afterForm+`
-
-
-
-    `;
+</form>`;
 
   }
 
