@@ -34,6 +34,8 @@ class mApp{
    *  ```
    * *will put in htmlDymo div html element App Frame with Hello world in it.
    *  bonus go to button to go to test functions page.*
+   *
+   * ![](https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/screenShots/ss_mApp_frame.png)
    */
   appFrame( args ){
 
@@ -103,9 +105,11 @@ class mApp{
   * @property {dict} content.content - if dictionary then use rule `key: <strong>val</strong><br>`
   * @namespace
   * @property {dict} content.tip - if dictionary then use rule `key: <strong>val</strong><br>`
-  * @param link {string} - if set put `<a href="#" noclick="link"...` over all item
+  * @param link {string} [''=DefultValue] - not set link at all or if set put `<a href="#" noclick="link"...` over all item
   * @returns {string} to put it for example as `$('#htmlDyno').html( returnStr )`;
   * @description to make your stuff in lightning speed wrap your data to nice stuff.
+  *   ![](https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/screenShots/ss_mAppLvBuilderImages.png)
+  *   ![](https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/screenShots/ss_mAppLvBuilderData.png)
   */
   lvElement( head, content, link='' ){
     /*`version: <strong>`+e['packitso']['ver']+`</strong><br>
@@ -156,6 +160,7 @@ class mApp{
   * @property {string} data.header  - sets header of list view
   * @property {string} data.headerTip - sets header tip / noti info
   * @property {string|array|json} data.items  - array of Objects `mApp.lvElement` to list view
+  * @property {bool} data.searchOn [true=DefaultValue]
   * @returns {string} to put it for example as `$('#htmlDyno').html( returnStr )`;
   * @description Build in easy way list view customizable and fast touch freandly!
   */
@@ -167,10 +172,9 @@ class mApp{
     //cl("buildListView calld !!!");
     //cl(data);
     let lvtr = `<div class="ui-body ui-corner-all ui-body-a">
-
-    <ul data-role="listview"
-      data-filter="true" data-filter-placeholder="Search ..."
-      data-insert="true">
+    <ul data-role="listview"`+
+      ( data['searchOn'] != undefined && data['searchOn'] == false ? "" : `data-filter="true" data-filter-placeholder="Search ..."` )+
+      `data-insert="true">
       <li data-role="list-divider">`+
         data['header']+
         `<span class="ui-li-count">`+

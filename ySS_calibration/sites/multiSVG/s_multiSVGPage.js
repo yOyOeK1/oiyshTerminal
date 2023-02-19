@@ -92,17 +92,22 @@ class s_multiSVGPage{
     }else{
       // default list of svg
       tr = `<h1>multi SVG</h1>`;
+      let items = [
+      ];
       for( let s=0,sc=this.svgsList.length; s<sc; s++ ){
-        tr+= '<a href="#" '+
-          //'onclick="pager.getCurrentPage().doAppDetails(\'yssPages\','+p+')" '+
-          `onclick="pager.goToByHash('pageByName=multi SVG&action=svg&i=`+s+`')" `+
-          'class="ui-btn '+
-            'ui-btn-a '+
-            ' ui-btn-icon-right ui-icon-carat-r">'+
-          this.svgsList[ s ]+
-          '</a>';
-
+        items.push( this.app.lvElement(
+          this.svgsList[ s ],
+          {
+            "img": `sites/multiSVG/`+this.svgsList[ s ],
+          },
+          `pager.goToByHash('pageByName=multi SVG&action=svg&i=`+s+`')`
+        ) );
       }
+      tr+= this.app.lvBuild({
+        "header": "files in directory:",
+        "headerTip": items.length,
+        "items": items
+      });
     }
 
     return this.app.appFrame({"content": tr});

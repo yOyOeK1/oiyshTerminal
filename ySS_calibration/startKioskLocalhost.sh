@@ -1,2 +1,2 @@
-#!/bin/bash
-google-chrome --app="http://localhost:1880/yss"
+
+google-chrome --app="http://192.168.43.220:1880/yss"

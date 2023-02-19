@@ -668,7 +668,8 @@ class s_packitsoPage{
       var trw = this.app.lvBuild({
           "header": ( new Date() ),
           "headerTip": wc,
-          "items": toTr
+          "items": toTr,
+          "searchOn": false
       });
 
 
@@ -697,7 +698,7 @@ class s_packitsoPage{
     if( operation == 'edit' )
       this.pisNew = editD;
 
-    return `<div class="ui-body ui-corner-all ui-body-a">`+
+    return `<div class="ui-corner-all ui-body-a">`+
         this.pagePackForm(
           (operation == 'new' ? 'new one' : operation)
         )+
@@ -725,40 +726,49 @@ class s_packitsoPage{
     return `<h1>Pack it so - `+title+`</h1>
 <form class="pisForm" name="packitso">
 
-  <div class="ui-field-contain">
+  <ul data-role="listview" data-inset="true">
 
-    <label for="pisName">Name of pack:</label>
-    <input type="text" name="pisName" id="pisName"
-      placeholder="project name in dpkg env."
-      class="toSave" pName="name"
-      value="`+(urlArgs['pisName']!=undefined ? urlArgs['pisName']: '')+`">
+    <li class="ui-field-contain">
+      <label for="pisName">Name of pack:</label>
+      <input type="text" name="pisName" id="pisName"
+        placeholder="project name in dpkg env."
+        class="toSave" pName="name"
+        value="`+(urlArgs['pisName']!=undefined ? urlArgs['pisName']: '')+`">
+    </li>
 
-    <label for="pisVer">Version:</label>
-    <input type="text" name="pisVer" id="pisVer"
-      placeholder="0.0.1"
-      class="toSave" pName="ver"
-      value="`+(urlArgs['pisVer']!=undefined ? urlArgs['pisVer']: '')+`">
+    <li class="ui-field-contain">
+      <label for="pisVer">Version:</label>
+      <input type="text" name="pisVer" id="pisVer"
+        placeholder="0.0.1"
+        class="toSave" pName="ver"
+        value="`+(urlArgs['pisVer']!=undefined ? urlArgs['pisVer']: '')+`">
+    </li>
 
+    <li class="ui-field-contain">
+      <label for="pisDeps">Dependencies:</label>
+      <input type="text" name="pisDeps" id="pisDeps"
+        placeholder="otdm-tools, ..."
+        class="toSave" pName="otdm.deps"
+        value="`+(urlArgs['pisDeps']!=undefined ? urlArgs['pisDeps']: '')+`">
+    </li>
 
-    <label for="pisDeps">Dependencies:</label>
-    <input type="text" name="pisDeps" id="pisDeps"
-      placeholder="otdm-tools, ..."
-      class="toSave" pName="otdm.deps"
-      value="`+(urlArgs['pisDeps']!=undefined ? urlArgs['pisDeps']: '')+`">
+    <li class="ui-field-contain">
+      <label for="pisDesc">Description:</label>
+      <textarea name="pisDesc" id="pisDesc"
+        placeholder="write so info about your pack..."
+        class="toSave" pName="desc"
+        value="">`+(urlArgs['pisDesc']!=undefined ? urlArgs['pisDesc']: '')+`</textarea>
+    </li>
 
-    <label for="pisDesc">Description:</label>
-    <textarea name="pisDesc" id="pisDesc"
-      placeholder="write so info about your pack..."
-      class="toSave" pName="desc"
-      value="">`+(urlArgs['pisDesc']!=undefined ? urlArgs['pisDesc']: '')+`</textarea>
+    <li class="ui-field-contain">
+      <label for="pisAuth">Author:</label>
+      <input type="text" name="pisAuth" id="pisAuth"
+        placeholder="Name LastName <email@adres.com>"
+        class="toSave" pName="author"
+        value="`+(urlArgs['pisAuth']!=undefined ? urlArgs['pisAuth']: '')+`">
+    </li>
 
-    <label for="pisAuth">Author:</label>
-    <input type="text" name="pisAuth" id="pisAuth"
-      placeholder="Name LastName <email@adres.com>"
-      class="toSave" pName="author"
-      value="`+(urlArgs['pisAuth']!=undefined ? urlArgs['pisAuth']: '')+`">
-
-  </div>
+  </ul>
 
 </form>`;
 
