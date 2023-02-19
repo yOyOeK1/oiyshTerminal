@@ -1,6 +1,22 @@
 
 
-
+/**
+ * Class sPager is a helper from oiyshTerminal family - Main class
+ * But we should refer to instance `pager` Nice!
+ *
+ * This one is helping managing sites. Having menu shaders and work with Screens manager. This is only a documentation to help you how to use it to do somethin you want!
+ *
+ * @example
+ *
+ * let cp = pager.getCurrentPage();
+ *
+ * *will give you a curent page object. You on page from elsvare calld*
+ *
+ * pager.goToByHash('pageByName=pack it so')
+ *
+ * *returns {string} - can be use in onclick="returndValue" to get proper back and change page*
+ *
+ */
 class sPager {
 
   constructor(){
@@ -111,7 +127,10 @@ class sPager {
     }catch( e ){}
   }
 
-
+  /**
+   * @param {integer} pageNo - will sec curent site from `this.pages[pageNo]` to set now
+   * @description Methode - **not recomendet** shortest way to set now a different site but not the best. Check `.goToByHash()`
+   */
   setPage( pageNo ){
     cl("setPage"+pageNo);
     $.mobile.panel();
@@ -225,6 +244,17 @@ class sPager {
     return this.pages;
   }
 
+  /**
+   * @param {string} url - in zone of yss
+   * @returns {string} correct string to use in `onclick="returnValue"` to sustain back in browser. Passing arguments and not reload ish
+   *
+   * @example
+   * ```javascript
+   * // clean way to change a page and ads timestamp
+   * // at end as updater to reduce chaching
+   * pager.goToByHash('pageByName=pack it so');
+   * ```
+   */
   goToByHash( url ){
     window.location.hash=url+`&`+(Math.random());
   }
