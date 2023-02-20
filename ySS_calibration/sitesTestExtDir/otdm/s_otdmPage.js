@@ -9,6 +9,7 @@ class s_otdmPage{
 
     this.resL=0;
     this.resRet = false;
+    this.app = new mApp();
     this.mDoCmd = new mDoCmd();
   }
 
@@ -21,6 +22,14 @@ class s_otdmPage{
 	}
 
   appFrame( content, goTo = '' ){
+    return this.app.appFrame({
+      "content": content,
+      "goTo":goTo,
+      "backButton": "history.back()"
+    });
+
+
+
     return `
 <div date-role="header" data-position="inline">
 
@@ -334,7 +343,7 @@ $( document ).ready(function() {
   }
 
   makeLVItems( doPages, src='yssPages' ){
-    var tr = '';
+    let tri = [];
     for(var p=0,pc=doPages.length; p<pc; p++ ){
       //cl("doPages["+p+"]");
       //cl(doPages[p]);
@@ -342,6 +351,21 @@ $( document ).ready(function() {
       if( name == undefined && doPages[p]['name'] != undefined )
         name = doPages[p]['name'];
 
+      let classItem = ( doPages[p]['enable'] == true ? 'ui-btn-a' : 'ui-btn-b' )+
+        ( doPages[p]['external'] == true ? 'ui-btn-c' : '' );
+
+      tri.push( this.app.lvElement(
+        name,
+        {
+          "content" : "ok",
+          'class' : classItem,
+          'tip': (doPages[p]['enable'] == true || doPages[p]['installed'] == true) ? 'on' : 'off'
+        },
+        `pager.goToByHash('pageByName=OTDM&action=appDetials&src=`+src+`&i=`+p+`')`
+      ) );
+      cl("-----------------");
+      cl(tri[0]);
+      /*
       tr+= '<a href="#" '+
         //'onclick="pager.getCurrentPage().doAppDetails(\'yssPages\','+p+')" '+
         `onclick="pager.goToByHash('pageByName=OTDM&action=appDetials&src=`+src+`&i=`+p+`')" `+
@@ -352,18 +376,13 @@ $( document ).ready(function() {
         '['+( (doPages[p]['enable'] == true || doPages[p]['installed'] == true) ? 'on' : 'off' )+'] '+
         name+
         '</a>';
+        */
     }
-    return tr;
+    return tri;
   }
 
   getYssPages(){
-    var tr= `
-<div id="yssPagesNow">
-  <form class="ui-filterable">
-    <input id="filterBasic-input" data-type="search" />
-  </form>
-  <div id="otdmLV" data-role="controlgroup" data-filter="true" data-input="#filterBasic-input">
-      `;
+    let tryp= ``;
 
 
     if( urlArgs['action'] && urlArgs['action'] == 'dpkg' ){
@@ -373,9 +392,12 @@ $( document ).ready(function() {
 
       if( this.otdmMyList != undefined ){
         cl("no need to query there is a list ....");
-        tr+= pager.getCurrentPage().makeLVItems(
-            this.otdmMyList,'dpkgDetails'
-          );
+        tryp+= pager.getCurrentPage().app.lvBuild({
+          "header": "1234",
+          "headerTip": "abc",
+          "items" : makeLVItems( this.otdmMyList, 'dpkgDetails' )
+        });
+
 
       }else{
 
@@ -385,18 +407,16 @@ $( document ).ready(function() {
         );
         cl("res from otdmArgs---------");
         cl( res );
-        tr+='Loading... dpkg data';
+        tryp+='Loading... dpkg data';
 
       }
 
     } else {
       var doPages = yssPages;
-      tr+= this.makeLVItems( doPages );
+      tryp+= this.makeLVItems( doPages );
 
     } // end main yssPages
-    tr+= `
-  </div>
-</div>
+    tryp+= `
 <script>
 setTimeout(()=>{
   cl("focus on filter field....");
@@ -406,12 +426,12 @@ setTimeout(()=>{
 `;
 
     cl("list view build.");
-    return tr;
+    return tryp;
   }
 
   getPageSwitcher(){
     var tr = `
-<form>
+<form class="">
   <div clas="ui-field-contain">
     <label for="select-otdmPages">Loking at:</label>
     <select name="select-otdmPages" id="select-otdmPages" data-mini="true">
@@ -496,12 +516,14 @@ $("#select-otdmPages").on(
       >setPage</button>
     -->
 
-
-    `+this.getPageSwitcher()+`
-    `+this.getYssPages()+`
-
-    </div>
-    `;
+    `+
+    `<div class="ui-corner-all ui-body-b">`+
+      this.getPageSwitcher()+
+    `</div>`+
+    `<div class="ui-corner-all ui-body-a">`+
+      this.getYssPages()+
+    `</div>`+
+    `</div>`;
   }
 
   get getHtml(){
@@ -544,7 +566,9 @@ $("#select-otdmPages").on(
       );
 
     }else{
-      tr = this.pageMain();
+      tr = this.app.appFrame({
+        "content":this.pageMain()
+      });
     }
 
 
@@ -553,7 +577,7 @@ $("#select-otdmPages").on(
 
   getHtmlAfterLoad(){
     cl("after load");
-    //$("#otdmPage").enhanceWithin();
+    $("#htmlDyno").enhanceWithin();
   }
 
   get svgDyno(){
