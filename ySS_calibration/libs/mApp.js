@@ -21,7 +21,7 @@ class mApp{
    * @namespace
    * @property {json} args - The default values for frame arguments
    * @property {string} args.goTo - if set then past to `pager.goToByHash(goTo)` to move without reloading
-   * @property {string} args.backButton - if set then past to `pager.goToByHash( backButton )`
+   * @property {string} args.backButton - if set then past to `onclick="backButton"`
    * @property {string} args.content - to put your content in frame
    * @desc function returns Basic Frame of a page. if needed back or goTo button is there to use
    * @returns {string} to put it for example as `$('#htmlDyno').html( returnStr )`;
@@ -45,7 +45,7 @@ class mApp{
   `+(args['backButton'] != undefined ?`
   <button `+
     //`onclick="history.back()" `+
-    `onclick="pager.goToByHash('`+args['backButton']+`')" `+
+    `onclick="`+args['backButton']+`" `+
     `class="ui-btn-left ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">
     Back to list.</button>
     `:``)+(
@@ -130,8 +130,7 @@ class mApp{
     // nO:<strong>`+w+`</strong>
     let lve =`<!-- lvElement start --><li>`;
     if( link != '' ){
-      lve+=`<a href="#" onclick="`+link+`" `;
-      lve+=`>`;
+      lve+=`<a href="#" onclick="`+link+`">`;
     }
     if( content['img'] != undefined )
       lve+= `<img src="`+content['img']+`">`;
@@ -196,6 +195,7 @@ class mApp{
         `</span>
       </li>`;
 
+    cl("lvBuild got items in typeof: ... ["+(typeof data['items'])+"]")
     for(let d=0,dc=data['items'].length;d<dc;d++)
       lvtr+= data['items'][d];
 
