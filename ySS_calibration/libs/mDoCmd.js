@@ -59,6 +59,9 @@ class mDoCmd{
     //cl("mDoCmd.otdmArgs ["+JSON.stringify(args)+"]");
     tr = {};
 
+
+    // url 'http://localhost:1880/yss/?otdmQ:\{"webCmdSubProcess":"\[ls,/tmp\]","pH":"66"\}'
+
     var url = "?otdmQ:"+JSON.stringify(args);
     cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
 
