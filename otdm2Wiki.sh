@@ -153,9 +153,9 @@ do
         #echo "-------------- end wF"
 
 
-        echo "checking if have .isYssSite .... "${rootDir}"/"${o}"/DEBIAN/isYssSite"
         if [ -f ${rootDir}"/"${o}"/DEBIAN/isYssSite" ];
         then
+          echo "have .isYssSite .... "${rootDir}"/"${o}"/DEBIAN/isYssSite"
           echo "using url from ./DEBIAN/isYssSite"
           urlToSwap=`cat ${rootDir}"/"${o}"/DEBIAN/isYssSite"`
           echo "  got url to swap from file: "${urlToSwap}
@@ -169,8 +169,17 @@ do
         pathToFile=`echo ${rH} | \
           sed -r 's|'${rootDir}'|'${urlToSwap}'|g' | \
           sed -r 's|/README.md||g' | sed -r 's|/README||g'`
+
+        echo "-------- rH ..... "${rH}
+        echo "------------pathToFile ... "${pathToFile}
+        echo "------------pathToFile2 ... "${pathToFile2}
+        echo "------------rootDir .... "${rootDir}
+        echo "------------urlToSwap .... "${urlToSwap}
+
+
+
         cat ${rH} | \
-          sed -r 's|]\(./|]\('${pathToFile2}'/|g' | \
+          sed -r 's|]\(./|]\('${pathToFile}'/|g' | \
           sed -r 's|]\(../|]\('${pathToFile2}'/../|g' >> ${wF}
         echo "
 ---
@@ -281,7 +290,7 @@ do
 
   fi
 
-  if [ ${o} = "otdm-yss-basic-sail" ]; then
+  if [ ${o} = "otdm-nrf-yss" ]; then
     #exit 1
     echo "exit no"
   fi
