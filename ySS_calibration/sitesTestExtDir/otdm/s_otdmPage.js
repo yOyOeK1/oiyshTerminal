@@ -543,7 +543,7 @@ $("#select-otdmPages").on(
           value="`+( urlArgs['action'] == 'cmd' ?
             //'./otdmTools.py,-testDialog,yes': ''
             //'mplayer,/home/yoyo/Music/AWS/3sirCWDglG4ZY.128.mp3': ''
-            `sh,-c,echo 'It will ask you from bash for prompt'; echo 'resend command'; echo 'or enter custom text to echo';read -p 'can you tyke new text' aaa;echo 'you entert['; echo $aaa; echo ']<- its procest by bash'`: ''
+            'cal,2025': ''
             )+`"
            />
           <div id="spRes">res..</div>`:''
