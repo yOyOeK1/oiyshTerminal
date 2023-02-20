@@ -15,6 +15,8 @@
     "jsdoc2md-three4yss": "jsdoc2md ./ySS_calibration/libs/three4yss.js >> ./yss-js-functions.md",
     "jsdoc2md-yssPageExample": "jsdoc2md ./ySS_calibration/sites/basic_sail/s_basicSailPage.js >> ./yss-js-functions.md",
     "jsdoc2md-arg": "echo 1;args=`echo $npm_config_argv | jq '.remain[0]' -r`; echo 'got args'$args; echo 2; jsdoc2md ${args} >> ./yss-js-functions.md; echo ",
+    "jsdoc2md-py1": "jsdoc2md /tmp/py2doc.py; echo ",
+    "py2doc.md": "pydoc-markdown -I /tmp/py2docInput/ --render-toc > /tmp/py2docOutput.md; echo ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "argst": "echo $1"
   },
