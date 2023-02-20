@@ -141,6 +141,10 @@ class s_packitsoPage{
 
 
     `+`// for debuging
+
+    <button onclick="pager.getCurrentPage().testCmd()"
+      ></button>
+
     <button onclick="pager.goToByHash('pageByName=pack it so&action=startNew`+
       `&pisName=test1&pisDeps=otdm-tool&pisDesc=Description of project from GET at time:`+
       (new Date().getTime())+`&pisVer=0.1.1&pisAuth=B. Ceglik <yoyoek@wp.pl>')"
@@ -148,6 +152,49 @@ class s_packitsoPage{
 
     </div>
     `;
+  }
+
+  testC(c){
+    cl("testC ");
+    cl("new ph: "+this.mDoCmd.genNewPh());
+    this.mDoCmd.otdmArgs(
+      {
+        "webCmdSubProcess": c,
+        'pH': this.mDoCmd.pH
+      },
+      (d,r)=>{
+        cl("got result !!! -- ["+c+"]");
+        cl(d);
+        cl("--------end");
+      }
+    );
+  }
+
+  testCmd(){
+    cl("test1");
+
+    if( 1 ){ // query to cmd shell
+      this.mDoCmd.otdmArgs(
+        {
+          "webCmdSubProcess": `[ls,/tmp]`,
+          'pH': this.mDoCmd.pH
+        },
+        (d,r)=>{
+          cl("got ls !!!");
+          cl(d);
+        }
+      );
+    }
+
+    if( 0 ){ // q to otdmtools
+      this.mDoCmd.otdmArgs(
+        {'dfs':'/tmp'},
+        (d,r)=>{
+          cl("got ls !!!");
+          cl(d);
+        }
+      );
+    }
   }
 
   formWorkDelete(){
@@ -262,6 +309,21 @@ class s_packitsoPage{
     $("#wfStat").html("DONE").fadeOut();
   }
 
+  updateSelectedWorks(){
+    $('#wsListDiv div ul li').find('p').each(function () {
+      cl("p - ["+$(this).html()+"]");
+      if( $(this).html().substring(0, 4) == 'No#:' ){
+        let idOf = $(this).html().split('<b>')[1].split("</b>")[0]
+        cl("got ID:"+idOf);
+        $(this).parent().find('h2').attr('class',
+          'ui-body-'+( pager.getCurrentPage().pisNew['editId'] == idOf && pager.getCurrentPage().pisNew['edit'] ? 'b':'a' )
+        );
+      }
+
+
+    });
+  }
+
   cbOnCmdLsAllDONE( data, res ){
     cl(".cbOnCmdLsAllDONE god ");
     cl("data");
@@ -269,6 +331,11 @@ class s_packitsoPage{
     cl("res");
     cl(res);
     $("#wfIdent").html('<option value="-1" selected>---</option>');
+    if( typeof data == "string" && data.length == 0 ){
+      cl("error data in form?");
+      return 0;
+    }else{
+    }
     data.forEach((item, i) => {
       cl(item);
       let uid = -1;
@@ -294,12 +361,21 @@ class s_packitsoPage{
           >`+name+` (`+uid+`)</option>`
       );
 
+
+
+
+      pager.getCurrentPage().updateSelectedWorks();
+
+
       if( pager.getCurrentPage().pisNew['edit'] == true ){
         cl("yyyyy select !!!");
         cl("edit worker");
+
         cl(pager.getCurrentPage().editWorker);
         $("#wfIdent").val( pager.getCurrentPage().editWorker['ident'] );
         $("#wfIdent").selectmenu('refresh');
+      }else{
+
       }
 
       $("#wfStat").html("DONE").fadeOut();
@@ -308,7 +384,7 @@ class s_packitsoPage{
 
   cbOnChangeWfWorkSELECTED(){
     let work = $("#wfWork").val();
-    cl("cbOnChangeWfWorkSELECTED() ... "+work);
+    //cl("cbOnChangeWfWorkSELECTED() ... "+work);
 
     $("#wfStat").html("loading ... [ * ]").show();
     var cmdBul = {
@@ -317,8 +393,8 @@ class s_packitsoPage{
       "ident": "*"
     };
     if( $("#wfExtArgs").val() != '' ){
-      cl("cmdBul");
-      cl(cmdBul);
+      //cl("cmdBul");
+      //cl(cmdBul);
       let a = $("#wfExtArgs").val().split(' ');
       var lastK = "";
       a.forEach((item, i) => {
@@ -329,10 +405,10 @@ class s_packitsoPage{
           cmdBul[ lastK ] = item;
         }
       });
-      cl("cmdBul -- after adding Extra Arguments");
-      cl(cmdBul);
+      //cl("cmdBul -- after adding Extra Arguments");
+      //cl(cmdBul);
 
-      cl("-----------------------");
+      //cl("-----------------------");
     }
 
     this.mDoCmd.otdmArgs(
@@ -380,6 +456,8 @@ class s_packitsoPage{
     this.pisNew['edit'] = true;
     this.pisNew['editId'] = workId;
 
+
+
     //$("#wfBtClear").hide();
     $("#wfBtDelete").show();
 
@@ -407,6 +485,8 @@ class s_packitsoPage{
     this.pisNew['edit'] = false;
     this.pisNew['editId'] = -1;
     $("#wfBtDelete").hide();
+
+    this.updateSelectedWorks();
   }
 
   workForm(){
@@ -420,51 +500,62 @@ class s_packitsoPage{
     return `
 <form class="pisForm" name="workForm">
 
-  <label for="wfExtArgs">Extra arguments</label>
-  <input type="text" name="wfExtArgs" id="wfExtArgs"
-    placeholder="for otdmTools.py"
-    class="toSave" pName="extArgs"
-    value="`+(urlArgs['wfExtArgs']!=undefined ? urlArgs['wfExtArgs']: '')+`">
+  <ul data-role="listview" data-inset="true" class="ui-body-a">
 
-  <fieldset data-role="controlgroup" data-type="horizontal"
-    data-mini="true">
-    <legend>Set up driver  <div style="display:inline;" id="wfStat">lsWork doCmd ... status</div></legend>
+    <li class="ui-field-contain">
+      <label for="wfExtArgs">Extra arguments</label>
+      <input type="text" name="wfExtArgs" id="wfExtArgs"
+        placeholder="for otdmTools.py"
+        class="toSave" pName="extArgs"
+        value="`+(urlArgs['wfExtArgs']!=undefined ? urlArgs['wfExtArgs']: '')+`">
+    </li>
 
+    <li class="ui-field-contain">
 
-    <label for="wfWork">Work in</label>
-    <select name="wfWork" id="wfWork"
-      onchange="pager.getCurrentPage().cbOnChangeWfWorkSELECTED()"
-      class="toSave" pName="keyWord">
-      <option value="-1">- - -</option>
-    </select>
+      <fieldset data-role="controlgroup" data-type="horizontal"
+        data-mini="true">
+      <legend>Set up driver  <div style="display:inline;" id="wfStat">lsWork doCmd ... status</div></legend>
 
-    <label for="wfIdent">Identification</label>
-    <select name="wfIdent" id="wfIdent"
-      class="toSave" pName="ident">
-      <option value="-1">- - -</option>
-    </select>
+      <label for="wfWork">Work in</label>
+      <select name="wfWork" id="wfWork"
+        onchange="pager.getCurrentPage().cbOnChangeWfWorkSELECTED()"
+        class="toSave" pName="keyWord">
+        <option value="-1">- - -</option>
+      </select>
 
+      <label for="wfIdent">Identification</label>
+      <select name="wfIdent" id="wfIdent"
+        class="toSave" pName="ident">
+        <option value="-1">- - -</option>
+      </select>
 
-  </fieldset>
-  <label for="wfOut">Output name</label>
-  <input type="text"
-    name="wfOut" id="wfOut"
-    placeholder="file name of out"
-    class="toSave" pName="oFile"
-    value="">
+    </li>
+
+    <li class="ui-field-contain">
+      </fieldset>
+      <label for="wfOut">Output name</label>
+      <input type="text"
+        name="wfOut" id="wfOut"
+        placeholder="file name of out"
+        class="toSave" pName="oFile"
+        value="">
+    </li>
+
+  </ul>
 
 </form>
 
-<div class="ui-grid-b center">
-  <a class="ui-shadow ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext ui-btn-inline"
+<div data-role="controlgroup" data-type="horizontal" data-mini="true">
+
+  <a class="ui-shadow ui-btn ui-corne-all ui-btn-icon-left ui-icon-plus ui-btn-a "
     onclick="pager.getCurrentPage().formWorkAdd()"
     id="wfBtAdd"
     >Add</a>
-  <a class="ui-shadow ui-btn ui-corner-all ui-icon-recycle ui-btn-icon-notext ui-btn-inline"
+  <a class="ui-shadow ui-btn ui-corne-all ui-btn-icon-left ui-icon-recycle ui-btn-a"
     onclick="pager.getCurrentPage().formWorkClear()"
     id="wfBtClear"
     >Clear</a>
-  <a class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-inline"
+  <a class="ui-shadow ui-btn ui-corne-all ui-btn-icon-left ui-icon-delete ui-btn-a "
     onclick="pager.getCurrentPage().formWorkDelete()"
     id="wfBtDelete"
     >Delete</a>
@@ -666,7 +757,7 @@ class s_packitsoPage{
 
 
       var trw = this.app.lvBuild({
-          "header": ( new Date() ),
+          "header": "Works: "+( new Date() ),
           "headerTip": wc,
           "items": toTr,
           "searchOn": false
@@ -688,6 +779,7 @@ class s_packitsoPage{
 
     cl("Packi it so -- "+( operation == 'new' ? 'NEW ONE' : operation )+" editD!!! ------------------");
     cl(editD);
+
     this.pisNew = {
       'edit': false,
       'editId':-1,
@@ -695,14 +787,17 @@ class s_packitsoPage{
       'entryDate': new Date().getTime()
     };
 
-    if( operation == 'edit' )
+    if( operation == 'edit' ){
       this.pisNew = editD;
+      this.pisNew['edit'] = false;
+      this.pisNew['editId'] = -1;
+    }
 
-    return `<div class="ui-corner-all ui-body-a">`+
-        this.pagePackForm(
+    //return `<div class="ui-corner-all ui-body-a">`+
+    return this.pagePackForm(
           (operation == 'new' ? 'new one' : operation)
         )+
-      `</div>`+
+      //`</div>`+
       `<div class="ui-body ui-corner-all ui-body-a">`+
         this.workForm()+
       `</div>`+
@@ -724,9 +819,10 @@ class s_packitsoPage{
 
   pagePackForm( title ){
     return `<h1>Pack it so - `+title+`</h1>
+
 <form class="pisForm" name="packitso">
 
-  <ul data-role="listview" data-inset="true">
+  <ul data-role="listview" data-inset="true" class="ui-body-a">
 
     <li class="ui-field-contain">
       <label for="pisName">Name of pack:</label>
@@ -877,6 +973,7 @@ class s_packitsoPage{
       //test
       cl(i+": - Form in - Pack it so now on page. name:["+obj["name"]+"] children:"+obj.children.length);
       $(obj).change(function(){
+
         let pisNew = pager.getCurrentPage().pisNew;
         cl("so now pack it so - new is ----------");
         cl( pisNew );
@@ -893,8 +990,10 @@ class s_packitsoPage{
           pisNew[changeInFormName][pName] = $(this).val();
           if( pisNew['edit'] == true ){
             pisNew['works'][ pisNew['editId'] ][pName] = $(this).val();
+          }else{
 
           }
+
 
           if( pName == "ident" ){
             cl("html of all ---------------------");
@@ -957,8 +1056,8 @@ class s_packitsoPage{
 
 
   onMessageCallBack( r ){
-    console.log("s_packitsoPage got msg ");
-    cl(r);
+    //console.log("s_packitsoPage got msg ");
+    //cl(r);
     if( r.topic == 'e01Mux/adc0' ){
       //putText("houBatVol", (""+(r.payload*(0.02771809)) ).substring(0,5) );
 
@@ -966,6 +1065,12 @@ class s_packitsoPage{
     }else if( r.topic == 'thisDevice/bat/perc' ){
       //putText("batPercent", r.payload+"%");
     }
+
+
+    this.mDoCmd.onWSMessageCallBackWork_onStatusDONE( r );
+
+
+
   }
 
 
