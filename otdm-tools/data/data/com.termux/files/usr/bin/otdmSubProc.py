@@ -15,8 +15,35 @@ class otdmSubProc:
         lNo = 0
 
         self.subOut = []
+        LastPipe=-1
         try:
-            self.subP = Popen(args['cmd'],  stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+            print(f"have to check if dont need splitting ... {args['cmd']}")
+            cmdStep=[]
+            for a in args['cmd']:
+                if a != "|":
+                    cmdStep.append( a )
+                elif len(cmdStep) > 0:
+                    print(f"run sub split detected .... on stock")
+                    if LastPipe == -1:
+                        print(f"tail run... no before this is first {cmdStep}")
+                        self.subP = Popen(cmdStep,  stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                        LastPipe=1
+                    else:
+                        print(f"tail run... next {cmdStep}")
+                        self.subP = Popen(cmdStep,  stdout=PIPE, stdin=self.subP.stdout, stderr=STDOUT)
+
+                    cmdStep=[]
+                else:
+                    print("end of command no in stack done...")
+
+            if len(cmdStep) > 0:
+                if LastPipe == -1:
+                    print(f"tail run... no before this is first {cmdStep}")
+                    self.subP = Popen(cmdStep,  stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+                else:
+                    print(f"tail run... next {cmdStep}")
+                    self.subP = Popen(cmdStep,  stdout=PIPE, stdin=self.subP.stdout, stderr=STDOUT)
+
         except:
             print("ojjj Error ")
             self.subOut.append( b"error o.O" )
