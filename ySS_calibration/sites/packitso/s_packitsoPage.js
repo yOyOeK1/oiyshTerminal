@@ -886,7 +886,7 @@ class s_packitsoPage{
         "content": content
       });*/
       tr = cp.app.appFrame({
-        "backButton": "pageByName="+cp.getName,
+        "backButton": "pager.goToByHash('pageByName="+cp.getName+"')",
         "content": cp.pageStartNewOrEdit()
       });
 
@@ -922,7 +922,7 @@ class s_packitsoPage{
             $("#htmlDyno").append('<br>DONE');
             cp.pisNew = data;
             let trf = cp.app.appFrame({
-              "backButton": "pageByName="+cp.getName,
+              "backButton": "pager.goToByHash('pageByName="+cp.getName+"')",
               "content": cp.pageStartNewOrEdit( 'edit', data )
             });
             $("#htmlDyno").html( trf ). enhanceWithin();
