@@ -8,6 +8,8 @@
  *  mqtt and otdm-nrf-yss are making a bridge from bash or otdmTool.py to
  *  mqtt. Then using function from this class you can interact with process or
  *  only make some bash work.
+ *
+ *  **Check** otdmTool.py site [otdmDriverWebCmdSubProcess - documentation](./xdevdoc-otdmDriverProto-web-cmd-sub-process)
  */
 class mDoCmd{
 
@@ -16,14 +18,20 @@ class mDoCmd{
     /** @desc To know if still running. true (running..) */
     this.cmdWork = false;
     /** @desc To identify current command communication topic*/
-    this.pH = 0;
+    this.pH = this.genNewPh();
+    /** @desc To collect data stdout from cmd from shell*/
+    this.cmdStdOut = '';
 
     this.updateObj = "";
     cl("mDoCmd  is in constructor.... "+
       " ph: "+this.pH);
   }
 
-
+  genNewPh(){
+   self.pH = "pH"+(Math.round( Math.random()*100000 ) )+"_"+(Math.round( Math.random()*100000 ) );
+   cl(" mDoCmd generating new pH ..... "+this.pH);
+   return self.pH;
+  };
 
   /**
    * Methode run to command from **otdmTools** and get result - call back on finish.
@@ -54,7 +62,7 @@ class mDoCmd{
     //var fName = "_"+(Math.random()*1000000)+"_"+( new Date().getTime() )+".json";
     //cl("fName: ["+fName+"]");
     var url = "?otdmQ:"+JSON.stringify(args);
-    //cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
+    cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
 
     $.get( url, function( data, status ){
       let daTr = data;
@@ -86,12 +94,12 @@ class mDoCmd{
       cl(cmd);
       sOutSend('otdmCmd:'+this.pH+':'+cmd );
       return 0;
+    }else{
+      cl("new command clearing cmdStdOut ....");
+      this.cmdStdOut = '';
     }
 
-    cl("do Apt Update :)");
-    var pH = "pH"+(Math.round( Math.random()*100000 ) )+"_"+(Math.round( Math.random()*100000 ) );
-    this.pH = pH;
-    cl("pH: ["+pH+"]");
+    cl("pH: ["+this.pH+"]");
     $("#"+this.updateObj).html("doing it.....["+cmd+"]<br>");
 
     //cmd = JSON.stringify(["ls", "/tmp"]),
@@ -99,11 +107,15 @@ class mDoCmd{
     this.otdmArgs(
       {
         "webCmdSubProcess": cmd,
-        'pH': pH
+        'pH': this.pH
       },
-      cbFunc == -1 ? this.otdmCallBackWebCmdSubProcess : cbFunc
+      cbFunc == -1 ?
+        this.otdmCallBackWebCmdSubProcess :
+        cbFunc
     );
   }
+
+
   /**
   * Default callback methode for `.otdmArgs` methode on DONE. Will only spit to console.log the result.
   * @param {json/string} data - json / string tipically if all is ok then get json.
@@ -118,6 +130,14 @@ class mDoCmd{
 
 
 
+
+  CmdStdOut_addToRes( so ){
+    //cl("cmd -> stdout more by ..... ");
+    cl(""+so);
+    this.cmdStdOut+= so+"\n";
+  }
+
+
   /**
    * Methode to put in your **WebSocket handle** message from it. This will detect end of work for your command. Set up correctly `cmdWork`
    * @param {json} r - incomming msg from websocket server. it will look for owne topic with `pH` as key. if done will come sets end of `cmdWork` to false.
@@ -126,13 +146,28 @@ class mDoCmd{
   onWSMessageCallBackWork_onStatusDONE( r ){
     if( this.cmdWork &&
       r.topic == String("subP/"+this.pH+"/status") ){
+
         cl("got status update on "+this.pH+" msg:"+r.payload);
+
         if( r.payload == 'done' ){
           this.cmdWork = false;
           cl("END web sub process work -----");
           $("#"+this.updateObj).append('DONE');
         }
+    }else if( r.topic.substring(0,5+this.pH.length) == 'subP/'+this.pH){
+      //cl("have line !!!!!");
+
+      if( typeof r.payload == 'object' ){
+        let tatso = [];
+        var d = r.payload['data'];
+        for( var b=0,bc=d.length; b<bc; b++ )
+          tatso.push( String.fromCharCode( d[b] ) );
+
+        this.CmdStdOut_addToRes( (tatso.join("")) );
+      }else{
+        this.CmdStdOut_addToRes( r.payload.toString() );
       }
+    }
   }
 
   /**
