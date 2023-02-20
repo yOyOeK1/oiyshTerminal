@@ -78,8 +78,8 @@ class mApp{
   */
   makeNiceList( data ){
     var mnl = [];
-    cl("makeNiceList of element in html\ngot data -----");
-    cl(data);
+    cl("makeNiceList of element in html -----");
+    //cl(data);
     if( data == undefined )
       return '';
 
@@ -100,6 +100,8 @@ class mApp{
   * @property {string} content.img - url for image to put on left of item
   * @property {string|dict} content.content - put it as content or if {dict} set do automaticly a list of parameters in item. it will make `key: <strong>value</strong>`
   * @property {string|dict} content.tip - set head  tip cloud in right top corner of item
+  * @property {string} content.class - set extra class at `<h2 class="..` try `ui-body-b`
+
   * @namespace
   * @property {object} content.content - if is dict then do expect that is a {"key":1,"index":23}
   * @property {dict} content.content - if dictionary then use rule `key: <strong>val</strong><br>`
@@ -108,8 +110,18 @@ class mApp{
   * @param link {string} [''=DefultValue] - not set link at all or if set put `<a href="#" noclick="link"...` over all item
   * @returns {string} to put it for example as `$('#htmlDyno').html( returnStr )`;
   * @description to make your stuff in lightning speed wrap your data to nice stuff.
-  *   ![](https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/screenShots/ss_mAppLvBuilderImages.png)
-  *   ![](https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/screenShots/ss_mAppLvBuilderData.png)
+  * @example
+  *  ```javascript
+  *  tr+= this.app.lvBuild({
+  *   "header": "files in directory:",
+  *   "headerTip": items.length,
+  *   "items": items
+  *  });
+  * ```
+  * A fast way to get consistance look
+  *
+  * ![](https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/screenShots/ss_mAppLvBuilderImages.png)
+  *  ![](https://github.com/yOyOeK1/oiyshTerminal/raw/main/ySS_calibration/screenShots/ss_mAppLvBuilderData.png)
   */
   lvElement( head, content, link='' ){
     /*`version: <strong>`+e['packitso']['ver']+`</strong><br>
@@ -123,7 +135,7 @@ class mApp{
     }
     if( content['img'] != undefined )
       lve+= `<img src="`+content['img']+`">`;
-    lve+=`<h2>`+head+`</h2>`;
+    lve+=`<h2 class="`+( content['class'] != undefined ? content['class'] :'')+`">`+head+`</h2>`;
     lve+= `<p>`;
     if( typeof content == "string" ){
       lve+= content;
@@ -136,12 +148,14 @@ class mApp{
       }else{
         lve+= this.makeNiceList( content['content'] );
 
-        lve+= `<p class="ui-li-aside">`;
-        if( typeof content['tip'] == "string" )
-          lve+= content['tip'];
-        else
-          lve+= this.makeNiceList( content['tip'] );
-        lve+= `</p>`;
+        if( content['tip'] != undefined && content['tip'] != '' ){
+          lve+= `<p class="ui-li-aside ui-corner-all ui-body-b">`;
+          if( typeof content['tip'] == "string" )
+            lve+= content['tip'];
+          else
+            lve+= this.makeNiceList( content['tip'] );
+          lve+= `</p>`;
+        }
 
       }
 
