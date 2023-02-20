@@ -547,15 +547,15 @@ class s_packitsoPage{
 
 <div data-role="controlgroup" data-type="horizontal" data-mini="true">
 
-  <a class="ui-shadow ui-btn ui-corne-all ui-btn-icon-left ui-icon-plus ui-btn-a "
+  <a class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-plus ui-btn-a "
     onclick="pager.getCurrentPage().formWorkAdd()"
     id="wfBtAdd"
     >Add</a>
-  <a class="ui-shadow ui-btn ui-corne-all ui-btn-icon-left ui-icon-recycle ui-btn-a"
+  <a class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-recycle ui-btn-a"
     onclick="pager.getCurrentPage().formWorkClear()"
     id="wfBtClear"
     >Clear</a>
-  <a class="ui-shadow ui-btn ui-corne-all ui-btn-icon-left ui-icon-delete ui-btn-a "
+  <a class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-delete ui-btn-a "
     onclick="pager.getCurrentPage().formWorkDelete()"
     id="wfBtDelete"
     >Delete</a>
