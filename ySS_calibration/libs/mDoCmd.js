@@ -59,8 +59,6 @@ class mDoCmd{
     //cl("mDoCmd.otdmArgs ["+JSON.stringify(args)+"]");
     tr = {};
 
-    //var fName = "_"+(Math.random()*1000000)+"_"+( new Date().getTime() )+".json";
-    //cl("fName: ["+fName+"]");
     var url = "?otdmQ:"+JSON.stringify(args);
     cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
 
