@@ -10,7 +10,26 @@ wikiDir="/home/yoyo/Apps/oiyshTerminal.wiki"
 # https://jsdoc.app/index.html
 echo "set no errors !!!!"
 set -e
+
+#"otdmDriverProto": {
+#  "title": "otdmDriverProto indepth explenation / documentation of prototype",
+#  "doctype": "py",
+#  "file": "./otdm2pydocTemplate.py",
+#  "asFile": "otdm-tools-devdoc"},
+
+
+
 list='{
+  "otdmDriverProto": {
+    "title": "otdmDriverProto.py indepth explenation / documentation - coder edition",
+    "doctype": "py",
+    "file": "./otdm-tools/data/data/com.termux/files/usr/bin/otdmDriverProto.py",
+    "asFile": "xdevdoc-otdmDriverProto"},
+  "otdmDriverProto": {
+    "title": "otdmDriverWebCmdSubProcess.py indepth explenation / documentation - coder edition",
+    "doctype": "py",
+    "file": "./otdm-tools/data/data/com.termux/files/usr/bin/otdmDriverWebCmdSubProcess.py",
+    "asFile": "xdevdoc-otdmDriverProto-web-cmd-sub-process"},
   "yssPageExample": {
     "title": "example ( Make your site ) - yss site .svg base data from mqtt",
     "file": "./ySS_calibration/sites/basic_sail/s_basicSailPage.js",
@@ -75,13 +94,14 @@ for js in `echo $list |  jq 'keys[]' -r`; do
   title=`echo $list | jq '.'$js'.title' -r`
   file=`echo $list | jq '.'$js'.file' -r`
   asFile=`echo $list | jq '.'$js'.asFile' -r`
-  echo "title for file is ... "$title
-  echo -e "\n---\n# "${title}"\n### "$js"\n" \
-    "[To index](#)" >> ${otDir}"/yss-js-functions.md"
+  docT=`echo $list | jq '.'$js'.doctype' -r`
 
   echo "pre build asFile .... ["${asFile}"]"
   tmA="/tmp/abccc"
   if [ ${asFile} = 'null' ];then
+    echo "title for file is ... "$title
+    echo -e "\n---\n# "${title}"\n### "$js"\n" \
+      "[To index](#)" >> ${otDir}"/yss-js-functions.md"
     echo "no seperet file."
   else
     echo "seperet file ...."
@@ -93,8 +113,33 @@ for js in `echo $list |  jq 'keys[]' -r`; do
       "[To index](./yss-js-functions#index)" >> ${otDir}"/yss-js-functions.md"
   fi
 
-  echo "running ... npm run jsdoc2md-arg" $file
-  npm run jsdoc2md-arg $file >> /dev/null
+  if [ ${docT} = "py" ];then
+    echo "doctype .... ["${docT}"]"
+    echo "  preparing /tmp/py2docInput ....."
+    rm -rvf '/tmp/py2docInput'
+    mkdir /tmp/py2docInput
+    echo "copy file to work with ... "${otDir}"/"${file}
+    cp ${otDir}"/"${file} /tmp/py2docInput/
+    echo "running npm run py2doc.md ...."
+    npm run py2doc.md
+    if [ -f /tmp/py2docOutput.md ];then
+      echo "  DONE"
+      echo "  cheeting that that was a jsdoc2md :P ....."
+      cat /tmp/py2docOutput.md >> ${otDir}"/yss-js-functions.md"
+
+      rm /tmp/py2docOutput.md
+      echo "    .... NEXT"
+    else
+      echo "  ERROR generating "${otDir}"/"${file}" no result foud!"
+      exit 1
+    fi
+    #echo "-- workon"
+    #exit 1
+  else
+
+    echo "running ... npm run jsdoc2md-arg" $file
+    npm run jsdoc2md-arg $file >> /dev/null
+  fi
 
   echo "post build asFile .... ["${asFile}"]"
   if [ ${asFile} = 'null' ];then
