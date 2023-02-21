@@ -25,7 +25,7 @@ list='{
     "doctype": "py",
     "file": "./otdm-tools/data/data/com.termux/files/usr/bin/otdmDriverProto.py",
     "asFile": "xdevdoc-otdmDriverProto"},
-  "otdmDriverProto": {
+  "otdmDriverWebCmdSubProcess": {
     "title": "otdmDriverWebCmdSubProcess.py indepth explenation / documentation - coder edition",
     "doctype": "py",
     "file": "./otdm-tools/data/data/com.termux/files/usr/bin/otdmDriverWebCmdSubProcess.py",
