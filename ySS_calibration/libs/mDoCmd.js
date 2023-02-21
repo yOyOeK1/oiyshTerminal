@@ -58,8 +58,6 @@ class mDoCmd{
   otdmArgs( args, callBack=-1 ){
     //cl("mDoCmd.otdmArgs ["+JSON.stringify(args)+"]");
     tr = {};
-
-
     // url 'http://localhost:1880/yss/?otdmQ:\{"webCmdSubProcess":"\[ls,/tmp\]","pH":"66"\}'
 
     var url = "?otdmQ:"+JSON.stringify(args);
@@ -87,7 +85,7 @@ class mDoCmd{
    * @param {object} callBack - can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
    * @description Methode to run command from **bash layer** and get live conection with stdin / stdout. It use `pH` as a key in creating new mqtt topic to establish trafic. Running process. So you can intercact with thread.
    */
-  doCmd( cmd, updateObj, cbFunc = -1 ){
+  doCmd( cmd, updateObj, cbFunc=-1 ){
     this.updateObj = updateObj;
 
     if( this.cmdWork == true ){
@@ -96,7 +94,7 @@ class mDoCmd{
       sOutSend('otdmCmd:'+this.pH+':'+cmd );
       return 0;
     }else{
-      cl("new command clearing cmdStdOut ....");
+      cl("new command clearing cmdStdOut .... ["+cmd+"]");
       this.cmdStdOut = '';
     }
 
@@ -108,12 +106,24 @@ class mDoCmd{
     this.otdmArgs(
       {
         "webCmdSubProcess": cmd,
-        'pH': this.pH
+        'pH': this.pH,
+        "stdout": "1"
       },
-      cbFunc == -1 ?
-        this.otdmCallBackWebCmdSubProcess :
-        cbFunc
+      cbFunc != -1 ?
+        cbFunc :
+        this.otdmCallBackWebCmdSubProcess
     );
+  }
+
+  doSh( cmd, updateObj, cbFunc=-1){
+    cl("doSh--------");
+    cl("cmd");
+    cl(cmd);
+    this.doCmd(
+      '[sh,-c,'+cmd+'; echo "exitCode:"$?]',
+      updateObj,
+      cbFunc
+      );
   }
 
 
@@ -145,6 +155,7 @@ class mDoCmd{
    * @description Methode to update worker live connection is it DONE. Put it in your site **onMassageCallBack** if you want to update status or run next one. If running not starting text.
    */
   onWSMessageCallBackWork_onStatusDONE( r ){
+    //cl(r);
     if( this.cmdWork &&
       r.topic == String("subP/"+this.pH+"/status") ){
 
@@ -179,6 +190,7 @@ class mDoCmd{
     cl("data - from mDoCmd");
     cl(data);
     //this.cmdWork = false;
+    cl("set cmdWork false - DONE")
   }
 
 
