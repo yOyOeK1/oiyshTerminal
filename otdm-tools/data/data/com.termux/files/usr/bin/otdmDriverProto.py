@@ -68,6 +68,8 @@ class otdmDriverProto:
     plugin init step.
 
     All your driversProto should to extand by otdmDriverProto
+
+    *nice cmd:  ```python import pdb; pdb.set_trace()```*
     """
 
     deb=False
