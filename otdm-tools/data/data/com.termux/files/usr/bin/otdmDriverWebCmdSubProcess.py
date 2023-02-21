@@ -27,6 +27,13 @@ class otdmDriverWebCmdSubProcess( otdmSubProc, otdmDriverProto ):
 
     For me updating system repository
 
+    ### Extra args for this driver
+    `-stdout` [string] if set then result of command returns to stdout -> `-oFile` of subrocess two not only mqtt
+    ```bash
+    $ curl 'http://localhost:1880/yss/?otdmQ:\{"webCmdSubProcess":"\[ls,/tmp,|,grep,313\]","pH":"66","stdhttp":"yes"\}'
+    ```
+    *to get `ls` with `313` words in it, from host localhost. Return [array] of elements. Last element is [int] = -1 (end of process)*
+
     ## Example
 
     ```bash
@@ -52,6 +59,13 @@ class otdmDriverWebCmdSubProcess( otdmSubProc, otdmDriverProto ):
     - subP/pH93419_/in - it's a stdin of command so in this example sending p will pause :)
 
     **Check:** helper on javascript site [mDoCmd - documentation](./yss-js-functions-mDoCmd)
+
+    or
+    ```bash
+    # to file result not the subprocess status, cmd running in shell
+    $ otdmTools.py -pH "pH84" -oFile "/tmp/res11.json" -webCmdSubProcess '[sh,-c,echo "abc" | grep "ab333"; echo $?]' -stdout 1
+
+    ```
 
     """
 
