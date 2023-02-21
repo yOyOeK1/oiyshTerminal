@@ -1,3 +1,10 @@
+dpkg (0.25.01) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * added otdmSh.sh for posible gate to make pack it so more smooth
+
+  -- B.Ceglik <yoyoek@wp.pl  23-02-21
+
 dpkg (0.24.01) unstable; urgency=low
 
   [ B.Ceglik ]

@@ -273,16 +273,16 @@ Homepage: https://github.com/yOyOeK1/oiyshTerminal
 Description: Sets on termux wake-lock. So it have a chance to work in background.
 
 Package: otdm-tools
-Version: 0.23.9
+Version: 0.25.1
 Architecture: all
 Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
 Depends: jq, python (>=3.0) | python3
 Recommends: python3-pip, python3-apt | python-apt
-Filename: ./otdm-tools_0.23.9-69_all.deb
-Size: 41304
-MD5sum: 6dd348b66bc9e84b03c299279eb26f04
-SHA1: 02e4e0494efa79f0c91f78f65f3d0d03808d7721
-SHA256: 1b40c6fc933cfb8c559133140b5052cc128820a3dab4acccb20a1146ea2540ef
+Filename: ./otdm-tools_0.25.1-70_all.deb
+Size: 60976
+MD5sum: a96a00eafd1c3a1e0aa6f0f59c24399f
+SHA1: 7893f53aba3472d3ea675d81a6d50fd40a239f82
+SHA256: 309c5495d7985e39a5a77ff307844f31b9c60758f6d35809aca1db6cf232fe09
 Section: otdm
 Priority: optional
 Homepage: https://github.com/yOyOeK1/oiyshTerminal
