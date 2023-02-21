@@ -1,4 +1,11 @@
-echo ". . . x x x X X X   otdm - maker    X X X x x x . . ."
+echo '. . . x x x X X X   otdm - maker    X X X x x x . . .
+./otdmMake.sh [dir of .deb project]
+
+will check for:
+- DEBIAN/preBuildRC - pre build bash
+- DEBIAN/otdm - otdmTool work - import export downlad tasker json define what will be done
+- will run $ otdmBuildAllWith.sh .... on it to make .deb and update Repository ./OTDM
+'
 
 
 pd=$1
