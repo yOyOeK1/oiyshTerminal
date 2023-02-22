@@ -1,4 +1,5 @@
-echo " --- oiyshTerminal - Build all with this: "
+echo " --- oiyshTerminal - Build all with this - otdmBuilAllWith.sh ---- "
+
 
 REPODIR="/home/yoyo/Apps/oiyshTerminal/OTDM"
 
@@ -7,44 +8,55 @@ echo "This is [$pN]! it will be a deb soon..."
 
 v=`cat $pN"/DEBIAN/control" | grep 'Version' | awk '{print $2}'`
 a=`cat $pN"/DEBIAN/control" | grep 'Architecture' | awk '{print $2}'`
+echo -n "- run command $ ./otdmMakeDeb.sh "$pN" .... to get .deb... "
+re=`./otdmMakeDeb.sh "$pN"`
+if [ "$?" = "0" ];then
+  echo "DONE"
+else
+  echo \\n"ERROR exit 11................... $ ./otdmBuilAllWith.sh "$pN
+  exit 11
+fi
 
-echo "- make deb..."
-re=`otdmMakeDeb.sh "$pN"`
 bNr=`cat $pN"/DEBIAN/otdm_bNR"`
 debFn=$pN"_"$v"-"$bNr"_"$a
 
-echo "got file["$debFn".deb]-----"
+echo "Got it ["$debFn".deb]"
 #exit 1
 
 
 if [ -f "./"$debFn".deb" ]; then
   si=`ls -alh $debFn".deb" | awk '{print $5}'`
-  echo "- we have deb! size "$si
+  echo "  - .deb size "$si
 
-  echo -n "- making archive with release....  "
+  echo -n " - making archive with release....  "
   zipFn=$debFn"_"`date +%y%m%d%H%M%S`".zip"
-  zip -q -r $zipFn "./"$pN
-  si=`ls -alh $zipFn | awk '{print $5}'`
+  zip -q -r "OTDMSrcZips/"$zipFn "./"$pN
+  si=`ls -alh "OTDMSrcZips/"$zipFn | awk '{print $5}'`
   echo "Zip! size "$si
 
-  echo "--------------------------------------"
-  toRm=$REPODIR"/"$pN"*.deb"
-  qMsg="Do you want to remove old deb files from Repo. Of [$pN*.deb]
-    rm "$toRm
-  otdmTools.py -doQueryYN "$qMsg" -d n
-  r=$?
+  #echo "--------------------------------------"
+  toRm=$REPODIR"/"$pN"*deb"
+  #qMsg="Do you want to remove old deb files from Repo. Of [$pN*.deb]
+  #    rm "$toRm
+
+  #otdmTools.py -doQueryYN "$qMsg" -d y
+  #r=$?
+  r="1"
   if [[ "$r" == "1" ]]; then
-    rm -v "$toRm"
+    echo "will rm $toRm"
+    #echo 'ls'
+    #ls $toRm
+    rm $toRm
   fi
-  echo "--------------------------------------"
+  #echo "--------------------------------------"
 
 
-  echo -n "- copy it to repo directory....  "
+  echo -n "- copy it to repo directory ....  "
   mv $debFn".deb" $REPODIR"/"
   echo "DONE"
 
-  echo -n "- update repo..."
-  otdmRepoUpdate.sh
+  echo -n "- update repo ... "
+  ./otdmRepoUpdate.sh 2> /dev/null
   echo "  DONE"
 
   echo "- ls in repo dir ...."

@@ -15,7 +15,7 @@ if [[ $pd == "" ]]; then
 fi
 
 if [ -d $pd ]; then
-  echo "will do make in ["$pd"]"
+  echo "Will do make in ["$pd"]"
 else
   echo "need to add [DIR] as a argument"
   exit 1
@@ -47,8 +47,8 @@ fi
 
 #echo "Running now otdmMakeDeb.sh ....."
 #otdmMakeDeb.sh $pd
-echo "Running now otdmBuildAllWith.sh ....."
-otdmBuildAllWith.sh $pd
+echo "Running now otdmBuildAllWith.sh ..... "
+./otdmBuildAllWith.sh $pd
 r=$?
 if [[ "$r" != "0" ]]; then
   echo "Error in otdmBuildAllWith.sh .... it return [$r]"

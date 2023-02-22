@@ -1,13 +1,29 @@
 echo "-- OTDM - repositorium update --"
 
-echo "goind to OTDM directory ...."
+otRepUpdTmpF=`mktemp`"_"`date +%s`"_otdmRepoUpdate.log"
+
+echo "Goind to OTDM directory .... "
 cd ./OTDM
 
-echo "Raw ..."
-dpkg-scanpackages . /dev/null > Release
+echo -n "Raw ... "
+dpkg-scanpackages . /dev/null > Release 2>&1 >> $otRepUpdTmpF
+if [ "$?" = "0" ]; then
+  echo -n "(OK)"
+else
+  echo "Build log is at .... "$otRepUpdTmpF\\n"Error exit 1 - otdm repo update"
+  exit 1
+fi
 
-echo "Gz ..."
-dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
+
+echo -n "Gz ... "
+dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz 2>&1 >> $otRepUpdTmpF
+if [ "$?" = "0" ]; then
+  echo -n "(OK)"
+else
+  echo "Build log is at .... "$otRepUpdTmpF\\n"Error exit 2 - otdm repo update"
+  exit 1
+fi
+
 
 cd ../
 echo "DONE"
