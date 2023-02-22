@@ -1,5 +1,5 @@
 #! /bin/bash
-echo -n "- = [ Pack it so - .sh set init ..... "
+echo -n "- = [ Pack it so - .sh set init to extend shell command  ..... "
 
 
 eHelp(){
