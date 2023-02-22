@@ -1,7 +1,13 @@
 
+# dpkgDir is added on auto build directory for the site in ./otdm2yssSites.sh
 echo "installing ... "${dpkgDir}
 
-yssSs=`cat /data/data/com.termux/files/home/.otdm/config.json | jq '.otdm.prefix' -r `"/yss/sites/sites.json"
+otdmHome="/data/data/com.termux/files/home/.otdm"
+yssSs=`cat ${otdmHome}/config.json | jq '.otdm.prefix' -r `"/yss/sites/sites.json"
+nrHost=`cat ${otdmHome}/config.json | jq '.["node-red"].host' -r`
+nrPort=`cat ${otdmHome}/config.json | jq '.["node-red"].port' -r`
+yssUrl="http://"$nrHost":"$nrPort"/yss/index.html"
+
 cp ${yssSs} ${yssSs}"_"`date +%y%m%d%H%M%S`
 echo "yss/sites/sites.json .... "${yssSs}
 jAdd=`cat $yssSs | jq '. .dirs+=["'${dpkgDir}'"]'`
@@ -9,6 +15,16 @@ echo "jAdd"
 echo ${jAdd} | jq '.'
 echo ${jAdd} | jq '.' > ${yssSs}
 
+echo "wget for "$yssUrl
+wget "$yssUrl" -O `tempfile`
+if [ $? = "0" ];then
+  echo "OK"
+else
+  echo "no ok :("
+fi
+
+
+# old path ---------------
 if [ "0" = "1" ]; then
   echo "update sites.json for yss ...."
 
