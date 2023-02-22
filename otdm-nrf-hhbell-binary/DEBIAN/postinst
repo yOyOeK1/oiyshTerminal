@@ -17,7 +17,9 @@ hp="/data/data/com.termux/files/home/.otdm/nrf-"${flowName}
 
 echo "* checking if Node-red is ok ...["${flowName}"]"
 otdmTools.py -dnrfByUid '*' -oFile ${tFile} > /dev/null
+set +e
 isF=`cat ${tFile} | jq '.[] | select( .label == "'${flowName}'" )' | grep '{' > /dev/null; echo $?`
+set -e
 if [ ${isF} = "1" ]
 then
 
@@ -34,12 +36,12 @@ then
 
   echo "* getting it how is after adding...."
   echo "  first getting all ...."
-  otdmTools.py -dnrfByUid '*' -oFile ${hp}"/nrf_all_afterAdd.json"
+  otdmTools.py -dnrfByUid '*' -oFile ${hp}"/nrf_all_afterAdd.json" >> /dev/null
   echo "  extracting uid...."
   otTeUid=`cat ${hp}"/nrf_all_afterAdd.json" | jq '.[] | select( .label == "'${flowName}'" ) | .id ' -r`
   echo "    ot Test uid [${otTeUid}]"
   echo "  getting correct one...."
-  otdmTools.py -dnrfByUid ${otTeUid} -oFile ${hp}"/nrf_afterAdd.json"
+  otdmTools.py -dnrfByUid ${otTeUid} -oFile ${hp}"/nrf_afterAdd.json" >>/dev/null
   echo "  making md5sum for later..."
   cat ${hp}"/nrf_afterAdd.json" | md5sum | awk '{print $1}' > ${hp}"/nrf_afterAdd.md5"
   echo "    "`cat ${hp}"/nrf_afterAdd.md5"`

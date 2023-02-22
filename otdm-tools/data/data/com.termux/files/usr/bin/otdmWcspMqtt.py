@@ -11,6 +11,7 @@ try:
 except:
     print("paho missing - no woris it's for test.....")
 
+
 class otdmWcspMqtt:
     cli = None
     pH = "ueoueouoeueo"

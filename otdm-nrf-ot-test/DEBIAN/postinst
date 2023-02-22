@@ -16,7 +16,9 @@ hp="/data/data/com.termux/files/home/.otdm/nrf-ot-test"
 
 echo "* checking if Node-red is ok ...[ot Test]"
 otdmTools.py -dnrfByUid '*' -oFile ${tFile} > /dev/null
+set +e
 isF=`cat ${tFile} | jq '.[] | select( .label == "ot Test" )' | grep '{' > /dev/null; echo $?`
+set -e
 if [ ${isF} = "1" ]
 then
 

@@ -1,6 +1,8 @@
-dpkg (0.25.01) unstable; urgency=low
+dpkg (0.25.9) unstable; urgency=low
 
   [ B.Ceglik ]
+  * making in more quiet ... driver proto POST
+  * fix driver proto -iFile -iStr
   * added otdmSh.sh for posible gate to make pack it so more smooth
 
   -- B.Ceglik <yoyoek@wp.pl  23-02-21

@@ -24,9 +24,9 @@ then
   tFile=`mktemp`
   echo "  first getting all ...."
   # getting all from Node-red, extract by label then do md5
-  otdmTools.py -dnrfByUid '*' -oFile ${tFile}"_all_afterAdd.json"
+  otdmTools.py -dnrfByUid '*' -oFile ${tFile}"_all_afterAdd.json" >> /dev/null
   otTeUid=`cat ${tFile}"_all_afterAdd.json" | jq '.[] | select( .label == "'${flowName}'" ) | .id ' -r`
-  otdmTools.py -dnrfByUid ${otTeUid} -oFile ${tFile}"_afterAdd.json"
+  otdmTools.py -dnrfByUid ${otTeUid} -oFile ${tFile}"_afterAdd.json" >> /dev/null
   cat ${tFile}"_afterAdd.json" | md5sum | awk '{print $1}' > ${tFile}"_afterAdd.md5"
   md5Now=`cat ${tFile}"_afterAdd.md5"`
   md5PostInst=`cat ${hp}"/nrf_afterAdd.md5"`

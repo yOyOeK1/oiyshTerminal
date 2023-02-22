@@ -116,6 +116,8 @@ then
       if [ $? = "0" ]
       then
         echo "Node-red is UP!"
+        echo "to be shure 5 sec more ..."
+        sleep 5
 
       else
         echo "... waiting for node-red to start...."
@@ -124,7 +126,10 @@ then
         if [ $? = "0" ]
         then
           echo "Node-red is UP!"
+          echo "to be shure 5 sec more ..."
+          sleep 5
         fi
+
 
       fi # $? != "0"
 
@@ -180,10 +185,14 @@ then
       echo "if all was fine node-red is at :1880"
       echo "waiting for node-red to start ....."
       sleep 5
+      set +e
       wget http://127.0.0.1:1880 -O /dev/null > /dev/null
       if [ $? = "0" ]
       then
         echo "Node-RED is UP!"
+        echo "Still wait 5 sec more ..."
+        sleep 5
+        echo "resum ....."
       else
         echo "no response frome node-red as a service.."
       fi

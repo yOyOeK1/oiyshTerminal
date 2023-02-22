@@ -12,8 +12,8 @@ echo "---------------------------------------"
 echo "|  postinst args: [$*]-c($#)         "
 echo "---------------------------------------"
 
-echo "getting tmp file ..."
 tFile=`mktemp`
+echo "getting tmp file ... "$tFile
 
 
 #get nodes
@@ -21,9 +21,13 @@ tFile=`mktemp`
 
 
 echo "* checking if Node-red is ok ..."
-/data/data/com.termux/files/usr/bin/otdmTools.py -dnrfByUid '*' -oFile ${tFile} > /dev/null
-isF=`cat ${tFile} | jq '.[] | select( .label == "ySS" )' | grep '{' > /dev/null; echo $?`
-if [ ${isF} = "1" ]
+echo "running $ otdmTools.py -dnrfByUid '*' -oFile "$tFile"  ....."
+/data/data/com.termux/files/usr/bin/otdmTools.py -dnrfByUid '*' -oFile "$tFile"
+echo "checking if tab ySS is pressent ..."
+set +e
+isF=`cat "$tFile" | jq '.[] | select( .label == "ySS" )' | grep '{'; echo $?`
+set -e
+if [ "${isF}" = "1" ]
 then
 
   echo "* replacing paths..."
@@ -32,13 +36,10 @@ then
   sed -i "s|/home/yoyo/Apps/oiyshTerminal/ySS_calibration/|/data/data/com.termux/files/home/.otdm/yss/|g" /data/data/com.termux/files/home/.otdm/nrf-yss/nrf_org.json
 
   echo "* first lets make a backup of Node-red...."
-  /data/data/com.termux/files/usr/bin/otdmTools.py -mkbp flows -bSuffix 'beforeInjecting_nrf-yss' > /dev/null
+  /data/data/com.termux/files/usr/bin/otdmTools.py -mkbp flows -bSuffix 'beforeInjecting_nrf-yss'
 
   echo "* injecting it...."
-  /data/data/com.termux/files/usr/bin/otdmTools.py \
-  -dnrfByUid 1 \
-  -act POST \
-  -iFile /data/data/com.termux/files/home/.otdm/nrf-yss/nrf_org.json > /dev/null
+  /data/data/com.termux/files/usr/bin/otdmTools.py -dnrfByUid 1 -act POST -iFile /data/data/com.termux/files/home/.otdm/nrf-yss/nrf_org.json 
 
 else
   echo " E!E - there is flow with 'ySS' name in your Node-red. It's not a clean start.

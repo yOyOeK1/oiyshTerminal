@@ -213,8 +213,9 @@ class otdmDriverProto:
                     print("Error no -iStr")
                     sys.exit(1)
                 else:
-                    iJ=self.args.get("iStr","")
-                    print(f"Using -iStr .... [{len(iJ)}]")
+                    if ifile == -1:
+                        iJ=self.args.get("iStr","")
+                        print(f"Using -iStr .... [{len(iJ)}]")
 
                 try:
                     r=self.POST(iJ)
@@ -363,7 +364,7 @@ class otdmDriverProto:
         d: object - to put in work as data input to work
         # Returns
         [json] - to raport status"""
-        print( f"otdmDriverProto.POST({d})" )
+        print( f"otdmDriverProto.POST( chars of data:{len(d)} )" )
         return self.CurlWResChk( "POST",
             f"http://{self.getHost()}:{self.getPort()}{self.getApiPath()}{self.getSuffix()}",
             data=f"{json.dumps(d)}"

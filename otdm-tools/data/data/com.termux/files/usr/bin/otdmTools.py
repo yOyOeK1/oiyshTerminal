@@ -19,7 +19,7 @@ from otdmDriverManager import *
 
 from otdmPackitso import *
 
-ver="0.24.01"
+ver="0.25.9"
 confFilePath="/data/data/com.termux/files/home/.otdm/config.json"
 deb=0
 
@@ -107,7 +107,7 @@ def dYN( query, defReturn=False, inPrefix="i" ):
 
 
 def chkClipBoard():
-    print("[ i ] chkClipBoard ....", end="")
+    #print("[ i ] chkClipBoard ....", end="")
     global clip
 
     cDir="{0}".format(conf['otdm']['prefix'])
@@ -125,7 +125,7 @@ def chkClipBoard():
     cfl = len( cff )
     if cfl > 1000: print("[ WARNING ] clip file (%s)"%cfl)
     if clip == [] and cfl > 0:
-        print(f" .....   loading: {cfl}")
+        #print(f" .....   loading: {cfl}")
         clip = cff
     elif len(clip) == cfl:
         #it's that subfunction is running?
@@ -236,7 +236,7 @@ def loadFileToJson( fPath ):
 
 def confLoad():
     if conf == {}:
-        print("[ i ] Configuration file loading from [%s]..."%confFilePath)
+        #print("[ i ] Configuration file loading from [%s]..."%confFilePath)
         return loadFileToJson( confFilePath )
     else:
         #print("conf is loaded so pass read.")
@@ -1359,10 +1359,13 @@ def bashConfigToJson( fPath ):
     #print(fD)
     return fD
 
-def addArgHandle_oFile( args, ts ):
+""" Handle -oFile
+arg - passd from your script
+ts  - to save data"""
+def addArgHandle_oFile( args, tsData ):
     global conf
     fs = otdmDriverFileSystem( args, conf )
-    fs.saveIfArgs(ts)
+    fs.saveIfArgs(tsData)
 
 
 def osType( args ):
@@ -1624,11 +1627,11 @@ def exeIt( args ):
             if deb: print(f"try it [{a['name']}]")
             o=a.get("o")
             r=o.chkArgs( args )
-            print(f"o is named? {o.getName()} key -{o.keyWord} got r[{r}]")
 
             #if r == False:
             #    return False
             if r != 0:
+                print(f"o is named? {o.getName()} key -{o.keyWord} got r[{r}]")
                 return r
 
         elif args.get( a[0] ) != None:

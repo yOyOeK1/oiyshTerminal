@@ -17,7 +17,9 @@ hp="/data/data/com.termux/files/home/.otdm/nrf-"${flowName}
 
 echo "* checking if Node-red is ok ...["${flowName}"]"
 otdmTools.py -dnrfByUid '*' -oFile ${tFile} > /dev/null
+set +e
 isF=`cat ${tFile} | jq '.[] | select( .label == "'${flowName}'" )' | grep '{' > /dev/null; echo $?`
+set -e
 if [ ${isF} = "1" ]
 then
 
