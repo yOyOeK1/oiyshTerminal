@@ -17,6 +17,14 @@ otdmCS(){
   echo -n "-------------------------oiyshTerminal otdm"
 }
 
+otdmNowTimeStamp(){
+  echo `date +%s`
+}
+
+otdmNowTimeNiceFN(){
+  echo `date +%y%m%d_%H%M%S`
+}
+
 otdmHelp(){
   echo -e '
   Help of - otdmSh.sh  oiyshTerminal otdmTools family.
@@ -30,6 +38,9 @@ otdmHelp(){
       ExitMsg $1 $2
         $1 - msg on exit
         $2 - exit code to exit default 1
+      NowTimeStamp - echo timestamp now
+      NowTimeNiceFN - echo nice time for file name no spaces no special characters
+
 
   '
   otdmCS "
