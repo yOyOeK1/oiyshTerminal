@@ -1,0 +1,10 @@
+Package: otdm-tools-packitso
+Version: 0.1.1
+Section: base
+Priority: optional
+Architecture: all
+Depends: otdm-tools
+Maintainer: Bartlomiej Ceglik <yoyoek@wp.pl>
+Description: Pack it so .sh helpers scripts set. To make all operation more smooth.
+	Set of bash files to automatize preparation steps of Pack it so. Now mainly for
+	otdm-yss-packitso.
