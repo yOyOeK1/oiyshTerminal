@@ -52,9 +52,17 @@ function buildYssSite(){
     echo "parent dir:       ["${parentDir}"]"
     echo ${parentDir}"/"${bName} > ${sDir}"/DEBIAN/isYssSite"
     #exit 1
+
+    #echo "make debian/source .."
+    #mkdir -p ${sDir}"/DEBIAN/source"
+    #echo "    /options for ignoring .gitignore ...."
+    #echo 'tar-ignore = ".gitignore"' > ${sDir}"/DEBIAN/source/optaions"
+
     mkdir -p ${phDir}
     mkdir -p ${sDir}"/data/data/com.termux/files/home/.otdm/yss/sites/"
     ln -s ${lSrc} ${lDest}
+
+
   fi
 
   echo '*' > ${sDir}"/.gitignore"
