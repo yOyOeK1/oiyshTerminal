@@ -7,7 +7,7 @@ echo "otdm Frequent commands ...."
 # > otdmSh: [Hello world !!]
 otdmcl(){
   m="$*"
-  echo 'otdmSh: ('${#m}'): :'"$m"
+  echo 'otCL: ('${#m}'): :'"$m"
 }
 otdmCL(){
   otdmcl "$*"
@@ -40,7 +40,7 @@ otdmHelp(){
         $2 - exit code to exit default 1
       NowTimeStamp - echo timestamp now
       NowTimeNiceFN - echo nice time for file name no spaces no special characters
-
+      ExitWithCode $1 - code of exit you want
 
   '
   otdmCS "
@@ -49,6 +49,12 @@ otdmHelp(){
   Check rest of otdm family: https://github.com/yOyOeK1/oiyshTerminal/wiki/otdm-index
   "
   echo "Sh.sh"
+}
+
+otdmExitWithCode(){
+  a1="$1"
+  otdmCL "Will exit on request with code [$a1]"
+  exit $1
 }
 
 otdmNameSpace(){
