@@ -29,16 +29,19 @@ exitCodes:
 pShSetPackGit(){
   ar1="$1"
   forceItDiff="$2"
-  echo "got force it if it s a sub directory of repo: $forceItDiff"
 
-  dirPath=$(pwd)"/$ar1"
+  #echo "got force it if it s a sub directory of repo: $forceItDiff"
+
+  if [ "$(expr index "$ar1", '/' )" = "1" ];then
+    echo "use from root path ...."
+    dirPath="$ar1"
+  else
+    echo "use ./ path ...."
+    dirPath=$(pwd)"/$ar1"
+  fi
   projectDir=$(basename "$dirPath")
-
-  echo "Setting up git in path [$dirPath]"
-
-  #exit 9
-
   sPwd=$(pwd)
+  echo "Setting up git in path [$dirPath]"
   echo "Start pwd: $sPwd"
   echo "Dir Path: $dirPath"
   echo "----------------------------------------"
@@ -129,7 +132,9 @@ pShSetPackGit(){
 
     set -e
     echo -n "- make carusela ..... "
-    otdmCaruselaFileOrDir "$dirPath" >> /dev/null
+    # it's a function use it as function it returns / exits !
+    r=`otdmCaruselaFileOrDir "$dirPath"`
+    echo "result of carusela [$?]"
     echo "DONE"
     #echo "$? --- exit code of carusela"
     #echo "--- exit testing -- EXIT 99"
