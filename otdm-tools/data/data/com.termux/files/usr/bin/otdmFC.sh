@@ -75,3 +75,79 @@ otdmNameSpace(){
   done
 
 }
+
+# $1 - file to carusela count
+otdmCaruselaCountNow(){
+  ftw="$1"
+  ftwDn=`dirname "$ftw"`
+  ftwFn=`basename "$ftw"`
+  echo `find "$ftwDn" | grep "$ftwFn"'_' | wc -w`
+}
+
+# $1 - file / directory to carusela
+otdmCaruselaIt(){
+  ftw="$1"
+  cp -rf "$ftw" "$ftw"'_'$(otdmNowTimeNiceFN)
+
+}
+
+# $1 - file to trim if more then $2
+# $2 - max count delete older
+otdmCaruselaTrim(){
+  ftw="$1"
+  fcm="$2"
+  ftwBN=`basename "$ftw"`
+  fcn=$( otdmCaruselaCountNow "$ftw" )
+  if [  "$(expr $fcn '>' $fcm)" = "0" ];then
+    echo "still left space it tail for ..."$[$fcm-$fcn]
+
+  else
+    echo "there is more in carusela ... triming it"
+    echo "base name use [$ftwBN]"
+    fln=`ls -t | grep "$ftwBN"'_'`
+    fn=1
+    for f in $fln; do
+      echo -n "file no: $fn -> f: $f ... "
+
+      if [ $(expr "$fcm" '>=' "$fn") = "0" ];then
+        echo "  remove it ..."
+        echo "  will rm $f"
+        rm -rvf "$f"
+      else
+        echo "  skip it's ..."
+      fi
+      fn=$[$fn+1]
+    done
+  fi
+}
+
+# $1 - file to carusela
+# $2 - $2:10 how many to live in tail
+otdmCaruselaFileOrDir(){
+  ftw="$1"
+  fc="$2"
+  if [ "$fc" = "" ];then
+    ## DEFAULT COUNT
+    fc=20
+  fi
+
+  echo "fc: [$fc]"
+  echo "file to work with: $ftw"
+
+  filInCarNow=`otdmCaruselaCountNow "$ftw"`
+
+  if [ -f $ftw ];then
+    echo "Target is file .... have now: $filInCarNow"
+    otdmCaruselaIt "$ftw"
+    otdmCaruselaTrim "$ftw" "$fc"
+
+  elif [ -d $ftw ];then
+    echo "Target is directory .... have now: $filInCarNow"
+    otdmCaruselaIt "$ftw"
+    otdmCaruselaTrim "$ftw" "$fc"
+
+  else
+    echo "Error target unknown type no file no dir."
+  fi
+  #exit 0
+}
