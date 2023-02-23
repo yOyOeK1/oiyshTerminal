@@ -273,7 +273,7 @@ class s_packitsoPage{
           cl("existing project ask if overrite!");
           let text = "There is a file. Overwrite it ?";
           if( confirm(text) == true ){
-            cl("ok overwrite it !");
+            cl("ok overwrite it !  -- TODO end of path");
 
           }else
             cl("do nothing...");
