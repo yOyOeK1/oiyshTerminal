@@ -1,0 +1,190 @@
+[
+    {
+        "id": "7bc8a82b048dbd65",
+        "type": "tab",
+        "label": "notifications-onhost",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e73a7e874646447e",
+        "type": "comment",
+        "z": "7bc8a82b048dbd65",
+        "name": "Handle nofifications to host system",
+        "info": "@namespace msg {json}\n@property msg.payload {string} - set Notification message\n@property msg.status [|default:low|normal|critical] - to set level",
+        "x": 380,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "049be3432fceb48c",
+        "type": "function",
+        "z": "7bc8a82b048dbd65",
+        "name": "",
+        "func": "let stat = 'low';\nif( msg.status != undefined ){\n    stat=msg.status;\n    if( stat == \"alert\" ) stat=\"critical\";\n    \n}\n\nreturn {\n    payload: `\"`+msg.payload+`\" `+`'{\"status\":\"`+stat+`\"}'`\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "9a7f836ab1cfc01b",
+                "db8070eb0607fd74"
+            ]
+        ]
+    },
+    {
+        "id": "e8ea3228c7f833a8",
+        "type": "link in",
+        "z": "7bc8a82b048dbd65",
+        "name": "makeNotification-onhost",
+        "links": [
+            "90998697b4f404f7",
+            "3538a22eb60a5064"
+        ],
+        "x": 85,
+        "y": 180,
+        "wires": [
+            [
+                "049be3432fceb48c"
+            ]
+        ]
+    },
+    {
+        "id": "9a7f836ab1cfc01b",
+        "type": "exec",
+        "z": "7bc8a82b048dbd65",
+        "command": "/data/data/com.termux/files/usr/bin/otdmNotificationSolver.sh",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "to notification solver .sh",
+        "x": 540,
+        "y": 260,
+        "wires": [
+            [
+                "11a01bed4be8e81a"
+            ],
+            [
+                "11a01bed4be8e81a"
+            ],
+            [
+                "11a01bed4be8e81a"
+            ]
+        ]
+    },
+    {
+        "id": "11a01bed4be8e81a",
+        "type": "debug",
+        "z": "7bc8a82b048dbd65",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "db8070eb0607fd74",
+        "type": "debug",
+        "z": "7bc8a82b048dbd65",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c73f7c7e9b4eec46",
+        "type": "inject",
+        "z": "7bc8a82b048dbd65",
+        "name": "test low",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "status",
+                "v": "low",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Test of notification on host low From Node-RED",
+        "payloadType": "str",
+        "x": 90,
+        "y": 60,
+        "wires": [
+            [
+                "90998697b4f404f7"
+            ]
+        ]
+    },
+    {
+        "id": "90998697b4f404f7",
+        "type": "link out",
+        "z": "7bc8a82b048dbd65",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "e8ea3228c7f833a8"
+        ],
+        "x": 265,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "82ba3077bcb0f61d",
+        "type": "inject",
+        "z": "7bc8a82b048dbd65",
+        "name": "test critical",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "status",
+                "v": "critical",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Test of notification on host low From Node-RED",
+        "payloadType": "str",
+        "x": 100,
+        "y": 100,
+        "wires": [
+            [
+                "90998697b4f404f7"
+            ]
+        ]
+    }
+]

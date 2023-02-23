@@ -1,0 +1,88 @@
+[
+    {
+        "id": "84fced5c05ee5659",
+        "type": "tab",
+        "label": "hhbel-tts",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "93899b04e559da6c",
+        "type": "inject",
+        "z": "84fced5c05ee5659",
+        "name": "Full houre bell",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "0 0-23 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 740,
+        "y": 320,
+        "wires": [
+            [
+                "ef2131388841d078"
+            ]
+        ]
+    },
+    {
+        "id": "ef2131388841d078",
+        "type": "function",
+        "z": "84fced5c05ee5659",
+        "name": "houre to tts it's ..",
+        "func": "function dec2bin(dec) {\n  return (dec >>> 0).toString(2);\n}\n\nconst d = new Date();\nvar hour = d.getHours();\nvar hBin = dec2bin( hour );\n\nnode.status({\n    fill:'blue',\n    shape: 'ring',\n    text:\"houre: \"+hour\n});\n\nlet apm = \"a.m.\";\nif( hour >= 12 ){\n    apm = \"p.m.\";\n    if( hour > 12 )\n        hour-=12;\n}\n\nreturn{\n    payload: \"It\\\\'s \"+hour+\" \"+apm\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 320,
+        "wires": [
+            [
+                "4a0c70fe185c0442",
+                "4aedf73cfdc5312f"
+            ]
+        ]
+    },
+    {
+        "id": "4a0c70fe185c0442",
+        "type": "debug",
+        "z": "84fced5c05ee5659",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "4aedf73cfdc5312f",
+        "type": "link out",
+        "z": "84fced5c05ee5659",
+        "name": "send to tts",
+        "mode": "link",
+        "links": [
+            "17609442d95b1478"
+        ],
+        "x": 1215,
+        "y": 220,
+        "wires": []
+    }
+]

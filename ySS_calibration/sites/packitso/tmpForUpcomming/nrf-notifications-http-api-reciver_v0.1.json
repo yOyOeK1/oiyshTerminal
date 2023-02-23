@@ -1,0 +1,100 @@
+[
+    {
+        "id": "106615a3011cc6e5",
+        "type": "tab",
+        "label": "http-api-Notification",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "aa15101ef8bdfc0e",
+        "type": "http in",
+        "z": "106615a3011cc6e5",
+        "name": "http:// /makeNotification",
+        "url": "/makeNotification",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "25cf9585cbdaa86a",
+                "6392fa200cf9cb49"
+            ]
+        ]
+    },
+    {
+        "id": "6392fa200cf9cb49",
+        "type": "debug",
+        "z": "106615a3011cc6e5",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "25cf9585cbdaa86a",
+        "type": "function",
+        "z": "106615a3011cc6e5",
+        "name": "http api ./makeNotification query parser",
+        "func": "\nif (msg.req && msg.req.query && msg.req.query.length != 0 ){\n    let q = msg.req.query;\n    if ( q['payload'] != undefined ){ \n        node.status({text:\"got msg to notifiy?\"});\n    \n        let tr = { payload: q['payload'] };\n        if ( q['status'] != undefined )\n        tr['status'] = q['status'];\n\n        return tr;\n\n    }\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 260,
+        "wires": [
+            [
+                "6392fa200cf9cb49",
+                "1a8b07effcb96674",
+                "ee153562a6adac1e"
+            ]
+        ]
+    },
+    {
+        "id": "1a8b07effcb96674",
+        "type": "link out",
+        "z": "106615a3011cc6e5",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "e8ea3228c7f833a8"
+        ],
+        "x": 915,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "9bb3863c05c351b5",
+        "type": "comment",
+        "z": "106615a3011cc6e5",
+        "name": "HTTP API ./makeNotification handle incoming GET",
+        "info": "http://localhost:1880/makeNotification?payload=This%20is%20a%20message%20for%20notification&status=critical&2",
+        "x": 390,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "ee153562a6adac1e",
+        "type": "http response",
+        "z": "106615a3011cc6e5",
+        "name": "Say OK",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1040,
+        "y": 200,
+        "wires": []
+    }
+]

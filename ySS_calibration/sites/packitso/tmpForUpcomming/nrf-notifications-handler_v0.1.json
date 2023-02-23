@@ -1,0 +1,775 @@
+[
+    {
+        "id": "252ee7ba87c4e484",
+        "type": "tab",
+        "label": "Notification handler",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6bd727567437e789",
+        "type": "within-time-switch",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "nameInt": "",
+        "positionConfig": "794897b66b94a457",
+        "startTime": "07:00",
+        "startTimeType": "entered",
+        "startOffset": 0,
+        "startOffsetType": "none",
+        "startOffsetMultiplier": 60000,
+        "endTime": "21:00",
+        "endTimeType": "entered",
+        "endOffset": 0,
+        "endOffsetType": "none",
+        "endOffsetMultiplier": 60000,
+        "timeRestrictions": 0,
+        "timeRestrictionsType": "none",
+        "timeDays": "*",
+        "timeOnlyOddDays": false,
+        "timeOnlyEvenDays": false,
+        "timeOnlyOddWeeks": false,
+        "timeOnlyEvenWeeks": false,
+        "timeMonths": "*",
+        "timedatestart": "",
+        "timedateend": "",
+        "propertyStart": "",
+        "propertyStartType": "none",
+        "propertyStartCompare": "true",
+        "propertyStartThreshold": "",
+        "propertyStartThresholdType": "num",
+        "startTimeAlt": "",
+        "startTimeAltType": "none",
+        "startOffsetAlt": 0,
+        "startOffsetAltType": "none",
+        "startOffsetAltMultiplier": 60000,
+        "propertyEnd": "",
+        "propertyEndType": "none",
+        "propertyEndCompare": "true",
+        "propertyEndThreshold": "",
+        "propertyEndThresholdType": "num",
+        "endTimeAlt": "",
+        "endTimeAltType": "none",
+        "endOffsetAlt": 0,
+        "endOffsetAltType": "none",
+        "endOffsetAltMultiplier": 60000,
+        "withinTimeValue": "true",
+        "withinTimeValueType": "msgInput",
+        "outOfTimeValue": "false",
+        "outOfTimeValueType": "msgInput",
+        "tsCompare": "0",
+        "x": 670,
+        "y": 560,
+        "wires": [
+            [
+                "8d29a9418d8bbef8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1da3c3e57f205d5e",
+        "type": "switch",
+        "z": "252ee7ba87c4e484",
+        "name": "alert overwrite",
+        "property": "status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "alert",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": true,
+        "outputs": 2,
+        "x": 540,
+        "y": 460,
+        "wires": [
+            [
+                "8d29a9418d8bbef8"
+            ],
+            [
+                "6bd727567437e789"
+            ]
+        ]
+    },
+    {
+        "id": "5233453e57d1627d",
+        "type": "exec",
+        "z": "252ee7ba87c4e484",
+        "d": true,
+        "command": "/data/data/com.termux/files/home/playSound.sh",
+        "addpay": "mp3",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "play sound (depricated)",
+        "x": 1070,
+        "y": 560,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8d29a9418d8bbef8",
+        "type": "function",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "func": "\n///data/data/com.termux/files/home/sounds/\n///data/data/com.termux/files/home/.otdm/nrf-notifications/\n\nlet prefixPath = global.get('otdmHomePath')+\n    '/nrf-notifications';\n    \n    \nif( msg.hasOwnProperty('status') ){\n    msg.mp3 = prefixPath+'/relaxing-bell-ding-sound.mp3';\n    if( msg.status == 'alert' )\n        msg.mp3 = prefixPath+'/ahooga-horn.mp3';\n    else if( msg.status == 'weather' )\n        msg.mp3 = prefixPath+'/511491_5408716-lq.mp3';\n    \n    \n}else{\n    msg.mp3 = prefixPath+'/bell-rings-short.mp3'; \n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 460,
+        "wires": [
+            [
+                "fb226307b5ce3f99",
+                "0b22f5a32b4b9692"
+            ]
+        ]
+    },
+    {
+        "id": "fb226307b5ce3f99",
+        "type": "delay",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 980,
+        "y": 440,
+        "wires": [
+            [
+                "d43c7358d4726816"
+            ]
+        ]
+    },
+    {
+        "id": "b2db3d45b1af9c8a",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "select",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "select * from todolist where id>:id;",
+        "payload": "{'id':'10'}",
+        "payloadType": "jsonata",
+        "x": 490,
+        "y": 720,
+        "wires": [
+            [
+                "235adf39d2d4f472"
+            ]
+        ]
+    },
+    {
+        "id": "ae0b2392af3f696a",
+        "type": "debug",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "647fa5e7e8adb8e3",
+        "type": "comment",
+        "z": "252ee7ba87c4e484",
+        "name": "create table",
+        "info": "CREATE TABLE `nrNotifications` (     \n    `id` int(11) NOT NULL AUTO_INCREMENT,          \n    `status` varchar(255) COLLATE utf8_bin NOT NULL,     \n    `sentence` varchar(255) COLLATE utf8_bin NOT NULL,          \n    `entryDate` int(11) NOT NULL,     \n    PRIMARY KEY (`id`) \n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin AUTO_INCREMENT=1;",
+        "x": 690,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "15059cebc8f63d0e",
+        "type": "function",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "func": "entryDate = Math.floor(Date.now() / 1000);\ntr = {};\ntr['topic'] = 'insert into nrNotifications \\\n    (status, sentence,entryDate) VALUES \\\n    (:status,:sentence,:entryDate)';\n    \nstatus = 'info';\nif( msg.hasOwnProperty('status') )\n    status = msg.status;\n    \ntr['payload'] = {\n    'status':   status,\n    'sentence': msg.payload,\n    'entryDate':    entryDate\n};\n\nreturn tr;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 800,
+        "wires": [
+            [
+                "0b80bd3b01bb2a18",
+                "235adf39d2d4f472"
+            ]
+        ]
+    },
+    {
+        "id": "f73d531802f11610",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "select",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "select * from todolist where id>:id;",
+        "payload": "{'id':'10'}",
+        "payloadType": "jsonata",
+        "x": 490,
+        "y": 860,
+        "wires": [
+            [
+                "235adf39d2d4f472"
+            ]
+        ]
+    },
+    {
+        "id": "0b80bd3b01bb2a18",
+        "type": "debug",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "0d36399fb0f6c102",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 330,
+        "y": 340,
+        "wires": [
+            [
+                "1da3c3e57f205d5e",
+                "15059cebc8f63d0e"
+            ]
+        ]
+    },
+    {
+        "id": "0ffa6fe5432288f0",
+        "type": "link in",
+        "z": "252ee7ba87c4e484",
+        "name": "makeNotification",
+        "links": [
+            "0fe22534f3cb8b13",
+            "dd72bcc4a8e7ff0c",
+            "06bfa44964f1a2ab"
+        ],
+        "x": 75,
+        "y": 460,
+        "wires": [
+            [
+                "15059cebc8f63d0e",
+                "c74ce948bafdfa9e",
+                "c615ded6bf434ba9",
+                "b2f6e467eeb6aa02"
+            ]
+        ]
+    },
+    {
+        "id": "235adf39d2d4f472",
+        "type": "mysql",
+        "z": "252ee7ba87c4e484",
+        "mydb": "738f43c4b584c737",
+        "name": "mysqlAt ....",
+        "x": 730,
+        "y": 800,
+        "wires": [
+            [
+                "ae0b2392af3f696a"
+            ]
+        ]
+    },
+    {
+        "id": "d43c7358d4726816",
+        "type": "exec",
+        "z": "252ee7ba87c4e484",
+        "command": "/data/data/com.termux/files/usr/bin/otdmTtsSolver.sh",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "to tts solver",
+        "x": 1270,
+        "y": 480,
+        "wires": [
+            [
+                "9fa3d5d537ce2e5a"
+            ],
+            [
+                "9fa3d5d537ce2e5a"
+            ],
+            [
+                "9fa3d5d537ce2e5a"
+            ]
+        ]
+    },
+    {
+        "id": "1e26837fe05bc3d5",
+        "type": "comment",
+        "z": "252ee7ba87c4e484",
+        "name": "TODO [parshialy] universal solution for linux and temux for tts",
+        "info": "done by /data/data/com.termux/files/usr/bin/otdmTtsSolver.sh\npart of a otdm-p-notifications",
+        "x": 1420,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "fcb06af18e854f50",
+        "type": "function",
+        "z": "252ee7ba87c4e484",
+        "name": "tts msg builder",
+        "func": "node.status({text:\"tts: \"+msg.payload});\nlet sh = `ts=\"`+msg.payload+`\";`+\n    `termux-tts-speak \"$ts\" && echo '{\"exitCode\": 0, \"msg\":\"termux-api handle it\"}' || `+\n    `espeak \"$ts\" && echo '{\"exitCode\": 0, \"msg\":\"espeak handle it\"}' || `+\n    `echo '{\"exitCode\": 1,\"msg\":\"no tts found\"}'`;\n\nreturn {\n    payload: sh\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67aaf03edd1df6cf",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "test bell and tts",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "This is a test. This is a test - of bell and tts solver.",
+        "payloadType": "str",
+        "x": 540,
+        "y": 300,
+        "wires": [
+            [
+                "1da3c3e57f205d5e"
+            ]
+        ]
+    },
+    {
+        "id": "0b22f5a32b4b9692",
+        "type": "link out",
+        "z": "252ee7ba87c4e484",
+        "name": "send to audio processor",
+        "mode": "link",
+        "links": [
+            "ce6ae63daecb7b69"
+        ],
+        "x": 975,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "9fa3d5d537ce2e5a",
+        "type": "debug",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "c74ce948bafdfa9e",
+        "type": "debug",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 230,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "e0638b9acc6ca768",
+        "type": "comment",
+        "z": "252ee7ba87c4e484",
+        "name": "TODO table create setup",
+        "info": "",
+        "x": 730,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "984fdc40c503d0d0",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "test bell and tts Alarm",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "status",
+                "v": "alert",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "This is a test. This is a test - Alarm of bell and tts solver.",
+        "payloadType": "str",
+        "x": 560,
+        "y": 340,
+        "wires": [
+            [
+                "1da3c3e57f205d5e"
+            ]
+        ]
+    },
+    {
+        "id": "3538a22eb60a5064",
+        "type": "link out",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "e8ea3228c7f833a8"
+        ],
+        "x": 555,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "e139f36af0fe087c",
+        "type": "comment",
+        "z": "252ee7ba87c4e484",
+        "name": "Emit to onhost Notification ...",
+        "info": "",
+        "x": 340,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "485a8d2725276a67",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "test bell and tts",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "This is a test. This is a test - of bell and tts solver.",
+        "payloadType": "str",
+        "x": 680,
+        "y": 60,
+        "wires": [
+            [
+                "06bfa44964f1a2ab"
+            ]
+        ]
+    },
+    {
+        "id": "68960b59a52dcd94",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "test bell and tts Alarm",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "status",
+                "v": "alert",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "This is a test. This is a test - Alarm of bell and tts solver.",
+        "payloadType": "str",
+        "x": 700,
+        "y": 100,
+        "wires": [
+            [
+                "06bfa44964f1a2ab"
+            ]
+        ]
+    },
+    {
+        "id": "06bfa44964f1a2ab",
+        "type": "link out",
+        "z": "252ee7ba87c4e484",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "0ffa6fe5432288f0"
+        ],
+        "x": 955,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c615ded6bf434ba9",
+        "type": "switch",
+        "z": "252ee7ba87c4e484",
+        "name": "if msg.tts = false",
+        "property": "tts",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "empty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 280,
+        "y": 460,
+        "wires": [
+            [],
+            [],
+            [
+                "1da3c3e57f205d5e"
+            ]
+        ]
+    },
+    {
+        "id": "35ca46437f3cb9f1",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "test bell and No tts Alarm",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "status",
+                "v": "alert",
+                "vt": "str"
+            },
+            {
+                "p": "tts",
+                "v": "false",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "This is a test. This is a test - Alarm of bell and tts solver.",
+        "payloadType": "str",
+        "x": 690,
+        "y": 140,
+        "wires": [
+            [
+                "06bfa44964f1a2ab"
+            ]
+        ]
+    },
+    {
+        "id": "b2f6e467eeb6aa02",
+        "type": "switch",
+        "z": "252ee7ba87c4e484",
+        "name": "if msg.onhost = false",
+        "property": "onhost",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "empty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 320,
+        "y": 1160,
+        "wires": [
+            [],
+            [],
+            [
+                "3538a22eb60a5064"
+            ]
+        ]
+    },
+    {
+        "id": "c48dd15ce21dde38",
+        "type": "inject",
+        "z": "252ee7ba87c4e484",
+        "name": "test bell and No onhost = false",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "status",
+                "v": "alert",
+                "vt": "str"
+            },
+            {
+                "p": "onhost",
+                "v": "false",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "This is a test. This is a test - Alarm of bell a.",
+        "payloadType": "str",
+        "x": 700,
+        "y": 180,
+        "wires": [
+            [
+                "06bfa44964f1a2ab"
+            ]
+        ]
+    },
+    {
+        "id": "794897b66b94a457",
+        "type": "position-config",
+        "name": "Panama",
+        "isValide": "true",
+        "longitude": "0",
+        "latitude": "0",
+        "angleType": "deg",
+        "timeZoneOffset": "99",
+        "timeZoneDST": "0",
+        "stateTimeFormat": "3",
+        "stateDateFormat": "12",
+        "contextStore": ""
+    },
+    {
+        "id": "738f43c4b584c737",
+        "type": "MySQLdatabase",
+        "name": "dbAt_hu",
+        "host": "192.168.43.1",
+        "port": "3306",
+        "db": "svoiysh",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]
