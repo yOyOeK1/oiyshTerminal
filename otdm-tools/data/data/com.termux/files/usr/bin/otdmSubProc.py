@@ -7,7 +7,7 @@ class otdmSubProc:
     subOut = []
     errorInStack = False
     def th_subP( self, args, cb ):
-        print(f"sub thread {args['name']} is starting cmd {args['cmd']}")
+        print(f"sub thread [ {args['name']} ] is starting cmd { args['cmd']}")
         print("Popen")
         print("subOut is now %s"%self.subOut)
 
@@ -17,30 +17,45 @@ class otdmSubProc:
         self.subOut = []
         self.errorInStack = False
         LastPipe=-1
+        #isShe is True it will not look for split command
+        isSh=False
         if 1:
-            print(f"have to check if dont need splitting ... {args['cmd']}")
+            print(f"have to check if dont need splitting ... args['cmd']")
             cL=[]
             cmdSets=[]
             if args['cmd'][0] == "sh":
                 print("doing in sh ......")
-                cmdSets = [args['cmd']]
-                args['cmd'] = []
+                cmdSets = ['sh','-c',",".join(args['cmd'][2:])]
+                #print("sh is detected [2] commad is  ---- ")
+                #print(cmdSets)
+                #for c in cmdSets:
+                #    print("is ----------")
+                #    print(c)
 
-            print("doing in SubProcesss.Popon ......")
-            for a in args['cmd']:
-                if a != "|":
-                    cL.append( a )
-                elif len(cL) > 0:
+                args['cmd'] = []
+                isSh=True
+
+            if isSh == False:
+                print("doing in SubProcesss.Popon ......")
+                for a in args['cmd']:
+                    if a != "|":
+                        cL.append( a )
+                    elif len(cL) > 0:
+                        cmdSets.append( cL )
+                        cL=[]
+
+                if len(cL) > 0:
                     cmdSets.append( cL )
                     cL=[]
-
-            if len(cL) > 0:
-                cmdSets.append( cL )
+            else:
+                cmdSets=[cmdSets]
                 cL=[]
 
-            print(f"so after resections we have cmds .... {cmdSets}")
+            print(f"so after resections we have cmds ....len:{len(cmdSets)} {cmdSets}")
 
             for i,s in enumerate(cmdSets):
+                print("last look at cmd ...")
+                print(s)
                 if i == 0:
                     print("first -- >")
                     si = sp.PIPE
@@ -49,6 +64,12 @@ class otdmSubProc:
                     si = self.subP.stdout
 
                 print(f"sub split ...   [{s}] ",end="")
+
+                for i,c in enumerate(s):
+                    print("is ----------")
+                    s[i] = str( c )
+                    print(s[i])
+
                 try:
                     self.subP = sp.Popen(
                         s,
@@ -168,13 +189,14 @@ class otdmSubProc:
 
     def SubProcGET( self, name, fromQ = '' ):
         ph = self.args.get("pH","")
-        cmd = self.args.get("webCmdSubProcess")[1:-1].split(',')
+        #cmd = self.args.get("webCmdSubProcess")[1:-1].split(',')
+        cmd = name[1:-1].split(',')
 
         if ph == "":
             print("Error no -pH argument for destincting prefix handler for communication.")
             sys.exit(1)
 
-        print("cmd will do :%s"%cmd)
+        print("cmd will do :%s"%" ".join(cmd))
 
         print("starting mqtt topic communication channel.....")
         s = otdmWcspMqtt()
