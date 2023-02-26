@@ -7,7 +7,21 @@ echo ""
 otdmHome="/data/data/com.termux/files/home/.otdm"
 otdmUsrBin='/data/data/com.termux/files/usr/bin'
 
-
+#
+# interesting
+# echo '{"entryDate":"'$(date +%s)'"}' | jq '. | .hello="a" | .arg2=true | .ssh+=["Ala"] | .ssh+=["Bum"]'
+#
+# {
+#  "entryDate": "1677352006",
+#  "hello": "a",
+#  "arg2": true,
+#  "ssh": [
+#    "Ala",
+#    "Bum"
+#  ]
+#}
+#
+#
 
 for ftl in `echo 'FC ShStack'`; do
   echo "Loading bin/ondm"$ftl".sh ..."
