@@ -57,10 +57,9 @@ class mDoCmd{
    */
   otdmArgs( args, callBack=-1 ){
     //cl("mDoCmd.otdmArgs ["+JSON.stringify(args)+"]");
-    tr = {};
     // url 'http://localhost:1880/yss/?otdmQ:\{"webCmdSubProcess":"\[ls,/tmp\]","pH":"66"\}'
 
-    var url = "?otdmQ:"+JSON.stringify(args);
+    var url = "?otdmQ:URI:"+encodeURI(JSON.stringify(args));
     cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
 
     $.get( url, function( data, status ){
@@ -76,11 +75,10 @@ class mDoCmd{
         else
           callBack( daTr , status );
     } );
-    return tr;
   }
 
   /**
-   * @param {json} cmd - json structure of arguments pass same way as you use `otdmTools.py` Argument is a key and value is value.
+   * @param {array} cmd - array example:["ls","/tmp"] structure of arguments pass same way as you use `otdmTools.py` Argument is a key and value is value.
    * @param {string} updateObj - id of html element will update status of app stdout
    * @param {object} callBack - can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
    * @description Methode to run command from **bash layer** and get live conection with stdin / stdout. It use `pH` as a key in creating new mqtt topic to establish trafic. Running process. So you can intercact with thread.
@@ -115,15 +113,90 @@ class mDoCmd{
     );
   }
 
+
+  /**
+   * @param {string} cmd - example: "df -h | grep sda"
+   * @param {string} updateObj - id of html element will update status of app stdout
+   * @param {object} cbFunc - can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
+   * @description Methode to run command from **bash layer** and get live conection with stdin / stdout. It use `pH` as a key in creating new mqtt topic to establish trafic. Running process. So you can intercact with thread.
+   */
   doSh( cmd, updateObj, cbFunc=-1){
     cl("doSh--------");
     cl("cmd");
+    cl( typeof cmd );
     cl(cmd);
     this.doCmd(
-      '[sh,-c,'+cmd+'; echo "exitCode:"$?]',
+      String("[sh,-c,"+cmd+'; echo "exitCode:"$?]').toString(),
       updateObj,
       cbFunc
       );
+  }
+
+  /**
+   * @param {string} cmd - example: "df -h | grep sda"
+   * @param {string} updateObj - id of html element will update status of app stdout
+   * @param {object} cbFuncOk - calledback on OK `exitCode:0` can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
+   * @param {object} cbFuncErr - calledback on Error `exitCode:!0` can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
+   * @param {bool} rAsJson - true:default if true return in json if false as it came
+   * @description Methode to run command from **bash layer** and get live conection with stdin / stdout. It use `pH` as a key in creating new mqtt topic to establish trafic. Running process. So you can intercact with thread. Plast it do exitCode check for you.
+   */
+  doShExitCodeChk( cmd, updateObj, cbFuncOk=-1, cbFuncErr=-1, rAsJson=true ){
+    let c = this.doSh( cmd, updateObj, (d,res)=>{
+
+      // IMPORTANT!
+      //c.cmdWork = false;
+
+      let dlen = d.length;
+      cl("Data processing .... -1");
+      if( d[dlen-1] != -1 ){
+        cl("no -1 at end");
+        return cbFuncErr( d, res );
+      }else{
+        cl("OK!");
+      }
+
+      cl("Data processing .... exitCode:0 ?");
+      if( d[dlen-2] != "exitCode:0" ){
+        cl("no correct exitCode GOT ["+d[dlen-2]+"]");
+        return cbFuncErr( d, res );
+      }else{
+        cl("OK!");
+      }
+
+      cl("Poping first and two lasts ....")
+      d.pop();
+      d.pop();
+      //d.shift();
+      d.shift();
+
+      let retStat = 0;
+
+      let j = {};
+      if( rAsJson == true ){
+        cl("Data array to json ...");
+        try{
+          j = JSON.parse( d.join("") );
+        }catch(e){
+            cl("Error in parsing data to json :/ ");
+            return cbFuncErr( d, res );
+        }
+      }
+
+
+      //cl(j);
+
+
+      if( cbFuncOk != -1 && rAsJson == true )
+        cbFuncOk( j , retStat);
+      else if( cbFuncOk != -1 && rAsJson == false )
+        cbFuncOk( d , retStat);
+
+
+      //cbFuncOk
+
+
+    });
+
   }
 
 
@@ -137,6 +210,8 @@ class mDoCmd{
     cl("data ------------");
     cl(data);
 
+    cl('// need to call can not!! is is a default mDoCmd.cbOnCmdGetReturnDONE ');
+    cl('// this.cmdWork = true;');
   }
 
 
