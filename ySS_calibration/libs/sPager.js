@@ -179,7 +179,8 @@ class sPager {
       $(this).css('text-shadow','0 0 0 #0000');//'10px 15px 5px #f3f3f366');
     });
 
-
+    cl("scroll to top ...");
+    $(document.body).scrollTop( 0 );
   }
 
   setCssForPage(){
