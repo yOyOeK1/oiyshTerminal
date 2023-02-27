@@ -16,7 +16,8 @@
     "test_Three.js",
 
     "test_functions",
-    "packitso"
+    "packitso",
+    "shareitso"
 
   ],
   "externals":[

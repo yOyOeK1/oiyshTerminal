@@ -1,0 +1,15 @@
+{
+    "oName": "s_shareitso",
+    "o": null,
+    "dir": "shareitso",
+    "jssrc":["shareitso.js","sisFormSubmitHelper.js"],
+    "enable": true,
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "Intranet shareitso. Text, links, files, share browsing ...",
+    "screenShots": ["ss_inMenu.jpg","ss_mainList.jpg"],
+    "otdm":{
+        "playground": false,
+        "icon": "icon_share-svgrepo-com.svg"
+    }
+}
