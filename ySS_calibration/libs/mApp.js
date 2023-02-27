@@ -78,7 +78,7 @@ class mApp{
   */
   makeNiceList( data ){
     var mnl = [];
-    cl("makeNiceList of element in html -----");
+    //cl("makeNiceList of element in html -----");
     //cl(data);
     if( data == undefined )
       return '';
