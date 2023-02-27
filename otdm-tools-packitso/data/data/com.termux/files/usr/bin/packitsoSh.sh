@@ -1,4 +1,6 @@
 #! /bin/bash
+set -e
+
 echo -n "- = [ Pack it so - .sh set init to extend shell command  ..... "
 
 eHelp(){
@@ -9,14 +11,40 @@ eHelp(){
 -setPackGit pathToDir [force]- set up git repository for directory
   force [0:default|1] - to force init even if dir is in repository parent all ready
 
-exitCodes:
-0 - ok
-1 - if init was on directory in other repo (if you know what you are doing add force="1")
-6 - if .git is existing
-12 - wrong author in packitso.json
-128 - wrong author in packitso.json
+  exitCodes:
+  0 - ok
+  1 - if init was on directory in other repo (if you know what you are doing add force="1")
+  6 - if .git is existing
+  12 - wrong author in packitso.json
+  128 - wrong author in packitso.json
   '
 }
+
+
+doReqListRun(){
+  ## fast list build
+  mainList=$( ls -alht `find "$dirPath" | grep json` | \
+  sed 's| '$dirPath'| .|g' )
+
+  echo "-------------------got mainList"
+  echo $mainList
+  echo "============================"
+
+
+  echo "$mainList" | while read -r line; do
+    echo "line --"$line
+    fPath=$(echo "$line" | awk '{print $9}')
+    fullPath="$dirPath/$fPath"
+    #if [ -d  $fullPath ]; then
+    echo "------"
+    echo -e "fPath: $fPath\n"
+
+  done
+    ## fast list build
+
+}
+
+
 
 
 # To init directory with git hub repository in it ..
@@ -201,7 +229,7 @@ else
       exit 1
     fi
     ;;
-    "-help" )
+    "-help"|"-h"|"--help" )
       echo "Arg[-help]"
       eHelp
     ;;
