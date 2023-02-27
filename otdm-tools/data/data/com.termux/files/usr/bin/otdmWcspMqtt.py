@@ -19,6 +19,9 @@ class otdmWcspMqtt:
     subP = 0
     mqttConf = {}
 
+    def __init__(self):
+        print("otdmWcspMqtt constructor ....")
+
     def makeCli(self, pH, mqttConf):
         self.pH = pH
         self.mqttConf = mqttConf
