@@ -87,12 +87,16 @@ class s_apV3SvgPage{
 	}
 
 	svgDynoAfterLoad(){
-		moveOnPath( "rudderPos", "pathRudder", 0.5 );
-		putText("textRMB", '- -' );
-		SVG("#rmbBT").opacity(0.3);
-		putText("textInfoRMB", '' );
-		SVG("#textInfoRMB").hide();
-		$("#apSettings").hide();
+		setTimeout(()=>{
+
+			moveOnPath( "rudderPos", "pathRudder", 0.5 );
+			putText("textRMB", '- -' );
+			//SVG("#rmbBT").opacity(0.3);
+			putText("textInfoRMB", '' );
+			SVG("#textInfoRMB").hide();
+			$("#apSettings").hide();
+
+		});
 	}
 
 
