@@ -1,5 +1,6 @@
 var socketIn = null;
 function wsConnectIn( onMesCallBack ){
+	// address is replace on fly by host 
 	socketIn = new  WebSocket("ws://192.168.43.1:1880/ws/accel/oriCal");
 
 
