@@ -56,7 +56,7 @@ class s_shareitso{
         return path;//pref+"icon_png-file-type-svgrepo-com.svg";
         break;
       case "apk":
-        return pref+'icon_share.svg';
+        return pref+'icon_android-svgrepo-com.svg';
         break;
       case "pdf":
         return pref+"icon_file-pdf-svgrepo-com.svg";
