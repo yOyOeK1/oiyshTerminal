@@ -51,6 +51,11 @@ class s_testFuncsPage{
   trigger create
 </button>
 -->
+
+<!-- grafana config need set allow_embedding = true -->
+<iframe src="http://192.168.43.220:3000/d/TXSTREZ/yoyoek1-stuff?orgId=1&from=now-10s&to=now&viewPanel=7&kiosk&refresh=5s"
+width="50vw" style="height:50vh;"
+frameborder="0"></iframe>
     `;
   }
 
