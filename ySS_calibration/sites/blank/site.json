@@ -1,0 +1,13 @@
+{
+    "oName": "s_blankPage",
+    "o": null,
+    "dir": "blank",
+    "jssrc":["s_blankPage.js"],
+    "enable": true,
+    "author": "Name Last <email@adres.com>",
+    "ver": "0.0.1",
+    "desc": "Description...",
+    "otdm":{
+        "playground": false
+    }
+}
