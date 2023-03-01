@@ -37,6 +37,7 @@ class s_multiSVGPage{
   mulSvgParseGet( data, status ){
     cl("mul svg parse get --------");
     $("#htmlDyno").html('');
+    pager.setHeader('');
 
     pager.getCurrentPage().muSvMa = {};
 
@@ -91,7 +92,7 @@ class s_multiSVGPage{
 
     }else{
       // default list of svg
-      tr = `<h1>multi SVG</h1>`;
+      tr = ``;
       let items = [
       ];
       for( let s=0,sc=this.svgsList.length; s<sc; s++ ){
@@ -110,7 +111,11 @@ class s_multiSVGPage{
       });
     }
 
-    return this.app.appFrame({"content": tr});
+    return this.app.appFrame({
+      "title": "multi SVG",
+      "content": tr
+    });
+
   }
 
 

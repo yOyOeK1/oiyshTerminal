@@ -27,6 +27,36 @@ class sPager {
     this.pageHistory = [];
   }
 
+  setHeader( title ){
+    if( title == '' ){
+      $('#pHeader').fadeOut();/*html(
+        `<h1 data-role="heading" class="ui-title"
+          id="pHeaderStr"
+          >not set</h>` );*/
+    }else{
+      cl("setHeader title "+title);
+      //cl("setHe len:"+title.length);
+      //cl("setHe sub ["+title.substring(0,1)+"]");
+      if( title.substring(0,1) == "<" ){
+        cl("setHeader detect html as header ..");
+        $('#pHeader').html( title );
+      }else{
+        $('#pHeader').html(
+          `<h1 data-role="heading" class="ui-title"
+            id="pHeaderStr"
+            >`+title+`</h>` );
+
+      }
+      $("#pHeader").fadeIn();
+      /*
+      setTimeout(()=>{
+        $('#pHeader').show();
+        cl("show it !!");
+      }, 1200);
+      */
+    }
+  }
+
   setScreenManager(s){
     this.sm = s;
   }
@@ -133,6 +163,7 @@ class sPager {
    */
   setPage( pageNo ){
     cl("setPage"+pageNo);
+    this.setHeader('');
     $.mobile.panel();
     this.currentPage = pageNo;
     this.pageHistory.push( pageNo );
@@ -181,6 +212,10 @@ class sPager {
 
     cl("scroll to top ...");
     $(document.body).scrollTop( 0 );
+
+    $( "[data-role='header'], [data-role='footer']" ).toolbar({ theme: "b" });
+
+
   }
 
   setCssForPage(){

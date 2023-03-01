@@ -10,6 +10,7 @@ class s_otdmPage{
     this.resL=0;
     this.resRet = false;
     this.mDoCmd = new mDoCmd();
+    this.app = new mApp();
   }
 
   get getName(){
@@ -197,7 +198,7 @@ $( document ).ready(function() {
     </div>
   </div>`;
 
-    return { "tr": tr, "urlToGo": urlToGo };
+    return { "tr": tr, "urlToGo": urlToGo, 'debName':name };
   }
 
   doAppDetails( srcApp, appNo){
@@ -223,9 +224,16 @@ $( document ).ready(function() {
 
     }
 
-    $("#htmlDyno").html( this.appFrame(
-      tr['tr'], tr['urlToGo']
-    ) ).enhanceWithin();
+
+
+    cl("got url To Go");
+    cl(tr['urlToGo']);
+    $("#htmlDyno").html( this.app.appFrame({
+      "title": tr['debName'],
+      "content":tr['tr'],
+      "goTo": tr['urlToGo'] == '' ? undefined : tr['urlToGo'],
+      "backButton": 'history.back()',
+    }) ).enhanceWithin();
   }
 
 
@@ -631,4 +639,3 @@ $("#select-otdmPages").on(
   }
 
 }
-
