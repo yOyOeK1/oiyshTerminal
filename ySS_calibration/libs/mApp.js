@@ -22,6 +22,7 @@ class mApp{
    * @property {json} args - The default values for frame arguments
    * @property {string} args.goTo - if set then past to `pager.goToByHash(goTo)` to move without reloading
    * @property {string} args.backButton - if set then past to `onclick="backButton"`
+   * @property {string} args.title - to put page headet title
    * @property {string} args.content - to put your content in frame
    * @desc function returns Basic Frame of a page. if needed back or goTo button is there to use
    * @returns {string} to put it for example as `$('#htmlDyno').html( returnStr )`;
@@ -39,29 +40,44 @@ class mApp{
    */
   appFrame( args ){
 
-    return ( args['goTo'] == undefined && args['backButton'] == undefined ? "" : `
+    let btBack = (args['backButton'] != undefined ?
+      `<a `+
+        //`onclick="history.back()" `+
+        `onclick="`+args['backButton']+`" `+
+        `data-rol="back"  `+
+        `class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all"  `+
+        //`class="ui-btn-left ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l"`+
+        `>`+
+        `Back to list.</a>
+        `:``);
+    let btGoTo = ( args['goTo'] != undefined ?
+      `<a
+        onclick="pager.goToByHash('`+args['goTo']+`')"
+        class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-forward">
+        Go TO
+      </a> `: '' );
+
+    if( args['title'] != undefined && args['title'] != '' ){
+      let title = args['title'];
+      if ( btBack != '' || btGoTo != '' )
+        title = '<h1 data-role="heading" class="ui-title">'+title+'</h1>';
+      pager.setHeader( title+btBack+btGoTo );
+    }else{
+      cl(".appFrame is build without title for header!");
+      pager.setHeader( '' );
+
+    }
+
+    return ( (args['title'] != '') || ( args['goTo'] == undefined && args['backButton'] == undefined ) ? "" : `
 <div date-role="header" data-position="inline">
 
-  `+(args['backButton'] != undefined ?`
-  <button `+
-    //`onclick="history.back()" `+
-    `onclick="`+args['backButton']+`" `+
-    `class="ui-btn-left ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">
-    Back to list.</button>
-    `:``)+(
-      args['goTo'] != undefined ? `
-  <button
-    onclick="pager.goToByHash('`+args['goTo']+`')"
-    class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-forward">
-    Go TO
-  </button> `: ''
-      )+`
+  `+btBack+btGoTo+`
 </div>
-`)+`
+      `)+`
 
-<div role="main" class="ui-content">
+<div class="ui-content">
 `+( args['goTo'] == undefined && args['backButton'] == undefined ?
-  "" : `<br><br>`)+
+  "" : (args['title'] == '' ? `<br><br>` : '') )+
   args['content']+`
 </div>
     `;
