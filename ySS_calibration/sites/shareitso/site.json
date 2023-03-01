@@ -5,8 +5,8 @@
     "jssrc":["shareitso.js","sisFormSubmitHelper.js"],
     "enable": true,
     "author": "B.Ceglik <yoyoek@wp.pl>",
-    "ver": "0.0.1",
-    "desc": "Intranet shareitso. Text, links, files, share browsing ...",
+    "ver": "0.0.9901",
+    "desc": "Intranet shareitso. Text, links, files, ...",
     "screenShots": ["ss_inMenu.jpg","ss_mainList.jpg"],
     "otdm":{
         "playground": false,
