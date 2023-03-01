@@ -56,7 +56,7 @@ if [ -f "./"$debFn".deb" ]; then
   echo "DONE"
 
   echo -n "- update repo ... "
-  ./otdmRepoUpdate.sh 2> /dev/null
+  ./otdmRepoUpdate.sh 
   echo "  DONE"
 
   echo "- ls in repo dir ...."
