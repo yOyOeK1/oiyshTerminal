@@ -270,6 +270,8 @@ function makeInit(){
   });
   chkUrl();
 
+
+  
 }
 
 function chkUrl(){
@@ -335,15 +337,49 @@ function chkUrl(){
 	</div>
 -->
 <div id="SMIdentDiv" style="z-index:10;position:relative;top:0;left:0;font-size:50vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>
-<div data-role="page">
+
+
+
+<div data-role="page" id="mainPage">
 
   <!--<div data-role="popup" id="SMIdentPop" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
     <div id="SMIdentDiv" style="z-index:10;position:relative;top:0;left:0;font-size:70vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>
   </div>-->
 
 
-  <div
-    data-role="panel"
+
+  <div date-role="header" class="ui-bar-a ui-header"
+  id="pHeader">
+  <h1 data-role="heading" class="ui-title"
+  id="pHeaderStr"
+  >pHeaderStr</h1>
+</div>
+
+
+  <div data-role="main"
+    id="htmlDyno"
+    >
+<!-- style="z-index:3;position:absolute;top:0;left:0;" -->
+
+<div style="text-align: center;">
+  <img src="images/otWorld1.png"><br>
+  <h1>oiyshTerminal - ySS_calibration</h1>
+  More about on: <a href="https://github.com/yOyOeK1/oiyshTerminal">github</a>
+  <br>
+  <br>
+  use bottom menu to start...
+
+  <footer>ver: 2301091425</footer>
+
+</div>
+
+<!--
+<button onclick='otdm({ "dganById": "*", "oFile": "/data/data/com.termux/files/home/node2otdmTools.fifo"} );'>do query to otdm</button>
+<div id="otdmResDyno"></div>
+-->
+  </div>
+
+  <div data-role="panel"
     data-display="overlay"
     id="panelMenu">
 
@@ -405,8 +441,15 @@ function chkUrl(){
 
 
   </div>
+  <!-- end of data-role="panel" -->
+
+
+  <div id="svgDyno" data-enhance="false" data-role="none" style="display:inline;z-index:-100;">--</div>
+
+  <div data-role="footer" data-theme="a" style="display:none;">in foot</div>
 
 </div>
+
 
 <!--
 <button class="ui-btn ui-btn-icon-right ui-icon-carat-r">ok</button>
@@ -414,25 +457,6 @@ function chkUrl(){
 -->
 
   <!--<div id="svgSizing" style="z-index:20;position:absolute;top:0;left:0;"></div>-->
-	<div id="svgDyno" data-enhance="false" data-role="none" style="display:inline;">--</div>
-  <div id="htmlDyno" style="z-index:3;position:absolute;top:0;left:0;">
-<div style="text-align: center;">
-  <img src="images/otWorld1.png"><br>
-  <h1>oiyshTerminal - ySS_calibration</h1>
-  More about on: <a href="https://github.com/yOyOeK1/oiyshTerminal">github</a>
-  <br>
-  <br>
-  use bottom menu to start...
-
-  <footer>ver: 2301091425</footer>
-
-</div>
-
-    <!--
-    <button onclick='otdm({ "dganById": "*", "oFile": "/data/data/com.termux/files/home/node2otdmTools.fifo"} );'>do query to otdm</button>
-    <div id="otdmResDyno"></div>
-    -->
-  </div>
 	<div class="bottomPanel">
 		<div class="bottomPanelHandle"><img id="bottomPanelMenuImg" src="images/menu.svg"></div>
 		<div class="bottomPanelContainer defBg">
