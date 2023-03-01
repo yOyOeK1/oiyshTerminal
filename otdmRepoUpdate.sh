@@ -6,7 +6,7 @@ echo "Goind to OTDM directory .... "
 cd ./OTDM
 
 echo -n "Raw ... "
-dpkg-scanpackages . /dev/null > Release 2>&1 >> $otRepUpdTmpF
+dpkg-scanpackages . /dev/null > Release #2>&1 >> $otRepUpdTmpF
 if [ "$?" = "0" ]; then
   echo -n "(OK)"
 else
@@ -16,7 +16,7 @@ fi
 
 
 echo -n "Gz ... "
-dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz 2>&1 >> $otRepUpdTmpF
+dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz 
 if [ "$?" = "0" ]; then
   echo -n "(OK)"
 else
