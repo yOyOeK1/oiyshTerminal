@@ -156,18 +156,24 @@ class mDoCmd{
       }
 
       cl("Data processing .... exitCode:0 ?");
+
       if( d[dlen-2] != "exitCode:0" ){
         cl("no correct exitCode GOT ["+d[dlen-2]+"]");
-        return cbFuncErr( d, res );
+        return cbFuncErr( d, d[dlen-2] );
       }else{
         cl("OK!");
       }
 
       cl("Poping first and two lasts ....")
-      d.pop();
-      d.pop();
-      //d.shift();
-      d.shift();
+      if( rAsJson == true ){
+        d.pop();
+        d.pop();
+        //d.shift();
+        d.shift();
+      }else{
+        d.pop();
+        d.pop();
+      }
 
       let retStat = 0;
 
