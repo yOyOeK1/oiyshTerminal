@@ -288,6 +288,11 @@ proot-distro login debian -- /root/sGrafana.sh
     echo 'http_proxy='$ip > ~/.wgetrc
     echo 'https_proxy='$ip >> ~/.wgetrc
 
+    echo "pip ..."
+    pip config set global.proxy "$ip"
+    echo "pip3 ..."
+    pip3 config set global.proxy "$ip"
+
   else
     echo "  no"
   fi
