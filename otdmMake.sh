@@ -25,6 +25,7 @@ fi
 if [ -f $pd"/DEBIAN/preBuildRC" ]; then
   echo "preBuildRC file pressent. Running it..."
   . $pd"/DEBIAN/preBuildRC"
+  echo $?" << -- EXIT CODE"
 
   echo "Run by ["$pd"/DEBIAN/preBuildRC] is DONE"
 
