@@ -6,6 +6,7 @@ class s_packitsoPage{
     this.mDoCmd = new mDoCmd();
     this.editWorker = -1;
     this.packsDirs = [];
+    this.protoDriversList = [];
     this.packs = [];
     this.loadingPacknow  = -1;
     this.app = new mApp();
@@ -97,7 +98,6 @@ class s_packitsoPage{
   pageMain(){
     return `
     <div id="packitsoPage">
-    <h1>Pack it so</h1>
 
     `+(
       urlArgs['action'] == '' ?
@@ -146,7 +146,7 @@ class s_packitsoPage{
       ></button>
 
     <button onclick="pager.goToByHash('pageByName=pack it so&action=startNew`+
-      `&pisName=test1&pisDeps=otdm-tool&pisDesc=Description of project from GET at time:`+
+      `&pisName=test1&pisDeps=otdm-tools, otdm-tools-packitso&pisDesc=Description of project from GET at time:`+
       (new Date().getTime())+`&pisVer=0.1.1&pisAuth=B. Ceglik <yoyoek@wp.pl>')"
       >start new with Data....</button>
 
@@ -297,9 +297,12 @@ class s_packitsoPage{
     $("#wfIdent").html('<option value="-1" selected>---</option>');
     data.forEach((item, i) => {
       cl(item);
+      pager.getCurrentPage().protoDriversList[i] = item;
       $("#wfWork").append(
         `<option
           workSrcName="`+item.name+`"
+          workiKey="`+item.iKey+`"
+          workiUid="`+item.iUid+`"
           value="`+item.keyWord+`">`+
           item.name+'/'+item.keyWord+
           `</option>`
@@ -337,7 +340,7 @@ class s_packitsoPage{
     }else{
     }
     data.forEach((item, i) => {
-      cl(item);
+      //cl(item);
       let uid = -1;
       if( item.uid != undefined )
         uid = "uid:"+item.uid;
@@ -345,6 +348,16 @@ class s_packitsoPage{
         uid = "id:"+item.id;
 
       let name = -1;
+
+
+      //cl("------------- setting name or iKey by driver rules ..");
+      //cl("driverProto.iKey: "+driverProto['iKey'])
+      let dpiKey = $('#wfWork').find(":selected").attr('workiKey');
+      //cl(" si iKey ? "+dpiKey );
+      if( dpiKey != "" ){
+        name = item[ dpiKey ];
+        cl("using name for now with driver proto iKey ... "+name);
+      }
       if( item.name != undefined )
         name = item.name;
       if( name == -1 && item.label )
@@ -514,25 +527,26 @@ class s_packitsoPage{
 
       <fieldset data-role="controlgroup" data-type="horizontal"
         data-mini="true">
-      <legend>Set up driver  <div style="display:inline;" id="wfStat">lsWork doCmd ... status</div></legend>
 
-      <label for="wfWork">Work in</label>
-      <select name="wfWork" id="wfWork"
-        onchange="pager.getCurrentPage().cbOnChangeWfWorkSELECTED()"
-        class="toSave" pName="keyWord">
-        <option value="-1">- - -</option>
-      </select>
+        <legend>Set up driver  <div style="display:inline;" id="wfStat">lsWork doCmd ... status</div></legend>
 
-      <label for="wfIdent">Identification</label>
-      <select name="wfIdent" id="wfIdent"
-        class="toSave" pName="ident">
-        <option value="-1">- - -</option>
-      </select>
+        <label for="wfWork">Work in</label>
+        <select name="wfWork" id="wfWork"
+          onchange="pager.getCurrentPage().cbOnChangeWfWorkSELECTED()"
+          class="toSave" pName="keyWord">
+          <option value="-1">- - -</option>
+        </select>
 
+        <label for="wfIdent">Identification</label>
+        <select name="wfIdent" id="wfIdent"
+          class="toSave" pName="ident">
+          <option value="-1">- - -</option>
+        </select>
+
+      </fieldset>
     </li>
 
     <li class="ui-field-contain">
-      </fieldset>
       <label for="wfOut">Output name</label>
       <input type="text"
         name="wfOut" id="wfOut"
@@ -541,11 +555,39 @@ class s_packitsoPage{
         value="">
     </li>
 
+
+    <!--
+    <select multiple="multiple" data-native-menu="false" name="select-multi2"
+      onmousedown="cl('on mouse down');">
+      <option value="1">opt 1</option>
+      <option value="2">opt 2</option>
+      <option value="3">opt 3</option>
+      <option value="4">opt 4</option>
+    </select>
+    -->
+
+    <li class="ui-field-contain">
+
+      <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+        <legend>Include steps: (TODO)</legend>
+        <input type="checkbox" name="mkpreBuilRC" id="mkpreBuilRC">
+        <label for="mkpreBuilRC">preB RC</label>
+        <input type="checkbox" name="mkpreDEBpostins" id="mkpreDEBpostins">
+        <label for="mkpreDEBpostins">./postinst</label>
+        <input type="checkbox" name="mkpreDEBpostrm" id="mkpreDEBIANpostrm">
+        <label for="mkpreDEBIANpostrm">./postrm</label>
+      </fieldset>
+
+    </li>
+
+
   </ul>
 
 </form>
 
+
 <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+
 
   <a class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-plus ui-btn-a "
     onclick="pager.getCurrentPage().formWorkAdd()"
@@ -811,15 +853,76 @@ class s_packitsoPage{
         <button
           onclick="pager.getCurrentPage().formSave()"
           >Save</button>
+        <button
+          id="btnPacIT"
+          onclick="pager.getCurrentPage().packitsoIT()"
+          disabled="">Pack it so</button>
+        <button
+          id="btnRmOtdmd"
+          class="ui-btn ui-corner-all ui-btn-icon-left ui-icon-recycle"
+          onclick="pager.getCurrentPage().packitsoCleanUp()"
+          disabled="">remove otdmp-</button>
       </div>
       <br><br><br>
       `;
   }
 
+  packitsoCleanUp(){
+    cl("rm otdmp- yes");
+    let cp = pager.getCurrentPage();
+    cp.mDoCmd.doShExitCodeChk(
+      'pDir="/OT/otdmp-'+cp.pisNew['packitso']['name']+'"; if [ -d "$pDir" ];then echo "DIR IS OK"; echo "Removing ... aka renaming with sufix :P "; tDir="$pDir""_""$(date +%y%m%d_%H%M%S)";echo "As backup is in ... $tDir";mv "$pDir" "$tDir";  else echo "NO DIR"; fi ',
+      '',
+      ( d, r )=>{
+        cp.mDoCmd.cmdWork=false;
+        cl("GOT OK !");
+        cl(d);
+        //pager.getCurrentPage().lvOfShareitso(d);
+
+      },
+      ( d, r )=>{
+        cp.mDoCmd.cmdWork=false;
+        cl("GOT ERROR !");
+        cl(d);
+        cl("r----------------");
+        cl(r);
+      },
+      false
+    );
+  }
+
+  packitsoIT(){
+    cl("yes!");
+    let cp = pager.getCurrentPage();
+    cp.mDoCmd.doShExitCodeChk(
+      'cd /OT; ./otdmpFromP.sh /OT/ySS_calibration/sites/packitso/p-"'+cp.pisNew['packitso']['name']+'"/packitso.json',
+      '',
+      ( d, r )=>{
+        cp.mDoCmd.cmdWork=false;
+        cl("GOT OK !");
+        cl(d);
+        //pager.getCurrentPage().lvOfShareitso(d);
+
+      },
+      ( d, r )=>{
+        cp.mDoCmd.cmdWork=false;
+        cl("GOT ERROR !");
+        cl(d);
+        cl("r----------------");
+        cl(r);
+        if( r == "exitCode:4" ){
+          cl("got error that directory is existing ... unlocking recycle ")
+          $("#btnRmOtdmd").attr('disabled', false);
+        }
+
+      },
+      false
+    );
+  }
 
   pagePackForm( title ){
-    return `<h1>Pack it so - `+title+`</h1>
-
+    //return `<h1>Pack it so - `+title+`</h1>`+
+    return `
 <form class="pisForm" name="packitso">
 
   <ul data-role="listview" data-inset="true" class="ui-body-a">
@@ -886,6 +989,7 @@ class s_packitsoPage{
         "content": content
       });*/
       tr = cp.app.appFrame({
+        'title': "Start new ...",
         "backButton": "pager.goToByHash('pageByName="+cp.getName+"')",
         "content": cp.pageStartNewOrEdit()
       });
@@ -895,7 +999,7 @@ class s_packitsoPage{
       cl(tr);
       cl(this);
 
-      if( urlArgs['i'] != undefined && urlArgs['i']!=''){
+      if( urlArgs['i'] != undefined && urlArgs['i'] != ''){
         cl("ok load some pack it so .json");
 
         tr = `<br>loading ... pack it so list ...`;
@@ -909,8 +1013,8 @@ class s_packitsoPage{
 
         });
 
-      }else if( urlArgs['n'] != undefined && urlArgs['n']!=''){
-        cl("ok load from pack it so name :) .....");
+      }else if( urlArgs['n'] != undefined && urlArgs['n'] != '' ){
+        cl("ok load from pack it so by name :) .....");
         let file = cp.instanceOf['fDir']+'/'+urlArgs['n']+'/packitso.json';
 
         //cp.packEDIT( urlArgs['i'] )
@@ -922,6 +1026,7 @@ class s_packitsoPage{
             $("#htmlDyno").append('<br>DONE');
             cp.pisNew = data;
             let trf = cp.app.appFrame({
+              "title": "Editing: "+data['packitso']['name'],
               "backButton": "pager.goToByHash('pageByName="+cp.getName+"')",
               "content": cp.pageStartNewOrEdit( 'edit', data )
             });
@@ -956,9 +1061,11 @@ class s_packitsoPage{
 
 
     }else{
+      cl("Main no arg main page ...");
       cp.loadPackitsoList(()=>{cl("no args pack it so list ... DONE");});
 
       tr = cp.app.appFrame({
+        "title": "Pack it so",
         "content": cp.pageMain()+"<br>"+cp.packsList()
       });
     }
@@ -968,26 +1075,49 @@ class s_packitsoPage{
   }
 
   getHtmlAfterLoad(){
+
     cl("Pack it so - After load HTML");
+
+    setTimeout(()=>{
+      this.workersList();
+      $("#wfBtDelete").hide();
+    },200);
+
+    if( urlArgs['action'] == 'editWork' ){
+    }else if( urlArgs['action'] == 'startNew' ){
+    }else{
+
+    }
+
+
+
     $(".pisForm").each(function(i, obj) {
       //test
       cl(i+": - Form in - Pack it so now on page. name:["+obj["name"]+"] children:"+obj.children.length);
-      $(obj).change(function(){
+      $(obj).change(function(e,a){
 
-        let pisNew = pager.getCurrentPage().pisNew;
+        cl("----------------- on change --");
+        cl("e");
+        cl(e);
+
+        let curPag = pager.getCurrentPage();
+        let pisNew = curPag.pisNew;
         cl("so now pack it so - new is ----------");
         cl( pisNew );
 
         cl("form change ! ["+this.name+"]....");
-        var changeInFormName = this.name;
+        // change in form name
+        var cifn = this.name;
+
+
         $(obj).find(".toSave").each(function(){
           let pName = $(this).attr('pName');
           cl("obj .toSave ... id: "+this.id+" pName: "+pName);
-          if( pisNew[changeInFormName] == undefined )
-            pisNew[changeInFormName] = {};
-          if( pisNew[changeInFormName][pName] == undefined )
-            pisNew[changeInFormName][pName] = "";
-          pisNew[changeInFormName][pName] = $(this).val();
+          if( pisNew[cifn] == undefined )
+            pisNew[cifn] = {};
+          if( pisNew[cifn][pName] == undefined )
+            pisNew[cifn][pName] = "";
+          pisNew[cifn][pName] = $(this).val();
           if( pisNew['edit'] == true ){
             pisNew['works'][ pisNew['editId'] ][pName] = $(this).val();
           }else{
@@ -1007,10 +1137,16 @@ class s_packitsoPage{
             for(let c=0,cc=cs.length;c<cc;c++ ){
               if( $(cs[c]).attr('value') == $(this).val() ){
                 let identSplit = $(this).val().split(':');
-                pisNew[changeInFormName]['srcName'] = $('#wfWork').find(":selected").attr('workSrcName');
-                pisNew[changeInFormName]['identKey'] = identSplit[0];
-                pisNew[changeInFormName]['identUid'] = identSplit[1];
-                pisNew[changeInFormName]['name'] = $(cs[c]).attr('identname');
+                cl("curPag.protoDriversList[]");
+                cl(curPag.protoDriversList);
+                let dpiKey = $('#wfWork').find(":selected").attr('workiKey');
+                let dpiUid = $('#wfWork').find(":selected").attr('workiUid');
+                pisNew[cifn]['srcName'] = $('#wfWork').find(":selected").attr('workSrcName');
+                pisNew[cifn]['identKey'] = identSplit[0];
+                pisNew[cifn]['identUid'] = identSplit[1];
+                pisNew[cifn]['name'] = $(cs[c]).attr('identname');
+                pisNew[cifn]['iKey'] = dpiKey;
+                pisNew[cifn]['iUid'] = dpiUid;
 
                 if( pisNew['edit'] == true ){
                   //pisNew['works'][ pisNew['editId'] ]
@@ -1018,6 +1154,8 @@ class s_packitsoPage{
                   pisNew['works'][ pisNew['editId'] ]['identKey'] = identSplit[0];
                   pisNew['works'][ pisNew['editId'] ]['identUid'] = identSplit[1];
                   pisNew['works'][ pisNew['editId'] ]['name'] = $(cs[c]).attr('identname');
+                  pisNew['works'][ pisNew['editId'] ]['iKey'] = dpiKey;
+                  pisNew['works'][ pisNew['editId'] ]['iUid'] = dpiUid;
 
                 }
 
@@ -1034,12 +1172,14 @@ class s_packitsoPage{
         pager.getCurrentPage().workersList();
 
       });
+
+
     });
 
-    setTimeout(()=>{
-      this.workersList();
-      $("#wfBtDelete").hide();
-    },200);
+
+
+
+
   }
 
   get svgDyno(){

@@ -3,6 +3,9 @@ from otdmDriverNodeRedProto import *
 class otdmDriverNodeRedFlowById( otdmDriverNodeRedProto ):
 
     keyWord = "dnrfByUid"
+    iKey="label"
+    iUid=""
+    isPackitso=True
 
     def __init__(self, args, conf ):
         super(otdmDriverNodeRedFlowById, self).__init__( args, conf, "node-red", "/flow" )

@@ -3,6 +3,10 @@ from otdmDriverGrafanaProto import *
 class otdmDriverGrafanaDashboardByUid( otdmDriverGrafanaProto ):
 
     keyWord = "dgdbByUid"
+    iKey="title"
+    iUid=""
+    isPackitso=True
+
 
     def __init__(self, args, conf ):
         super(otdmDriverGrafanaDashboardByUid, self).__init__( args, conf, "grafana", "/dashboards/uid" )

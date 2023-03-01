@@ -16,10 +16,32 @@ env:
 
 echo "$tr" >> $TMPDIR"/"$DPKG_MAINTSCRIPT_PACKAGE"_dpkg.log"
 
+echo "# oiyshTerminal - otdm-tool "
+
+echo -n "Installing aditional deps .."
 
 
-echo "check if jq is postinst..."
-if which jq 2> /dev/null; then
+pipChk(){
+  wtch="$1"
+  echo -n "- checkin pip status for ..[ $wtch ]"
+  if pip list | grep "$wtch" 2> /dev/null ; then
+    echo ".. in in system ... OK"
+  else
+    echo -n "... installing ...."
+    pip install "$wtch"
+    echo " .OK"
+  fi
+}
+
+
+
+
+
+
+
+echo -n " chave jq ? ..."
+isJq=`which jq`
+if [ "$?" = "0" ]; then
   echo "  OK"
 
 else
@@ -34,40 +56,45 @@ else
 
 fi
 
-echo "check if pip is...."
-if which pip 2> /dev/null; then
-  echo "pip pip pppip pii ....OK"
+echo -n "Check if pip is in system ...."
+isPip=`which pip`
+if [ "$?" = "0" ]; then
+  echo "...OK"
 else
   echo "Error no pip in a system... You need to get pip!"
   exit 1
 fi
 
-echo "checkin deps for python...."
-if pip list | grep requests 2> /dev/null ; then
-  echo "requests ....... OK"
-else
-  echo "requests - installing...."
-  pip install requests
-fi
-echo "pip section .......OK"
 
 
-echo "saving os type ....."
+
+pipChk "requests"
+pipChk "paho-mqtt"
+pipChk "uploadserver"
+
+
+echo "--------------------------------------------"
+
+
+echo "Saving os type ....."
 /data/data/com.termux/files/usr/bin/otdmTools.py -osType '?' -oFile '/data/data/com.termux/files/home/.otdm/os.json'
+
 
 bashRcAdd=`cat ~/.bashrc | grep '/data/data/com.termux/files/usr/bin' > /dev/null; echo $?`
 if [ ${bashRcAdd} = "0" ]
 then
   echo ".bashrc have path! so it's update or reinstall."
 else
-  echo "adding path to .bashrc...."
+  echo "Adding path to .bashrc...."
   echo 'export PATH=$PATH:"/data/data/com.termux/files/usr/bin"' >> ~/.bashrc
 fi
 
-echo 'If you have problems with no file found for otdmTool.py check path.
+echo -e 'If you have problems with no file found for otdmTool.py check path.
 Do you have path to /data/data/com.termux/files/usr/bin
 Installer is adding it to ~/.bashrc of installer but is it different then
 you?
 You can add it by running:
 $ echo "export PATH=$PATH:\"/data/data/com.termux/files/usr/bin\"" >> ~/.bashrc
-...........................................................'
+...........................................................' | while read -r line; do
+  echo \\t\\t"$line"
+done

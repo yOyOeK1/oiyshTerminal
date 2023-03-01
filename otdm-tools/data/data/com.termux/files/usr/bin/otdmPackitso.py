@@ -19,7 +19,10 @@ class otdmPackitso:
             tr.append( {
                 "workerId": len(tr),
                 "name":d['name'],
-                "keyWord": d['o'].keyWord
+                "keyWord": d['o'].keyWord,
+                "iKey": d['o'].iKey,
+                "iUid": d['o'].iUid,
+                "isPackitso": d['o'].isPackitso
                 } )
 
 

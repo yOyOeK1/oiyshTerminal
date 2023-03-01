@@ -1,9 +1,9 @@
 Package:otdm-tools
-Version: 0.25.9
+Version: 0.26.1
 Section: otdm
 Priority: optional
 Architecture: all
-Depends: jq, python (>=3.0) | python3
+Depends: jq, curl, python (>=3.0) | python3
 #Recommends: jq, python (>=3.0) | python3
 Recommends: python3-pip, python3-apt | python-apt
 #Pre-Depends: otdm-installer (>=0.1) | otdm-installer-dummy (>=0.1)

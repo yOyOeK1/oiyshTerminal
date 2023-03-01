@@ -82,6 +82,15 @@ class otdmDriverProto:
     keyWord="driverProto"
     """**keyWord**: string - @overwriteIt important to invoce from arguments from console."""
 
+    iKey=""
+    """**iKey**: string - @overwriteIt if want to use driver in packitso"""
+
+    iUid=""
+    """**iUid**: string - @overwriteIt if want to use driver int packitso"""
+
+    isPackitso=False
+    """**isPackitso**: bool - @overwriteIt important to use in packitso only if ready"""
+
 
 
     def __init__( self, args, conf, name, suffix ):
@@ -138,6 +147,19 @@ class otdmDriverProto:
 
             if arg == "chkHost":
                 return self.chkHost()
+
+            if arg == "isPackitso":
+                if self.args.get("oFile","") == "":
+                    print("Error if * then -oFile")
+                    sys.exit(1)
+                r = {
+                    "isPackitso": self.isPackitso,
+                    "iKey": self.iKey,
+                    "iUid": self.iUid
+                    }
+
+                self.saveIfArgs( r )
+                return 1
 
             if arg == "lookForDeps" or arg == "clean":
                 ifile=args.get("iFile","")
@@ -338,6 +360,7 @@ class otdmDriverProto:
         return self.resChk(
             self.curlJ( methodee, url, headerss, data )
         )
+
 
 
     def GETAll( self ):

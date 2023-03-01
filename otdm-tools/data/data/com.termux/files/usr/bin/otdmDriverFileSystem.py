@@ -4,6 +4,9 @@ import os
 class otdmDriverFileSystem( otdmDriverProto ):
 
     keyWord = "dfs"
+    iKey="name"
+    iUid=""
+    isPackitso=True
 
     def __init__(self, args, conf, prefixFS="/" ):
         super(otdmDriverFileSystem, self).__init__( args, conf, "FileSystem", prefixFS )
