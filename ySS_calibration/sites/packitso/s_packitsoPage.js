@@ -270,7 +270,7 @@ class s_packitsoPage{
                       text: 'File saved.',
                       showHideTransition: 'slide',
                       icon: 'success'
-                  })
+                  });
 
 
 
@@ -492,9 +492,20 @@ class s_packitsoPage{
     $("#wfOut").val(we['oFile']);
     $("#wfWork").val(we['keyWord']);
     $("#wfWork").selectmenu('refresh');
+
+
+
+
+
     this.cbOnChangeWfWorkSELECTED();
     cl("is async...?");
 
+    ["mkpreBuilRC", "mkpreDEBpostins", "mkpreDEBpostrm"].find((e,i)=>{
+      if( we[e] == true )
+      $("#"+e).attr('checked',true).checkboxradio('refresh');
+      else
+      $("#"+e).removeAttr('checked').checkboxradio('refresh');
+    });
 
   }
 
@@ -506,6 +517,11 @@ class s_packitsoPage{
     $("#wfWork").selectmenu('refresh');
     $("#wfIdent").html('');
     $("#wfIdent").selectmenu('refresh');
+    ["mkpreBuilRC", "mkpreDEBpostins", "mkpreDEBpostrm"].find((e,i)=>{
+      $("#"+e).removeAttr('checked').checkboxradio('refresh');
+    });
+    //$("#mkpreDEBpostins").removeAttr('checked').checkboxradio('refresh');
+    //$("#mkpreDEBpostrm").removeAttr('checked').checkboxradio('refresh');
     this.pisNew['workForm'] = {};
     this.pisNew['edit'] = false;
     this.pisNew['editId'] = -1;
@@ -581,13 +597,15 @@ class s_packitsoPage{
     <li class="ui-field-contain">
 
       <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-        <legend>Include steps: (TODO)</legend>
-        <input type="checkbox" name="mkpreBuilRC" id="mkpreBuilRC">
+        <legend>Include steps:</legend>
+
+        <input class="toSave" pName="mkpreBuilRC" type="checkbox" name="mkpreBuilRC" id="mkpreBuilRC">
         <label for="mkpreBuilRC">preB RC</label>
-        <input type="checkbox" name="mkpreDEBpostins" id="mkpreDEBpostins">
+        <input class="toSave" pName="mkpreDEBpostins" type="checkbox" name="mkpreDEBpostins" id="mkpreDEBpostins">
         <label for="mkpreDEBpostins">./postinst</label>
-        <input type="checkbox" name="mkpreDEBpostrm" id="mkpreDEBIANpostrm">
-        <label for="mkpreDEBIANpostrm">./postrm</label>
+        <input class="toSave"  pName="mkpreDEBpostrm" type="checkbox" name="mkpreDEBpostrm" id="mkpreDEBpostrm">
+        <label for="mkpreDEBpostrm">./postrm</label>
+
       </fieldset>
 
     </li>
@@ -804,6 +822,10 @@ class s_packitsoPage{
       for(let w=wc-1; w>-1; w--){
         let e = this.pisNew['works'][w];
         //cl(" - item: "+e['name']);
+        var stepsInThisWork = '';
+        (["mkpreBuilRC", "mkpreDEBpostins", "mkpreDEBpostrm"].find((ek,i)=>{
+          if( e[ek] == true )
+            stepsInThisWork+=ek+", "; }))
         toTr.push(
           this.app.lvElement(
             e['srcName']+` / `+e['keyWord']+` / `+e['name'],
@@ -811,7 +833,8 @@ class s_packitsoPage{
               "content": {
                 "ident": e['ident'],
                 "extra args": e['extArgs'],
-                "out put file": e['oFile']
+                "out put file": e['oFile'],
+                "steps": '<small>'+stepsInThisWork+'</small>'
               },
               "tip": { "No#": w }
             },
@@ -1203,14 +1226,26 @@ class s_packitsoPage{
 
         $(obj).find(".toSave").each(function(){
           let pName = $(this).attr('pName');
-          cl("obj .toSave ... id: "+this.id+" pName: "+pName);
+          let pType = $(this).attr('type');
+          cl("obj .toSave ... id: "+this.id+" pName: "+pName+" ptype:"+pType);
           if( pisNew[cifn] == undefined )
             pisNew[cifn] = {};
           if( pisNew[cifn][pName] == undefined )
             pisNew[cifn][pName] = "";
-          pisNew[cifn][pName] = $(this).val();
+
+          if( pType == "checkbox" ){
+            pisNew[cifn][pName] = $(this).attr('checked') ? true : false;
+          }else{
+            pisNew[cifn][pName] = $(this).val();
+          }
+
           if( pisNew['edit'] == true ){
-            pisNew['works'][ pisNew['editId'] ][pName] = $(this).val();
+            if( pType == "checkbox" ){
+              pisNew['works'][ pisNew['editId'] ][pName] = $(this).attr('checked') ? true : false;
+            }else{
+              pisNew['works'][ pisNew['editId'] ][pName] = $(this).val();
+            }
+
           }else{
 
           }
