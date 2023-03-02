@@ -262,6 +262,18 @@ class s_packitsoPage{
                 (data,res)=>{
                   cl("data ->");cl(data);
                   cl("  DONE Saved !");
+
+                  $("#btnPacIT").attr('disabled', false);
+
+                  $.toast({
+                      heading: 'Success',
+                      text: 'File saved.',
+                      showHideTransition: 'slide',
+                      icon: 'success'
+                  })
+
+
+
                 }
               );
 
@@ -675,6 +687,18 @@ class s_packitsoPage{
         'items':eles
       });
 
+    if( eles.length == this.packs.length ){
+      this.toastOnStartLoading.reset();
+      $.toast({
+        heading: 'Loading packitso\'us is done',
+        text: [
+            'Found ( '+this.packs.length+' ) directories.'
+        ],
+        showHideTransition: 'slide',
+        icon: 'info'
+      });
+    }
+
 
     $("#plDiv").html(newList);
     $("#plDiv").enhanceWithin();
@@ -878,6 +902,21 @@ class s_packitsoPage{
         cl("GOT OK !");
         cl(d);
         //pager.getCurrentPage().lvOfShareitso(d);
+        if( d[0] == "DIR IS OK" ){
+          $.toast({
+              heading: 'Removing / recycling / backuping',
+              text: 'otdmp- directory cycle for backup with prefix.',
+              showHideTransition: 'slide',
+              icon: 'success'
+          });
+        } else if( d[0] == "NO DIR" ){
+          $.toast({
+              heading: 'Removing / recycling / backuping',
+              text: 'No target /OT/otdmp-'+cp.pisNew['packitso']['name']+' directory',
+              showHideTransition: 'slide',
+              icon: 'warning'
+          });
+        }
 
       },
       ( d, r )=>{
@@ -886,6 +925,15 @@ class s_packitsoPage{
         cl(d);
         cl("r----------------");
         cl(r);
+
+        $.toast({
+            heading: 'Removing / recycling / backuping',
+            text: 'Something is not ok',
+            showHideTransition: 'slide',
+            hideAfter: false,
+            icon: 'error'
+        });
+
       },
       false
     );
@@ -899,25 +947,49 @@ class s_packitsoPage{
       '',
       ( d, r )=>{
         cp.mDoCmd.cmdWork=false;
-        cl("GOT OK !");
+        cl("GOT OK ! from ./otdmpFromP.sh ....");
         cl(d);
         //pager.getCurrentPage().lvOfShareitso(d);
+        $.toast({
+            heading: 'Success',
+            text: 'Deployd to .deb file, repository update ...',
+            showHideTransition: 'slide',
+            //hideAfter: false,
+            icon: 'success'
+        });
 
       },
       ( d, r )=>{
         cp.mDoCmd.cmdWork=false;
-        cl("GOT ERROR !");
+        cl("GOT ERROR ! from ./otdmpFromP.sh .... ");
         cl(d);
         cl("r----------------");
         cl(r);
         if( r == "exitCode:4" ){
           cl("got error that directory is existing ... unlocking recycle ")
           $("#btnRmOtdmd").attr('disabled', false);
+
+          $.toast({
+              heading: 'Warning',
+              text: 'Can\'t build! Target directory in existing. <a href="#" onclick="pager.getCurrentPage().packitsoCleanUp()">Recycle it!</a>',
+              showHideTransition: 'slide',
+              hideAfter: false,
+              icon: 'warning'
+          });
+
         }
 
       },
       false
     );
+
+    $.toast({
+        heading: 'Packitso this to .deb ...',
+        text: 'Process started ... and running ... ',
+        showHideTransition: 'slide',
+        icon: 'info'
+    });
+
   }
 
   pagePackForm( title ){
@@ -976,6 +1048,7 @@ class s_packitsoPage{
 
 
   getHtml(){
+
     var tr = '';
     let cp = pager.getCurrentPage();
 
@@ -1046,6 +1119,14 @@ class s_packitsoPage{
             cl("making responsive save ....");
             cp.getHtmlAfterLoad();
 
+            $("#btnPacIT").attr('disabled',false);
+            setTimeout(()=>{
+              try{
+                cp.toastOnStartLoading.reset();
+              }catch(e){
+                cl("Second visit on page ?");
+              }
+            }, 500 );
           });
 
 
@@ -1062,6 +1143,16 @@ class s_packitsoPage{
 
     }else{
       cl("Main no arg main page ...");
+      cp.toastOnStartLoading = $.toast({
+        heading: 'Loading packitso\'us ... ',
+        text: [
+            'Running bash to find them all'
+        ],
+        showHideTransition: 'slide',
+        hideAfter: false,
+        icon: 'info'
+      });
+      //a=$(find ./p-*/packitso.json -type f | while read -r line; do echo -n "{  \"modDate\":\"""$(find "$line" -printf "%Ay-%Am-%Ad %AT")""\",  ";echo -n " \"file\":\"$line\",  ";echo -n "  "$(ls -alh "$line" | awk '{print "\"size\":\""$5"\", "}'; echo -n "\"content\":"; echo -n `cat "$line"`" },  ";);echo ""; done;  ); echo "[ $a {} ]" | tr -d '\n'  |jq '.[0:-1]'
       cp.loadPackitsoList(()=>{cl("no args pack it so list ... DONE");});
 
       tr = cp.app.appFrame({
