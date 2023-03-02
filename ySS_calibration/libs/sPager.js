@@ -162,6 +162,11 @@ class sPager {
    * @description Methode - **not recomendet** shortest way to set now a different site but not the best. Check `.goToByHash()`
    */
   setPage( pageNo ){
+    if( this.currentPage == pageNo  ){
+      cl("DROPING setPage !!! it's now the same ?");
+      return 0;
+    }
+
     cl("setPage"+pageNo);
     this.setHeader('');
     $.mobile.panel();
@@ -292,6 +297,7 @@ class sPager {
    * ```
    */
   goToByHash( url ){
+    //this.currentPage = -1;
     window.location.hash=url+`&`+(Math.random());
   }
 
