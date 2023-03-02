@@ -164,7 +164,7 @@ class sPager {
   setPage( pageNo ){
     if( this.currentPage == pageNo  ){
       cl("DROPING setPage !!! it's now the same ?");
-      return 0;
+      //return 0;
     }
 
     cl("setPage"+pageNo);
