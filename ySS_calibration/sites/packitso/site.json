@@ -7,7 +7,7 @@
     "ver": "0.0.1",
     "author": "B.Ceglik <yoyoek@wp.pl>",
     "desc": "yss site Front end for otdm-tools-packitso",
-
+	"screenShots": ["ss_cleaningOldProjectDir.png", "ss_editingPackitso.png", "ss_fromPackitSoToDeb.png", "ss_mainPage.png", "ss_overriteProtection.png", "ss_selectingPackitso.png", "ss_toastOnSave.png", "ss_toasts1OnIndex.png"],
     "otdm":{
         "depends": "otdm-yss, otdm-tools-packitso",
         "playground": false
