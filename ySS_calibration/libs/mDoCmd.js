@@ -169,7 +169,11 @@ class mDoCmd{
         d.pop();
         d.pop();
         //d.shift();
-        d.shift();
+        if ( d[0] == "[" ){
+          cl("skipp shift of result ....");
+        }else{
+          d.shift();
+        }
       }else{
         d.pop();
         d.pop();
@@ -179,11 +183,15 @@ class mDoCmd{
 
       let j = {};
       if( rAsJson == true ){
-        cl("Data array to json ...");
+        //cl("Data array to json ...");
+        //cl(d.join(""));
+        //cl("-------------------------------");
         try{
           j = JSON.parse( d.join("") );
         }catch(e){
             cl("Error in parsing data to json :/ ");
+            cl("Error says ");
+            cl(e);
             return cbFuncErr( d, res );
         }
       }
