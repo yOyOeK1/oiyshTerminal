@@ -1,12 +1,22 @@
 var socketIn = null;
+
+var wsToast = null;
+
 function wsConnectIn( onMesCallBack ){
-	// address is replace on fly by host 
+	// address is replace on fly by host
 	socketIn = new  WebSocket("ws://192.168.43.1:1880/ws/accel/oriCal");
 
 
 	socketIn.onopen = function(){
 		cl("WS_In on open");
 		$("#wsInStat").text("OK");
+		wsToast= $.toast({
+				heading: 'Success',
+				text: 'WebSocket In is OK!',
+				//showHideTransition: 'slide',
+				hideAfter: 800,
+				icon: 'success'
+		});
 	}
 
 	socketIn.onclose = function(){
@@ -14,6 +24,12 @@ function wsConnectIn( onMesCallBack ){
 		cl("WS_In will try to recconnect...");
 		setTimeout( wsConnectIn( onMesCallBack ), 1000 );
 		$("#wsInStat").text("X");
+		wsToast= $.toast({
+				heading: 'Error',
+				text: 'WebSocket In have some problems.',
+				showHideTransition: 'slide',
+				icon: 'error'
+		})
 	}
 
 	socketIn.onerror = function(e){
@@ -57,6 +73,13 @@ function wsConnectOut(){
 	socketOut.onopen = function(){
 		cl("WS_Out on open");
 		$("#wsOutStat").text("OK");
+		wsToast= $.toast({
+				heading: 'Success',
+				text: 'WebSocket Out is OK!',
+				//showHideTransition: 'slide',
+				hideAfter: 800,
+				icon: 'success'
+		})
 	}
 
 	socketOut.onclose = function(){
@@ -67,6 +90,15 @@ function wsConnectOut(){
 
 	socketOut.onerror = function(e){
 		cl("WS_Out on error:"+e);
+		wsToast= $.toast({
+				heading: 'Error',
+				text: [
+					'WebSocket Out hove some problems',
+					e
+				],
+				showHideTransition: 'slide',
+				icon: 'error'
+		})
 	}
 
 }
