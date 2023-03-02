@@ -87,6 +87,7 @@ var module = new moduleCollector();
 <script src="libs/jquery.min.js"></script>
 <script src="libs/jquery-ui.js"></script>
 <script src="libs/jquery.mobile-1.4.5.min.js"></script>
+<script src="libs/jquery.toast.min.js"></script>
 
 <script type="importmap">
     {
@@ -119,6 +120,7 @@ var module = new moduleCollector();
 <link rel="stylesheet" href="libs/flexslider.css" type="text/css" media="all">
 
 <link rel="stylesheet" href="libs/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="libs/jquery.toast.min.css">
 <link rel="stylesheet" href="main.css">
 
 
@@ -184,8 +186,11 @@ function waitForT4y(){
 // ON LOAD ------------------
 $( document ).ready(function() {
 
+  cl("Set .toast time ....");
+  $.toast.options.hideAfter=7000;
   //makeInit();
   waitForT4y();
+
 });
 function makeInit(){
   /*
@@ -271,7 +276,7 @@ function makeInit(){
   chkUrl();
 
 
-  
+
 }
 
 function chkUrl(){
@@ -307,6 +312,7 @@ function chkUrl(){
       cl("get n ");
       cl(n);
 
+      pager.currentPage++;
       pager.setPage( pager.pages.indexOf( n ) );
   }
 
