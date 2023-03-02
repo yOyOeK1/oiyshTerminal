@@ -59,6 +59,9 @@ body{
   /*filter: grayscale(100%);*/
 
 }
+.jq-toast-single{
+  text-shadow: none !important;
+}
 #htmlDyno{
 	width:100%;
 }
