@@ -22,7 +22,7 @@ class mApp{
    * @property {json} args - The default values for frame arguments
    * @property {string} args.goTo - if set then past to `pager.goToByHash(goTo)` to move without reloading
    * @property {string} args.backButton - if set then past to `onclick="backButton"`
-   * @property {string} args.title - to put page headet title
+   * @property {string} args.title - to put page header title
    * @property {string} args.content - to put your content in frame
    * @desc function returns Basic Frame of a page. if needed back or goTo button is there to use
    * @returns {string} to put it for example as `$('#htmlDyno').html( returnStr )`;
@@ -30,7 +30,7 @@ class mApp{
    *  ```javascript
    *  $("#htmlDyno").html( mApp2.appFrame({
    *    "content":"Hello world",
-   *    "goTo": "pageByName=test functions"
+   *    "goTo": "pager.goToByHash('pageByName=test functions')"
    *  }) );
    *  ```
    * *will put in htmlDymo div html element App Frame with Hello world in it.
@@ -56,6 +56,10 @@ class mApp{
         class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-forward">
         Go TO
       </a> `: '' );
+    if( args['goTo'] != undefined && args['goTo'].substring(0,4) == "raw:" ){
+      cl("Detect goTo as raw: ....");
+      btGoTo = args['goTo'].substring(4);
+    }
 
     if( args['title'] != undefined && args['title'] != '' ){
       let title = args['title'];
@@ -150,7 +154,7 @@ class mApp{
     }
     if( content['img'] != undefined )
       lve+= `<img src="`+content['img']+`">`;
-    lve+=`<h2 class="`+( content['class'] != undefined ? content['class'] :'')+`">`+head+`</h2>`;
+    lve+=`<h2 `+( content['class'] != undefined ? ` class="`+content['class']+`" ` :'')+`>`+head+`</h2>`;
     lve+= `<p>`;
     if( typeof content == "string" ){
       lve+= content;
