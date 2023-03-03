@@ -52,7 +52,7 @@ body{
 	position: absolute;
 	top:0;
 	left:0;
-	z-index: 1;
+	z-index: 0;
 
   text-shadow: none !important;
 	/*-webkit-filter: grayscale(100%);*/ /* Safari 6.0 - 9.0 */
