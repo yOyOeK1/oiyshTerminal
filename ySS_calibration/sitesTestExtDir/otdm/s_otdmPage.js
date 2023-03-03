@@ -11,6 +11,34 @@ class s_otdmPage{
     this.resRet = false;
     this.mDoCmd = new mDoCmd();
     this.app = new mApp();
+    this.fConfig = new mDynoForm("config",{
+     "otdm": {
+      "prefix": "/data/data/com.termux/files/home/.otdm"
+     },
+     "node-red": {
+      "host": "192.168.43.220",
+      "port": 1880,
+      "apiPath": ""
+     },
+     "grafana": {
+      "host": "192.168.43.1",
+      "port": 3000,
+      "apiPath": "/api",
+      "user": "admin",
+      "passwd": "77777"
+     },
+     "mysql": {
+      "host": "192.168.43.64",
+      "port": 3306,
+      "dbname": "svoiysh",
+      "user": "ykpu",
+      "passwd": "777777777777"
+     },
+     "mqtt": {
+      "host": "192.168.43.1",
+      "port": 10883
+     }
+    });
   }
 
   get getName(){
@@ -335,10 +363,45 @@ $( document ).ready(function() {
             return vv;
         });
     });
+
+    let app = new mApp();
+
+    let goTo = pager.getCurrentPage().getPageSelect();
+
+    let tr = app.appFrame({
+      "title": "otdm", // config
+      "content": pager.getCurrentPage().fConfig.getHtml(),
+      //'backButton': 'history.back()',
+      'goTo':'raw:<div id="mSelGoTo">'+goTo+'</div>'
+    });
+    $("#htmlDyno").html( tr );
+
+
+    setTimeout(()=>{
+
+      $("#mSelGoTo select").selectmenu({
+        icon: "bars"
+        //'ui-btn-right ui-btn ui-btn-b ui-corner-all ui-btn-icon-right ui-icon-forward'
+      });
+      $("#mSelGoTo").attr('class', 'ui-btn-right ui-btn-inline ui-mini ui-icon-forward' );
+
+      $('#htmlDyno input').textinput({
+        disabled: true,
+        theme: "b"
+      });
+      //$('#htmlDyno input').textinput( "refresh" );
+
+      //.attr('class', 'ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-forward');
+    },200);
+
+    /*
     $("#htmlDyno").html( pager.getCurrentPage().appFrame(
       '<h1>otdm - config:</h1><hr/>'+
+      pager.getCurrentPage().fConfig.getHtml()+
       '<pre>'+JSON.stringify(data, 1, 1 )+'</pre>'
     ));
+    */
+    $("#htmlDyno").enhanceWithin();
   }
 
   makeLVItems( doPages, src='yssPages' ){
@@ -417,54 +480,63 @@ setTimeout(()=>{
     return tr;
   }
 
+
+  getPageSelect(){
+    return `
+    <select name="select-otdmPages" id="select-otdmPages" data-mini="true">
+      <option value="installed" >Installed</option>
+      <option value="dpkg" `+(urlArgs['action']=='dpkg' ? 'selected': '')+`>dpkg repository</option>
+      <option value="cmd" `+(urlArgs['action']=='cmd' ? 'selected': '')+`>cmd</option>
+      <option value="config" `+(urlArgs['action']=='config' ? 'selected': '')+`>config</option>
+    </select>
+
+    `;
+  }
+
+  pageSelectActivate(){
+    $("#select-otdmPages").on(
+      'change', (e)=>{
+        cl('changed!');
+        cl(e);
+        cl(this);
+        cl($("#select-otdmPages option:selected").val() );
+
+        switch( $("#select-otdmPages option:selected").val() ){
+          case "installed":
+            pager.goToByHash('pageByName=OTDM');
+            break;
+          case "dpkg":
+            pager.goToByHash('pageByName=OTDM&action=dpkg');
+            break;
+          case "config":
+            pager.goToByHash('pageByName=OTDM&action=config');
+            break;
+          case "cmd":
+            pager.goToByHash('pageByName=OTDM&action=cmd');
+            break;
+        };
+
+      }
+    );
+  }
+
+
   getPageSwitcher(){
     var tr = `
 <form>
   <div clas="ui-field-contain">
     <label for="select-otdmPages">Loking at:</label>
-    <select name="select-otdmPages" id="select-otdmPages" data-mini="true">
-      <option value="installed" >Installed</option>
-      <option value="dpkg" `+(urlArgs['action']=='dpkg' ? 'selected': '')+`>dpkg repository</option>
-      <option value="cmd" `+(urlArgs['action']=='cmd' ? 'selected': '')+`>cmd</option>
-      <option value="config" >config</option>
-    </select>
+    `+this.getPageSelect()+`
   </div>
 </form>
-<script>
-$("#select-otdmPages").on(
-  'change', (e)=>{
-    cl('changed!');
-    cl(e);
-    cl(this);
-    cl($("#select-otdmPages option:selected").val() );
-
-    switch( $("#select-otdmPages option:selected").val() ){
-      case "installed":
-        pager.goToByHash('pageByName=OTDM');
-        break;
-      case "dpkg":
-        pager.goToByHash('pageByName=OTDM&action=dpkg');
-        break;
-      case "config":
-        pager.goToByHash('pageByName=OTDM&action=config');
-        break;
-      case "cmd":
-        pager.goToByHash('pageByName=OTDM&action=cmd');
-        break;
-    };
-
-  }
-);
-</script>
     `;
-
-
 
     return tr;
   }
 
 
   pageMain(){
+    /*
     return `
     <div id="otdmPage">
     <h1>OTDM</h1>
@@ -510,6 +582,50 @@ $("#select-otdmPages").on(
 
     </div>
     `;
+
+    */
+    let cont = '';
+    if( urlArgs['action'] == 'cmd' ){
+      cont+= `<input id="cmd" type="text"
+        value="`+( urlArgs['action'] == 'cmd' ? '/usr/bin/pkexec,--disable-internal-agent,whoami': '')+`"
+         />
+        <div id="spRes"></div>`;
+    }
+    if( urlArgs['action'] == 'cmd' ){
+      cont+= `<button class="ui-btn"
+        onclick="pager.getCurrentPage().doCmdUpdate()">
+        do cmd</button>`;
+    }
+    if( urlArgs['action'] == 'dpkg' ){
+      cont+= `<button class="ui-btn"
+        onclick="pager.getCurrentPage().doAptUpdate()">
+        update repository</button>
+      <div id="spRes"></div>`;
+    }
+
+    //cont+= this.getPageSwitcher();
+    cont+= this.getYssPages();
+
+    let app = new mApp();
+    let goTo = pager.getCurrentPage().getPageSelect();
+    let tr = app.appFrame({
+      "title": "otdm", // config
+      "content": cont,
+      //'backButton': 'history.back()',
+      'goTo':'raw:<div id="mSelGoTo">'+goTo+'</div>'
+    });
+    $("#htmlDyno").html( tr );
+
+
+    setTimeout(()=>{
+
+      $("#mSelGoTo select").selectmenu({
+        icon: "bars"
+        //'ui-btn-right ui-btn ui-btn-b ui-corner-all ui-btn-icon-right ui-icon-forward'
+      });
+      $("#mSelGoTo").attr('class', 'ui-btn-right ui-btn-inline ui-mini ui-icon-forward' );
+    },100);
+
   }
 
   get getHtml(){
@@ -529,7 +645,7 @@ $("#select-otdmPages").on(
           value="`+( urlArgs['action'] == 'cmd' ?
             //'./otdmTools.py,-testDialog,yes': ''
             //'mplayer,/home/yoyo/Music/AWS/3sirCWDglG4ZY.128.mp3': ''
-            `sh,-c,echo 'It will ask you from bash for prompt'; echo 'resend command'; echo 'or enter custom text to echo';read -p 'can you tyke new text' aaa;echo 'you entert['; echo $aaa; echo ']<- its procest by bash'`: ''
+            `sh,-c,seq 1 1 10 | while read -r line; do echo '--'$line;done`: ''
             )+`"
            />
           <div id="spRes">res..</div>`:''
@@ -540,7 +656,23 @@ $("#select-otdmPages").on(
           onclick="pager.getCurrentPage().doCmdUpdate()">
           do cmd</button>`: ''
         );
-      tr = this.appFrame( trB );
+      let app = new mApp();
+      let goTo = pager.getCurrentPage().getPageSelect();
+      tr = app.appFrame({
+         "title": "otdm", // cmd
+         "content": trB,
+         //"backButton":"pager.goToByHash('pageByName=OTDM')",
+         'goTo':'raw:<div id="mSelGoTo">'+goTo+'</div>'
+      });
+
+      // to correct go option
+      setTimeout(()=>{
+        $("#mSelGoTo select").selectmenu({
+          icon: "bars"
+          //'ui-btn-right ui-btn ui-btn-b ui-corner-all ui-btn-icon-right ui-icon-forward'
+        });
+        $("#mSelGoTo").attr('class', 'ui-btn-right ui-btn-inline ui-mini ui-icon-forward' );
+      },100);
 
 
     }else if( urlArgs['action'] == 'config' ){
@@ -555,6 +687,10 @@ $("#select-otdmPages").on(
       tr = this.pageMain();
     }
 
+    setTimeout(()=>{
+      cl("Activate header menu ...");
+      pager.getCurrentPage().pageSelectActivate();
+    },200);
 
     return tr;
   }
@@ -562,6 +698,10 @@ $("#select-otdmPages").on(
   getHtmlAfterLoad(){
     cl("after load");
     //$("#otdmPage").enhanceWithin();
+    setTimeout(()=>{
+      cl("Activate2 header menu ...");
+      pager.getCurrentPage().pageSelectActivate();
+    },500);
   }
 
   get svgDyno(){
