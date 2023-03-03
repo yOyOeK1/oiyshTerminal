@@ -1,6 +1,10 @@
 
 class s_packitsoPage{
 
+
+  //a=$(find /OT/ySS_calibration/sites/packitso/p-*/packitso.json -type f | while read -r line; do echo -n "{  \"modDate\":\"""$(find "$line" -printf "%Ay-%Am-%Ad %AT")""\",  ";echo -n " \"file\":\"$line\",  ";echo -n "  "$(ls -alh "$line" | awk '{print "\"size\":\""$5"\", "}'; echo -n "\"content\":"; echo -n `cat "$line"`" },  ";);echo ""; done;  ); echo "[ $a {} ]" | tr -d "\\n"  |jq ".[0:-1]"
+
+
   constructor(){
 
     this.mDoCmd = new mDoCmd();
@@ -34,6 +38,17 @@ class s_packitsoPage{
     let hDir = this.instanceOf['fDir'];
     cl("loadPackitsoList from home directory ./p-* .... "+hDir);
     let cp = pager.getCurrentPage();
+
+
+    cp.toastOnStartLoading = $.toast({
+      heading: 'Loading packitso\'us ... ',
+      text: [
+          'Running bash to find them all'
+      ],
+      showHideTransition: 'slide',
+      hideAfter: false,
+      icon: 'info'
+    });
 
     cl("cp.mDoCmd");
     cl(cp.mDoCmd);
@@ -492,11 +507,6 @@ class s_packitsoPage{
     $("#wfOut").val(we['oFile']);
     $("#wfWork").val(we['keyWord']);
     $("#wfWork").selectmenu('refresh');
-
-
-
-
-
     this.cbOnChangeWfWorkSELECTED();
     cl("is async...?");
 
@@ -674,11 +684,10 @@ class s_packitsoPage{
     //cl(e);
     if( e == 0  )
       return 0;
+
     let w = this.loadingPacknow;
     let bUrl = this.packs[w]['fullPath']+`/packitso.json`;
-    let urlToPackJ = decodeURI(
-      '#pageByName=pack it so&action=editWork&i='+bUrl
-    );
+    let urlToPackJ = decodeURI( '#pageByName=pack it so&action=editWork&i='+bUrl );
     //cl("url to pack: "+urlToPackJ);
     let content = {
       "content" : {
@@ -688,22 +697,36 @@ class s_packitsoPage{
       },
       "tip": {"No#":w},
     };
+
     this.packs[w]['li.tmp'] = this.app.lvElement(
       e['packitso']['name'],
       content,
       `pager.goToByHash('pageByName=pack it so&action=editWork&i=`+w+`')`
     );
-
+    if( this.packs[w]['liPut.tmp'] == undefined ){
+      this.packs[w]['liPut.tmp'] = false;
+    }
     var eles = [];
     for(let pId=0,pc=this.packs.length;pId<pc;pId++){
       if( this.packs[pId]['li.tmp'] != undefined )
         eles.push( this.packs[pId]['li.tmp'] );
     }
-    let newList = this.app.buildListView( {
+
+
+    let lvUlChil = $("#plDiv").find('ul').children();
+    let newList = -1;
+    if( lvUlChil.length == 0 ){
+      newList = this.app.buildListView( {
         "header": "Pack it so'us:" +(eles.length == this.packs.length ? "" : " loading ... "),
         "headerTip": eles.length == this.packs.length ? eles.length : eles.length+'/'+this.packs.length,
         'items':eles
       });
+    }else{
+      cl("lvUl is now childrens:"+lvUlChil.length);
+
+      //return 0;
+    }
+
 
     if( eles.length == this.packs.length ){
       this.toastOnStartLoading.reset();
@@ -717,10 +740,25 @@ class s_packitsoPage{
       });
     }
 
+    if( lvUlChil.length == 0 ){
+      $("#plDiv").html(newList);
+      $("#plDiv").enhanceWithin();
 
-    $("#plDiv").html(newList);
-    $("#plDiv").enhanceWithin();
+    }else{
+      cl("inject item to list view !");
 
+      for(let i=1,ic=this.packs.length; i<ic; i++ ){
+        if( this.packs[i]['liPut.tmp'] == false && this.packs[i]['li.tmp'] != undefined ){
+          this.packs[i]['liPut.tmp'] = true;
+          $( this.packs[i]['li.tmp'] ).insertAfter(
+            $($('#plDiv').find('ul')[0]).find('li')[0]
+          );
+        }
+      }
+
+      $($('#plDiv').find('ul')[0]).listview('refresh');
+
+    }
 
     if( this.loadingPacknow!=-1 && this.loadingPacknow < this.packs.length-1 ){
       this.loadingPacknow++;
@@ -729,6 +767,7 @@ class s_packitsoPage{
       );
     }else{
       this.loadingPacknow = -1;
+
     }
 
 
@@ -817,6 +856,8 @@ class s_packitsoPage{
       wc = this.pisNew['works'].length;
 
     if( wc > 0 ){
+
+
 
       let toTr = [];
       for(let w=wc-1; w>-1; w--){
@@ -1166,15 +1207,7 @@ class s_packitsoPage{
 
     }else{
       cl("Main no arg main page ...");
-      cp.toastOnStartLoading = $.toast({
-        heading: 'Loading packitso\'us ... ',
-        text: [
-            'Running bash to find them all'
-        ],
-        showHideTransition: 'slide',
-        hideAfter: false,
-        icon: 'info'
-      });
+
       //a=$(find ./p-*/packitso.json -type f | while read -r line; do echo -n "{  \"modDate\":\"""$(find "$line" -printf "%Ay-%Am-%Ad %AT")""\",  ";echo -n " \"file\":\"$line\",  ";echo -n "  "$(ls -alh "$line" | awk '{print "\"size\":\""$5"\", "}'; echo -n "\"content\":"; echo -n `cat "$line"`" },  ";);echo ""; done;  ); echo "[ $a {} ]" | tr -d '\n'  |jq '.[0:-1]'
       cp.loadPackitsoList(()=>{cl("no args pack it so list ... DONE");});
 
