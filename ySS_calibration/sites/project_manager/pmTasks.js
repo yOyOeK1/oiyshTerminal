@@ -332,14 +332,14 @@ class pmTasks{
   }
 
   buildCircleImgGant( objT, ccx, ccy, dI, wFrom, wTo, level ){
-    cl("buildCircleImgGant ...."+level);
-    cl(" wFrom, wTo, level");
+    //cl("buildCircleImgGant ...."+level);
+    //cl(" wFrom, wTo, level");
     cl([wFrom, wTo, level]);
 
     let lh=16,cx=wFrom,ew=(wTo-wFrom);
 
-    cl(" cx, lh, ew ");
-    cl([ cx, lh, ew ]);
+    //cl(" cx, lh, ew ");
+    //cl([ cx, lh, ew ]);
 
     if( level == 0 ){
       let tCent = objT.text( ".cc" );
@@ -355,15 +355,19 @@ class pmTasks{
     for(let t=0,tc=iInLev; t<tc; t++ ){
       var aStart = cx+(t*ewAtom);
       let aEnd = aStart+ewAtom-gap;
+      if( aEnd < gap ) aEnd = gap;
       var r = (level)*lh;
 
-        cl(" aStart, aEnd, r");
-        cl([ aStart, aEnd, r]);
+        //cl(" aStart, aEnd, r");
+        //cl([ aStart, aEnd, r]);
+        let pShadow = objT.path(``);
         let p = objT.path(``);
         cl("chave path ");
         p.attr("id","cirId"+dI[t]['id'] );
         p.attr("fill","#aaa");
+        pShadow.attr("fill","#999");
         p.attr("stroke","#333");
+
         if( dI[t]['sub'] && dI[t]['sub'] != [] && dI[t]['sub'].length>0 ){
           p.attr('class','myPMCirSvg');
         }else{
@@ -373,22 +377,73 @@ class pmTasks{
         // making line on mouseover from circle to list
         p.on('mouseover',function(){
           let mid = this.attr("id");
+          let arrowType = 1;
           let tId = mid.substring(5);
           let mx=this.cx(),my=this.cy();
           let lO = SVG("#listTasksId"+tId);
           let lx=lO.x()-gap,ly=lO.y()+5;
           if( pager['PMlineToShow']!= undefined ){
-            pager['PMlineToShow'].remove();
+            if( arrowType == 2 ){
+              pager['PMlineToShow'].remove();
+              pager['PMlineToShow2'].remove();
+            }
+          }
+          if(   pager['PMlineToShowLeLi'] != undefined && arrowType == 1 ){
+            pager['PMlineToShowLeLi'].remove();
           }
 
-          pager['PMlineToShow'] = objT.line({
-            x1:mx, y1: my, x2: lx, y2: ly,
-            "style": "fill:#fff; stroke:#b86640; stroke-width: 2"
-          });
-          cl("path is: "+mx+" , "+my+"   to    "+lx+" , "+ly);
+          if( arrowType == 1 ){
+            let l = new LeaderLine(
+              document.getElementById( mid ),
+              document.getElementById( "listTasksId"+tId ),
+              {
+                outlineColor: '#353',
+                outline: true,
+                startSocket: 'top',
+                //middleLabel: 'MIDDLE',
+                startPlug: 'square',
+                startPlugSize: 0.5,
+                //animOptions:{ duration: 3000, timing: 'linear'},
+                //dropShadow: true,
+                color: "#ddd"
+              });
+            pager['PMlineToShowLeLi'] = l;
+          }
+
+          if( arrowType == 2 ){
+            pager['PMlineToShow'] = objT.line({
+              x1:mx, y1: my, x2: lx-50, y2: ly,
+              "style": "fill:#fff; stroke:#b86640; stroke-width: 2"
+            });
+            pager['PMlineToShow2'] = objT.line({
+              x1:lx-50, y1: ly, x2: lx, y2: ly,
+              "style": "fill:#fff; stroke:#b86640; stroke-width: 2"
+            });
+          }
+          /*
+          pager['PMlineToShow'] = SVG(`<g stroke="black" stroke-width="3" fill="black">
+            <circle id="pointA" cx="`+mx+`" cy="`+my+`" r="3" />
+            <circle id="pointB" cx="`+(lx-40)+`" cy="`+(ly+20)+`" r="3" />
+            <circle id="pointC" cx="`+lx+`" cy="`+ly+`" r="3" />
+          </g>`);
+          */
+          $("#pImg").append( pager['PMlineToShow'] );
+          $("#pImg").append( pager['PMlineToShow2'] );
+          //cl("path is: "+mx+" , "+my+"   to    "+lx+" , "+ly);
 
         });
 
+        let shadowDist = 2;
+        let dShadow = ah.arc({
+          x: ccx+shadowDist,
+          y: ccy+shadowDist,
+          R: r+lh-gap,
+          r: r,
+          start: aStart,
+          end: aEnd,
+        });
+        pShadow.attr('d', dShadow);
+        //pShadow.attr('class','');
         let d = ah.arc({
           x: ccx,
           y: ccy,
