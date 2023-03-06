@@ -218,6 +218,15 @@ class s_shareitso{
     }, 1);
   }
 
+  getQr( msg ){
+
+    $.get( `/qrcode?q=`+msg, function( data, status ){
+      $('#dQr').html( data );
+
+    });
+
+  }
+
 
   getHtml(){
     let cp = pager.getCurrentPage();
@@ -232,6 +241,7 @@ class s_shareitso{
     //a=$(find -L ./ -type f -printf "\n| .+=[{\"modTime\":\"%Ay-%Am-%Ad %AT\", \"size\":\"%s\", \"file\":\"%p\"}]" | sort -r); echo '[]' | jq '. '"$a"
     //a=$(find -L ./ -type f -printf "\n| .+=[{\"modTime\":\"%Ay-%Am-%Ad %AT\", \"size\":\"%s\", \"file\":\"%p\"}]" | sort -r); echo '[]' | jq '. '"$a"
     htmlTr+=`
+    <div id="dQr"></div>
     <form
       id="fileForm" name="fileForm"
       action="`+cp.hostPortOfFiles+`/upload"
@@ -247,7 +257,8 @@ class s_shareitso{
       <li class="ui-field-contain">
         <!--<label for="msg">message</label>-->
         <input name="msg" id="msg" type="text"
-          placeholder="Past message ..." />
+          placeholder="Past message ..."
+          onchange="pager.getCurrentPage().getQr( $(this).val() )"/>
       </li>
 
       <li class="ui-field-contain">
