@@ -1,0 +1,13 @@
+{
+    "oName": "s_pmPage",
+    "o": null,
+    "dir": "blank",
+    "jssrc":["s_pmPage.js", "pmTasks.js"],
+    "enable": true,
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "Projects managment system tu support you with convolutet situations and tasks ",
+    "otdm":{
+        "playground": false
+    }
+}

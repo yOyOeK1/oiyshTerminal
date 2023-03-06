@@ -1,6 +1,9 @@
 {
   "dirs": [
 
+
+    "project_manager",
+
     "calibration",
     "autopilot_v3_svg",
 
@@ -16,6 +19,7 @@
     "test_Three.js",
 
     "test_functions",
+    "test_mDynoForm",
     "packitso",
     "shareitso"
 
