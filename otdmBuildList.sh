@@ -16,5 +16,5 @@ otdm-nrf-ot-test \
 otdm-nrf-audio-onhost \
 otdm-nrf-hhbell-binary \
 otdm-yss \
-otdm-yss-calibration otdm-yss-autopilot-v3-svg otdm-yss-multisvg otdm-yss-basic-sail otdm-yss-iloo-nav otdm-yss-music-sync otdm-yss-iloo-nav-3d otdm-yss-3d-compass1 otdm-yss-test-three-js otdm-yss-test-functions otdm-yss-packitso otdm-yss-imagehistorye otdm-yss-test-functionse otdm-yss-otdme \
+otdm-yss-project-manager otdm-yss-calibration otdm-yss-autopilot-v3-svg otdm-yss-multisvg otdm-yss-basic-sail otdm-yss-iloo-nav otdm-yss-music-sync otdm-yss-iloo-nav-3d otdm-yss-3d-compass1 otdm-yss-test-three-js otdm-yss-test-functions otdm-yss-test-mdynoform otdm-yss-packitso otdm-yss-shareitso otdm-yss-imagehistorye otdm-yss-test-functionse otdm-yss-otdme \
 otdm-tools"
