@@ -82,6 +82,7 @@ class mDynoForm{
     vPath.find((e,k)=>{
       cl("enter "+e+" index: "+vPath.indexOf(e));
       if( vPath.indexOf(e) == vPath.length-1 ){
+        cl("  setting "+e+'Set() ... ');
         setFA[e+'Set'] = function ( v ){
           setFA[e] = v;
           $('#'+e).val(v);
@@ -116,10 +117,34 @@ class mDynoForm{
 </li>
   `;
 
+  }else if( (typeof val ) == "object" && Object.keys( val ).length > 0 ){
+    cl("Have selector?...");
+    cvP+=`=$(this).val()`;
+    let keys = Object.keys( val );
+    let items = [];
+    for(let i=0,ic=val['options'].length; i<ic; i++ ){
+      items.push( `<option value="`+i+`">`+val['options'][i]+`</option>` );
+    }
+
+    //value="`+val+`"
+    //onchange="cl('ok2')"
+    //>
+
+    return  `
+<li class="ui-field-contain">
+  <label for="`+name+`">`+this.doFirstLeterBig(name)+`:</label>
+  <select name="`+name+`" id="`+name+`" onchange="`+cvP+`">
+    `+items.join(" ")+`
+  </select>
+</li>
+  `;
+
   }else if( (typeof val ) == "function" ){
     cl("function value skipp...");
   }else{
-    return 'NaN element type: '+(typeof val );
+    cl("NaN element ");
+    cl(val);
+    return 'NaN element type0: '+(typeof val );
   }
 
   }

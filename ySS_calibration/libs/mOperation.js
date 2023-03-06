@@ -25,6 +25,18 @@ function rotateImage(obj, degree) {
 
 }
 
+
+
+function timestampToNiceTime( ts ){
+  var date = new Date(ts*1000);
+  return date.getFullYear()+
+    "/"+(date.getMonth()+1)+
+    "/"+date.getDate()+
+    " "+date.getHours()+
+    ":"+date.getMinutes()+
+    ":"+date.getSeconds();
+}
+
 //rotateSvgSetRC( "objRot2Shadow", "objRot2RC", ui.value );
 /**
  * function to  rotate object over center of other object in .svg object by name

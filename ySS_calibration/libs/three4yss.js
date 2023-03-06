@@ -36,6 +36,7 @@ class Three4Yss extends aggregation(
 
   constructor( ){
     super();
+    this.initOnPage = -1;
     this.extras = {};
     this.frameNo = 0;
     this.ready = false;
@@ -109,8 +110,6 @@ class Three4Yss extends aggregation(
   getHtmlAfterLoad( glbFileModel, extras = {} ){
     //cl("---------------- extras!");
     //cl(extras);
-
-
     t4y.frameNo = 0;
     t4y.ready = false;
     t4y.initPageNo = pager.currentPage;
@@ -400,7 +399,7 @@ fitCanvasToScreenDelay(){
 
 fitCanvasToScreen(){
   var c = $("#otThreeLogo").children()[0];
-  $(c).attr('style',"width:100vw;height:100vh;");
+  $(c).attr('style',"width:100vw;height:99.2vh;");
 }
 
  onWindowResize( renderAfter=true ) {

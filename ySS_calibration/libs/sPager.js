@@ -260,13 +260,13 @@ class sPager {
     }else{
       var cp = this.getCurrentPage();
       $("#svgDyno").html("");
-      console.log("----------------- mobile get active page ----------------");
+      //console.log("----------------- mobile get active page ----------------");
       $("#htmlDyno").html( cp.getHtml ).enhanceWithin();
       //console.log($(":mobile-pagecontainer").pagecontainer("getActivePage"));
       //$(":mobile-pagecontainer").pagecontainer("getActivePage");
       //$('#htmlDyno').enhanceWithin();
       //$("#htmlDyno").enhanceWithin();
-      console.log("----------------- mobile get active page ---------DONE");
+      //console.log("----------------- mobile get active page ---------DONE");
       cp.getHtmlAfterLoad();
       try{
         var abcueoa = 1213;

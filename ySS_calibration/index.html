@@ -90,6 +90,10 @@ var module = new moduleCollector();
 <script src="libs/jquery.mobile-1.4.5.min.js"></script>
 <script src="libs/jquery.toast.min.js"></script>
 
+<script src="libs/jquery.dform-1.1.0.min.js"></script>
+
+<script src="libs/mDbdForm.js"></script>
+
 <script type="importmap">
     {
         "imports": {
@@ -206,6 +210,8 @@ function makeInit(){
   });
   */
 
+
+
   cl("-----------------------------------");
   cl("t4y status:");
   cl(t4y);
@@ -243,6 +249,12 @@ function makeInit(){
   }
 	cl( "ready!" );
 
+
+  window.addEventListener('hashchange', function () {
+    chkUrl();
+  });
+  chkUrl( true );
+
   //doMqtt();
   svgTests();
 	wsConnectIn( pager );
@@ -255,8 +267,15 @@ function makeInit(){
   cl("have cookie from last use: ["+lastUse+"]");
   var lastPageNo = getCookie('lastPage');
   cl("lastPage: ["+lastPageNo+"]")
-  if( lastPageNo != "" )
+  if( chkUrl() == 0  ){
+    cl("Page set by url ....");
+  }else if( lastPageNo != "" ){
+    cl("Page set by last page no ....");
     pager.setPage( parseInt( lastPageNo ) );
+  }else{
+    cl("Page set as -1 first visit no plan ...");
+    pager.setPage(-1);
+  }
   looperIter();
   navBatteryPercentSignUp( pager );
 
@@ -271,16 +290,10 @@ function makeInit(){
 
   setSvgFit();
 
-  window.addEventListener('hashchange', function () {
-    chkUrl();
-  });
-  chkUrl();
-
-
-
+  //chkUrl();
 }
 
-function chkUrl(){
+function chkUrl( dontSetPage=false ){
   var has = window.location.href;
   cl("chkUrl ["+has+"]");
   urlArgs = {};
@@ -298,24 +311,32 @@ function chkUrl(){
   cl("urlArgs");
   cl(urlArgs);
 
-  if( urlArgs['page'] != undefined )
+  if( dontSetPage == true )
+    return 1;
+
+  if( urlArgs['page'] != undefined ){
     pager.setPage( urlArgs['page'] );
+    return 0;
 
-  else if( urlArgs['pageByName'] != undefined ){
+  }else if( urlArgs['pageByName'] != undefined ){
 
-      var n = undefined;
-      for( var p=0,pc=pager.pages.length; p<pc; p++){
-        if( pager.pages[p].getName == urlArgs['pageByName'] ){
-          n = pager.pages[p];
-          break;
-        }
+    var n = undefined;
+    for( var p=0,pc=pager.pages.length; p<pc; p++){
+      if( pager.pages[p].getName == urlArgs['pageByName'] ){
+        n = pager.pages[p];
+        break;
       }
-      cl("get n ");
-      cl(n);
+    }
+    cl("get n ");
+    cl(n);
 
-      pager.currentPage++;
-      pager.setPage( pager.pages.indexOf( n ) );
+    pager.currentPage++;
+    pager.setPage( pager.pages.indexOf( n ) );
+    return 0;
+
   }
+
+  return 1;
 
 }
 
