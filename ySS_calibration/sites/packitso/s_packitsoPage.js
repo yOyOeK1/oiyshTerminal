@@ -253,7 +253,21 @@ class s_packitsoPage{
       (data,res)=>{
         cl("got pDir test result .....");
         cl(data);
-        if( data == 0 ){
+        cl("typeof: "+(typeof data));
+        let isOk = true;
+        if( (typeof data) == 'object' ){
+          cl("is object !!");
+          for(let i=0,ic=data.length; i<ic; i++ ){
+            let pathElements = data[i]['fullPath'].split('/');
+            if( pathElements[ pathElements.length-1 ] == 'packitso.json'  ){
+              isOk = false;
+              break;
+            }
+          }
+        }
+
+
+        if( data == 0 || isOk == true  ){
           cl("new project save .....");
 
           cl("  making directory ....")
@@ -298,16 +312,74 @@ class s_packitsoPage{
 
         }else{
           cl("existing project ask if overrite!");
-          let text = "There is a file. Overwrite it ?";
-          if( confirm(text) == true ){
-            cl("ok overwrite it !  -- TODO end of path");
+          let text = "There is a file. Overwrite it ? "+
+            `<a hrfe="#" onclick="pager.getCurrentPage().okOveriteAndSave()">Overwrite it!</a>`;
 
-          }else
-            cl("do nothing...");
+          $.toast({
+              heading: 'Error',
+              text: text,
+              icon: 'error'
+          });
+
+
         }
 
       }
     );
+
+
+  }
+
+
+  okOveriteAndSave(){
+
+    // overrite
+    let cp = pager.getCurrentPage();
+    cp.mDoCmd.doShExitCodeChk(
+      'pF="/OT/ySS_calibration/sites/packitso/p-'+cp.pisNew['packitso']['name']+'/packitso.json"; if [ -f "$pF" ];then echo "File IS OK"; echo "Removing ... aka renaming with sufix :P "; tF="$pF""_""$(date +%y%m%d_%H%M%S)";echo "As backup is in ... $tF";mv "$pF" "$tF";  else echo "NO File"; fi ',
+      '',
+      ( d, r )=>{
+        cp.mDoCmd.cmdWork=false;
+        cl("GOT OK !");
+        cl(d);
+        //pager.getCurrentPage().lvOfShareitso(d);
+        if( d[0] == "File IS OK" ){
+          $.toast({
+              heading: 'Removing / recycling / backuping',
+              text: './p-'+cp.pisNew['packitso']['name']+'/packitso.json backup ...',
+              showHideTransition: 'slide',
+              icon: 'success'
+          });
+          setTimeout(()=>{cp.formSave();}, 300 );
+        } else if( d[0] == "NO File" ){
+          $.toast({
+              heading: 'Removing / recycling / backuping',
+              text: 'No target ./p-'+cp.pisNew['packitso']['name']+'/packitso.json',
+              showHideTransition: 'slide',
+              icon: 'warning'
+          });
+        }
+
+      },
+      ( d, r )=>{
+        cp.mDoCmd.cmdWork=false;
+        cl("GOT ERROR !");
+        $.toast({
+            heading: 'Removing / recycling / backuping',
+            text: 'Something is not ok with ./p-'+cp.pisNew['packitso']['name']+'/packitso.json',
+            showHideTransition: 'slide',
+            hideAfter: false,
+            icon: 'error'
+        });
+
+      },
+      false
+    );
+
+
+    // save
+
+
 
 
   }
