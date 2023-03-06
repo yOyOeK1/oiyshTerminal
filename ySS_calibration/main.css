@@ -107,3 +107,37 @@ div.bottomPanelHandle{
 	border-radius:3px;
 	text-transform:uppercase;
 }
+
+
+
+.myPMTaskSvg {
+  fill: #0b0b0b;
+  cursor:pointer;
+  font-size: 10;
+}
+
+.myPMTaskSvg:hover {
+  fill: #c00;
+  font-size: 15;
+}
+
+.myPMCirSvg {
+  fill: #ace91b;
+  cursor:help;
+  font-size: 10;
+}
+
+.myPMCirSvg:hover {
+  fill: #c00;
+  font-size: 15;
+}
+.myPMCirLastSvg {
+  fill: #e9fc05;
+  cursor:help;
+  font-size: 10;
+}
+
+.myPMCirLastSvg:hover {
+  fill: #d0c5a8;
+  font-size: 15;
+}

@@ -1,4 +1,53 @@
 
+
+class svgArcHelper{
+
+  point = (x, y, r, angel) => [
+    (x + Math.sin(angel) * r).toFixed(2),
+    (y - Math.cos(angel) * r).toFixed(2),
+  ];
+
+  full = (x, y, R, r) => {
+    if (r <= 0) {
+      return `M ${x - R} ${y} A ${R} ${R} 0 1 1 ${x + R} ${y} A ${R} ${R} 1 1 1 ${x - R} ${y} Z`;
+    }
+    return `M ${x - R} ${y} A ${R} ${R} 0 1 1 ${x + R} ${y} A ${R} ${R} 1 1 1 ${x - R} ${y} M ${x - r} ${y} A ${r} ${r} 0 1 1 ${x + r} ${y} A ${r} ${r} 1 1 1 ${x - r} ${y} Z`;
+  };
+
+  part = (x, y, R, r, start, end) => {
+    const [s, e] = [(start / 360) * 2 * Math.PI, (end / 360) * 2 * Math.PI];
+    const P = [
+      this.point(x, y, r, s),
+      this.point(x, y, R, s),
+      this.point(x, y, R, e),
+      this.point(x, y, r, e),
+    ];
+    const flag = e - s > Math.PI ? '1' : '0';
+    return `M ${P[0][0]} ${P[0][1]} L ${P[1][0]} ${P[1][1]} A ${R} ${R} 0 ${flag} 1 ${P[2][0]} ${P[2][1]} L ${P[3][0]} ${P[3][1]} A ${r} ${r}  0 ${flag} 0 ${P[0][0]} ${P[0][1]} Z`;
+  };
+
+  arc = (opts = {}) => {
+    const { x = 0, y = 0 } = opts;
+    let {
+      R = 0, r = 0, start, end,
+    } = opts;
+
+    [R, r] = [Math.max(R, r), Math.min(R, r)];
+    if (R <= 0) return '';
+    if (start !== +start || end !== +end) return this.full(x, y, R, r);
+    if (Math.abs(start - end) < 0.000001) return '';
+    if (Math.abs(start - end) % 360 < 0.000001) return this.full(x, y, R, r);
+
+    [start, end] = [start % 360, end % 360];
+
+    if (start > end) end += 360;
+    return this.part(x, y, R, r, start, end);
+  };
+
+}
+
+
+
 class pmTasks{
 
   constructor( pageName ){
@@ -169,6 +218,247 @@ class pmTasks{
     }
   }
 
+  lookForDataWithParent( trA, dI, idParent ){
+    if( idParent == 0 )
+      idParent = null;
+
+    for(let i=0,ic=dI.length; i<ic; i++ ){
+      //cl("looking ...."+dI[i]['firstParent']);
+      if( dI[i]['firstParent'] == idParent ){
+        let d = dI[i];
+        d['sub'] = this.lookForDataWithParent( [], dI, dI[i]['id'] );
+        trA.push( d );
+
+      }
+    }
+    return trA;
+  }
+
+  rebuildDataForImage( dI ){
+    cl("Looking at level ... 0");
+    tr = this.lookForDataWithParent( [], dI, 0 );
+    cl("in level 0 got ... "+tr.length);
+
+    return tr;
+
+  }
+
+
+
+  countSubs( dI ){
+    let tr = 2;
+
+
+    return tr;
+  }
+
+
+  buildBlocksImgGant( objT, dI, wFrom, wTo, level ){
+    cl("buildBlocksImgGant ...."+level);
+    cl(" wFrom, wTo, level");
+    cl([wFrom, wTo, level]);
+    let cx=wFrom,cy=70,lh=25,ew=wTo-wFrom;
+
+    if( level == 0 ){
+      let tCent = objT.text( ".center" );
+      tCent.font({ size:10, fill: "#000000" });
+      tCent.move( cx,cy+level*lh );
+    }
+
+    let iInLev = dI.length;
+    for(let t=0,tc=iInLev; t<tc; t++ ){
+
+
+      let isFractin = ew/iInLev;
+      let rect = objT.rect( isFractin-2, lh-2 ).attr({ stroke: '#000', fill: '#ddd' });
+      let x = cx + parseInt( isFractin*t );
+      let y = cy + lh*level;
+      rect.move( x, y );
+
+      let tCent = objT.text( dI[t]['name'].substring(0,6) );
+      tCent.font({ size:10, fill: "#000000" });
+      tCent.move( x,y );
+
+
+
+      if( dI[t]['sub']!= [] ){
+        this.buildBlocksImgGant( objT, dI[t]['sub'], x, x+isFractin, level+1 );
+      }
+
+
+    }
+
+
+  }
+
+
+
+  buildLevelImg( objT, dI, hOff, level ){
+    cl("buildLevelImg ... lever: "+level);
+
+    let x = hOff;
+    let trC = 0;
+    let trCSub = [];
+    for(let t=0,tc=dI.length; t<tc; t++ ){
+      let textF = objT.text( dI[t]['name'] );
+      textF.font({ size:10, fill: "#000000" });
+      textF.move( 20+(level*20), x );
+      textF.attr('class','myPMTaskSvg');
+      textF.attr("id","listTasksId"+dI[t]['id'] );
+      //textF.attr('style','cursor:help;');
+      //textF.attr('style.pointer','background-color:#f70;');
+      //textF.attr('style:hover','background-color:#f00;');
+      textF.on('mouseover',function(){
+        cl("over task id: "+dI[t]['id']);
+      });
+      textF.on('click',function(){
+        cl("click on task id: "+dI[t]['id']);
+        pager.goToByHash('pageByName=project manager&action=edit&id='+dI[t]['id']);
+      });
+      x+= 10;
+      trC+=1;
+      if( dI[t]['sub']!= [] ){
+        trCSub = this.buildLevelImg( objT, dI[t]['sub'], x, level+1 );
+      }
+      if( trCSub >0 ){
+        cl("trCSub got :"+trCSub);
+        x+= trCSub*10;
+        trC+= trCSub;
+      }
+
+    }
+
+    return trC;
+  }
+
+  buildCircleImgGant( objT, ccx, ccy, dI, wFrom, wTo, level ){
+    cl("buildCircleImgGant ...."+level);
+    cl(" wFrom, wTo, level");
+    cl([wFrom, wTo, level]);
+
+    let lh=16,cx=wFrom,ew=(wTo-wFrom);
+
+    cl(" cx, lh, ew ");
+    cl([ cx, lh, ew ]);
+
+    if( level == 0 ){
+      let tCent = objT.text( ".cc" );
+      tCent.font({ size:10, fill: "#000000" });
+      tCent.move( ccx,ccy );
+    }
+
+
+    let iInLev = dI.length;
+    var ewAtom = ew/iInLev;
+    var ah = new svgArcHelper();
+    let gap = 2.0;
+    for(let t=0,tc=iInLev; t<tc; t++ ){
+      var aStart = cx+(t*ewAtom);
+      let aEnd = aStart+ewAtom-gap;
+      var r = (level)*lh;
+
+        cl(" aStart, aEnd, r");
+        cl([ aStart, aEnd, r]);
+        let p = objT.path(``);
+        cl("chave path ");
+        p.attr("id","cirId"+dI[t]['id'] );
+        p.attr("fill","#aaa");
+        p.attr("stroke","#333");
+        if( dI[t]['sub'] && dI[t]['sub'] != [] && dI[t]['sub'].length>0 ){
+          p.attr('class','myPMCirSvg');
+        }else{
+          p.attr('class','myPMCirLastSvg');
+        }
+
+        // making line on mouseover from circle to list
+        p.on('mouseover',function(){
+          let mid = this.attr("id");
+          let tId = mid.substring(5);
+          let mx=this.cx(),my=this.cy();
+          let lO = SVG("#listTasksId"+tId);
+          let lx=lO.x()-gap,ly=lO.y()+5;
+          if( pager['PMlineToShow']!= undefined ){
+            pager['PMlineToShow'].remove();
+          }
+
+          pager['PMlineToShow'] = objT.line({
+            x1:mx, y1: my, x2: lx, y2: ly,
+            "style": "fill:#fff; stroke:#b86640; stroke-width: 2"
+          });
+          cl("path is: "+mx+" , "+my+"   to    "+lx+" , "+ly);
+
+        });
+
+        let d = ah.arc({
+          x: ccx,
+          y: ccy,
+          R: r+lh-gap,
+          r: r,
+          start: aStart,
+          end: aEnd,
+        });
+        p.attr('d', d);
+        p.attr('fill-rule', 'evenodd');
+        //o.move(ccx-r, ccy-r);
+
+          /*parseInt(ccx),
+          parseInt(ccy),
+          toRad(aStart),
+          toRad(ewAtom),
+          parseFloat(r), 1 );
+          */
+
+      if( dI[t]['sub']!= [] ){
+        this.buildCircleImgGant( objT, ccx, ccy, dI[t]['sub'], aStart, aEnd, level+1 );
+      }
+
+    }
+  }
+
+
+  buildImage( d ){
+  //projSVG
+    cl("build Image .....");
+    cl("data in ...");
+    cl(d);
+
+    let dToI = this.rebuildDataForImage( d );
+    cl("img data ");
+    cl(dToI);
+
+    let iw=900,ih=300;
+    let icx=parseInt(iw/2), icy=parseInt(ih/2);
+
+
+    let tr = `<svg id="pImg" width="`+iw+`" height="`+ih+`" >
+      <text x="10" y="20" style="fill:black;">Project manager view:</text>
+      <svg>`;
+
+    $('#projSVG').html(tr);
+    var bip = SVG("#pImg");
+    let hImg = this.buildLevelImg( bip, dToI, 30, 9 );
+    cl("build levels image have elements: "+hImg);
+    $("#pImg").attr('height',hImg*10+50);
+
+
+    //this.buildBlocksImgGant( bip, dToI, 70, 500, 0 );
+    this.buildCircleImgGant( bip, 100, 120, dToI, 0, 360, 1 );
+
+
+    /*
+    let lastH = 0;
+    for(let t=0,tc=dToI.length; t<tc; t++ ){
+      let textF = bip.text( dToI[t]['name'] );
+      textF.font({ size:10, fill: "#000000" });
+      textF.move( 20, 30+(t+lastH)*10 );
+      lastH = this.countSubs( dToI[t] );
+    }
+    */
+
+
+  }
+
+
   loadTaskList( step ){
     cl("loadTaskList .... step: "+step);
     let cp = pager.getCurrentPage();
@@ -181,7 +471,7 @@ class pmTasks{
         this.onDBisTableRes
       );
 
-      return `<div id="projLV">Projects list is loading ... </div>`;
+      return `<div id="projSVG"> </div><div id="projLV">Projects list is loading ... </div>`;
 
     }else if( step == 1 ){
       cl("getting list off task in db ....");
@@ -192,12 +482,17 @@ class pmTasks{
         pt.status as status,
         pt.name as name,
         pt.description as description,
+        ( SELECT idTaskParent FROM pm_binds WHERE idTask=pt.id limit 1 ) as firstParent,
         pt.entryDate as entryDate,
         ( SELECT count(idTask) FROM pm_binds WHERE idTaskParent=pt.id ) as childrens
         FROM pm_tasks as pt order by status, childrens, entryDate desc;`,
         (d,r)=>{
           if( r == 'success' ){
             cl("make tasks list .....");
+
+
+            cp.task.buildImage( d );
+            //projSVG
 
             let tsks = [];
             cp.task.tasksList = [];
