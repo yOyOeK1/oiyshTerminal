@@ -218,13 +218,21 @@ class s_shareitso{
     }, 1);
   }
 
-  getQr( msg ){
-
+  async getQrCodeFeachAndProcess( msg ){
     $.get( `/qrcode?q=`+msg, function( data, status ){
-      $('#dQr').html( data );
-
+        $('#dQr').hide();
+        $('#dQr').html( data );
+        $('#dQr').fadeIn();
     });
+  }
 
+  getQr( msg ){
+    if( msg.length < 512 ){
+        $('#dQr').html("loading ...");
+        this.getQrCodeFeachAndProcess(msg);
+    }else{
+      $('#dQr').html("to long to generate qrCode. "+msg.length);
+    }
   }
 
 

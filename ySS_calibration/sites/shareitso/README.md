@@ -6,8 +6,6 @@
 
 Usable / TODO need work in service and .deb setting up section
 
-
-
 ## screenshots
 
 | image                  | what is on it                                                                                                                           |
@@ -15,8 +13,7 @@ Usable / TODO need work in service and .deb setting up section
 | ![](./ss_thumb.jpg)    | in action show case [video link ...](https://www.youtube.com/watch?v=74lI6NzLUF8)                                                       |
 | ![](./ss_inMenu.jpg)   | shareitso is in yss site set. Can be access by menu or by http://...1880/yss/#pageByName=shareitso                                      |
 | ![](./ss_mainList.jpg) | list of last shareitsonized files :) Some mime type recognition, audio can be play from page. No need of installing any thing on client |
+| ![](./ss_qrcode.png)   | now for instance analog / digital share of msg's it do qrcode for ...                                                                   |
 |                        |                                                                                                                                         |
-
-
 
 ## notes
