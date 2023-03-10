@@ -4,7 +4,7 @@
 
 
 
-- otgHeaders=**[true:default|false]** - to show or hide page-title's 
+- otgHeaders=**[true:default|false]** - to show or hide page-title's
 * otgOnly=**[number]** - number of panel witch maxis it to extreme :)
 
 
@@ -13,18 +13,18 @@
 
 ## 100% manual installation
 
-In your grafana directory 
+In your grafana directory
 
 * you have `./grafana/public/lib/` copy `otGrafanaBtZoom.js` to it.
 
 * add at end of `./grafana/public/views/index.html` new line with ...
-  
+
   ```html
   <script src="public/lib/otGrafanaBtZoom.js"></script>
   ```
 
 * reload grafana page and you will get new button in top bar tools
-  
+
   ![](./ss_otgBt.png)
 
 
@@ -41,7 +41,7 @@ TODO is comming ...
 
 ## status
 
-working / usable
+working / usable / not installing correctly only manual installation
 
 
 

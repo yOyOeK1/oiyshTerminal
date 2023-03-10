@@ -1,0 +1,4 @@
+echo "---------------------"
+echo "---------------------"
+
+cp "/usr/share/grafana/public/lib/otGrafanaBtZoom.js" "/OT/otdm-grafana-btzoom/data/data/com.termux/files/home/.otdm/grafana-btzoom/otGrafanaBtZoom.js_file_notLink"

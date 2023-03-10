@@ -1,0 +1,9 @@
+Package: otdm-grafana-btzoom
+Version: 0.0.1
+Section: base
+Priority: optional
+Architecture: all
+#Depends: jq
+#Pre-Depends: otdm-tools (>=0.20)
+Maintainer: yoyoek@wp.pl
+Description: Grafana plugino / hack to make interface make some custom things.

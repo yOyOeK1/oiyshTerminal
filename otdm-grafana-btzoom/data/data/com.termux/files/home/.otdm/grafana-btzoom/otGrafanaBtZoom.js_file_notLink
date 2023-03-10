@@ -1,0 +1,88 @@
+
+function cl( msg ){
+  console.log( msg );
+}
+
+
+var otgHeaderState = true;
+var otgUrl = {};
+
+function otgHeadersToogle(){
+  cl("otgHeadersToogle .... ");
+  if( otgHeaderState == true ){
+    $(".panel-title").fadeOut();
+  }else{
+    $(".panel-title").fadeIn();
+  }
+  otgHeaderState = !otgHeaderState;
+}
+
+
+
+function otgAddBtOT(){
+  cl("otgAddBtOT .... ");
+  cl(otgUrl);
+  let bt = `<div class="css-p8muss">
+      <button hrfe="#"
+        class="toolbar-button css-jp0mh7-toolbar-button"
+        onclick="otgHeadersToogle()">OT</button>
+    </div>`;
+  $('.page-toolbar').append(bt);
+
+  if( otgUrl['headers'] == 'false' ){
+    otgHeadersToogle();
+  }
+
+}
+
+function otgDoOnly(){
+  cl("otgDoOnly ...."+otgUrl['only']);
+  if( otgUrl['only'] != '' ){
+    cl("Have order to reshuffle .....");
+    let pcs = $(".panel-content");
+    cl("  found panels ... "+pcs.length);
+    if( parseInt(otgUrl['only']) <= pcs.length ){
+      cl("length of it is ok with order ! is comming ...");
+    } else {
+      cl(" abord wrong order number to count of found .");
+      return 0;
+    }
+
+
+    let pc = pcs[ parseInt(otgUrl['only']) ];
+    $(pc).attr("style","margin:0px;padding:0px;spacing:0px;");
+    let b = $("body");
+    //b.html("");
+    b.attr("style","margin:0px;padding:0px;spacing:0px;");
+    b.html( pc );
+
+
+
+
+  }
+}
+
+
+function otgUrlParse(){
+  let uNow = document.location.href;
+  let url = new URL( uNow );
+  otgUrl['headers'] = url.searchParams.get('otgHeaders');
+  otgUrl['only'] = url.searchParams.get('otgOnly')||'';
+  cl("otgUrlParse .... "+JSON.stringify( otgUrl ) );
+}
+
+
+$( document ).ready(function() {
+
+  cl("OiyshTerminal - grafana button zoom .... :) ");
+
+  otgUrlParse();
+
+  setTimeout(()=>{
+
+    otgAddBtOT();
+    otgDoOnly();
+
+  },800);
+
+});
