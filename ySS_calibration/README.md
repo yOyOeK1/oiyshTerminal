@@ -108,15 +108,15 @@ It's a description of installation steps for you. And it's the hard way. It's a 
 #### Installation manually
 
 1. Importing flow from this repository:
-   
+
    https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-nrf-yss/data/data/com.termux/files/home/.otdm/nrf-yss/nrf_org.json
-   
+
    You will find there json files of flow to import. It will create:
-   
+
        - hosting for your yss instance
-   
+
        - all the stuff necessery for having Screens Manager working
-   
+
        - give you a link in and link out to send and recive data from yss.
 
 2. Download yss directory with all the file-goodnes from
@@ -147,7 +147,7 @@ Edit **bPath** and **msg.yssWSUrl** if needed! Flow will provide you with webSoc
 
 # yss panel Prototype
 
-How to make your site section. Some explanation how you can start using it Now! You have all you need on your computer. 
+How to make your site section. Some explanation how you can start using it Now! You have all you need on your computer.
 
 ## 1. site.json to .deb
 
@@ -176,7 +176,7 @@ This will bind the worlds of **site** and .deb (otdm). oiyshTerminal **Debian Ma
 
 ## 2. The basic page
 
-Most basic site. 
+Most basic site.
 
 ```javascript
 class s_blankPage{
@@ -283,9 +283,9 @@ t4y.doAni( t4y.otsce.getObjectByName("Empty"), {
 });
 ```
 
-Will find object Empty and rotate by Y axis to angle deg 10. Do animation setup. 
+Will find object Empty and rotate by Y axis to angle deg 10. Do animation setup.
 
-([documentation](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#t4y_anidoaniitd-whattodo)) 
+([documentation](https://github.com/yOyOeK1/oiyshTerminal/wiki/yss-js-functions#t4y_anidoaniitd-whattodo))
 
 ```javascript
 t4y.putText( "heel: 11",{
@@ -310,6 +310,8 @@ Replace text in current scean. Will look for HeelText to replace it with this on
 
 # TODO
 
+* navigator.wakeLock.request() - for wakeLock of screen
+* WakeLockSentinel.release()
 * 3d compass is super hi load on ecosia.
 * three.js don't scale down frame when it's not in aspect. When it's to narrow it's bed.
 * t4y need sequence loader to unify variables for async actions :/ or some callback system that it's ready after t4y.getHtmlAfterLoad();
@@ -426,19 +428,19 @@ yoyoek1
 # BENCHTABLE
 
 * 2301151128  3d com ani 1    0 0m3.966s    0m9.143s    0m44.140s
-  
+
                          0    0 0m2.102s    0m6.042s    0m44.164s
               three.js   1    0 0m4.342s    0m9.397s    0m44.178s
                          0    0 0m2.262s    0m5.803s    0m44.187s
 
 * 2301151049  3d com ani 1    0 0m4.360s    0m10.830s    0m44.126s
-  
+
                          0    0 0m2.250s    0m6.249s    0m44.150s
               three.js   1    0 0m4.453s    0m9.410s    0m44.152s
                          0    0 0m2.693s    0m6.347s    0m44.225s
 
 * 2301150926  3d com ani 1    0 0m4.307s    0m8.728s    0m44.099s
-  
+
                          0    0 0m4.164s    0m8.421s    0m44.142s
               three.js   1    0 0m4.574s    0m9.476s    0m44.123s
                          0    0 0m4.746s    0m9.310s    0m44.200s
@@ -448,14 +450,14 @@ yoyoek1
                          1    0 0m4.882s  0m9.353s
 
 * 2301142005  fps limit 18 -------------------------
-  
+
               3d com ani 5 aa 0 0m10.407s  0m18.143s
                          0    0 0m1.902s  0m5.375s
               three.js   5    0 0m4.385s  0m16.266s
                          0    0 0m2.102s  0m5.723s
 
 * 2301141232  3d com ani 5 aa 0 0m11.106s 0m18.397s
-  
+
                      ani 0.7  0 0m10.531s 0m17.760s
                      ani 0    0 0m2.560s  0m6.746s
               three.js   0    0 0m2.398s  0m6.094s
@@ -463,20 +465,20 @@ yoyoek1
                         5     0 0m4.270s  0m15.443s  
 
 * 2301141057  3d com ani 0 aa 0 0m2.449s  0m5.957s
-  
+
                                 0m2.405s  0m6.038s
               three.js 0 0      0m2.267s  0m5.909s
               three.js 0.7 0    0m5.320s  0m16.776s
               3d com   0.7 0    0m5.320s  0m16.776s
 
 * 2301140839  3d com ani 1 aa 0 0m4.476s  0m12.612s
-  
+
                 ani 0 aa 0      0m1.879s  0m5.274s
 
 * 2301140813  3d com ani 0 aa 0 0m2.029s  0m5.890s <-- asyncs
 
 * 2301131458  3d com alias off  0m2.726s  0m7.320s
-  
+
                 ani 0.3         0m2.796s  0m6.380s
                 ani 0.1         0m2.464s  0m6.477s
                                 0m2.558s  0m5.983s

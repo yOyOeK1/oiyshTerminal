@@ -80,6 +80,7 @@ var module = new moduleCollector();
 <script src="libs/mMath.js"></script>
 <script src="libs/mApp.js"></script>
 <script src="libs/mDynoForm.js"></script>
+<script src="libs/mAedv.js"></script>
 <script src="libs/mDoCmd.js"></script>
 <script src="libs/mWebSockets.js"></script>
 <script src="libs/aggregation.js"></script>
@@ -221,24 +222,28 @@ function makeInit(){
   jQuery.fx.interval = Math.round(1000/18);
   console.log("yss index.html document ready !");
   pager = new sPager();
+  clOut = "buf";
   try{
-    //cl("current yssPages setting is ----------------");
-    //yssPages.find(p=>{
-    //  cl(p);
-    //  cl("      -------------------------");
-    //});
-    //cl("current yssPages setting is ----------------END");
     nodeRedInjectionAddPages();
+
+    clOut = 'console.log';
+    cl('Pages loaded .... OK!');
+
   }catch(e){
-    //pager.addPage( new s_calibrationPage() );
     //pager.addPage( new s_basicSailPage() );
+    clOut = 'console.log';
+    cl('Pages loaded .... ERROR!');
+    cl("load log ----------------------------------");
+    cl(clBuf.join("\n"));
+    cl("load log ----------------------------------");
+
     cl("nodeRedInjectionAddPages() not pressent running on grafana not node-red?");
     cl(e);
   }
-  // basic test of functions on svg version
-  //pager.addPage( new s_testFuncsPage() );
   // basic test of functions on three.js glb models
   //pager.addPage( new s_threeTestPage() );
+
+
 
   // screen manager remote
   sm = new SM();
@@ -297,9 +302,9 @@ function makeInit(){
 
 function chkUrl( dontSetPage=false ){
   var has = window.location.href;
-  cl("chkUrl ["+has+"]");
+  //cl("chkUrl ["+has+"]");
   urlArgs = {};
-  cl("looking for hash -------------------------");
+  //cl("looking for hash -------------------------");
   has = has.split("#")[1];
   if( has != undefined && has.length > 0 ){
     has = has.split("&");
