@@ -2,19 +2,21 @@
 
 class svgArcHelper{
 
-  point = (x, y, r, angel) => [
+  point(x, y, r, angel){
+    return  [
     (x + Math.sin(angel) * r).toFixed(2),
     (y - Math.cos(angel) * r).toFixed(2),
-  ];
+    ];
+  }
 
-  full = (x, y, R, r) => {
+  full(x, y, R, r){
     if (r <= 0) {
       return `M ${x - R} ${y} A ${R} ${R} 0 1 1 ${x + R} ${y} A ${R} ${R} 1 1 1 ${x - R} ${y} Z`;
     }
     return `M ${x - R} ${y} A ${R} ${R} 0 1 1 ${x + R} ${y} A ${R} ${R} 1 1 1 ${x - R} ${y} M ${x - r} ${y} A ${r} ${r} 0 1 1 ${x + r} ${y} A ${r} ${r} 1 1 1 ${x - r} ${y} Z`;
   };
 
-  part = (x, y, R, r, start, end) => {
+  part(x, y, R, r, start, end){
     const [s, e] = [(start / 360) * 2 * Math.PI, (end / 360) * 2 * Math.PI];
     const P = [
       this.point(x, y, r, s),
@@ -26,7 +28,7 @@ class svgArcHelper{
     return `M ${P[0][0]} ${P[0][1]} L ${P[1][0]} ${P[1][1]} A ${R} ${R} 0 ${flag} 1 ${P[2][0]} ${P[2][1]} L ${P[3][0]} ${P[3][1]} A ${r} ${r}  0 ${flag} 0 ${P[0][0]} ${P[0][1]} Z`;
   };
 
-  arc = (opts = {}) => {
+  arc(opts = {}){
     const { x = 0, y = 0 } = opts;
     let {
       R = 0, r = 0, start, end,
@@ -294,7 +296,7 @@ class pmTasks{
 
 
   buildLevelImg( objT, dI, hOff, level ){
-    cl("buildLevelImg ... lever: "+level);
+    //cl("buildLevelImg ... lever: "+level);
 
     let x = hOff;
     let trC = 0;
@@ -321,7 +323,7 @@ class pmTasks{
         trCSub = this.buildLevelImg( objT, dI[t]['sub'], x, level+1 );
       }
       if( trCSub >0 ){
-        cl("trCSub got :"+trCSub);
+        //cl("trCSub got :"+trCSub);
         x+= trCSub*10;
         trC+= trCSub;
       }
@@ -334,7 +336,7 @@ class pmTasks{
   buildCircleImgGant( objT, ccx, ccy, dI, wFrom, wTo, level ){
     //cl("buildCircleImgGant ...."+level);
     //cl(" wFrom, wTo, level");
-    cl([wFrom, wTo, level]);
+    //cl([wFrom, wTo, level]);
 
     let lh=16,cx=wFrom,ew=(wTo-wFrom);
 
@@ -349,20 +351,19 @@ class pmTasks{
 
 
     let iInLev = dI.length;
-    var ewAtom = ew/iInLev;
+    var ewAtom = ew/iInLev*0.99;
     var ah = new svgArcHelper();
-    let gap = 2.0;
+    let gap = 2;
     for(let t=0,tc=iInLev; t<tc; t++ ){
-      var aStart = cx+(t*ewAtom);
-      let aEnd = aStart+ewAtom-gap;
-      if( aEnd < gap ) aEnd = gap;
+      var aStart = deg360Pos( cx+(t*ewAtom) );
+      let aEnd = deg360Pos( aStart+ewAtom );
+      let aW = deg360Pos(aEnd-aStart);
       var r = (level)*lh;
-
         //cl(" aStart, aEnd, r");
         //cl([ aStart, aEnd, r]);
         let pShadow = objT.path(``);
         let p = objT.path(``);
-        cl("chave path ");
+        //cl("chave path ");
         p.attr("id","cirId"+dI[t]['id'] );
         p.attr("fill","#aaa");
         pShadow.attr("fill","#999");
@@ -407,6 +408,7 @@ class pmTasks{
                 //dropShadow: true,
                 color: "#ddd"
               });
+            setTimeout(()=>{ try{l.hide();}catch(e){cl("e in line hide: "+e);} },1000);
             pager['PMlineToShowLeLi'] = l;
           }
 
@@ -452,6 +454,7 @@ class pmTasks{
           start: aStart,
           end: aEnd,
         });
+        p.attr( 'idF', "arcOfId"+dI[t]['id']);
         p.attr('d', d);
         p.attr('fill-rule', 'evenodd');
         //o.move(ccx-r, ccy-r);
@@ -497,7 +500,7 @@ class pmTasks{
 
 
     //this.buildBlocksImgGant( bip, dToI, 70, 500, 0 );
-    this.buildCircleImgGant( bip, 100, 120, dToI, 0, 360, 1 );
+    this.buildCircleImgGant( bip, 100, 120, dToI, 0, 360, 2 );
 
 
     /*
