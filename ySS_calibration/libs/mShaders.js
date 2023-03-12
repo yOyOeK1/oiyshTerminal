@@ -16,7 +16,7 @@ function mkLightHex( hexIn, operationType ){
 
   if( hexIn == undefined )
     return 0;
-  console.log("invert["+hexIn+"]");
+  //console.log("invert["+hexIn+"]");
   if( hexIn.substring(0,4) == "rgb("){
     rgb = hexIn.replace("rgb(","").replace(")",'').split(",");
     tr = "rgb(";
@@ -313,7 +313,7 @@ function mkRotation( rotateStat ){
   }
 
   setSvgFit();
-  console.log("call fit svg")
+  //cl("call fit svg")
 }
 
 var mkShaderType;
@@ -476,7 +476,7 @@ function mkShaderExecutor( shType ){
     });
   }
 
-  cl("doing shader over menu.--------");
+  //cl("doing shader over menu.--------");
   /*
   // do menu
   $("#panelMenu").each(function(o, e){
@@ -494,7 +494,7 @@ function mkShaderExecutor( shType ){
 
   });
   */
-  cl("doing shader over menu.--------END");
+  //cl("doing shader over menu.--------END");
   // TODO fix menu
   /*  cl("bottom menu ------- START ");
   var sm = SVG("#bottomPanelMenuImg");

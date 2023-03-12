@@ -1,12 +1,41 @@
 var makeWithAnimation = false;
 
+
+// [ console.log, buf ]
+var clOut = "console.log";
+var clBuf = [];
+var clBufErr = [];
+
 /**
  * function to  console.log ing.... try to use this one to
  * 	silence down interface
  * @param {string} msg - The msg to console.log
  */
 function cl( msg ){
-	console.log(msg);
+  switch ( clOut ) {
+    case "console.log":
+      console.log(msg);
+      break;
+    case "buf":
+      clBuf.push(msg);
+      break;
+    default:
+
+  }
+
+}
+function clErr( msg ){
+  switch ( clOut ) {
+    case "console.log":
+      console.error(msg);
+      break;
+    case "buf":
+      clBufErr.push(msg);
+      break;
+    default:
+
+  }
+
 }
 
 function strToHtmlSafe(input) {

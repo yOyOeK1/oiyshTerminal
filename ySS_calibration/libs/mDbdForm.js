@@ -1,4 +1,8 @@
 
+
+
+
+
 class mDbdForm{
 
   constructor( pageName, tableName, promoteColumn, defListSelect = '' ){
@@ -172,6 +176,15 @@ class mDbdForm{
 
   getHtmlListLandingDiv(){
     return `<div id="projLV`+this.pH+`">Projects list is loading ... </div>`;
+  }
+
+  dbChk( ){
+    this.dbQ(
+      `SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '`+this.tableName+`';`,
+      this.onDBisTableRes,
+      this.pH
+    );
+    return `checking if table is ok ...`;
   }
 
   loadTaskList( step ){
