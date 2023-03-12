@@ -126,8 +126,17 @@ class s_pmPage{
 
 
   // id parent 8 iths 10
-  getHtml(){
-    let cp = pager.getCurrentPage();
+  get getHtml(){
+    if(1){
+			cl("this experiment------------------");
+			cl("this experiment------------------");
+			cl("this,	");
+			cl([this,	]);
+			cl("this.getName: "+this.getName);
+			cl("this experiment------------------");
+			cl("this experiment------------------");
+		}
+    let cp = this;
     let tr = '';
 
     if( urlArgs['action'] == "binds" ){
@@ -260,8 +269,8 @@ class s_pmPage{
 
   getHtmlAfterLoad(){
     cl(
-      pager.getCurrentPage().getName+
-      " - getHtmlAfterLoad()"
+      " - getHtmlAfterLoad() "+
+      this.getName
     );
   }
 
