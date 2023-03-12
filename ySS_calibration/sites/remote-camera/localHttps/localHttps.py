@@ -13,10 +13,17 @@ import requests
 
 class mySHRHPOST(http.server.SimpleHTTPRequestHandler):
 
-    def _set_headers(self):
+    def _set_headers(self, doEnd=True):
+        print(" set_headers ....")
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
-        self.end_headers()
+        self.send_header('Access-Control-Allow-Origin', '192.168.43.220');
+        self.send_header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+        self.send_header('Access-Control-Max-Age', '1000');
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+
+        if doEnd == True:
+            self.end_headers()
 
 
     def getI420FromBase64(self, codec, image_path="/tmp"):
@@ -26,6 +33,12 @@ class mySHRHPOST(http.server.SimpleHTTPRequestHandler):
         with open(image_path, 'wb') as f:
             f.write(imgdata)
         f.close()
+
+    def do_GET(self):
+        print("do_GET .....")
+        self._set_headers( doEnd=False )
+        super().do_GET()
+
 
     def do_POST(self):
         print(f" do_POST ............path: {self.path}")
