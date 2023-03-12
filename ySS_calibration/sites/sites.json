@@ -4,24 +4,26 @@
 
     "project_manager",
 
+    "packitso",
+    "shareitso",
+
     "calibration",
     "autopilot_v3_svg",
-
-    "multiSVG",
+    "remote-camera",
 
     "basic_sail",
     "iloo_nav",
 
+    "multiSVG",
     "music_sync",
 
     "iloo_nav_3d",
     "3d_compass1",
-    "test_Three.js",
 
     "test_functions",
-    "test_mDynoForm",
-    "packitso",
-    "shareitso"
+    "test_Three.js",
+    "test_mAEDV",
+    "test_mDynoForm"
 
   ],
   "externals":[

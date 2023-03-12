@@ -1,0 +1,13 @@
+{
+    "oName": "s_remoteCameraPage",
+    "o": null,
+    "dir": "remote-camera",
+    "jssrc":["s_remoteCameraPage.js", "pHtml.js"],
+    "enable": true,
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "To source camera from device on which you are at the yss site. So any phone / tablet / laptop can be a camera source for your oiyshTerminal instance",
+    "otdm":{
+        "playground": false
+    }
+}
