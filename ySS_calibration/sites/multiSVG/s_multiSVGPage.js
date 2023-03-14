@@ -10,6 +10,7 @@ class s_multiSVGPage{
       "multiSvg01.svg",
       "multiSvg02Big.svg",
       "multiSvgFastScreen.svg",
+      "igv1-16.svg",
       "monsterL.svg",
       "monsterR.svg",
       "chromeStartMenu1.svg"
