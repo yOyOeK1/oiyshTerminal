@@ -312,6 +312,14 @@ pSHDebianize(){
     echo -e \\n"Project installed directory $pInstDir "
     mkdir -p "$pInstDir"
 
+    srcDirAsFiles="$(dirname $pJPath)"
+    echo "Copy all project files from $srcDirAsFiles to $pInstDir .... "
+    find "$srcDirAsFiles" -type "f" | while read -r line;do
+      echo "file to copy: "$line;
+      cp "$line" "$pInstDir/"
+    done
+    echo "------ Then. "
+
     echo -n "Will live in $pInstDir as his pre build home. "
 
     echo -n "Putting ./DEBIAN/control .. "
