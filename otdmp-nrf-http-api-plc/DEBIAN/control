@@ -1,0 +1,12 @@
+Package: otdmp-nrf-http-api-plc
+Version: 0.0.3
+Section: otdm
+Priority: optional
+Architecture: all
+Depends: otdm-tools, otdm-tools-packitso, otdmp-nrf-http-api-db
+#Recommends: python3-pip, python3-apt | python-apt
+#Pre-Depends: otdm-installer (>=0.1) | otdm-installer-dummy (>=0.1)
+Maintainer: B. Ceglik  <yoyoek@wp.pl>
+Tag: oiyshTerminal, otdm, packitso
+Description: Http api to help with plcs in the system. What there is, get some details, statistics. All over http and json as result. Now passing stuff from packitso ...   *This is a automatic build from packitso.json to .deb Wed 15 Mar 2023 11:50:58 AM EST packitsoSh.sh (0.0.7.17)*
+

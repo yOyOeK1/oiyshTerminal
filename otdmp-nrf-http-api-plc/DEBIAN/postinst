@@ -1,0 +1,26 @@
+# packitso automatic build
+# ver (0.0.7.17) build  Wed 15 Mar 2023 11:50:58 AM EST
+#
+# 
+
+
+## in work [0] : [ node-red ( dnrfByUid ) ] / [ id:bf43b163cb91aff3 ] extraArgs[] then to [ nrf-http-api-plc01.json ]
+#       driverProto use iKey [label] : [ nrf-http-api-plc ] is identificator of installed instance 
+# post install steps ...
+#
+echo "packitso automatic postinst script for "
+
+/data/data/com.termux/files/usr/bin/packitsoSh.sh \
+-DEBIANposti "dnrfByUid" "label" "nrf-http-api-plc" "/data/data/com.termux/files/home/.otdm/p-nrf-http-api-plc/nrf-http-api-plc01.json";
+r="$?"
+if [ "$r" = "0" ];then
+  echo "OK"
+else
+  echo -e \n\n$r"<-- EXIT CODE"
+  exit $r
+fi
+
+
+echo "--------------------------------------------------"
+
+

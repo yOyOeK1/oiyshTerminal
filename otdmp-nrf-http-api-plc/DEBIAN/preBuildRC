@@ -1,0 +1,26 @@
+# packitso automatic build
+# ver (0.0.7.17) build  Wed 15 Mar 2023 11:50:58 AM EST
+#
+# 
+
+
+## in work [0] : [ node-red ( dnrfByUid ) ] / [ id:bf43b163cb91aff3 ] extraArgs[] then to [ nrf-http-api-plc01.json ]
+#       driverProto use iKey [label] : [ nrf-http-api-plc ] is identificator of installed instance 
+# getting product in prebuild ...
+#
+otdmTools.py -dnrfByUid "bf43b163cb91aff3" -oFile "/OT/otdmp-nrf-http-api-plc/data/data/com.termux/files/home/.otdm/p-nrf-http-api-plc/nrf-http-api-plc01.json"
+if [ "$(cat "/OT/otdmp-nrf-http-api-plc/data/data/com.termux/files/home/.otdm/p-nrf-http-api-plc/nrf-http-api-plc01.json" )" = "false" ];then
+  echo "Error when prebuilding geting data ... EXIT 3"
+  exit 3
+fi
+
+
+
+
+
+
+#
+#
+# packitso automatic build
+# ver (0.0.7.17) build  Wed 15 Mar 2023 11:50:59 AM EST
+#
