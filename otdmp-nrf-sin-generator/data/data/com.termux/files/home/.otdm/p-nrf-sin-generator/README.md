@@ -4,13 +4,21 @@
 
 Have some sliders to broadcast data to your site to check how it's reacting. And have nice sine wave generator. 
 
-![](./ss_node-ui-and-yss.png)
+
+
+![](./ss_inAction.gif)
+
+
 
 ## status
 
 usable / not tested in installation 
 
 ## screenshots
+
+![](./ss_node-ui-and-yss.png)
+
+
 
 ![](./ss_flow.png)
 
