@@ -1,0 +1,41 @@
+{
+  "edit": true,
+  "editId": 0,
+  "works": [
+    {
+      "entryDate": 1677002480440,
+      "extArgs": "",
+      "undefined": "",
+      "keyWord": "dganById",
+      "ident": "id:182",
+      "srcName": "grafana",
+      "identKey": "id",
+      "identUid": "182",
+      "name": "gan-out-of-tipical-template-draft",
+      "oFile": "gAnonsNewMaxVolt_template.json",
+      "ver": "0.0.1",
+      "otdm.deps": "otdm-tool",
+      "desc": "Grafana new min max value detection template. Use for making Anointment on graph about going out of typical. Good for detecting wrong wiring, sensor or other fail or.",
+      "author": "B. Ceglik <yoyoek@wp.pl>"
+    }
+  ],
+  "entryDate": 1677002360020,
+  "workForm": {
+    "extArgs": "",
+    "undefined": "",
+    "keyWord": "dganById",
+    "ident": "id:182",
+    "srcName": "grafana",
+    "identKey": "id",
+    "identUid": "182",
+    "name": "new max volts",
+    "oFile": "gAnonsNewMaxVolt_template.json"
+  },
+  "packitso": {
+    "name": "gan-out-of-tipical-template-draft",
+    "ver": "0.0.1",
+    "otdm.deps": "otdm-tool",
+    "desc": "Grafana new min max value detection template. Use for making Anointment on graph about going out of typical. Good for detecting wrong wiring, sensor or other fail or.",
+    "author": "B. Ceglik <yoyoek@wp.pl>"
+  }
+}
