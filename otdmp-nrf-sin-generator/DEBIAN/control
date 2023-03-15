@@ -1,0 +1,12 @@
+Package: otdmp-nrf-sin-generator
+Version: 0.0.1
+Section: otdm
+Priority: optional
+Architecture: all
+Depends: otdm-tools, otdm-tools-packitso
+#Recommends: python3-pip, python3-apt | python-apt
+#Pre-Depends: otdm-installer (>=0.1) | otdm-installer-dummy (>=0.1)
+Maintainer: B. Ceglik  <yoyoek@wp.pl>
+Tag: oiyshTerminal, otdm, packitso
+Description: Node-RED flow to generate fake data in sine wave form   *This is a automatic build from packitso.json to .deb Wed 15 Mar 2023 02:29:30 PM EST packitsoSh.sh (0.0.7.17)*
+

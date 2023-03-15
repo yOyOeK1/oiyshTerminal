@@ -1,0 +1,26 @@
+# packitso automatic build
+# ver (0.0.7.17) build  Wed 15 Mar 2023 02:29:30 PM EST
+#
+# 
+
+
+## in work [0] : [ node-red ( dnrfByUid ) ] / [ id:b96bfdd96eb132c6 ] extraArgs[] then to [ 4blenderAKAsinGen ]
+#       driverProto use iKey [label] : [ 4 blender ] is identificator of installed instance 
+# getting product in prebuild ...
+#
+otdmTools.py -dnrfByUid "b96bfdd96eb132c6" -oFile "/OT/otdmp-nrf-sin-generator/data/data/com.termux/files/home/.otdm/p-nrf-sin-generator/4blenderAKAsinGen"
+if [ "$(cat "/OT/otdmp-nrf-sin-generator/data/data/com.termux/files/home/.otdm/p-nrf-sin-generator/4blenderAKAsinGen" )" = "false" ];then
+  echo "Error when prebuilding geting data ... EXIT 3"
+  exit 3
+fi
+
+
+
+
+
+
+#
+#
+# packitso automatic build
+# ver (0.0.7.17) build  Wed 15 Mar 2023 02:29:31 PM EST
+#

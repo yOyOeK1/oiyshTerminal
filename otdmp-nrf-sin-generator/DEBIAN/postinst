@@ -1,0 +1,26 @@
+# packitso automatic build
+# ver (0.0.7.17) build  Wed 15 Mar 2023 02:29:30 PM EST
+#
+# 
+
+
+## in work [0] : [ node-red ( dnrfByUid ) ] / [ id:b96bfdd96eb132c6 ] extraArgs[] then to [ 4blenderAKAsinGen ]
+#       driverProto use iKey [label] : [ 4 blender ] is identificator of installed instance 
+# post install steps ...
+#
+echo "packitso automatic postinst script for "
+
+/data/data/com.termux/files/usr/bin/packitsoSh.sh \
+-DEBIANposti "dnrfByUid" "label" "4 blender" "/data/data/com.termux/files/home/.otdm/p-nrf-sin-generator/4blenderAKAsinGen";
+r="$?"
+if [ "$r" = "0" ];then
+  echo "OK"
+else
+  echo -e \n\n$r"<-- EXIT CODE"
+  exit $r
+fi
+
+
+echo "--------------------------------------------------"
+
+
