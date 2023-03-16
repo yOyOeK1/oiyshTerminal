@@ -13,7 +13,8 @@ class s_multiSVGPage{
       "igv1-16.svg",
       "monsterL.svg",
       "monsterR.svg",
-      "chromeStartMenu1.svg"
+      "chromeStartMenu1.svg",
+      "multiSvgOM02.svg"
     ];
 
     this.msOid = -1;
@@ -31,7 +32,7 @@ class s_multiSVGPage{
   }
 
   get getDefaultBackgroundColor(){
-    return "#cccccc";
+    return "#ffffff";
   }
 
 

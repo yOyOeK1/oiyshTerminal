@@ -1,0 +1,26 @@
+# packitso automatic build
+# ver (0.0.7.17) build  Thu 16 Mar 2023 06:51:49 PM EST
+#
+# 
+
+
+## in work [0] : [ node-red ( dnrfByUid ) ] / [ id:d04a960f275930b7 ] extraArgs[] then to [ openMuscleFlowForUdpCollecting.json ]
+#       driverProto use iKey [label] : [ UDP-open-muscle ] is identificator of installed instance 
+# getting product in prebuild ...
+#
+otdmTools.py -dnrfByUid "d04a960f275930b7" -oFile "/OT/otdmp-open-muscle-src/data/data/com.termux/files/home/.otdm/p-open-muscle-src/openMuscleFlowForUdpCollecting.json"
+if [ "$(cat "/OT/otdmp-open-muscle-src/data/data/com.termux/files/home/.otdm/p-open-muscle-src/openMuscleFlowForUdpCollecting.json" )" = "false" ];then
+  echo "Error when prebuilding geting data ... EXIT 3"
+  exit 3
+fi
+
+
+
+
+
+
+#
+#
+# packitso automatic build
+# ver (0.0.7.17) build  Thu 16 Mar 2023 06:51:50 PM EST
+#
