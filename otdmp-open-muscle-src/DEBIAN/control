@@ -1,5 +1,5 @@
 Package: otdmp-open-muscle-src
-Version: 0.0.2
+Version: 0.0.3
 Section: otdm
 Priority: optional
 Architecture: all
@@ -8,5 +8,5 @@ Depends: otdm-tools, otdm-tools-packitso
 #Pre-Depends: otdm-installer (>=0.1) | otdm-installer-dummy (>=0.1)
 Maintainer: B. Ceglik  <yoyoek@wp.pl>
 Tag: oiyshTerminal, otdm, packitso
-Description: Open-muscle cooperation src bulk   *This is a automatic build from packitso.json to .deb Thu 16 Mar 2023 07:15:16 PM EST packitsoSh.sh (0.0.7.17)*
+Description: Open-muscle cooperation src bulk. Now two devices 12 and 4 channel   *This is a automatic build from packitso.json to .deb Thu 16 Mar 2023 10:15:26 PM EST packitsoSh.sh (0.0.7.17)*
 

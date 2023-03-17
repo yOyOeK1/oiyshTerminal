@@ -6,7 +6,9 @@ Open muscle project is at github: https://github.com/turfptax/openmuscle
 
 
 
-Data upcomming from sensor in by udp in format json. Example row
+
+
+Data upcoming from sensor in by udp in format jsonish. Example row
 
 ```json
 {
@@ -22,11 +24,29 @@ Data upcomming from sensor in by udp in format json. Example row
 
 *this is nice formated for easy reading. Normally data is one line*
 
+So I reformatted data to json more
+
+```json
+{
+    "id": "OM-Band12", 
+    "time": [2023, 3, 12, 22, 23, 16, 6, 71], 
+    "data": [1280, 5153, 5332, 5100, 5385, 5176, 5304, 5069, 5317, 5140, 5324, 5073], 
+    "ticks": 144633, 
+    "rec_time": 3.0202174186706543
+}
+```
+
+**TODO posible bug** - Mysql is not recording data in higher resolution then sec. 
 
 
 
 
-There is a Node-RED flow helper to transfer udp upcoming line by line data to something more usable for yss. Then data is send to Websocket layer to show it on yss. This is open what can be done with the data. By sending it to mqtt it will be stored. But there is a lot of it It will be nice to make custom data set in db.
+
+There is a Node-RED flow helper to transfer udp upcoming line by line data to something more usable for yss. Then data is send to WebSocket layer to show it on yss. This is open what can be done with the data. By sending it to mqtt (if define) it will be stored (if define). But there is a lot of it It will be nice to make custom data set in db.
+
+
+
+To the power of multiSVG! 
 
 
 
@@ -48,7 +68,7 @@ Revamp of interface
 
 ![](./ss_interfaceRevamp1.png)
 
-
+![](./ss_4chDevice.png)
 
 ## notes
 

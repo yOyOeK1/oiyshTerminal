@@ -11,10 +11,11 @@ class s_multiSVGPage{
       "multiSvg02Big.svg",
       "multiSvgFastScreen.svg",
       "igv1-16.svg",
+      "multiSvgOM02.svg",
+      "multiSvgOM02_4ch.svg",
       "monsterL.svg",
       "monsterR.svg",
-      "chromeStartMenu1.svg",
-      "multiSvgOM02.svg"
+      "chromeStartMenu1.svg"
     ];
 
     this.msOid = -1;
@@ -263,9 +264,9 @@ class s_multiSVGPage{
         cl("desc:"+this.muSvMa[ r.topic ]['desc'] );
         let cmd = this.muSvMa[ r.topic ]['desc']['use'];
         cl("org: "+cmd);
-        cmd = cmd.replace("this", `"`+this.muSvMa[ r.topic ][ 'oname' ]+`"`);
-        cmd = cmd.replace( "valRaw", r.payload);
-        cmd = cmd.replace("val", `"`+r.payload+`"`);
+        cmd = cmd.split("this").join(`"`+this.muSvMa[ r.topic ][ 'oname' ]+`"`);
+        cmd = cmd.split("valRaw").join(r.payload);
+        cmd = cmd.split("val").join(`"`+r.payload+`"`);
         cl("mod: "+cmd);
         eval(cmd);
       }else
