@@ -1,5 +1,5 @@
 # packitso automatic build
-# ver (0.0.7.17) build  Thu 16 Mar 2023 07:15:16 PM EST
+# ver (0.0.7.17) build  Fri 17 Mar 2023 12:42:49 PM EST
 #
 # 
 
@@ -18,9 +18,37 @@ fi
 
 
 
+## in work [1] : [ grafana ( dgdsByUid ) ] / [ uid:2ubQiz-nz ] extraArgs[ -forceHost 192.168.43.1] then to [ grafDataSourceInfluxDBAtDell.json ]
+#       driverProto use iKey [] : [ InfluxDBAtDell ] is identificator of installed instance 
+# getting product in prebuild ...
+#
+otdmTools.py -dgdsByUid "2ubQiz-nz" -oFile "/OT/otdmp-open-muscle-src/data/data/com.termux/files/home/.otdm/p-open-muscle-src/grafDataSourceInfluxDBAtDell.json" -forceHost 192.168.43.1
+if [ "$(cat "/OT/otdmp-open-muscle-src/data/data/com.termux/files/home/.otdm/p-open-muscle-src/grafDataSourceInfluxDBAtDell.json" )" = "false" ];then
+  echo "Error when prebuilding geting data ... EXIT 3"
+  exit 3
+fi
+
+
+
+
+
+## in work [2] : [ grafana ( dgdbByUid ) ] / [ uid:bcRJll-Vk ] extraArgs[ -forceHost 192.168.43.1] then to [ grafDashBoard.json ]
+#       driverProto use iKey [title] : [ Open Muscle - test db1 test1 ] is identificator of installed instance 
+# getting product in prebuild ...
+#
+otdmTools.py -dgdbByUid "bcRJll-Vk" -oFile "/OT/otdmp-open-muscle-src/data/data/com.termux/files/home/.otdm/p-open-muscle-src/grafDashBoard.json" -forceHost 192.168.43.1
+if [ "$(cat "/OT/otdmp-open-muscle-src/data/data/com.termux/files/home/.otdm/p-open-muscle-src/grafDashBoard.json" )" = "false" ];then
+  echo "Error when prebuilding geting data ... EXIT 3"
+  exit 3
+fi
+
+
+
+
+
 
 #
 #
 # packitso automatic build
-# ver (0.0.7.17) build  Thu 16 Mar 2023 07:15:17 PM EST
+# ver (0.0.7.17) build  Fri 17 Mar 2023 12:42:51 PM EST
 #
