@@ -44,10 +44,18 @@ There is a Node-RED flow helper to transfer udp upcoming line by line data to so
 
 *first vesion bars are moving*
 
+Revamp of interface 
+
+![](./ss_interfaceRevamp1.png)
+
 
 
 ## notes
 
 cat ./datasetTWO.txt | while read -r line; do echo $line; echo $line| nc -u localhost 3145 -w 1; done
+
+
+
+cat ./datasetTWOFix.txt | while read -r line; do echo $line; echo $line | jq '.'| nc -u localhost 3145 -w 1; done
 
 

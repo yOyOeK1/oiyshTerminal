@@ -44,6 +44,10 @@ There is a Node-RED flow helper to transfer udp upcoming line by line data to so
 
 *first vesion bars are moving*
 
+Revamp of interface 
+
+![](./ss_interfaceRevamp1.png)
+
 
 
 ## notes
