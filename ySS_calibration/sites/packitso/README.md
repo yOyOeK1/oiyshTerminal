@@ -41,10 +41,6 @@ Saving
 
 ![](./ss_clean_save_packitso.png)
 
-
-
-
-
 ## Status of coding
 
 It's important section. This is still in progress project. It's to big to do it all at once :)
@@ -83,19 +79,23 @@ So **what we have** what **TODO**:
 
 - [x] rest..... ( oiyshTerminal - otdm all this repo final version )
 
+
+
+## Packitsonized with otdmp-...
+
+nrf-http-plc, nrf-http-hhbell-binary, ....
+
+
+
 ## Screenshots of the site
 
 **Main**
 ![](./ss_mainPage.png)
 *Main page of packitso. Super touch friendly using mApp. You can start new packitso or edit on from directory*
 
-
-
 ![](./ss_toasts1OnIndex.png)
 
 *Information on loading status updat*
-
-
 
 **Editing**
 ![](./ss_editingPackitso.png)
