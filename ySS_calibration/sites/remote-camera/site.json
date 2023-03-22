@@ -2,7 +2,7 @@
     "oName": "s_remoteCameraPage",
     "o": null,
     "dir": "remote-camera",
-    "jssrc":["s_remoteCameraPage.js", "pHtml.js"],
+    "jssrc":["s_remoteCameraPage.js", "pHtml.js","localHttps/sensorsList.js"],
     "enable": true,
     "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
     "ver": "0.0.1",

@@ -4,8 +4,6 @@
 
 Then it can be process by other mechanism: image recognition, alarm security, timelaps, ...
 
-
-
 There is currently two ways how to use it.
 
 **As master** - so you stay on page and manage or look ...
@@ -18,11 +16,9 @@ It's store data as files in `./yss/sites/remote-camera/localHttps/*.base64`
 
 Then request http to node-red api broadcasting new item over webSocket
 
-
-
 So in three clicks you have a remote camera.
 
-  
+It use yss/libs and can do https to http bridging.
 
 ## status
 
@@ -55,15 +51,9 @@ in progress...
 - [ ] manager iterations cpu consumption
 
 - [ ] others ...
-  
-  
-
-
 
 ## screenshots
 
 ![](./ss_thumb.jpg) [watch on youtube...](https://www.youtube.com/watch?v=OmMZG9lFIm8)
-
-
 
 ## notes

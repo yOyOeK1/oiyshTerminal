@@ -4,8 +4,9 @@ var yssRemCamHtml = `
 
 <label for="devName">This device name:</label>
 <input type="text" id="devName" name="devName" value="">
-<br>
-<a href="#" onclick="yssRemCamGoToS('main')" targe="_blank">become a camera ...</a>
+<button
+  onclick="yssRemCamGoToS('main')" targe="_blank"
+  >become a camera ...</button>
 
 <div id="dHttpsSevrevStatus"></div>
 
@@ -27,7 +28,7 @@ function yssRemCamGoToS(adr){
   }else{
 
     //document.cookie = "devName="+dName+";expires=Fri, 31 Dec 9999 23:59:59 GMT;HttpOnly;SameSite=Lax";
-    document.cookie = "devName="+dName+";expires=Fri, 31 Dec 9999 23:59:59 GMT;path=http://192.168.43.220:1880/yss/";
+    pager.setDevName( dName );
 
 
     cl("Go To https: "+adr+" devName: "+dName);
