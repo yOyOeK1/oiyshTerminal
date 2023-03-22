@@ -7,23 +7,27 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <link rel="stylesheet" href="main.css">
 </head>
-<script src="jquery.min.js"></script>
-<script src="jquery.toast.min.js"></script>
-<link rel="stylesheet" href="jquery.toast.min.css">
+<script src="libs/jquery.min.js"></script>
+<script src="libs/jquery.toast.min.js"></script>
+
+<script src="libs/mWebSockets.js"></script>
+<script src="sensorsList.js"></script>
+
+<link rel="stylesheet" href="libs/jquery.toast.min.css">
 <body>
+  <div id="postRaport"></div>
+  <div id="sensorsRaport"></div>
 
 <button id="start-camera">Start Camera</button>
-<video id="video" width="320" height="240" autoplay></video>
+<video id="video" width="640" height="480" autoplay></video>
 <button id="click-photo">Click Photo</button>
 <div id="dataurl-container">
-    <canvas id="canvas" ></canvas>
-    <div id="dataurl-header">Image Data URL</div>
-    <textarea id="dataurl" readonly></textarea>
+    <canvas id="canvas" width="640" height="480" ></canvas>
+
 </div>
 
 <img id="fakeGeter" src="">
 
-<div id="postRaport"></div>
 
 <script>
 
@@ -34,7 +38,61 @@ let canvas = document.querySelector("#canvas");
 let dataurl = document.querySelector("#dataurl");
 let dataurl_container = document.querySelector("#dataurl-container");
 var doClientThing = false;
+var tHref = document.location.href;
+var tUrl = new URL( tHref );
+var tDevName = tUrl.searchParams.get('devName');
+var tP = tUrl.searchParams.get('p');
 
+var navStatus = {};
+
+function cl( msg ){ console.log( msg ); }
+
+
+
+function doTCPS(){
+  navigator.tcpPermission.requestPermission({remoteAddress:"192.168.43.220", remotePort:18181}).then(
+  () => {
+    // Permission was granted
+    // Create a new TCP client socket and connect to remote host
+    var mySocket = new TCPSocket("192.168.43.220", 18181);
+
+    // Send data to server
+    mySocket.writeable.write("Hello World").then(
+        () => {
+
+            // Data sent sucessfully, wait for response
+            console.log("Data has been sent to server");
+            mySocket.readable.getReader().read().then(
+                ({ value, done }) => {
+                    if (!done) {
+                        // Response received, log it:
+                        console.log("Data received from server:" + value);
+                    }
+
+                    // Close the TCP connection
+                    mySocket.close();
+                }
+            );
+        },
+        e => console.error("Sending error: ", e)
+    );
+  }
+);
+}
+
+
+function pushToApi(msg){
+  let url = '/toNR?';
+  url+= encodeURI(JSON.stringify(msg));
+  $.get(
+    url, function( data, status ){
+      cl("push to API !"+status);
+
+    }
+  );
+
+
+}
 
 camera_button.addEventListener('click', async function() {
   await doClip();
@@ -42,9 +100,17 @@ camera_button.addEventListener('click', async function() {
 
 async function doClip(){
    	let stream = null;
-
+    //var constraints = { video: true, audio: false };
+    var constraints = {
+        audio: false,
+        video: {
+            width: { ideal: 1280 },
+            height: { ideal: 1024 },
+            facingMode: "environment"
+        }
+    };
     try {
-    	stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    	stream = await navigator.mediaDevices.getUserMedia(constraints);
     }
     catch(error) {
     	alert(error.message);
@@ -52,7 +118,6 @@ async function doClip(){
     }
 
     video.srcObject = stream;
-
     video.style.display = 'block';
     camera_button.style.display = 'none';
     click_button.style.display = 'block';
@@ -61,45 +126,37 @@ async function doClip(){
 }
 
 
-
 click_button.addEventListener('click', function() {
   pushFrame();
 
 });
 
-function cl( msg ){ console.log( msg ); }
 
 function pushFrame(){
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
     //canvas.getContext('2d').drawImage(video, 0, 0, 32,24);
-   	let image_data_url = canvas.toDataURL('image/jpeg');
-
+    //canvas.getContext('2d').drawImage(video, 0, 0, 1024,748);
+   	var image_data_url = canvas.toDataURL('image/jpeg');
     //dataurl.value = image_data_url;
     //dataurl_container.style.display = 'block';
-
-
-
-
     if( doClientThing == true ){
       console.log("pushFrame .... ");
-
       let url = "https://192.168.43.220:4444/camPost";
-      let data = image_data_url;
-
       let success = function (){cl("POST OK!");};
       let dataType = "text";
-
-
       //$("#fakeGeter").attr('src', url+"?i="+encodeURI(data));
 
       $.ajax({
         type: 'POST',
         url: '/camPost',
         crossDomain: true,
-        data: data,
-        dataType: 'text',
+        'data': {
+          "data": image_data_url,
+          "devName": tDevName
+        },
+        dataType: 'json',
         success: function(responseData, textStatus, jqXHR) {
-          var value = responseData.someKey;
+          //var value = responseData.someKey;
           cl("POST OK !");
           $("#postRaport").html(
             (new Date())+` posted ...`
@@ -110,24 +167,159 @@ function pushFrame(){
         }
       });
 
-
-      /*
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        success: success,
-        dataType: dataType
-      });
-      */
-
-      setTimeout(pushFrame, 1000);
+      setTimeout(pushFrame, 1100);
     }
 
 }
 
+function GenericSensorExtraClasses(){ cl("GenericSensorExtraClasses....")}
+
+//var navApiList=['GenericSensorExtraClasses','accelerometer','ambient-light-sensor','gyroscope','magnetometer'];
+
+function pushSensorToApi( sName, o ){
+  pushToApi({
+    "devName": tDevName,
+    "sensor":sName,
+    "d": o
+  });
+}
+
+
+
+
+var navToHandler = {};
+try{
+  navToHandler['accelerometer']={
+    'c': Accelerometer,
+    'extArgs': {frequency: 2},
+    'eName': 'reading',
+    'onData': (obj,sName)=>{ cl("Got acc x, y, z");cl([ obj.x, obj.y, obj.z ]);
+      pushSensorToApi(sName,[obj.x, obj.y, obj.z]);
+    }
+  };
+}catch(e){
+  cl("Error defining nav to header1 .... error "+e);
+  navToHandler['accelerometer']=-1;
+}
+
+try{
+  navToHandler['magnetometer']={
+    'c': Magnetometer,
+    'extArgs': {frequency: 2},
+    'eName': 'reading',
+    'onData': (obj,sName)=>{ cl("Got mag x, y, z");cl([ obj.x, obj.y, obj.z ]);
+        pushSensorToApi(sName,[obj.x, obj.y, obj.z]);
+    }
+  };
+}catch(e){
+  cl("Error defining nav to header2 .... error "+e);
+  navToHandler['magnetometer']=-1;
+}
+
+function navToggle( what ){
+  cl("navToggle: "+what);
+  if( navStatus[what] == undefined )
+    navStatus[what] = {'working':false};
+
+  nI = navStatus[what];
+
+  if( nI.working == false ){
+    cl("building action then ..... "+what);
+    let execIt = navToHandler[ what ];
+    cl("execIt is ");
+    cl(execIt);
+
+    if( execIt['extArgs'] != undefined ){
+      nI['o'] = new execIt['c']( execIt['extArgs'] );
+    }else{
+      nI['o'] = new execIt['c'](  );
+    }
+
+    cl("setting event listener .... "+execIt['eName']);
+    nI['o'].addEventListener( execIt['eName'], ()=>{
+      //cl("got data ....");
+      execIt['onData']( nI['o'], what );
+    }  );
+
+    cl("starting it .....");
+    nI['o'].start();
+
+    nI.working = true;
+  }else{
+
+    nI.working = false;
+  }
+
+
+}
+
+function permChk(){
+  for(let p=0,pc=navApiList.length; p<pc; p++ ){
+    if( p == 0 )
+      $('#sensorsRaport').html("Sensors on this device: ");
+    cl("doing permission check "+p+" -- >"+navApiList[p]);
+    try{
+      navigator.permissions.query({ name: navApiList[p] }).then((result) => {
+        //$('#sensorsRaport').append('<br>'+navApiList[p]+' permissions: ');
+        if (result.state === "denied") {
+          $('#sensorsRaport').append('denied');
+          return;
+        } else {
+          if( navToHandler[ navApiList[p] ] == -1 ){
+
+          }else{
+            $('#sensorsRaport').append(
+
+              `<img style="width:24px;height:24px;"
+                onclick="navToggle('`+navApiList[p]+`')"
+                src="icon_`+
+                navApiList[p]+
+                `.svg" id="dSen_`+navApiList[p]+`">`
+            );
+          }
+          pushToApi({
+            "devName": tDevName,
+            "statusUpdate":1,
+            "navApi": navApiList[p],
+            "testResult": navToHandler[ navApiList[p] ] == -1 ? 0 : 1
+          });
+
+          //p_magnetometer();
+        }
+        // Use the sensor.
+      });
+
+
+    }catch(e){
+      $('#sensorsRaport').append(
+        `ON<img style="width:24px;height:24px;"
+          onclick=""
+          src="icon_`+
+          navApiList[p]+
+          `.svg" id="dSen_`+navApiList[p]+`">`+e
+      );
+    }
+
+  }
+}
+
+
+
+var pager = -1;
+
+function makeSensorsTest(){
+  $('#sensorsRaport').html("running sensors tests ...<br>");
+  permChk();
+}
+
 $( document ).ready(function() {
   cl("Loaded javascript / dome ... ok ready!");
+
+
+  //wsConnectIn( pager );
+  //wsConnectOut();
+
+  makeSensorsTest();
 
 
 });
