@@ -20,6 +20,12 @@ class otdmDriverNodeRedProto( otdmDriverProto ):
                 if i.get("type","") == "tab":
                     tr.append(i)
             return tr
+            
+        if byType=="subflow":
+            for i in r:
+                if i.get("type","") == "subflow":
+                    tr.append(i)
+            return tr
 
         if byType=="*":
             return r
