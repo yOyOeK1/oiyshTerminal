@@ -29,6 +29,7 @@ arC="$#"
 
 
 notSolver(){
+  aOrgMsg="$1"
   aStatus="$2"
   statusLev="low"
   if [ "$aStatus" = "" ];then
@@ -36,16 +37,38 @@ notSolver(){
   else
     statusLev="$aStatus"
   fi
-  nm="OT ($statusLev) : $1"
+  nm="OT ($statusLev) : $aOrgMsg"
 
   #echo "---------------------------"
   #echo "notify-send --urgency=$statusLev $nm"
 
-  echo '{"exitCode": "'$(
-    termux-notification -t "otNoti - ($statusLev)" -c "$nm" && echo '0", "msg":"termux-api handle it"}' 2> /dev/null || \
-    notify-send --urgency="$statusLev" "$nm" && echo '0", "msg":"notify-send handle it"}' || \
-    echo '1","msg":"no tts found"}'
-  )
+  msl=$(expr length "$nm")
+  #echo "so msl is $msl"
+  if (( "$msl" > 25 )); then
+    #echo "longer then ... $msl"
+
+    msS=$(expr substr "$nm" 1 25 )" ... "
+    msR="$aOrgMsg"
+
+    #echo "exit 11"
+    #exit 11
+    echo '{"exitCode": "'$(
+      termux-notification -t "otNoti - ($statusLev)" -c "$nm" && echo '0", "msg":"termux-api handle it"}' 2> /dev/null || \
+      notify-send --urgency="$statusLev" "$msS" "$msR" && echo '0", "msg":"notify-send handle it"}' || \
+      echo '1","msg":"no tts found"}'
+    )
+  else
+    #echo "is short .."
+
+    echo '{"exitCode": "'$(
+      termux-notification -t "otNoti - ($statusLev)" -c "$nm" && echo '0", "msg":"termux-api handle it"}' 2> /dev/null || \
+      notify-send --urgency="$statusLev" "$nm" && echo '0", "msg":"notify-send handle it"}' || \
+      echo '1","msg":"no tts found"}'
+    )
+
+  fi
+
+
 }
 
 case $arC in
