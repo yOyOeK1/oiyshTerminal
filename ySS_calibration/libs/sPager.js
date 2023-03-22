@@ -57,6 +57,40 @@ class sPager {
     }
   }
 
+
+
+  getUA(){
+    let device = "Unknown";
+    const ua = {
+        "Linux": /Linux/i,
+        "Android": /Android/i,
+        "BlackBerry": /BlackBerry/i,
+        "Bluebird": /EF500/i,
+        "ChromeOS": /CrOS/i,
+        "Datalogic": /DL-AXIS/i,
+        "Honeywell": /CT50/i,
+        "iPad": /iPad/i,
+        "iPhone": /iPhone/i,
+        "iPod": /iPod/i,
+        "macOS": /Macintosh/i,
+        "Windows": /IEMobile|Windows/i,
+        "Zebra": /TC70|TC55/i,
+    }
+    Object.keys(ua).map(v => navigator.userAgent.match(ua[v]) && (device = v));
+    return device;
+  }
+
+  getDevName(){
+    let altName = 'remDev'+parseInt(Math.random()*10000)+this.getUA();
+    return getCookie('devName') || altName;
+  }
+
+  setDevName( devName ){
+    document.cookie = "devName="+devName+";expires=Fri, 31 Dec 9999 23:59:59 GMT;path=http://192.168.43.220:1880/yss/";
+
+  }
+
+
   setScreenManager(s){
     this.sm = s;
   }
