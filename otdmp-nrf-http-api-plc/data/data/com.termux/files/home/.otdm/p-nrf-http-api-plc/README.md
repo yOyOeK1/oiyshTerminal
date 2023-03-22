@@ -2,11 +2,7 @@
 
    Is for getting information about your plc's in your system. So if you can do http you can have some interaction / information about this system. This a one place to explore ins and outs lets say ...
 
-
-
 It's a in progress package / experimental / interesting
-
-
 
 ## is doing it....
 
@@ -63,6 +59,8 @@ in progress
   
   - [x] notification system to http api
   
+  - [ ] image to number (in progress check screens)
+  
   - [ ] GPS device
   
   - [ ] accelerometer sensor device
@@ -76,8 +74,6 @@ in progress
   - [ ] relay
   
   - [ ] 
-  
-  
 
 ## imaging it!
 
@@ -95,11 +91,11 @@ It have `Bundles` with names. So define `Sensors` on `IN`. This approach is givi
 
   
 
-## example
+## ot-plc phantom to battery node
 
-* phantom to battery node in Node-RED ver 0.0.1 *it's experiment*
-  
-  ![](./ss_batteries_v0.0.1_inplcAndGrafana.png)
+in Node-RED ver 0.0.1 *it's experiment*
+
+![](./ss_batteries_v0.0.1_inplcAndGrafana.png)
 
 *setting up your mqtt topics to phantom to battery node is linking it from topic to grafana. It have from different sources different types of payload coming. With minimum of setting for defining a battery instance we get ...*
 
@@ -127,15 +123,9 @@ Node return json ....
 
 **nLevel**: 0-1 base on set Min and Max
 
-
-
 And in grafana generated on base of fact that node instance is existing in Node-RED is generating views for every battery in **ot-plc** So By selecting one battery or all you get this as a result ...
 
 ![](./ss_plcBatteryInGrafanaBatteryDetails0.1.png)
-
-
-
-
 
 ## screenshots
 
@@ -145,11 +135,31 @@ And in grafana generated on base of fact that node instance is existing in Node-
 
 
 
+## ot-plc image to number
+
+**status** [in progress ... can install manually]
+
+As input take 
+
+property msg [json]
+
+- msg.srcImg [string] - full path from root to file 
+
+- msg.topic [string] - to put to topic on success
+
+- extArgs [json] - to pass arguments to `Seven Segment Optical Character Recognition`
+
+
+
+### in action image to number
+
+Image capture using yss-remote-camera -> to WebSocket -> to image to number process -> to mqtt topic on success ...
+
+![](./ss_ot-plc-image-to-number_0.0.1.png)
+
 
 
 ## notes
-
-
 
 ## todo
 
