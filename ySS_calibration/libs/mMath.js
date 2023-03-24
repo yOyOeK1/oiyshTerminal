@@ -251,3 +251,30 @@ function avgItKalman( key, forMs, toMs ){
   return tf.reduce((partialSum, a) => partialSum + a, 0)/tfC;
 
 }
+
+console.log("Make module ... mMath");
+try{
+  module.exports = {
+    toDegrees,
+    toRad,
+    getDist,
+
+    getDistLLInNM,
+    getAngleLL,
+    degToHdg,
+    deg360ToNorm,
+    deg360Pos,
+    deg360delta,
+    mMapVal,
+    storeIt,
+    storeGetLast,
+    storeGetPreLast,
+    storeGetFirstOlderThen,
+    avgIt,
+    avgItKalman
+
+  };
+  console.log(" ... OK");
+}catch(e){
+  console.log(" ... No module");
+}
