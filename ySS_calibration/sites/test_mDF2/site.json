@@ -1,0 +1,13 @@
+{
+    "oName": "s_mdf2Page",
+    "o": null,
+    "dir": "blank",
+    "jssrc":["s_mdf2Page.js"],
+    "enable": true,
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "To test functionality of mDF2 - my Dynamic Form attempt 2",
+    "otdm":{
+        "playground": false
+    }
+}
