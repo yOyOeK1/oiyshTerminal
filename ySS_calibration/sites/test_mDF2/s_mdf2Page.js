@@ -50,9 +50,9 @@ class s_mdf2Page{
         [new m2InputText( 'f0', "F0 input text" ) ],
         [new m2TrueFalse( 'f1', "F1 true or false 0 def", [ '1', '0' ], 0) ],
         //[new m2TrueFalse( 'f2', "F2 yes or no yes def", [ 'yes', 'no' ],1 ) ],
-        //[new m2Select( 'f3', "Select int",
-        //  [ 'one', 'two', 'three' ],
-        //  1 ) ],
+        [new m2Select( 'f3', "Select int",
+          [ 'one', 'two', 'three' ],
+          1 ) ],
         [new m2Select( 'f4', "Select keys",
           [ {'value':'one','html':'vone'}, {'value':'two','html':'vtwo'}, {'value': 'three', 'html':'vthree'} ],
           2 ) ],
@@ -75,17 +75,26 @@ class s_mdf2Page{
   }
 
   get getHtml(){
-    return '<b>'+pager.getCurrentPage().getName+'<b>'+
-      `<h3>add form</h3>
-      <div id="ftAdd">ftAdd</div>
-      <h4>add form END</h4>`+
+
+    var mtr = [];
+    [ "Add", /*"Edit",*/ "View", "Delete" ].find((e,i)=>{
+      mtr.push(`
+        <a href="#" onclick="$('#ft${e}').show()">${e}</a>
+        <script>$('#ft${e}').hide();</script>
+        `);
+    });
+
+
+
+    return mtr.join(" | ")+'<hr><b>'+pager.getCurrentPage().getName+'<b>'+
+      `<div id="ftAdd">ftAdd</div>`+
 
       `<h3>edit form</h3>
       <div id="ftEdit"></div>
       <h4>edit form END</h4>`+
 
       `<h3>delete form</h3>
-      <div id="ftDel">ftDel</div>
+      <div id="ftDelete">ftDelete</div>
       <h4>delete form END</h4>`;
   }
 
@@ -93,16 +102,35 @@ class s_mdf2Page{
   makeAddFormLoop(){
     setTimeout( ()=>{
       let cp = pager.getCurrentPage();
-      this.mdf.makeFormAdd( '#ftAdd', (id)=>{
+
+      if( 0 ){ // make add
+        this.mdf.makeFormAdd( '#ftAdd', (id)=>{
+          let cp = pager.getCurrentPage();
+          $.toast({
+              heading: cp.getName+" Add test",
+              text: 'Added id : '+id+' to table ['+cp.mdf.mDef.table+']',
+              showHideTransition: 'slide',
+              icon: 'success'
+          });
+
+          $('#ftAdd').html('<a href="#" onclick="$(\'#f5\').val(2345678)">change f5</a>');
+          cp.makeAddFormLoop();
+
+        });
+      }
+
+      let editId = 8;
+      this.mdf.makeFormEdit( '#ftEdit', editId, (id)=>{
         let cp = pager.getCurrentPage();
         $.toast({
-            heading: cp.getName+" Add test",
-            text: 'Added id : '+id+' to table ['+cp.mdf.mDef.table+']',
+            heading: cp.getName+" Edit test",
+            text: 'saved id : '+editId+' to table ['+cp.mdf.mDef.table+']',
             showHideTransition: 'slide',
             icon: 'success'
         });
-        $('#ftAdd').html('<a href="#" onclick="$(\'#f5\').val(2345678)">change f5</a>');
+
         cp.makeAddFormLoop();
+
       });
 
     },500);
@@ -125,7 +153,7 @@ class s_mdf2Page{
 
   svgDynoAfterLoad(){
     cl("automatic test ------------------------");
-    mt1();
+    //mt1();
     cl("automatic test ------------------------");
 
 

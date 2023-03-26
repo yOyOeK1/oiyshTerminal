@@ -55,6 +55,9 @@ function rotateImage(obj, degree) {
 }
 
 
+function timeStampNow(){
+  return parseInt( new Date().getTime() / 1000 );
+}
 
 function timestampToNiceTime( ts ){
   var date = new Date(ts*1000);

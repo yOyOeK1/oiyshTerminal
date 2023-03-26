@@ -10,6 +10,17 @@ class m2Col{
     this.name = colName;
     this.label = label;
     this.v = val;
+
+  }
+
+  setMDFParent( mdfParent ){
+    cl(`setMDFParent for ${this.name} : ${this.label}`)
+    this.mdf = mdfParent;
+  }
+
+  setAEDV( act, resForIdName ){
+    this.aedv = act;
+    this.formId = resForIdName;
   }
 
   getName(){
@@ -22,8 +33,13 @@ class m2Col{
     return this.v;
   }
 
-  getDBValAdd( fields ){
+  getDBValAddEdit( actAEDV, fields ){
     return fields;
+  }
+
+  setVal( v ){
+    this.v = v;
+    cl(".setVal v = v ....");
   }
 
 }
@@ -66,12 +82,14 @@ class m2InputText extends aggregation( m2Col ){
   }
 
 
-  getDBValAdd( fields ){
+  getDBValAddEdit( actAEDV, fields ){
     let ttr = {};
-    ttr[ this.name ] = $('#'+this.name).val()
+    ttr[ this.name ] = $('#'+this.formId+' #'+this.name).val()
     fields.push( ttr );
     return fields;
   }
+
+
 
 }
 
@@ -98,9 +116,9 @@ class m2Hidden extends aggregation( m2Col ){
   }
 
 
-  getDBValAdd( fields ){
+  getDBValAddEdit( actAEDV, fields ){
     let ttr = {};
-    ttr[ this.name ] = $('#'+this.name).val()
+    ttr[ this.name ] = $('#'+this.formId+' #'+this.name).val()
     fields.push( ttr );
     return fields;
   }
@@ -144,9 +162,9 @@ class m2TrueFalse extends aggregation( m2Col ){
   }
 
 
-  getDBValAdd( fields ){
+  getDBValAddEdit( actAEDV, fields ){
     let ttr = {};
-    if( $('#'+this.name).attr('checked') ){
+    if( $('#'+this.formId+' #'+this.name).attr('checked') ){
       ttr[ this.name ] = this.vals[0];
     }else{
       ttr[ this.name ] = this.vals[1];
@@ -154,6 +172,8 @@ class m2TrueFalse extends aggregation( m2Col ){
     fields.push( ttr );
     return fields;
   }
+
+
 
 }
 
@@ -181,19 +201,42 @@ class m2Select extends aggregation( m2Col ){
     //this.getVal()
 
     setTimeout(()=>{
-      cl("set it ...."+'#'+this.name+' :nth-child('+this.getVal()+')');
-      $('#'+this.name+' option').eq(this.getVal()).prop('selected', true);
 
-    },1000);
+      cl('select val is :'+this.getVal() );
+      cl("options ");
+      cl( this.options );
+      $( "#"+this.formId+' #'+this.name ).selectmenu()
+      $( "#"+this.formId+' #'+this.name ).val( this.getVal() );
+      $( "#"+this.formId+' #'+this.name ).selectmenu('refresh');
+      //$( e0Sel ).select('refresh');
+
+    },500);
 
 
     return ttr;
   }
 
 
-  getDBValAdd( fields ){
+
+  /*
+
+  setVal( v ){
+    cl(" .setVal for m2TrueFalse .... "+v);
+    this.v = v;
+
+    setTimeout(()=>{
+      $('#this.name option:eq("'+v+'")').prop('selected', true);
+    },800);
+
+  }
+
+  */
+
+
+
+  getDBValAddEdit( actAEDV, fields ){
     let ttr = {};
-    ttr[ this.name ] = $('#'+this.name+' option:selected').val();
+    ttr[ this.name ] = $('#'+this.formId+' #'+this.name+' option:selected').val();
     fields.push( ttr );
     return fields;
   }
@@ -213,8 +256,14 @@ class mDF2{
     pager[ this.obName ] = this;
 
     cl(`mDF2 init ... use obName[${this.obName}]`);
+    cl(this.mDef);
 
-
+    // pass this to all mDefs
+    cl("have aedvs in arra .... "+this.mDef['aedv'].length);
+    for(let f=0,fc=this.mDef['aedv'].length; f<fc; f++ ){
+      cl("set mdf parent ...."+f);
+      //this.mDef.aedv[f].setMDFParent( this );
+    }
   }
 
 
@@ -264,9 +313,29 @@ class mDF2{
     return `checking if table is ok ...`;
   }
 
+  getFormName( actName){
+    return `mdfForm${actName}`+this.obName;
+  }
+
+  actEdit(){
+    cl("actEdit ....");
+    this.actAddEdit('e');
+  }
 
   actAdd(){
-    cl("actAdd .... ");
+    this.actAddEdit('a');
+  }
+
+  actAddEdit(actAEDV){
+    let actName = 'Add';
+    let editingId = '';
+
+    if( actAEDV == 'e' ){
+      actName = 'Edit';
+      editingId = $( '#'+this.getFormName( actName ) ).attr('editID');
+    }
+
+    cl(`act${actName} .... `);
 
     let tav = [
       {'entryDate':timeStampNow()}
@@ -275,7 +344,7 @@ class mDF2{
     let cDef = this.mDef.aedv;
     for(let c=0,cc=cDef.length; c<cc; c++ ){
       let colDef = cDef[c];
-      tav = colDef[0].getDBValAdd( tav );
+      tav = colDef[0].getDBValAddEdit( actAEDV , tav );
 
     }
 
@@ -285,60 +354,124 @@ class mDF2{
     let qVN = [];
     let qVNS = [];
     let qV = '';
+    let qins = '';
     for( let c=0,cc=tav.length; c<cc; c++ ){
       let key = Object.keys( tav[c] )[0];
       let v = tav[c][ key ];
       qVN.push( key );
       qVNS.push( ':'+key );
       qV+= '&'+key+'='+encodeURIComponent(v);
+
     }
-    let qins = `insert into `+this.mDef.table+` `+
-      `( `+qVN.join(",")+` ) VALUES
-       ( `+qVNS.join(",")+` );`;
+
+    if( actAEDV == 'a' ){
+      qins = `insert into `+this.mDef.table+` `+
+        `( `+qVN.join(",")+` ) VALUES
+        ( `+qVNS.join(",")+` );`;
+    } else if ( actAEDV == 'e' ){
+      qins = `update ${this.mDef.table} set `;
+      let setL = []
+      for(let s=0,sc=qVNS.length; s<sc; s++ ){
+        setL.push( `${qVN[s]}=${qVNS[s]}` );
+      }
+      qins+= setL.join(',')+
+        ` where id=:id;`;
+      qV+=`&id=${editingId}`;
+    }
+
 
     let sq = qins+qV;
     cl("so org q is :")
     cl(sq);
 
-    this.dbQ(
-      sq,
-      (d,r)=>{
-        if( r == "success" && d.insertId != undefined ){
-          pager[this.obName]['lastAddRes'] = d;
-          cl("Added !");
-          pager[ this.obName ].cbOnAddDone( d.insertId );
-        }else{
-          cl("Error when Adding");
+
+    if( actAEDV == 'a' ){
+      this.dbQ(
+        sq,
+        (d,r)=>{
+          if( r == "success" && d.insertId != undefined ){
+            pager[this.obName]['lastAddRes'] = d;
+            cl("Added !");
+            pager[ this.obName ].cbOnAddDone( d.insertId );
+          }else{
+            cl("Error when Adding");
+          }
         }
-      }
-    );
+      );
+    }else if( actAEDV == 'e' ){
+      cl("doooo DB!!!");
+      this.dbQ(
+        sq,
+        (d,r)=>{
+          if( r == "success" && d.warningStatus == 0 ){
+            cl("Saved !");
+            pager[ this.obName ].cbOnAddDone(0);
+          }else{
+            cl("Error when Editing ");
+          }
+          /*
+          if( r == "success" && d.insertId != undefined ){
+            pager[this.obName]['lastAddRes'] = d;
+            cl("Saved !");
+            pager[ this.obName ].cbOnAddDone( d.insertId );
+          }else{
+            cl("Error when Adding");
+          }
+          */
+        }
+      );
+    }
 
 
   }
 
-
   makeFormAdd( htmlObjTargetId, cbAfterAdd ){
-    cl(`makeFormAdd .... `);
-    let fa = "make Form Add ...";
+    this.makeFormAddEdit('a', htmlObjTargetId, cbAfterAdd );
+  }
+
+  makeFormAddEdit( actAEDV, htmlObjTargetId, cbAfterAdd, data ){
+    let actName = 'Add';
+    let btLabelAddSave = 'Add it';
+    let editingId = ``;
+
+    if( actAEDV == 'e' ){
+      actName = 'Edit';
+      btLabelAddSave = 'Save';
+      editingId = data['id'];
+    }
+
+    let resForIdName = this.getFormName( actName );
+
+    cl(`makeFormAddEdit AEDV_${actName} .... `);
+    let fa = `make Form ${actName} ...`;
     this.cbOnAddDone = cbAfterAdd;
 
     let ht = [
       {
         "type": "h3",
-        "html": "Add form from - mDF2.js"
+        "html": `${actName} form from - mDF2.js`
       }
     ];
 
     let cDef = this.mDef.aedv;
     let fields = [];
     for(let c=0,cc=cDef.length; c<cc; c++ ){
-      let colDef = cDef[c];
-      cl(`doing column ${c} - is as ${typeof colDef[0]}`);
-      let ff = colDef[0].getFormField();
+      let colDef0 = cDef[c][0];
+      cl(`doing column ${c} - is as ${typeof colDef0}`);
+
+      colDef0.setAEDV( actAEDV, resForIdName );
+      if( actAEDV == 'a' ){
+
+      } else if( actAEDV == 'e' ){
+        colDef0.setVal( data[ colDef0.name ] );
+
+      }
+
+      let ff = colDef0.getFormField();
 
       // adding fields / rows of form from mDef ...
       cl("trace type ");
-      cl(colDef[0].constructor.name);
+      cl(colDef0.constructor.name);
       if(
         (ff != "" && ff != undefined ) ||
         ( 1 )
@@ -349,7 +482,7 @@ class mDF2{
               'html': ff
         });
 
-        if( colDef[0].constructor.name == 'm2Hidden' ){
+        if( colDef0.constructor.name == 'm2Hidden' ){
           fields[ fields.length-1 ]['style']='display:none;';
         }
 
@@ -376,30 +509,65 @@ class mDF2{
             "value" : "Clean"
           },{
             "type" : "a",
-            "html" : "Add it",
+            "html" : `${btLabelAddSave}`,
             "href" : "#",
             "class": "ui-btn ui-corner-all",
-            "onclick": "pager['"+this.obName+"'].actAdd()"
+            "onclick": `pager['${this.obName}'].act${actName}()`
         }]
     });
 
     cl('final ht');
     cl(ht);
 
-
-    $( htmlObjTargetId ).dform({
-      'id': "mdfFormAdd"+this.obName,
+    let dformDef = {
+      'id': resForIdName,
+      'editId': editingId,
       'html': ht
-    });
+    };
+    
+    $( htmlObjTargetId ).dform( dformDef );
 
-    $( "#mdfFormAdd"+this.obName+' #lvStart' ).listview();
-    $( "#mdfFormAdd"+this.obName ).enhanceWithin();
+    $( `#${resForIdName} [id="lvStart"]` ).listview();
+    $( `#${resForIdName}` ).enhanceWithin();
     cl("dform executed ....");
 
   }
 
 
+  makeFormEdit( htmlObjTargetId, editID, cbAfterAdd ){
+    cl(`makeFormEdit ... editID:${editID}`)
+    var editK = 'edit_'+editID;
+    if( this[ editK ] == undefined ){
+      this[ editK ] = 0;
+      cl(`step ... 0 - get data from db .....`);
+      $( htmlObjTargetId ).html('loading data ....');
+      this.dbQ(
+        `select * from ${this.mDef.table} where id=${editID};`,
+        (d,r)=>{
+          cl("d.length ... " +d.length);
+          cl("d[0] keys .... "+Object.keys(d[0]).length);
 
+          if( r == "success" && d.length == 1 && Object.keys(d[0]).length > 2 ){
+            this[ editK ] = d[0];
+            this.makeFormEdit( htmlObjTargetId, editID, cbAfterAdd );
+          }else{
+            cl("Error on getting data from db :( 34567");
+          }
+        }
+      );
+
+
+    }else if ( Object.keys( this[ editK ] ).length > 2 ){
+      cl('makeFormEdit ... Have data make form ....');
+      this.makeFormAddEdit('e', htmlObjTargetId, cbAfterAdd, this[ editK ] );
+
+    }else{
+      cl('makeFormEdit ... NaN state !');
+    }
+
+
+
+  }
 
 
 }
