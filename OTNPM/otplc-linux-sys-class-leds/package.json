@@ -1,0 +1,14 @@
+{
+  "name": "otplc-linux-sys-class-leds",
+  "version": "0.0.1",
+  "description": "Is for reading / writing sys class leds on linux.",
+  "main": "OTplcSysfsClassLeds.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "otplc", "light", "linux", "sysfs", "leds"
+  ],
+  "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+  "license": "ISC"
+}

@@ -1,0 +1,24 @@
+{
+   "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Is for reading / writing sys class leds on linux from Node-RED",
+  "keywords": [
+    "node-red",  "otplc", "light", "linux", "sysfs", "leds"
+  ],
+  "name": "node-red-otplc-linux-sys-class-leds",
+  "node-red": {
+    "nodes": {
+      "node-red-yhello": "node-red-otplc-linux-sys-class-leds.js"
+    }
+  },
+  "version": "0.0.1",
+  "main": "node-red-otplc-linux-sys-class-leds.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://192.168.43.220:8081/"
+  }
+}

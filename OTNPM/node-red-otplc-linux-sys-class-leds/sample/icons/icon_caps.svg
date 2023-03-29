@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800px"
+   height="800px"
+   viewBox="0 0 48 48"
+   version="1.1"
+   id="svg13"
+   sodipodi:docname="icon_caps.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs17">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter928"
+       x="-0.1128"
+       width="1.2256"
+       y="-0.1128"
+       height="1.2256">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.256"
+         id="feGaussianBlur930" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="704"
+     id="namedview15"
+     showgrid="false"
+     inkscape:zoom="0.295"
+     inkscape:cx="-155.9322"
+     inkscape:cy="400"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg13" />
+  <title
+     id="title2">keyboard-capslock</title>
+  <g
+     id="Layer_2-3"
+     data-name="Layer 2"
+     transform="translate(0.24,0.24)"
+     style="stroke:#6efb2a;stroke-opacity:1;filter:url(#filter928)">
+    <g
+       id="invisible_box-6"
+       data-name="invisible box"
+       style="stroke:#6efb2a;stroke-opacity:1">
+      <rect
+         style="fill:none;stroke:#6efb2a;stroke-opacity:1"
+         y="0"
+         x="0"
+         width="48"
+         height="48"
+         id="rect4-7" />
+    </g>
+    <g
+       id="Q3_icons-5"
+       data-name="Q3 icons"
+       style="stroke:#6efb2a;stroke-opacity:1">
+      <path
+         inkscape:connector-curvature="0"
+         d="M 24,6.8 39.2,22 H 33 v 6 H 15 V 22 H 8.8 L 24,6.8 M 24,2 a 2,2 0 0 0 -1.4,0.6 l -20,20 A 2,2 0 0 0 4,26 h 7 v 4 a 2,2 0 0 0 2,2 h 22 a 2,2 0 0 0 2,-2 v -4 h 7 a 2,2 0 0 0 1.4,-3.4 l -20,-20 A 2,2 0 0 0 24,2 Z"
+         id="path7-3"
+         style="stroke:#6efb2a;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m 33,40 v 2 H 15 v -2 h 18 m 2,-4 H 13 a 2,2 0 0 0 -2,2 v 6 a 2,2 0 0 0 2,2 h 22 a 2,2 0 0 0 2,-2 v -6 a 2,2 0 0 0 -2,-2 z"
+         id="path9-5"
+         style="stroke:#6efb2a;stroke-opacity:1" />
+    </g>
+  </g>
+  <g
+     id="Layer_2"
+     data-name="Layer 2">
+    <g
+       id="invisible_box"
+       data-name="invisible box">
+      <rect
+         width="48"
+         height="48"
+         id="rect4"
+         fill="none" />
+    </g>
+    <g
+       id="Q3_icons"
+       data-name="Q3 icons">
+      <path
+         d="M24,6.8,39.2,22H33v6H15V22H8.8L24,6.8M24,2a2,2,0,0,0-1.4.6l-20,20A2,2,0,0,0,4,26h7v4a2,2,0,0,0,2,2H35a2,2,0,0,0,2-2V26h7a2,2,0,0,0,1.4-3.4l-20-20A2,2,0,0,0,24,2Z"
+         id="path7" />
+      <path
+         d="M33,40v2H15V40H33m2-4H13a2,2,0,0,0-2,2v6a2,2,0,0,0,2,2H35a2,2,0,0,0,2-2V38a2,2,0,0,0-2-2Z"
+         id="path9" />
+    </g>
+  </g>
+</svg>

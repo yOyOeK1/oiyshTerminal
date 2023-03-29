@@ -1,0 +1,104 @@
+<script type="text/javascript">
+    RED.nodes.registerType('otplcLinuxSysClassLeds',{
+        category: 'ot',
+        color: '#ccda98',
+        defaults: {
+            name: { required: true, value: this.name ? this.name : 'linux: /sys/class/leds'},
+            led: { required: true, value: ""}/*,
+            ledsel: { value: "" },
+            trigger: { value: "" },
+            triggers: { value: "" },
+            optsLeds: { value: "" }*/
+        },
+        inputs:1,
+        outputs:1,
+        outputLabels:[
+        	"main payload"
+        	],
+        icon: "light.svg",
+        label: function() {
+            return this.name||"Otplc linux: /sys/class/leds";
+        },
+        /*oneditprepare: ()=>{
+          console.log("on edit preperr ... this is ..");
+          //console.log(this);
+          //let o = require('otplc-linux-sys-class-leds');
+          //var mot = new o();
+          //var dirList = mot.dirList();
+          //dirList.find((e,i)=>{ dirList[ i ] = { value: e, label: e }; });
+
+          //$('#node-input-ledsel').val('ve can ?');
+          $('#node-input-ledsel').typedInput({
+              types: [
+                  {
+                      value: "fruit",
+                      options: [{ value: "apple", label: "Apple from conf"},{ value: "banana", label: "Banana"}, { value: "cherry", label: "Cherry"}, ]
+                  }
+              ]
+          })
+        }*/
+    });
+</script>
+
+
+
+
+<script type="text/html" data-template-name="otplcLinuxSysClassLeds">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-led"><i class="fa fa-tag"></i> Led</label>
+        <input type="text" id="node-input-led" placeholder="">
+    </div>
+    <!-- next version ?
+    <div class="form-row">
+        <label for="node-input-ledsel"><i class="fa fa-tag"></i> Led select it:</label>
+        <input type="text" id="node-input-ledsel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-trigger"><i class="fa fa-tag"></i> Trigger</label>
+        <input type="text" id="node-input-trigger" placeholder="Trigger">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-triggers"><i class="fa fa-tag"></i> Triggers</label>
+        <input type="text" id="node-input-triggers" placeholder="Triggers">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-optsLeds"><i class="fa fa-tag"></i> optsLeds to hold vals for options..</label>
+        <input type="text" id="node-input-optsLeds">
+    </div>
+
+    -->
+
+    <div class="form-row">
+
+        <hr>
+        <b>Make shure</b>
+        <p>That you have permissions..</p>
+
+
+
+    </div>
+</script>
+
+<script type="text/html" data-help-name="otplcLinuxSysClassLeds">
+    <p>ot-plc to use linux sys / class / leds kernel layer to flash your leds!</p>
+    You need to have permissions to write to /sys/class/leds/*/[brightness|trigger]
+    then this is working for setting. Without it is only able to read status now.
+    <hr>
+    You can send it topic {string}:<br>
+    <b>dirList</b> - to get payload with posible options to set as led.<br>
+    <b>getStatus</b> - to get payload current brightness<br>
+    <b>getStatusLong</b> - extended json in payload info about set led<br>
+    <b>set</b> - with payload will write to brightness<br>
+    <b>trigger</b> - with payload write trigger<br>
+    <br>
+    On start look on status of node or what is returning.
+
+
+</script>
