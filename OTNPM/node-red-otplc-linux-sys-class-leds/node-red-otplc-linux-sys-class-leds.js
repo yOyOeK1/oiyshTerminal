@@ -16,8 +16,8 @@ module.exports = function(RED) {
       let eMsg = '';
       var mot = new otplcLLeds();
       node['mot'] = mot;
-      var dirList = mot.dirList();
-      dirList.find((e,i)=>{ dirList[ i ] = { value: e, label: e }; });
+      //var dirList = mot.dirList();
+      //dirList.find((e,i)=>{ dirList[ i ] = { value: e, label: e }; });
       //console.log( '- so dirList is ...');
       //console.log(dirList);
       //config.optsLeds = JSON.stringify(dirList);

@@ -3,22 +3,27 @@
   "deprecated": false,
   "description": "Is for reading / writing sys class leds on linux from Node-RED",
   "keywords": [
-    "node-red",  "otplc", "light", "linux", "sysfs", "leds"
+    "node-red",  "otplc", "light", "linux", "sysfs", "leds", "oiyshTerminal", "oit", "plc"
   ],
   "name": "node-red-otplc-linux-sys-class-leds",
   "node-red": {
     "nodes": {
-      "node-red-yhello": "node-red-otplc-linux-sys-class-leds.js"
+      "node-red-otplc-linux-sys-class-leds": "node-red-otplc-linux-sys-class-leds.js"
     }
   },
-  "version": "0.0.1",
+  "version": "0.0.9",
   "main": "node-red-otplc-linux-sys-class-leds.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
   "license": "ISC",
-  "publishConfig": {
-    "registry": "http://192.168.43.220:8081/"
+  "dependencies": {
+    "otplc-linux-sys-class-leds": ">=0.0.4"
+  },
+  "homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-otplc-linux-sys-class-leds",
+  "bugs":{
+    "url": "https://github.com/yOyOeK1/oiyshTerminal/issues?q=label%3Aotplc-linux-sys-class-leds"
   }
+
 }

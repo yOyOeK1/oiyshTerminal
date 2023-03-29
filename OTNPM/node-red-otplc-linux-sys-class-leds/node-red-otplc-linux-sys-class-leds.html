@@ -78,9 +78,13 @@
     <div class="form-row">
 
         <hr>
-        <b>Make shure</b>
-        <p>That you have permissions..</p>
-
+        On start look on status of node or what is returning.<br>
+        <br>
+        If you want access run:<br>
+        <i>
+    sudo chmod o+w /sys/class/leds/*/brightness<br>
+    sudo chmod o+w /sys/class/leds/*/trigger<br>
+        </i>
 
 
     </div>
@@ -98,7 +102,12 @@
     <b>set</b> - with payload will write to brightness<br>
     <b>trigger</b> - with payload write trigger<br>
     <br>
-    On start look on status of node or what is returning.
-
+    On start look on status of node or what is returning.<br>
+    If you want only have access to this run:<br>
+    <i>
+sudo chmod o+w /sys/class/leds/*/brightness<br>
+sudo chmod o+w /sys/class/leds/*/trigger<br>
+    </i>
+    So you will get permissions
 
 </script>
