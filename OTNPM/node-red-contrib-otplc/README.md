@@ -1,5 +1,7 @@
 ## node-red-contrib-otplc
 
+
+
   Is a Node-RED ui version to use oiyshTerminal - plc layes
 
 ## in result we have
@@ -12,9 +14,9 @@ in progress ...
 
 ## screenshots
 
-![](https://github.com/yOyOeK1/oiyshTerminal/blob/main/OTNPM/node-red-contrib-otplc/examples/ss_engineNode.png?ra)
+![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/node-red-contrib-otplc/examples/ss_engineNode.png)
 
-In dept topics in docs in Node-RED and at [otplc site ...](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-otplc)
+In dept topics in docs in Node-RED and at [otplc site ...](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/otplc)
 
 
 
