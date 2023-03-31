@@ -2,7 +2,7 @@
 
    Is oiyshTerminal solution for chaos in pins layers. We have many pins different types ins/outs in our systems. Sometimes one mcu is making something in more then one device (that is in my case). Adding PLC layer virtual we can organize all that is some sort of order.
 
-This library is to help with managing otplc's and get to point of having [this link ... yss-otplc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sites/otplc/README.md)
+This library is to help with managing otplc's and get to point of having [this link ... yss-otplc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sites/otplc/README.md) and [this link ... p-nrf-http-api-plc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sites/packitso/p-nrf-http-api-plc/README.md)
 
 ## most basic layer otplc
 
