@@ -1,0 +1,45 @@
+<script type="text/javascript">
+    RED.nodes.registerType('yhello',{
+        category: 'ot',
+        color: '#ccc',
+        defaults: {
+            name: {value:"yhello_"+(new Date().getTime())},
+            lastTn: { value: "" }
+        },
+        inputs:1,
+        outputs:3,
+        outputLabels:[
+        	"main payload",
+        	"org payload",
+        	"tn"
+        	],
+        icon: "ico_bug_32_32.png",
+        label: function() {
+            return this.name||"y_hello";
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="yhello">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-lastTn"><i class="fa fa-tag"></i> Last TN</label>
+        <input type="text" id="node-input-lastTn" placeholder="Last tn">
+        
+        
+        <hr>
+        <p>Is test 1</p>
+        <img src="http://localhost:1880/yss/sites/otplc/ico_graph_32_32.png" >
+        
+        
+        <iframe src="http://localhost:1880/yss/#page=7&0.5270836617939179"
+style="height:640px;width:100%;"
+frameborder="0"></iframe>
+        
+    </div>
+</script>
+
+<script type="text/html" data-help-name="yhello">
+    <p>A simple node that converts the message payloads into yhello </p>
+</script>

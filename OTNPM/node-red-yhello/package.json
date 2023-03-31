@@ -1,0 +1,24 @@
+{
+   "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A yhello (world) node for node-red",
+  "keywords": [
+    "node-red"
+  ],
+  "name": "node-red-yhello",
+  "node-red": {
+    "nodes": {
+      "node-red-yhello": "node-red-yhello.js"
+    }
+  },
+  "version": "0.0.1",
+  "main": "node-red-yhello.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://192.168.43.220:8081/"
+  }
+}
