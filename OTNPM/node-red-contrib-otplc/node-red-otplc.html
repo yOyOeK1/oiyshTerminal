@@ -1,0 +1,134 @@
+
+
+
+<script type="text/html" data-template-name="otplcBundle">
+
+    <div class="form-row">
+        <label for="node-config-input-plcType"><i class="fa fa-globe"></i> PlcType</label>
+        <input type="text" id="node-config-input-plcType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-globe"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-location"><i class="fa fa-globe"></i> Location</label>
+        <input type="text" id="node-config-input-location">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-srcName"><i class="fa fa-globe"></i> Source name</label>
+        <input type="text" id="node-config-input-srcName">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-srcD"><i class="fa fa-globe"></i> Source details</label>
+        <input type="text" id="node-config-input-srcD">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-extra"><i class="fa fa-globe"></i> Extra</label>
+        <input type="text" id="node-config-input-extra">
+    </div>
+
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('otplcBundle',{
+        category: 'config',
+        defaults: {
+            plcType: {value:""},
+            name: {value:""},
+            location: {value:""},
+            srcName: {value:""},
+            srcD: {value:""},
+            extra: {value:"-1"}
+        },
+        label: function() {
+            return this.plcType+": "+
+              this.location+" / "+this.name ||
+              this.location+'/'+this.name;
+        }
+    });
+</script>
+
+
+
+
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('otplcEngine',{
+        category: 'ot',
+        color: '#ccdf9a',
+        defaults: {
+            name: { required: true, value: this.name ? this.name : 'ot-plc ...'},
+            location: { value: "" },
+
+            otPlcSel: {required: false, type:"otplcBundle"},
+        },
+        inputs:1,
+        outputs:1,
+        outputLabels:[
+        	"main payload"
+        	],
+        icon: "white-globe.svg",
+        label: function() {
+            return "ot-plc Engine: "+this.name||"Ot-plc";
+        }
+    });
+</script>
+
+
+
+
+<script type="text/html" data-template-name="otplcEngine">
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-location"><i class="fa fa-tag"></i> Location</label>
+        <input type="text" id="node-input-location" placeholder="Location">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-otPlcSel"><i class="fa fa-otPlcSel"></i> ot-plc selection</label>
+        <input type="text" id="node-input-otPlcSel">
+    </div>
+
+    <div class="form-row">
+
+        <hr>
+        On start look on status of node or what is returning.<br>
+        <br>
+
+    </div>
+</script>
+
+<script type="text/html" data-help-name="otplcEngine">
+    <p>ot-plc Engine for Node-RED to use ...
+
+      <hr>
+      You can send it topic {string}:<br>
+      <b>getAll</b> - to get payload {array} of ot-plc's<br>
+      <b>getAllTypes</b> - to get payload {array} of options in ot-plc's with
+        {string} `payload` as key distinct<br>
+      <i>example</i> we want to check how many locations we have? <br>
+      <b>zeroAll</b> - to list of ot-plc's<br>
+      <b>add</b> - with arguments in `msg.` format as ...<br>
+      <i>for more info go to <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-otplc" target="_blank">
+        link ... otplc documentation</a></i><br>
+
+
+
+
+
+
+
+</script>

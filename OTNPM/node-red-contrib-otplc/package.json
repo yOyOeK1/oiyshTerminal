@@ -1,0 +1,31 @@
+{
+   "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Is for setting a instance of otplc in Node-RED",
+  "keywords": [
+    "node-red",  "otplc", "oiyshTerminal", "oit", "plc"
+  ],
+  "name": "node-red-contrib-otplc",
+  "engines": { "node": ">=10.19.0" },
+  "node-red": {
+    "version": ">=2.1.4",
+    "nodes": {
+      "node-red-contrib-otplc": "node-red-otplc.js"
+    }
+  },
+  "version": "0.0.2",
+  "main": "node-red-otplc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+  "license": "ISC",
+  "dependencies": {
+    "otplc": ">=0.0.1"
+  },
+  "homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc",
+  "bugs":{
+    "url": "https://github.com/yOyOeK1/oiyshTerminal/issues?q=label%3Anode-red-contrib-otplc"
+  }
+
+}
