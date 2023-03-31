@@ -1,5 +1,8 @@
 const otplcLLeds = require('otplc-linux-sys-class-leds');
 
+const otplc = require('otplc').otplc;
+
+
 function cl(m){
   console.log(m);
 }
@@ -24,6 +27,9 @@ module.exports = function(RED) {
       //var otplcLeds = dirList;
       let lName = this.name;
       let tPerms = mot.chkperm(lName);
+
+
+
 
       //cl("config is ...");
       //cl(config);
@@ -50,6 +56,15 @@ module.exports = function(RED) {
       }
 
       setStatus( node, eMsg == "" ? "is ready ...["+mot.getStatus( config.led )+"] ["+mot.getStatusFromSysFs( config.led ).brightness.trigger+"]" : eMsg );
+
+      if( eMsg == "" ){
+        setTimeout(()=>{
+          otplc.add( 'sysClassLed',
+            lName,
+            config.location
+          );
+        },300);
+      }
 
 
       node.on('input', function(msg) {

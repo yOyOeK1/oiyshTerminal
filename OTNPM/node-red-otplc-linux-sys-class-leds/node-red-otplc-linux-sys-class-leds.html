@@ -4,6 +4,7 @@
         color: '#ccda98',
         defaults: {
             name: { required: true, value: this.name ? this.name : 'linux: /sys/class/leds'},
+            location: { value: "" },
             led: { required: true, value: ""}/*,
             ledsel: { value: "" },
             trigger: { value: "" },
@@ -44,14 +45,22 @@
 
 
 <script type="text/html" data-template-name="otplcLinuxSysClassLeds">
+
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+
+    <div class="form-row">
+        <label for="node-input-location"><i class="fa fa-tag"></i> Location</label>
+        <input type="text" id="node-input-location" placeholder="Location">
+    </div>
+
     <div class="form-row">
         <label for="node-input-led"><i class="fa fa-tag"></i> Led</label>
         <input type="text" id="node-input-led" placeholder="">
     </div>
+
     <!-- next version ?
     <div class="form-row">
         <label for="node-input-ledsel"><i class="fa fa-tag"></i> Led select it:</label>
