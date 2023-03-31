@@ -1,0 +1,21 @@
+{
+  "name": "otplc",
+  "version": "0.0.1",
+  "description": "oiyshTerminal - plc solution",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test1": "node . 'runTest1' && exit 0",
+    "testErr": "node . 'runTestErr' && exit 0"
+  },
+  "keywords": [
+    "otplc", "oiyshTerminal", "oit", "plc"
+  ],
+  "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+  "license": "ISC",
+  "homepage": "https://github.com/yOyOeK1/oiyshTerminal/",
+  "bugs":{
+    "url": "https://github.com/yOyOeK1/oiyshTerminal/issues?q=label%3Aotplc"
+  }
+
+}
