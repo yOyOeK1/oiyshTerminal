@@ -1,6 +1,6 @@
 {
   "name": "otplc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "oiyshTerminal - plc solution",
   "main": "index.js",
   "scripts": {
