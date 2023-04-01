@@ -1,6 +1,10 @@
 
 class s_blankPage{
 
+  constructor(){
+    cl(`${this.getName} init ....`);
+  }
+
   get getName(){
     return "blank";
   }
@@ -10,7 +14,7 @@ class s_blankPage{
   }
 
   getHtml(){
-    return '<b>'+pager.getCurrentPage().getName+'<b>';
+    return '<b>'+pager.getCurrentPage().getName+'</b>';
   }
 
   getHtmlAfterLoad(){
