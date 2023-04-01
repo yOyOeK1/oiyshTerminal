@@ -1,0 +1,15 @@
+{
+  "name": "otmhh",
+  "version": "0.0.1",
+  "description": "To make templating html easy and fast from json structures makes html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test1": "node . 'runTest1' && exit 0"
+  },
+  "keywords": [
+    "oiyshTerminal"
+  ],
+  "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+  "license": "ISC"
+}
