@@ -1,0 +1,186 @@
+[
+    {
+        "id": "4d6568f703b5f2dc",
+        "type": "otplcLinuxSysClassLeds",
+        "z": "cbe8d92242cbd70e",
+        "name": "kbdCapslock",
+        "led": "input2::capslock",
+        "x": 1150,
+        "y": 680,
+        "wires": [
+            [
+                "638a334fa7d5bfcf"
+            ]
+        ]
+    },
+    {
+        "id": "9e2f6183ecfc59b8",
+        "type": "inject",
+        "z": "cbe8d92242cbd70e",
+        "name": "get status",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "getStatus",
+        "payloadType": "date",
+        "x": 920,
+        "y": 700,
+        "wires": [
+            [
+                "4d6568f703b5f2dc"
+            ]
+        ]
+    },
+    {
+        "id": "638a334fa7d5bfcf",
+        "type": "debug",
+        "z": "cbe8d92242cbd70e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "4306b3d2cd595635",
+        "type": "inject",
+        "z": "cbe8d92242cbd70e",
+        "name": "dirList",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "dirList",
+        "payload": "",
+        "payloadType": "date",
+        "x": 910,
+        "y": 620,
+        "wires": [
+            [
+                "4d6568f703b5f2dc"
+            ]
+        ]
+    },
+    {
+        "id": "c58b027ae7e32630",
+        "type": "inject",
+        "z": "cbe8d92242cbd70e",
+        "name": "get status long",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "getStatusLong",
+        "payloadType": "date",
+        "x": 940,
+        "y": 760,
+        "wires": [
+            [
+                "4d6568f703b5f2dc"
+            ]
+        ]
+    },
+    {
+        "id": "29f2e0eb6e882735",
+        "type": "inject",
+        "z": "cbe8d92242cbd70e",
+        "name": "set 1",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "set",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 910,
+        "y": 820,
+        "wires": [
+            [
+                "4d6568f703b5f2dc"
+            ]
+        ]
+    },
+    {
+        "id": "70e145953f4afcb6",
+        "type": "inject",
+        "z": "cbe8d92242cbd70e",
+        "name": "set 0",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "set",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 910,
+        "y": 860,
+        "wires": [
+            [
+                "4d6568f703b5f2dc"
+            ]
+        ]
+    },
+    {
+        "id": "f95b76aa495f001d",
+        "type": "comment",
+        "z": "cbe8d92242cbd70e",
+        "name": "About node-red-otplc-linux-sys-class-leds",
+        "info": "",
+        "x": 980,
+        "y": 560,
+        "wires": []
+    }
+]
