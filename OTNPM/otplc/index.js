@@ -52,7 +52,8 @@ class OTplc{
     let trt = {};
     let tr = [];
     for(let p=0; p<this.plcsCount; p++ ){
-      cl(this.plcs[ p ]);
+      //cl(`plc NO( ${p} ):`);
+      //cl(this.plcs[ p ]);
       if( trt[ this.plcs[ p ][ lType ] ] == undefined ){
           trt[ this.plcs[ p ][ lType ] ] = 1;
           tr.push( this.plcs[ p ][ lType ] );
