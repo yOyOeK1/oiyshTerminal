@@ -133,8 +133,6 @@ And in grafana generated on base of fact that node instance is existing in Node-
 
 *in all it's glory. On left flow in Node-RED. On right terminal with statistics of one of the topics*
 
-
-
 ## ot-plc image to number
 
 **status** [in progress ... can install manually]
@@ -149,18 +147,34 @@ property msg [json]
 
 - extArgs [json] - to pass arguments to `Seven Segment Optical Character Recognition`
 
-
-
 ### in action image to number
 
 Image capture using yss-remote-camera -> to WebSocket -> to image to number process -> to mqtt topic on success ...
 
 ![](./ss_ot-plc-image-to-number_0.0.1.png)
 
+# 
 
+### experimenting with integration
+
+This is a attempt to put configuration with my yss in from Node-RED
+
+![](./ss_otplc_in_node-red.png)
+
+# 
 
 ## notes
 
 ## todo
 
 [] - battery more outputs to send notifications on: isXxxx, timeout, others ...
+
+- [ ] output light as leds on devices
+  
+  - [ ] laptop - capslock, numlock, others..
+  
+  - [ ] phone (termux) - flashlight, others..
+  
+  - [ ] phone (as yss client) - flashlight, others...
+    
+    

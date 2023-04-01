@@ -1,0 +1,29 @@
+{
+  "edit": false,
+  "editId": -1,
+  "works": [
+    {
+      "entryDate": 1677609598116,
+      "extArgs": "-forceHost 192.168.43.1",
+      "undefined": "",
+      "keyWord": "dnrfByUid",
+      "ident": "id:ca9b53d7bee7fef3",
+      "srcName": "node-red",
+      "identKey": "id",
+      "identUid": "ca9b53d7bee7fef3",
+      "name": "hu2p-test1",
+      "iKey": "label",
+      "iUid": "hu2p-test1",
+      "oFile": ""
+    }
+  ],
+  "entryDate": 1677609493270,
+  "packitso": {
+    "name": "test-nrf-from-hu-test1",
+    "ver": "0.0.1",
+    "otdm.deps": "otdm-tool",
+    "desc": "Test is to select Node-RED flow from instance on server hu and make .deb from it :)",
+    "author": "B. Ceglik <yoyoek@wp.pl>"
+  },
+  "workForm": {}
+}
