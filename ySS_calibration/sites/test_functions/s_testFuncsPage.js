@@ -53,8 +53,8 @@ class s_testFuncsPage{
 -->
 
 <!-- grafana config need set allow_embedding = true -->
-<iframe src="http://192.168.43.220:3000/d/TXSTREZ/yoyoek1-stuff?orgId=1&from=now-10s&to=now&viewPanel=7&kiosk&refresh=5s"
-width="50vw" style="height:50vh;"
+<iframe src="http://192.168.43.220:3000/d/TXSTREZ/yoyoek1-stuff?orgId=1&from=now-10s&to=now&kiosk&refresh=5s&otgOnly=2"
+style="height:50vh;width:50vw;"
 frameborder="0"></iframe>
     `;
   }
