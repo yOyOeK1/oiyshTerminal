@@ -13,7 +13,7 @@
       "node-red-otplc-linux-sys-class-leds": "node-red-otplc-linux-sys-class-leds.js"
     }
   },
-  "version": "0.0.10",
+  "version": "0.0.906",
   "main": "node-red-otplc-linux-sys-class-leds.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,7 +22,8 @@
   "license": "ISC",
   "dependencies": {
     "otplc-linux-sys-class-leds": ">=0.0.4",
-    "node-red-contrib-otplc": ">=0.0.1"
+    "node-red-contrib-otplc": ">=0.0.904",
+    "otplc": ">=0.0.903"
   },
   "homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-otplc-linux-sys-class-leds",
   "bugs":{

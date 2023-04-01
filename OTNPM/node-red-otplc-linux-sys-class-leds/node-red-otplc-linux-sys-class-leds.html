@@ -4,7 +4,7 @@
         color: '#ccda98',
         defaults: {
             name: { required: true, value: this.name ? this.name : 'linux: /sys/class/leds'},
-            location: { value: "" },
+            //location: { value: "" },
             led: { required: true, value: ""}/*,
             ledsel: { value: "" },
             trigger: { value: "" },
@@ -51,10 +51,6 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 
-    <div class="form-row">
-        <label for="node-input-location"><i class="fa fa-tag"></i> Location</label>
-        <input type="text" id="node-input-location" placeholder="Location">
-    </div>
 
     <div class="form-row">
         <label for="node-input-led"><i class="fa fa-tag"></i> Led</label>
@@ -62,6 +58,11 @@
     </div>
 
     <!-- next version ?
+    <div class="form-row">
+      <label for="node-input-location"><i class="fa fa-tag"></i> Location</label>
+      <input type="text" id="node-input-location" placeholder="Location">
+    </div>
+
     <div class="form-row">
         <label for="node-input-ledsel"><i class="fa fa-tag"></i> Led select it:</label>
         <input type="text" id="node-input-ledsel">
@@ -118,5 +119,20 @@ sudo chmod o+w /sys/class/leds/*/brightness<br>
 sudo chmod o+w /sys/class/leds/*/trigger<br>
     </i>
     So you will get permissions
+
+    <hr>
+
+    <i>
+      <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc" target="_blank">
+        for more info go to otplc link ....
+      </a>
+    </i><br>
+    <i>
+      <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-otplc-linux-sys-class-leds/sample/exampleNodeSet.json" target="_blank">
+        example node set .json link ....
+      </a>
+    </i><br>
+
+
 
 </script>

@@ -1,14 +1,20 @@
 {
   "name": "otplc-linux-sys-class-leds",
-  "version": "0.0.1",
+  "version": "0.0.903",
   "description": "Is for reading / writing sys class leds on linux.",
   "main": "OTplcSysfsClassLeds.js",
+  "engines": { "node": ">=10.19.0" },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "otplc", "light", "linux", "sysfs", "leds"
+    "otplc", "light", "linux", "sysfs", "leds", "oiyshTerminal", "oit", "plc"
   ],
   "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
-  "license": "ISC"
+  "license": "ISC",
+  "homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/otplc-linux-sys-class-leds",
+  "bugs":{
+    "url": "https://github.com/yOyOeK1/oiyshTerminal/issues?q=label%3Aotplc-linux-sys-class-leds"
+  }
+
 }
