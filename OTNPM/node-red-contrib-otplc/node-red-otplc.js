@@ -11,9 +11,9 @@ module.exports = function(RED) {
 
 
     function OOplcEngine(config) {
-      cl( 'OOplcEngine init ...' );
       RED.nodes.createNode(this,config);
-
+      let niceName = config.name == "" ? 'ot-plc ... ': config.name+":location:"+config.location;
+      cl( 'OOplcEngine init ...['+niceName+']' );
       try{
         let abc = config.location;
       }catch(e){
@@ -27,12 +27,12 @@ module.exports = function(RED) {
 
       this.otPlcSel = config.otPlcSel;
       this.otPlcSelConfig = RED.nodes.getNode( this.otPlcSel );
-      cl( "got nodes::otPlcSelConfig ... count: "+this.otPlcSelConfig.length );
+      //cl( "got nodes::otPlcSelConfig ... count: "+this.otPlcSelConfig.length );
       //cl( this.otPlcSelConfig );
 
-      let con = new Date();
-      cl( "set context: "+con);
-      this.context().set('testContext1', con);
+      //let con = new Date();
+      //cl( "set context: "+con);
+      //this.context().set('testContext1', con);
 
       function setStatus( node, m ){
         node.status({text: m});
@@ -75,11 +75,12 @@ module.exports = function(RED) {
           });
 
         } else if( msg.topic == "getAllTypes" ){
-          cl("get all types ....");
+          cl("get all types .... ");
+          //cl("  and otplc is ..");cl(otplc);
           node.send({
             topit:"getAllTypes",
             key: msg.payload,
-            payload: otplc.getAllTypes( msg.payload )
+            payload: otplc.getAllTypes( String(msg.payload) )
           });
 
         } else if( msg.topic == "add" ){
@@ -92,12 +93,12 @@ module.exports = function(RED) {
             m.srcName, m.srcD,
             m.extra
           );
-          cl("- to otplc .... DONE name: "+n);
-          cl( this.otPlcSelConfig );
+          //cl("- to otplc .... DONE name: "+n);
+          //cl( this.otPlcSelConfig );
           //RED.nodes.eachConfig((e)=>{ console.log(e);});
 
 
-          cl(" so create it ....");
+          //cl(" so create it ....");
 
           /*
           RED.nodes.add('otplcBundle',{
@@ -109,7 +110,7 @@ module.exports = function(RED) {
             extra: m.extra
           });
           */
-          cl("- to otplcBundle .... DONE")
+          //cl("- to otplcBundle .... DONE")
 
           node.send({
             topit:"add",
@@ -131,10 +132,10 @@ module.exports = function(RED) {
 
 
     function OOplcBundle(n) {
-      cl( 'OOplcBundle init ...' );
-      cl(" soooo n is .....");
-      cl(n);
+      //cl(" soooo n is .....");
+      //cl(n);
       RED.nodes.createNode(this,n);
+      cl( `OOplcBundle init ... [plcType:${n.plcType} name:${n.name} location:${n.location}]` );
       this.plcType = n.plcType;
       this.name = n.name;
       this.location = n.location;

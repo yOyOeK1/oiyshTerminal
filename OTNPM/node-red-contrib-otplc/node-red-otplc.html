@@ -82,8 +82,6 @@
 </script>
 
 
-
-
 <script type="text/html" data-template-name="otplcEngine">
 
     <div class="form-row">
@@ -96,24 +94,16 @@
         <input type="text" id="node-input-location" placeholder="Location">
     </div>
 
-    <div class="form-row">
+    <div class="form-row" style="display:none;">
         <label for="node-input-otPlcSel"><i class="fa fa-otPlcSel"></i> ot-plc selection</label>
         <input type="text" id="node-input-otPlcSel">
     </div>
 
     <div class="form-row">
-
-        <hr>
-        On start look on status of node or what is returning.<br>
-        <br>
-
-    </div>
-</script>
-
-<script type="text/html" data-help-name="otplcEngine">
-    <p>ot-plc Engine for Node-RED to use ...
-
       <hr>
+      On start look on status of node or what is returning.<br>
+      <hr>
+
       You can send it topic {string}:<br>
       <b>getAll</b> - to get payload {array} of ot-plc's<br>
       <b>getAllTypes</b> - to get payload {array} of options in ot-plc's with
@@ -121,13 +111,47 @@
       <i>example</i> we want to check how many locations we have? <br>
       <b>zeroAll</b> - to list of ot-plc's<br>
       <b>add</b> - with arguments in `msg.` format as ...<br>
-      <i>for more info go to <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-otplc" target="_blank">
-        link ... otplc documentation</a></i><br>
+      <i>
+        <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc" target="_blank">
+          for more info go to otplc link ....
+        </a>
+      </i><br>
+      <i>
+        <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc#basicExample" target="_blank">
+          example node set .json link ....
+        </a>
+      </i><br>
+    </div>
+
+</script>
 
 
 
+<script type="text/html" data-help-name="otplcEngine">
 
+    <div class="form-row">
+      <hr>
+      On start look on status of node or what is returning.<br>
+      <hr>
 
+      You can send it topic {string}:<br>
+      <b>getAll</b> - to get payload {array} of ot-plc's<br>
+      <b>getAllTypes</b> - to get payload {array} of options in ot-plc's with
+        {string} `payload` as key distinct<br>
+      <i>example</i> we want to check how many locations we have? <br>
+      <b>zeroAll</b> - to list of ot-plc's<br>
+      <b>add</b> - with arguments in `msg.` format as ...<br>
+      <i>
+        <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc" target="_blank">
+          for more info go to otplc link ....
+        </a>
+      </i><br>
+      <i>
+        <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc#basicExample" target="_blank">
+          example node set .json link ....
+        </a>
+      </i><br>
+    </div>
 
 
 </script>
