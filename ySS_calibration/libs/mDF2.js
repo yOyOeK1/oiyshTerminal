@@ -178,14 +178,18 @@ class m2TrueFalse extends aggregation( m2Col ){
 }
 
 
-class m2Select extends aggregation( m2Col ){
 
-  constructor( colName, label, options=[], val=0 ){
+class m2SelectFlipswitch extends aggregation( m2Col ){
+
+  /*
+  typeMake [select|flipswitch]
+  */
+  constructor( typeMake ,colName, label, options=[], val=0 ){
      super( colName, label, val );
-     cl("m2Select init .... ");
+     cl(`m2SelectFlipswitch init .... [ ${typeMake} ] colName: ${colName}  label: ${label} val: ${val}`);
 
      this.options = options;
-
+     this.typeMake = typeMake;
   }
 
   getFormField( v = '' ){
@@ -200,38 +204,43 @@ class m2Select extends aggregation( m2Col ){
     };
     //this.getVal()
 
-    setTimeout(()=>{
+    if( this.typeMake == 'flipswitch' ){
+      ttr['data-role'] = 'flipswitch';
+    }
 
-      cl('select val is :'+this.getVal() );
-      cl("options ");
-      cl( this.options );
-      $( "#"+this.formId+' #'+this.name ).selectmenu()
-      $( "#"+this.formId+' #'+this.name ).val( this.getVal() );
-      $( "#"+this.formId+' #'+this.name ).selectmenu('refresh');
-      //$( e0Sel ).select('refresh');
+
+    setTimeout(()=>{
+      let objTw = $( "#"+this.formId+' #'+this.name );
+      if( 0 ){
+        cl(`-----setting up ${this.name} : ${this.label}------------------`);
+        cl(`select (${this.typeMake}) val is : [${this.getVal()}]` );
+        cl("options ");
+        cl( this.options );
+        cl("check objTw text ...."+objTw.text());
+        cl(`  current val: ${objTw.val()}`);
+      }
+
+      if( this.typeMake == 'flipswitch' ){
+        cl("making as flipswitch [#"+this.formId+' #'+this.name+']');
+        //$( "#"+this.formId+' #'+this.name ).flipswitch();
+
+        objTw.flipswitch();
+        if( this.getVal() == 1 ){
+          objTw.val("1").flipswitch('refresh');
+        }
+
+      }else{
+        objTw.selectmenu();
+        objTw.val( this.getVal() );
+        objTw.selectmenu('refresh');
+
+      }
 
     },500);
 
 
     return ttr;
   }
-
-
-
-  /*
-
-  setVal( v ){
-    cl(" .setVal for m2TrueFalse .... "+v);
-    this.v = v;
-
-    setTimeout(()=>{
-      $('#this.name option:eq("'+v+'")').prop('selected', true);
-    },800);
-
-  }
-
-  */
-
 
 
   getDBValAddEdit( actAEDV, fields ){
@@ -244,6 +253,25 @@ class m2Select extends aggregation( m2Col ){
 }
 
 
+class m2Select extends aggregation( m2SelectFlipswitch ){
+  constructor( colName, label, options=[], val=0 ){
+    cl("m2SelectFlipswitch init .... as select val:"+val);
+    super( 'select', colName, label, options, val );
+
+    this.options = options;
+
+  }
+}
+
+class m2Flipswitch extends aggregation( m2SelectFlipswitch ){
+  constructor( colName, label, options=[], val=0 ){
+    cl("m2SelectFlipswitch init .... as flipswitch val:"+val);
+     super( 'flipswitch', colName, label, options, val );
+
+     this.options = options;
+
+  }
+}
 
 
 class mDF2{
@@ -404,20 +432,12 @@ class mDF2{
         sq,
         (d,r)=>{
           if( r == "success" && d.warningStatus == 0 ){
-            cl("Saved !");
+            cl("Saved edited!");
             pager[ this.obName ].cbOnAddDone(0);
           }else{
             cl("Error when Editing ");
           }
-          /*
-          if( r == "success" && d.insertId != undefined ){
-            pager[this.obName]['lastAddRes'] = d;
-            cl("Saved !");
-            pager[ this.obName ].cbOnAddDone( d.insertId );
-          }else{
-            cl("Error when Adding");
-          }
-          */
+
         }
       );
     }
@@ -524,7 +544,7 @@ class mDF2{
       'editId': editingId,
       'html': ht
     };
-    
+
     $( htmlObjTargetId ).dform( dformDef );
 
     $( `#${resForIdName} [id="lvStart"]` ).listview();

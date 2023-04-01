@@ -5,7 +5,7 @@
 
 ( function( factory ) {
 	"use strict";
-	
+
 	if ( typeof define === "function" && define.amd ) {
 
 		// AMD. Register as an anonymous module.
@@ -51,6 +51,8 @@ $.cleanData = ( function( orig ) {
 			// Only trigger remove when necessary to save time
 			events = $._data( elem, "events" );
 			if ( events && events.remove ) {
+				//console.log( 'jquery trace ');
+				//console.log( elem );
 				$( elem ).triggerHandler( "remove" );
 			}
 		}

@@ -1,0 +1,13 @@
+{
+    "oName": "s_testMAEDV",
+    "o": null,
+    "dir": "blank",
+    "jssrc":["s_testMAEDV.js"],
+    "enable": true,
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "Yss test page to test functionality of mAEDV.js helping library to handle all add, edint, view options for database data.",
+    "otdm":{
+        "playground": false
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "oName": "s_otplcPage",
+    "o": null,
+    "dir": "blank",
+    "jssrc":["s_otplcPage.js","otPMain.js","otPTopics.js","otDevView.js"],
+    "enable": true,
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "For managing / configurating oiyshTerminal - programable layer ot-plc",
+    "otdm":{
+        "playground": false
+    }
+}

@@ -49,12 +49,13 @@ class s_mdf2Page{
         [new m2View( 'etFormCreate', "Form created at", timeStampNow(), timestampToNiceTime ) ],
         [new m2InputText( 'f0', "F0 input text" ) ],
         [new m2TrueFalse( 'f1', "F1 true or false 0 def", [ '1', '0' ], 0) ],
-        //[new m2TrueFalse( 'f2', "F2 yes or no yes def", [ 'yes', 'no' ],1 ) ],
+        // need fix of remove [new m2Flipswitch( 'f2', "F2 flipswitch", [ 'yes', 'no' ],1 ) ],
+        //[new m2Flipswitch( 'f2', "F2 flipswitch", [ 'yes', 'no' ],1 ) ],
         [new m2Select( 'f3', "Select int",
           [ 'one', 'two', 'three' ],
           1 ) ],
         [new m2Select( 'f4', "Select keys",
-          [ {'value':'one','html':'vone'}, {'value':'two','html':'vtwo'}, {'value': 'three', 'html':'vthree'} ],
+          [ {'value':'one','html':'vone'}, {'value':'dbtwo','html':'visiletwo'}, {'value': 'three', 'html':'vthree'} ],
           2 ) ],
         [new m2Hidden( 'f5', 'abc' ) ],
       ]
@@ -71,12 +72,26 @@ class s_mdf2Page{
   }
 
   get getDefaultBackgroundColor(){
-    return "#ffffff";
+    return "#ccc";
+  }
+
+  get remEdit(){
+    cl("will cliean");
+    cl("---- 1");
+    cl("---- 2");
+    $("#ftEdit select[data-role='flipswitch']").val(0).flipswitch('refresh').flipswitch("destroy");
+    //$("#ftEdit input[data-role='flipswitch']").selectmenu( "destroy" );
+    cl("---- 3");
+    //$("#ftEdit input[data-role='flipswitch']").remove();
+    cl("---- 33");
+    $("#ftEdit").html('');
+    cl("---- 4");
   }
 
   get getHtml(){
 
     var mtr = [];
+    //[ /*"Add",*/ "Edit", "View", "Delete" ].find((e,i)=>{
     [ "Add", /*"Edit",*/ "View", "Delete" ].find((e,i)=>{
       mtr.push(`
         <a href="#" onclick="$('#ft${e}').show()">${e}</a>
@@ -87,6 +102,7 @@ class s_mdf2Page{
 
 
     return mtr.join(" | ")+'<hr><b>'+pager.getCurrentPage().getName+'<b>'+
+      `<a href="#" onclick="pager.getCurrentPage().remEdit();">rem edit</a>`+
       `<div id="ftAdd">ftAdd</div>`+
 
       `<h3>edit form</h3>
@@ -100,6 +116,7 @@ class s_mdf2Page{
 
 
   makeAddFormLoop(){
+    cl("  makeAddFormLoop ................ ");
     setTimeout( ()=>{
       let cp = pager.getCurrentPage();
 
@@ -117,21 +134,29 @@ class s_mdf2Page{
           cp.makeAddFormLoop();
 
         });
+
       }
 
-      let editId = 8;
-      this.mdf.makeFormEdit( '#ftEdit', editId, (id)=>{
-        let cp = pager.getCurrentPage();
-        $.toast({
-            heading: cp.getName+" Edit test",
-            text: 'saved id : '+editId+' to table ['+cp.mdf.mDef.table+']',
-            showHideTransition: 'slide',
-            icon: 'success'
+      if( 1 ){ // make edit
+        let editId = 8;
+        cl(1);
+        $('#ftEdit').html('');
+        cl(2);
+        this.mdf.makeFormEdit( '#ftEdit', editId, (id)=>{
+          cl("ok edit done now loop ....");
+          let cp2 = pager.getCurrentPage();
+          $.toast({
+              heading: cp2.getName+" Edit test",
+              text: 'saved id : '+editId+' to table ['+cp2.mdf.mDef.table+']',
+              showHideTransition: 'slide',
+              icon: 'success'
+          });
+
+          cp2.makeAddFormLoop();
+
         });
-
-        cp.makeAddFormLoop();
-
-      });
+        cl(3);
+      }
 
     },500);
   }

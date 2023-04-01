@@ -1,0 +1,13 @@
+{
+    "oName": "s_mDynoFormPage",
+    "o": null,
+    "dir": "blank",
+    "jssrc":["s_mDynoFormPage.js"],
+    "enable": true,
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "Test site for yss oiyshTerminal to test functionality of mDynoForm library helper.",
+    "otdm":{
+        "playground": false
+    }
+}

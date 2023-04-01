@@ -7,6 +7,8 @@
     "packitso",
     "shareitso",
 
+    "otplc",
+
     "calibration",
     "autopilot_v3_svg",
     "remote-camera",
@@ -24,7 +26,8 @@
     "test_functions",
     "test_Three.js",
     "test_mAEDV",
-    "test_mDynoForm"
+    "test_mDynoForm",
+    "test_otMHH"
 
   ],
   "externals":[
