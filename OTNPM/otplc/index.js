@@ -9,7 +9,7 @@ class OTplc{
   constructor(){
     cl("OTplc init ...");
     this.plcs = [];
-    this.plcsCount = 0;
+    
   }
 
   isIn( name ){
@@ -39,7 +39,6 @@ class OTplc{
       'srcName': srcName, 'srcD': srcD,
       'extra': extra
     });
-    this.plcsCount++;
 
     return name+suf;
   }
@@ -48,13 +47,13 @@ class OTplc{
     return this.plcs;
   }
 
-  getAllTypes(lType){
+  getAllTypes( lType ){
     let trt = {};
     let tr = [];
-    for(let p=0; p<this.plcsCount; p++ ){
-      //cl(`plc NO( ${p} ):`);
-      //cl(this.plcs[ p ]);
-      if( trt[ this.plcs[ p ][ lType ] ] == undefined ){
+    for(let p=0; p<this.plcs.length; p++ ){
+      cl(`plc NO( ${p} ):`);
+      cl(this.plcs[ p ]);
+      if( this.plcs[ p ] != undefined && trt[ this.plcs[ p ][ lType ] ] == undefined ){
           trt[ this.plcs[ p ][ lType ] ] = 1;
           tr.push( this.plcs[ p ][ lType ] );
       }

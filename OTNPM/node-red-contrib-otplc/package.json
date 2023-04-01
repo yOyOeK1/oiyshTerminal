@@ -13,7 +13,7 @@
       "node-red-contrib-otplc": "node-red-otplc.js"
     }
   },
-  "version": "0.0.6",
+  "version": "0.0.904",
   "main": "node-red-otplc.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,7 +21,7 @@
   "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
   "license": "ISC",
   "dependencies": {
-    "otplc": ">=0.0.1"
+    "otplc": ">=0.0.903"
   },
   "homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc",
   "bugs":{

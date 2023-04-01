@@ -2,11 +2,25 @@
 
    Is oiyshTerminal solution for chaos in pins layers. We have many pins different types ins/outs in our systems. Sometimes one mcu is making something in more then one device (that is in my case). Adding PLC layer virtual we can organize all that is some sort of order.
 
-This library is to help with managing otplc's and get to point of having [this link ... yss-otplc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sites/otplc/README.md) and [this link ... p-nrf-http-api-plc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sites/packitso/p-nrf-http-api-plc/README.md)
+This library is to help with managing otplc's and get to point of having:
+
+
+
+
+
+- [node-red version of otplc-linux-sys-class-leds](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-otplc-linux-sys-class-leds) - virtual device as a led on your keyboard
+
+-  [yss-otplc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sites/otplc/README.md) - over all web viewer 
+
+- [p-nrf-http-api-plc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/ySS_calibration/sites/packitso/p-nrf-http-api-plc/README.md) - http api
+
+- I have more but look in repo ...
+
+
 
 ## most basic layer otplc
 
-Every thing have it's group. I call it `*plcType` for me it's battey, led, swith, button, relay, mic, temperature, rpm, .... We can put label of `*name` to every thing. Also `location` is important for later to know where it's. If it's a locker ok a car is in car. Over what type of protocol is mainly use `srcName` is like http, tcp, ws, mqtt, fs, ....  protocol over what we got it. And last in more detail `srcD` address. I case of mqtt: topic | ws: url | fs: path | ....    
+Every thing have it's group. I call it `*plcType` for me it's battery, led, switch, button, relay, mic, temperature, rpm, .... We can put label of `*name` to every thing. Also `location` is important for later to know where it's. If it's a locker ok a car is in car. Over what type of protocol is mainly use `srcName` is like http, tcp, ws, mqtt, fs, ....  protocol over what we got it. And last in more detail `srcD` address. I case of mqtt: topic | ws: url | fs: path | ....    
 
 *** need to set**
 

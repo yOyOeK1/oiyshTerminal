@@ -1,8 +1,9 @@
 {
   "name": "otplc",
-  "version": "0.0.3",
+  "version": "0.0.903",
   "description": "oiyshTerminal - plc solution",
   "main": "index.js",
+  "engines": { "node": ">=10.19.0" },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test1": "node . 'runTest1' && exit 0",
