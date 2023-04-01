@@ -1,5 +1,11 @@
 #!/data/data/com.termux/files/usr/bin/sh
 
+
+#npm config set strict-ssl false
+#npm config set registry "http://registry.npmjs.org/"
+#npm config set proxy "http://192.168.43.1:8118"
+
+
 # link short
 # https://bit.ly/3Qedy9w
 #
