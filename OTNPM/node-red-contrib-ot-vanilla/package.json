@@ -1,0 +1,27 @@
+{
+  "name": "node-red-contrib-ot-vanilla",
+  "version": "0.0.1",
+  "description": "OiyshTerminal vanilla version Node-RED to npm package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "engines": { "node": ">=10.19.0" },
+  "node-red": {
+      "version": ">=2.1.4",
+      "nodes": {
+          "npm-ot-vanilla1": "index.js"
+      }
+  },
+
+
+
+  "keywords": [
+    "oiyshTerminal",
+    "node-red",
+    "subflow"
+  ],
+  "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+  "license": "ISC"
+}
