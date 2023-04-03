@@ -1,0 +1,259 @@
+{
+    "id": "ee90.21412a477f0",
+    "type": "subflow",
+    "name": "otplc-notification-system-to-http-api",
+    "info": "Prepends `msg` to push it to http api notification system with registration to otplc\n\n# Inputs\n\n- `topic`     _string_    [none|low|normal|critical]\n\n    To pass importance level of notification\n\n- `payload`     _string_\n\n    A string to be displayd in notification\n\n",
+    "category": "sf2n-deployd",
+    "in": [
+        {
+            "x": 140,
+            "y": 160,
+            "wires": [
+                {
+                    "id": "da14.924c1320bcd"
+                }
+            ]
+        }
+    ],
+    "out": [],
+    "env": [
+        {
+            "name": "hostIpPort",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "label": {
+                    "en-US": "Ip and port of notification http api"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "loc",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "label": {
+                    "en-US": "Location"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "hostName",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "label": {
+                    "en-US": "Host name"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "module": "otplc-notification-system-to-http-api",
+        "type": "otplc-notification-system-to-http-api",
+        "version": "0.0.4",
+        "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+        "desc": "To have a posible notifications receivers",
+        "keywords": "oiyshTerminal, node-red, otplc",
+        "license": "GPL-3.0"
+    },
+    "color": "#cee768",
+    "inputLabels": [
+        "need .status [low|normal|critical] and .payload"
+    ],
+    "icon": "node-red/comment.svg",
+    "status": {
+        "x": 1120,
+        "y": 360,
+        "wires": [
+            {
+                "id": "a3f2.a09d98338b7",
+                "port": 0
+            }
+        ]
+    },
+    "flow": [
+        {
+            "id": "8512.0ad9ed98bcf",
+            "type": "http request",
+            "z": "ee90.21412a477f0",
+            "name": "http get",
+            "method": "GET",
+            "ret": "txt",
+            "paytoqs": "ignore",
+            "url": "",
+            "tls": "",
+            "persist": false,
+            "proxy": "",
+            "authType": "",
+            "senderr": false,
+            "x": 560,
+            "y": 220,
+            "wires": [
+                [
+                    "a3f2.a09d98338b7"
+                ]
+            ]
+        },
+        {
+            "id": "da14.924c1320bcd",
+            "type": "function",
+            "z": "ee90.21412a477f0",
+            "name": "",
+            "func": "\n\nlet url = `http://`+env.get(\"hostIpPort\")+\n    `/makeNotification`+\n    `?payload=`+msg.payload+\n    `&status=`+msg.status+`&2`;\nreturn {\n    \"url\": url\n    };",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 350,
+            "y": 220,
+            "wires": [
+                [
+                    "8512.0ad9ed98bcf"
+                ]
+            ]
+        },
+        {
+            "id": "9860.9acdbe0d750",
+            "type": "debug",
+            "z": "ee90.21412a477f0",
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "true",
+            "targetType": "full",
+            "statusVal": "",
+            "statusType": "auto",
+            "x": 920,
+            "y": 140,
+            "wires": []
+        },
+        {
+            "id": "a3f2.a09d98338b7",
+            "type": "function",
+            "z": "ee90.21412a477f0",
+            "name": "",
+            "func": "if( msg.statusCode == 200 ){\n    return { payload: \"OK\" };\n}else{\n    return { payload: \"error\" };\n    \n}",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 820,
+            "y": 220,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "09d4.4331e7e96a6",
+            "type": "inject",
+            "z": "ee90.21412a477f0",
+            "name": "",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ],
+            "repeat": "",
+            "crontab": "",
+            "once": true,
+            "onceDelay": "0.5",
+            "topic": "",
+            "payloadType": "date",
+            "x": 350,
+            "y": 80,
+            "wires": [
+                [
+                    "b6b3.5c2065e1027"
+                ]
+            ]
+        },
+        {
+            "id": "b6b3.5c2065e1027",
+            "type": "function",
+            "z": "ee90.21412a477f0",
+            "name": "set otPlcs presens",
+            "func": "//let otPlcs = global.get(\"otPlcs\")||[];\n/* depricated\notPlcs.push({\n    name: env.get(\"hostName\"),\n    location: env.get(\"loc\"),\n    plcType: \"notification-receiver\"\n});\nglobal.set(\"otPlcs\", otPlcs);\n*/\n\n// npm - otplc \n/*\nlet otplc = global.get('OTplc');\nlet otT = otplc.otplc;\notT.add('notification-receiver',\n    env.get(\"hostName\"),\n    env.get(\"loc\")\n);\n*/\nreturn {\n    topic: 'add',\n    payload: {\n    \"plcType\": \"notification-receiver\",\n    \"name\": env.get(\"hostName\"),\n    \"location\": env.get(\"loc\")||\"\",\n    \"srcName\": 'otplc-notification-system-to-http-api'\n    }\n}",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 550,
+            "y": 80,
+            "wires": [
+                [
+                    "2ab4.41930a33aa4"
+                ]
+            ]
+        },
+        {
+            "id": "b9d2.e27d6518c3b",
+            "type": "inject",
+            "z": "ee90.21412a477f0",
+            "name": "add ...",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ],
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "topic": "add",
+            "payload": "{\"plcType\":\"fromInjection\",\"name\":\"test1Inject\",\"location\":\"isDell\",\"srcName\":\"Node-RED injection\"}",
+            "payloadType": "json",
+            "x": 690,
+            "y": 160,
+            "wires": [
+                [
+                    "2ab4.41930a33aa4"
+                ]
+            ]
+        },
+        {
+            "id": "2ab4.41930a33aa4",
+            "type": "otplcEngine",
+            "z": "ee90.21412a477f0",
+            "name": "for otplc-notifications",
+            "location": "subFlow",
+            "otPlcSel": "6e871d0af4e31f09",
+            "x": 880,
+            "y": 80,
+            "wires": [
+                []
+            ]
+        }
+    ]
+}
