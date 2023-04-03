@@ -1,0 +1,21 @@
+{
+  "name": "ot-sf2n",
+  "version": "0.0.1",
+  "description": "OiyshTerminal way to get Node-RED subflow instance pack to deployd node_module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sf2npm": "node . doId=$1 pDir=$2",
+    "test1": "node . 'runTest1' && exit 0",
+    "testErr": "node . 'runTestErr' && exit 0"
+  },
+  "keywords": [
+    "oiyshTerminal",
+    "node-red"
+  ],
+  "author": "Bartlomie Ceglik <yoyoek@wp.pl>",
+  "license": "ISC",
+  "dependencies": {
+    "sync-request": "^6.1.0"
+  }
+}
