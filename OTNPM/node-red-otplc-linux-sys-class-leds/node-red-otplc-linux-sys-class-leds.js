@@ -57,16 +57,16 @@ module.exports = function(RED) {
 
       setStatus( node, eMsg == "" ? "is ready ...["+mot.getStatus( config.led )+"] ["+mot.getStatusFromSysFs( config.led ).brightness.trigger+"]" : eMsg );
 
-      /*
+
       if( eMsg == "" ){
         setTimeout(()=>{
           otplc.add( 'sysClassLed',
             lName,
-            config.location
+            config.location|| ""
           );
         },300);
       }
-      */
+
 
       node.on('input', function(msg) {
 

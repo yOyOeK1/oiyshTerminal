@@ -13,7 +13,7 @@
       "node-red-otplc-linux-sys-class-leds": "node-red-otplc-linux-sys-class-leds.js"
     }
   },
-  "version": "0.0.906",
+  "version": "0.0.907",
   "main": "node-red-otplc-linux-sys-class-leds.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
