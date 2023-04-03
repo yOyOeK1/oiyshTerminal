@@ -1,0 +1,71 @@
+{
+    "id": "c5a8.56bcaf4c2aa",
+    "type": "subflow",
+    "name": "ot-hz-detector",
+    "info": "# use it\n\nTo use it fead any signal to it. It will `return`  _int_ `payload` with Hz of signal",
+    "category": "sf2n-deployd",
+    "in": [
+        {
+            "x": 50,
+            "y": 30,
+            "wires": [
+                {
+                    "id": "9475.ddb1b6d234f"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 700,
+            "y": 120,
+            "wires": [
+                {
+                    "id": "9475.ddb1b6d234f",
+                    "port": 0
+                }
+            ]
+        }
+    ],
+    "env": [],
+    "meta": {
+        "module": "ot-hz-detector",
+        "type": "ot-hz-detector",
+        "version": "0.0.2",
+        "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+        "desc": "To get hz of signal",
+        "keywords": "node-red, oiyshTerminal",
+        "license": "GPL-3.0"
+    },
+    "color": "#cee768",
+    "icon": "node-red/rbe.png",
+    "status": {
+        "x": 700,
+        "y": 220,
+        "wires": [
+            {
+                "id": "9475.ddb1b6d234f",
+                "port": 0
+            }
+        ]
+    },
+    "flow": [
+        {
+            "id": "9475.ddb1b6d234f",
+            "type": "function",
+            "z": "c5a8.56bcaf4c2aa",
+            "name": "",
+            "func": "let tn = new Date().getTime();\nlet lastT = flow.get(\"lastT\")||tn;\nlet td = tn - lastT;\nflow.set(\"lastT\",tn);\nlet ptr = 1000/td;\nif( tn != td ){\n    return {\n        topic: 'hz',\n        payload: ptr\n    };\n}",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 420,
+            "y": 160,
+            "wires": [
+                []
+            ]
+        }
+    ]
+}

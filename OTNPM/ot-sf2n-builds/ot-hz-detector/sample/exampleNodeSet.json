@@ -1,0 +1,61 @@
+[
+    {
+        "id": "82d5dde54b6acf0c",
+        "type": "debug",
+        "z": "6e119010f87bea35",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2250,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "b3ade6f5b67c4574",
+        "type": "ot-hz-detector",
+        "z": "6e119010f87bea35",
+        "name": "Hz example",
+        "x": 1910,
+        "y": 980,
+        "wires": [
+            [
+                "82d5dde54b6acf0c"
+            ]
+        ]
+    },
+    {
+        "id": "a2211e9a3806a5e5",
+        "type": "inject",
+        "z": "6e119010f87bea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 1450,
+        "y": 880,
+        "wires": [
+            [
+                "f31c6882d831136a",
+                "b3ade6f5b67c4574"
+            ]
+        ]
+    }
+]

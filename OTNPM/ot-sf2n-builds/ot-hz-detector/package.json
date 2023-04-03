@@ -1,0 +1,17 @@
+{
+    "name": "ot-hz-detector",
+    "version": "0.0.2",
+    "description": "To get hz of signal",
+    "keywords": "node-red, oiyshTerminal, ot-sf2n",
+    "license": "GPL-3.0",
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "engines": {
+        "node": ">=10.19.0"
+    },
+    "node-red": {
+        "version": ">=2.1.4",
+        "nodes": {
+            "ot-hz-detector": "index.js"
+        }
+    }
+}
