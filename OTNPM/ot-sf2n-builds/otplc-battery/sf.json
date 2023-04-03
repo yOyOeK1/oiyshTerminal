@@ -1,0 +1,326 @@
+{
+    "id": "b9c7.a87e67fd049",
+    "type": "subflow",
+    "name": "otplc-battery",
+    "info": "\n## using it\n\nver 0.0.3",
+    "category": "sf2n-deployd",
+    "in": [
+        {
+            "x": 50,
+            "y": 30,
+            "wires": [
+                {
+                    "id": "1855.7752a0b9b7f"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 900,
+            "y": 440,
+            "wires": [
+                {
+                    "id": "24f1.5aa9704f7c3",
+                    "port": 1
+                }
+            ]
+        }
+    ],
+    "env": [
+        {
+            "name": "batName",
+            "type": "str",
+            "value": "bat1",
+            "ui": {
+                "label": {
+                    "en-US": "Battery name"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "sMin",
+            "type": "num",
+            "value": "12.08",
+            "ui": {
+                "label": {
+                    "en-US": "Min volts."
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "sMax",
+            "type": "num",
+            "value": "13.08",
+            "ui": {
+                "label": {
+                    "en-US": "Max volts."
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "vScale",
+            "type": "num",
+            "value": "1.0",
+            "ui": {
+                "label": {
+                    "en-US": "Scale factor"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "sUnit",
+            "type": "str",
+            "value": "volts",
+            "ui": {
+                "label": {
+                    "en-US": "Units use"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "batLoc",
+            "type": "str",
+            "value": "NaN",
+            "ui": {
+                "label": {
+                    "en-US": "Location"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "module": "otplc-battery",
+        "type": "otplc-battery",
+        "version": "0.0.5",
+        "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+        "desc": "To plc battery easy",
+        "keywords": "oiyshTerminal, node-red, otplc, iot, plc",
+        "license": "GPL-3.0"
+    },
+    "color": "#cee768",
+    "outputLabels": [
+        "main info"
+    ],
+    "icon": "font-awesome/fa-battery-three-quarters",
+    "status": {
+        "x": 900,
+        "y": 380,
+        "wires": [
+            {
+                "id": "24f1.5aa9704f7c3",
+                "port": 0
+            },
+            {
+                "id": "4ed5.c78bb12d600",
+                "port": 1
+            }
+        ]
+    },
+    "flow": [
+        {
+            "id": "1855.7752a0b9b7f",
+            "type": "function",
+            "z": "b9c7.a87e67fd049",
+            "name": "cumulator",
+            "func": "// if need to get more then one data or \n// need to create some virtuals\n\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 240,
+            "y": 500,
+            "wires": [
+                [
+                    "24f1.5aa9704f7c3"
+                ]
+            ]
+        },
+        {
+            "id": "24f1.5aa9704f7c3",
+            "type": "function",
+            "z": "b9c7.a87e67fd049",
+            "name": "preprocess",
+            "func": "function mMapVal( val, minI, maxI, minO, maxO, inLimits = false){\n  var dI = maxI - minI;\n  var dO = maxO - minO;\n  var nI = ( val - minI )/dI;\n\n  if( inLimits ){\n    var tr = minO + ( nI*dO );\n    if( tr < minO )\n      return minO;\n    else if( tr > maxO )\n      return maxO;\n    else\n      return tr;\n\n  }else\n    return minO + ( nI*dO );\n\n}\n\nlet volts = msg.payload * env.get('vScale');\nlet isMin = volts < env.get(\"sMin\") ? true : false;\nlet isMax = volts > env.get(\"sMax\") ? true : false\nlet isNormal = ( isMin == isMax && isMin == false ? true : false );\n\nlet hz = flow.get('dataHz')||1;\nif( hz == Infinity ) hz = 1;\n\nlet nLev = mMapVal( volts, env.get(\"sMin\"), env.get(\"sMax\"), 0,1);\nlet tr = {\n    'topic': 'and/plcBat/'+env.get(\"batName\"),\n    'volts': volts,\n    'nLevel': nLev,\n    'isMin': isMin,\n    'isMax': isMax,\n    'isNormal': isNormal,\n    'unit': env.get(\"sUnit\"),\n    'hz': hz\n    \n};\n\n\nlet trStat = {\n    payload: env.get(\"sUnit\")+\": \"+volts.toFixed(2)+\n        \" \"+(isMin?'min':'')+(isMax?'max':'')+(isNormal?'OK':'')+\n        \" \"+parseInt(nLev*100)+\"%\"\n};\n\n\n\nreturn [\n    trStat,\n    tr\n];",
+            "outputs": 2,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 450,
+            "y": 500,
+            "wires": [
+                [],
+                []
+            ]
+        },
+        {
+            "id": "301b.79f8ad05f8c",
+            "type": "inject",
+            "z": "b9c7.a87e67fd049",
+            "name": "",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ],
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "topic": "",
+            "payloadType": "date",
+            "x": 180,
+            "y": 640,
+            "wires": [
+                []
+            ]
+        },
+        {
+            "id": "e2c2.b0275a0c787",
+            "type": "function",
+            "z": "b9c7.a87e67fd049",
+            "name": "store hz",
+            "func": "flow.set('dataHz',msg.payload);",
+            "outputs": 0,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 560,
+            "y": 640,
+            "wires": []
+        },
+        {
+            "id": "3168.24a93376ad7",
+            "type": "inject",
+            "z": "b9c7.a87e67fd049",
+            "name": "",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ],
+            "repeat": "",
+            "crontab": "",
+            "once": true,
+            "onceDelay": "0.5",
+            "topic": "",
+            "payloadType": "date",
+            "x": 340,
+            "y": 60,
+            "wires": [
+                [
+                    "4ed5.c78bb12d600"
+                ]
+            ]
+        },
+        {
+            "id": "4ed5.c78bb12d600",
+            "type": "function",
+            "z": "b9c7.a87e67fd049",
+            "name": "set otPlcs presens",
+            "func": "//let otPlcs = global.get(\"otPlcs\")||[];\n\nlet tS = [{\n    topic: 'add',\n    payload: {\n    \"plcType\": \"battery\",\n    \"name\": env.get(\"batName\"),\n    \"location\": env.get(\"batLoc\"),\n    \"srcName\": 'otplc-battery'\n    }\n},{\n    topic:\"set\",\n    payload: \"is added ...\"\n}];\n\nnode.send( tS );\n    \n",
+            "outputs": 2,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 540,
+            "y": 60,
+            "wires": [
+                [
+                    "e724.7b54c490109"
+                ],
+                []
+            ]
+        },
+        {
+            "id": "9967.9da9b501126",
+            "type": "inject",
+            "z": "b9c7.a87e67fd049",
+            "name": "add ...",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ],
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "topic": "add",
+            "payload": "{\"plcType\":\"battery\",\"name\":\"test1Inject\",\"location\":\"isDell\",\"srcName\":\"Node-RED injection otplc-battery\"}",
+            "payloadType": "json",
+            "x": 610,
+            "y": 160,
+            "wires": [
+                [
+                    "e724.7b54c490109"
+                ]
+            ]
+        },
+        {
+            "id": "e724.7b54c490109",
+            "type": "otplcEngine",
+            "z": "b9c7.a87e67fd049",
+            "name": "for otplc-battery",
+            "location": "subFlow",
+            "otPlcSel": "6e871d0af4e31f09",
+            "x": 890,
+            "y": 40,
+            "wires": [
+                []
+            ]
+        }
+    ]
+}

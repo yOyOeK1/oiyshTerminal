@@ -1,0 +1,17 @@
+{
+    "name": "otplc-battery",
+    "version": "0.0.5",
+    "description": "To plc battery easy",
+    "keywords": "oiyshTerminal, node-red, otplc, iot, plc, ot-sf2n",
+    "license": "GPL-3.0",
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "engines": {
+        "node": ">=10.19.0"
+    },
+    "node-red": {
+        "version": ">=2.1.4",
+        "nodes": {
+            "otplc-battery": "index.js"
+        }
+    }
+}
