@@ -11,7 +11,9 @@ function cl( m ){
 class OTsf2n{
 
   constructor(){
-    cl("OTsf2n init ...");
+    this.pTemplatesPath = path.join(__dirname,"templates");
+    cl("OTsf2n init ... with templates: "+this.pTemplatesPath);
+
     this.getDone = false;
     this.wdI = -1;
     this.intNo = 0;
@@ -92,16 +94,20 @@ class OTsf2n{
     if( this.chkDir( opts.prefixDir ) == true  ){
       cl("  OK");
     }else{
-      cl("Exit no prefix target directory ["+opts.prefixDir+"]")
+      cl("Exit no prefix target directory ["+opts.prefixDir+"] EXIT 1")
       process.exit(1);
     }
 
     return this.getAllSf( ( data )=>{
         var okId = -1;
         var bNode = -1;
+        var debugShowProcess = false;
+
+        //cl("data---------");
+        //cl(data);
 
         if( data.length > 1 ){
-          cl("data length > 1 OK !!")
+          cl("data length > 1 OK !!");
         }else{
           cl("Error data");
           cl(data);
@@ -115,10 +121,11 @@ class OTsf2n{
           }
         })||-1;
 
-
-        cl("--------- base node is ");cl(bNode);
         var osfId = bNode['type'].substring(8);
-        cl("so org subflow id: "+osfId);
+        if( debugShowProcess ){
+          cl("--------- base node is ");cl(bNode);
+          cl("so org subflow id: "+osfId);
+        }
         var osfFlow = [];
         var osfNode = -1;
         let oId = osfId;
@@ -140,14 +147,16 @@ class OTsf2n{
 
         })||-1;
 
-        cl("------- base node difinition ");
-        cl(osfNode);
+        if( debugShowProcess ){
+          cl("------- base node difinition ");
+          cl(osfNode);
 
-        cl("-------   in flow ");
-        cl(osfFlow);
+          cl("-------   in flow ");
+          cl(osfFlow);
 
-        cl("------- id map");
-        cl(idMap);
+          cl("------- id map");
+          cl(idMap);
+        }
 
         osfNode['flow'] = osfFlow;
         //osfNode.name = osfNode.meta.module;
@@ -164,7 +173,7 @@ class OTsf2n{
             jTrSwap = jTrSwap.split( keys[ k ] ).join( idMap[ keys[ k ] ] );
         };
 
-        cl('-------\n'+jTrSwap);
+        if( debugShowProcess )cl('-------\n'+jTrSwap);
 
         let tDir = osfNode.meta.module;
         let tDirFull = opts.prefixDir+'/'+tDir;
@@ -177,30 +186,90 @@ class OTsf2n{
           //process.exit(1);
         }
 
-
         cl("putting package.json ....");
+        // building package.json
         let tNodes = {};
         tNodes[ osfNode.meta.module ] = 'index.js';
+        let pJ = {
+          'name': osfNode.meta.module,
+          'version': osfNode.meta.version,
+          'description': osfNode.meta.desc,
+          'keywords': osfNode.meta.keywords+', ot-sf2n',
+          'license': osfNode.meta.license,
+          'author': osfNode.meta.author,
+          "engines": { "node": ">=10.19.0" },
+          "node-red": {
+              "version": ">=2.1.4",
+              "nodes": tNodes
+          }
+        };
+          // adding ./package_extra.json if have
+        if( this.chkDir( `${tDirFull}/package_extra.json` ) == true ){
+          cl('is have package_extra.json .... Do it ...');
+          let pE = JSON.parse( fs.readFileSync( `${tDirFull}/package_extra.json` ).toString() );
 
-        fs.writeFileSync( `${tDirFull}/package.json`, JSON.stringify( {
-                'name': osfNode.meta.module,
-                'version': osfNode.meta.version,
-                'description': osfNode.meta.desc,
-                'keywords': osfNode.meta.keywords,
-                'license': osfNode.meta.license,
-                'author': osfNode.meta.author,
-                "engines": { "node": ">=10.19.0" },
-                "node-red": {
-                    "version": ">=2.1.4",
-                    "nodes": tNodes
-                }
-              }, null, 4  ) );
+          let ks = Object.keys( pE );
+          for( let k=0,kc=ks.length; k<kc; k++ ){
+              cl("adding ... "+ks[ k ]);
+              pJ[ ks[ k ] ] = pE[ ks[ k ] ];
+          }
+          cl("pJ now After add---------");cl(pJ)
 
-        cl("putting .json ....");
+        }
+
+        fs.writeFileSync( `${tDirFull}/package.json`, JSON.stringify( pJ, null, 4  ) );
+
+
+        cl("putting sf.json ....");
         fs.writeFileSync( `${tDirFull}/sf.json`, jTrSwap );
 
+
+
         cl("putting README.md ....");
-        fs.writeFileSync( `${tDirFull}/README.md`, osfNode.info );
+        let sep = "\n\n";
+        let rInstall = fs.readFileSync( `${this.pTemplatesPath}/README_install.md` ).toString()
+          .split('{npmName}').join(tDir);
+        let rFoot = fs.readFileSync( `${this.pTemplatesPath}/README_foot.md` ).toString();
+          // adding ./sample
+        let rSample = '';
+        if( this.chkDir( `${tDirFull}/sample` ) == true ){
+          cl("  have own ./sample ....");
+          let trSamp = [];
+
+
+          if( this.chkDir( `${tDirFull}/sample/ss_exampleNodeSet.png` ) == true ){
+            cl("  have own ./sample/ss_exampleNodeSet.png");
+            trSamp.push( `In Node-RED\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n/${tDir}/sample/ss_exampleNodeSet.png)` );
+          }
+
+          if( this.chkDir( `${tDirFull}/sample/exampleNodeSet.json` ) == true ){
+            cl("  have own ./sample/exampleNodeSet.json");
+            let jsonExampleStr = fs.readFileSync( `${tDirFull}/sample/exampleNodeSet.json` ).toString().split("\n").join('');
+            trSamp.push(
+              `\n*This is a json to import it as a example node set or use [link to ... ./sample/exampleNodeSet.json](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n/${tDir}/sample/exampleNodeSet.json)*\n\n`+
+              '```json\n'+jsonExampleStr+'\n```'
+              );
+          }
+
+
+          if( trSamp.length > 0 ){
+            rSample = '## example flow set'+sep+trSamp.join( sep )+sep;
+          }
+
+
+        }
+
+        fs.writeFileSync( `${tDirFull}/README.md`,
+          rInstall+sep+
+          osfNode.info+sep+
+          rSample+
+          rFoot
+        );
+
+        cl("putting README4Node.md ....");
+        fs.writeFileSync( `${tDirFull}/README4Node.md`,
+          osfNode.info
+        );
 
 
         cl("putting index.js .....");
@@ -219,6 +288,7 @@ module.exports = function(RED) {
 
       `);
 
+      cl("DONE");
       return 0;
 
     });
@@ -244,8 +314,8 @@ class OTsf2nTest1 {
 }
 class OTsf2nDoIt {
   constructor(opts) {
-    cl('OTsf2DoIt .... ');
-    cl("opts:");cl(opts);
+    cl('OTsf2DoIt init .... ');
+    cl("  opts:");cl(opts);
     let o = new OTsf2n();
     o.extractSF(opts);
   }
@@ -264,7 +334,7 @@ try{
   cl("Is not in module mode ...");
 }
 
-cl("cli?");
+//cl("cli?");
 
 var args = {};
 process.argv.forEach(function (val, index, array) {
@@ -282,8 +352,7 @@ function pHelp(){
 }
 
 if( args != {} ){
-  cl("args to parse :");
-  cl(args);
+  cl("args to parse :");cl(args);
 
   if( args['doId'] != undefined && args['pDir'] != undefined  ){
     cl(`go doId ............`);
