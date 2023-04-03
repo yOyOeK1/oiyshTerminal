@@ -83,10 +83,19 @@ module.exports = function(RED) {
             payload: otplc.getAllTypes( String(msg.payload) )
           });
 
+        } else if( msg.topic == "getAllTypesWith" ){
+          cl("get all types with.... ");
+          //cl("  and otplc is ..");cl(otplc);
+          let qres = otplc.getAllTypes( String(msg.payload), true );
+          node.send({
+            topit:"getAllTypesWith",
+            key: msg.payload,
+            payload: { allTypes: qres[0], byType: qres[1] }
+          });
+
         } else if( msg.topic == "add" ){
           let m = msg.payload;
-
-          cl("OOplcEngine add ....")
+          //cl("OOplcEngine add ....")
           let n = otplc.add(
             m.plcType,
             m.name, m.location,

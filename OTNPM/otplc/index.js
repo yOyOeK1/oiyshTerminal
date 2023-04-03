@@ -9,7 +9,7 @@ class OTplc{
   constructor(){
     cl("OTplc init ...");
     this.plcs = [];
-    
+
   }
 
   isIn( name ){
@@ -23,6 +23,7 @@ class OTplc{
 
 
   add(  plcType, name, location='', srcName='', srcD='', extra = -1){
+    cl("otplc.add( "+JSON.stringify([plcType, name, location, srcName, srcD])+" )");
     let suf = '';
     if( this.isIn( name ) == true ){
       for(let s=0,sc=1024; s<sc; s++ ){
@@ -30,7 +31,7 @@ class OTplc{
         if( this.isIn( name+suf ) == false )
           break;
       }
-      cl("will have sufix .... "+name+suf);
+      //cl("will have sufix .... "+name+suf);
     }
 
     this.plcs.push({
@@ -47,18 +48,38 @@ class OTplc{
     return this.plcs;
   }
 
-  getAllTypes( lType ){
+  getAllTypes( lType, withObj=false ){
     let trt = {};
     let tr = [];
     for(let p=0; p<this.plcs.length; p++ ){
-      cl(`plc NO( ${p} ):`);
-      cl(this.plcs[ p ]);
-      if( this.plcs[ p ] != undefined && trt[ this.plcs[ p ][ lType ] ] == undefined ){
-          trt[ this.plcs[ p ][ lType ] ] = 1;
-          tr.push( this.plcs[ p ][ lType ] );
+      //cl(`plc NO( ${p} ):`);
+      //cl(this.plcs[ p ]);
+
+      if( this.plcs[ p ] != undefined ){
+        let tplc = this.plcs[p];
+        let tkey = tplc[ lType ];
+
+        if( trt[ tkey ] == undefined ){
+          trt[ tkey ] = (withObj == false ? 1 : [ this.plcs[p] ] );
+          tr.push( tkey );
+
+        }else if( trt[ tkey ] != undefined && withObj == true ){
+          trt[ tkey ].push( tplc );
+
+        }
+
       }
+
+
     }
-    return tr;
+    cl('.getAllTypes '+JSON.stringify( tr ) );
+
+    if( withObj == true ){
+      return [tr, trt];
+    }else{
+      return tr;
+    }
+
   }
 
   get( fillterBy = {} ){}
@@ -106,31 +127,32 @@ try{
     OTplcTest1,
     otplc,
   };
+
+  var args = {};
+  process.argv.forEach(function (val, index, array) {
+    //console.log(index + ': ' + val);
+    if( index >= 2 ){
+      let s = val.split('=');
+      args[ s[0] ] = s[1] == undefined ? 1 : s[1];
+    }
+  });
+
+  if( args != {} ){
+    cl("args to parse :");
+    cl(args);
+
+
+    if( args['runTestErr'] == 1 ){
+      cl("go Exit with 1")
+      process.exit(1);
+    } else if( args['runTest1'] == 1 ){
+      new OTplcTest1();
+    }
+
+
+  }
+
 }catch(e){
   cl("Is not in module mode ...");
-}
-
-
-var args = {};
-process.argv.forEach(function (val, index, array) {
-  //console.log(index + ': ' + val);
-  if( index >= 2 ){
-    let s = val.split('=');
-    args[ s[0] ] = s[1] == undefined ? 1 : s[1];
-  }
-});
-
-if( args != {} ){
-  cl("args to parse :");
-  cl(args);
-
-
-  if( args['runTestErr'] == 1 ){
-    cl("go Exit with 1")
-    process.exit(1);
-  } else if( args['runTest1'] == 1 ){
-    new OTplcTest1();
-  }
-
 
 }
