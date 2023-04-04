@@ -17,7 +17,14 @@ list='[
 	"id": "f31c6882d831136a",
 	"subName": "ot-hz-detector",
 	"pDir": "/OT/OTNPM/ot-sf2n-builds"
+},{
+	"id": "536b855d2966be06",
+	"subName": "ot-to-status",
+	"pDir": "/OT/OTNPM/ot-sf2n-builds"
 },
+
+
+
 
 {
 	"id": "dummy",

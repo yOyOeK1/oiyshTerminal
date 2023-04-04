@@ -253,10 +253,15 @@ class OTsf2n{
           let trSamp = [];
 
 
-          if( this.chkDir( `${tDirFull}/${sampleExamples}/ss_exampleNodeSet.png` ) == true ){
-            cl("  have own ./${sampleExamples}/ss_exampleNodeSet.png");
-            trSamp.push( `In Node-RED\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n-builds/${tDir}/${sampleExamples}/ss_exampleNodeSet.png)` );
+          let imgNSufix = '';
+          for(let imgN=-1; imgN<10; imgN++){
+            if( imgN != -1 ) imgNSufix = imgN;
+            if( this.chkDir( `${tDirFull}/${sampleExamples}/ss_exampleNodeSet${imgNSufix}.png` ) == true ){
+              cl("  have own ./${sampleExamples}/ss_exampleNodeSet${imgNSufix}.png");
+              trSamp.push( `In Node-RED\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n-builds/${tDir}/${sampleExamples}/ss_exampleNodeSet${imgNSufix}.png)` );
+            }
           }
+
 
           if( this.chkDir( `${tDirFull}/${sampleExamples}/exampleNodeSet.json` ) == true ){
             cl("  have own ./${sampleExamples}/exampleNodeSet.json");
