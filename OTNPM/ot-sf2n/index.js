@@ -191,17 +191,18 @@ class OTsf2n{
         let tNodes = {};
         tNodes[ osfNode.meta.module ] = 'index.js';
         let pJ = {
-          'name': osfNode.meta.module,
+          'name': 'node-red-contrib-'+osfNode.meta.module,
           'version': osfNode.meta.version,
           'description': osfNode.meta.desc,
-          'keywords': osfNode.meta.keywords+', ot-sf2n',
+          'keywords': (osfNode.meta.keywords+', ot-sf2n').split(', '),
           'license': osfNode.meta.license,
           'author': osfNode.meta.author,
           "engines": { "node": ">=10.19.0" },
           "node-red": {
               "version": ">=2.1.4",
               "nodes": tNodes
-          }
+          },
+          "homepage": `https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n-builds/${tDir}`
         };
           // adding ./package_extra.json if have
         if( this.chkDir( `${tDirFull}/package_extra.json` ) == true ){
@@ -228,7 +229,7 @@ class OTsf2n{
         cl("putting README.md ....");
         let sep = "\n\n";
         let rInstall = fs.readFileSync( `${this.pTemplatesPath}/README_install.md` ).toString()
-          .split('{npmName}').join(tDir);
+          .split('{npmName}').join( 'node-red-contrib-'+tDir );
         let rFoot = fs.readFileSync( `${this.pTemplatesPath}/README_foot.md` ).toString();
           // adding ./sample
         let rSample = '';
@@ -239,14 +240,14 @@ class OTsf2n{
 
           if( this.chkDir( `${tDirFull}/sample/ss_exampleNodeSet.png` ) == true ){
             cl("  have own ./sample/ss_exampleNodeSet.png");
-            trSamp.push( `In Node-RED\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n/${tDir}/sample/ss_exampleNodeSet.png)` );
+            trSamp.push( `In Node-RED\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n-builds/${tDir}/sample/ss_exampleNodeSet.png)` );
           }
 
           if( this.chkDir( `${tDirFull}/sample/exampleNodeSet.json` ) == true ){
             cl("  have own ./sample/exampleNodeSet.json");
             let jsonExampleStr = fs.readFileSync( `${tDirFull}/sample/exampleNodeSet.json` ).toString().split("\n").join('');
             trSamp.push(
-              `\n*This is a json to import it as a example node set or use [link to ... ./sample/exampleNodeSet.json](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n/${tDir}/sample/exampleNodeSet.json)*\n\n`+
+              `\n*This is a json to import it as a example node set or use [link to ... ./sample/exampleNodeSet.json](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n-builds/${tDir}/sample/exampleNodeSet.json)*\n\n`+
               '```json\n'+jsonExampleStr+'\n```'
               );
           }
@@ -260,8 +261,8 @@ class OTsf2n{
         }
 
         fs.writeFileSync( `${tDirFull}/README.md`,
-          rInstall+sep+
           osfNode.info+sep+
+          rInstall+sep+
           rSample+
           rFoot
         );
