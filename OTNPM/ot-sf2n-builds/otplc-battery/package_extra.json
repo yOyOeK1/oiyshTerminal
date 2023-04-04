@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+	   "node-red-contrib-ot-hz-detector": ">=0.0.9"
+  }
+}

@@ -1,0 +1,156 @@
+[
+    {
+        "id": "8c74d86dd646c968",
+        "type": "debug",
+        "z": "6e119010f87bea35",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2130,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "864b5a8a1582f4d8",
+        "type": "otplc-battery",
+        "z": "6e119010f87bea35",
+        "name": "BATTERY EXAMPLE Node example",
+        "batName": "BATTERY EXAMPLE Node example",
+        "sMin": 12.08,
+        "sMax": 13.08,
+        "vScale": 0.1,
+        "sUnit": "volts",
+        "batLoc": "sf2nTest",
+        "x": 1910,
+        "y": 1240,
+        "wires": [
+            [
+                "8c74d86dd646c968"
+            ]
+        ]
+    },
+    {
+        "id": "711823b6fda47551",
+        "type": "function",
+        "z": "6e119010f87bea35",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1630,
+        "y": 1140,
+        "wires": [
+            [
+                "154d97aa81b6dff1",
+                "864b5a8a1582f4d8",
+                "b3ade6f5b67c4574"
+            ]
+        ]
+    },
+    {
+        "id": "74f181fce59b49d9",
+        "type": "comment",
+        "z": "6e119010f87bea35",
+        "name": "sf2n otplc-battery",
+        "info": "",
+        "x": 1420,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "a39bbe4c027701d1",
+        "type": "inject",
+        "z": "6e119010f87bea35",
+        "name": "test/bat1 -> high",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "test/bat1",
+        "payload": "150",
+        "payloadType": "str",
+        "x": 1430,
+        "y": 1140,
+        "wires": [
+            [
+                "711823b6fda47551"
+            ]
+        ]
+    },
+    {
+        "id": "305a83e8a7337060",
+        "type": "inject",
+        "z": "6e119010f87bea35",
+        "name": "test/bat1 -> norm",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "test/bat1",
+        "payload": "127",
+        "payloadType": "str",
+        "x": 1430,
+        "y": 1180,
+        "wires": [
+            [
+                "711823b6fda47551"
+            ]
+        ]
+    },
+    {
+        "id": "7697d23b0f9ff6dc",
+        "type": "inject",
+        "z": "6e119010f87bea35",
+        "name": "test/bat1 -> low",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "test/bat1",
+        "payload": "100",
+        "payloadType": "str",
+        "x": 1430,
+        "y": 1220,
+        "wires": [
+            [
+                "711823b6fda47551"
+            ]
+        ]
+    }
+]

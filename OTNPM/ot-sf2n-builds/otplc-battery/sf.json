@@ -2,7 +2,7 @@
     "id": "b9c7.a87e67fd049",
     "type": "subflow",
     "name": "otplc-battery",
-    "info": "\n## using it\n\nver 0.0.3",
+    "info": "Is to do some basic battery things. Do scaling of your data to `unit` you want. Have `min`, `max` values those are use to calculate `nLevel`. Ra ports `isNormal`  _boolean_ if all is OK. Location is used in otplt structure to put in in some place for you for later.\n\n\n---\n\n## use it\n\nTo use it feed any number to it in `payload`. It will handle it as you set the values in parameters of the node.\n\n`return` _json_ {\n    \n - `\"topic\"` _string_ - where to look for mqtt updates\n - `\"volts\"` _float_ - you `payload` as _number_ * `scale` from property\n - `\"nLevel\"` _float_ - 0.0 .... 1.0 base on current `volts` and your `min` `max` brackets\n - `\"isMin\"` _boolean_ - if is less then min then `false`\n - `\"isMax\"` _boolean_ ....\n - `\"isNormal\"` _boolean_ ....\n - `\"unit\"` _string_ - from property of the `\"hz\"` _float_ - frequency of the data\n\n}",
     "category": "sf2n-deployd",
     "in": [
         {
@@ -128,7 +128,7 @@
     "meta": {
         "module": "otplc-battery",
         "type": "otplc-battery",
-        "version": "0.0.5",
+        "version": "0.0.7",
         "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
         "desc": "To plc battery easy",
         "keywords": "oiyshTerminal, node-red, otplc, iot, plc",
@@ -169,7 +169,8 @@
             "y": 500,
             "wires": [
                 [
-                    "24f1.5aa9704f7c3"
+                    "24f1.5aa9704f7c3",
+                    "006d.e504d4354ca"
                 ]
             ]
         },
@@ -214,7 +215,9 @@
             "x": 180,
             "y": 640,
             "wires": [
-                []
+                [
+                    "006d.e504d4354ca"
+                ]
             ]
         },
         {
@@ -228,7 +231,7 @@
             "initialize": "",
             "finalize": "",
             "libs": [],
-            "x": 560,
+            "x": 700,
             "y": 640,
             "wires": []
         },
@@ -320,6 +323,19 @@
             "y": 40,
             "wires": [
                 []
+            ]
+        },
+        {
+            "id": "006d.e504d4354ca",
+            "type": "ot-hz-detector",
+            "z": "b9c7.a87e67fd049",
+            "name": "hz of data of subflow battery",
+            "x": 420,
+            "y": 640,
+            "wires": [
+                [
+                    "e2c2.b0275a0c787"
+                ]
             ]
         }
     ]
