@@ -14,6 +14,8 @@ class OTsf2n{
     this.pTemplatesPath = path.join(__dirname,"templates");
     cl("OTsf2n init ... with templates: "+this.pTemplatesPath);
 
+    this.httpPortNoderedUrl = `http://192.168.43.220:1880/flows`;
+
     this.getDone = false;
     this.wdI = -1;
     this.intNo = 0;
@@ -52,7 +54,7 @@ class OTsf2n{
     cl(".getAllSf() ..... callback:"+(callBack!=-1?'set':'def'));
 
     this.getDone = false;
-    http.get(`http://192.168.43.220:1880/flows`, resp => {
+    http.get(this.httpPortNoderedUrl, resp => {
         let data = "";
         resp.on("data", chunk => {
           cl("got data")
@@ -231,23 +233,36 @@ class OTsf2n{
         let rInstall = fs.readFileSync( `${this.pTemplatesPath}/README_install.md` ).toString()
           .split('{npmName}').join( 'node-red-contrib-'+tDir );
         let rFoot = fs.readFileSync( `${this.pTemplatesPath}/README_foot.md` ).toString();
-          // adding ./sample
+          // adding ./sample or ./examples
+        let isSamples = this.chkDir( `${tDirFull}/sample` );
+        let isExamples = this.chkDir( `${tDirFull}/examples` );
+        if( isSamples == isExamples && isSamples == true ){
+          cl("Error boath sample and example not allowed EXIT 1");
+          process.exit(1);
+        }
+        let sampleExamples = '';
+        if( isSamples ) sampleExamples = 'sample';
+        if( isExamples ) sampleExamples = 'examples';
+
+
+
         let rSample = '';
-        if( this.chkDir( `${tDirFull}/sample` ) == true ){
-          cl("  have own ./sample ....");
+        if( sampleExamples != '' ){
+          cl("go with ..... "+sampleExamples);
+          cl(`  have own ./${sampleExamples} ....`);
           let trSamp = [];
 
 
-          if( this.chkDir( `${tDirFull}/sample/ss_exampleNodeSet.png` ) == true ){
-            cl("  have own ./sample/ss_exampleNodeSet.png");
-            trSamp.push( `In Node-RED\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n-builds/${tDir}/sample/ss_exampleNodeSet.png)` );
+          if( this.chkDir( `${tDirFull}/${sampleExamples}/ss_exampleNodeSet.png` ) == true ){
+            cl("  have own ./${sampleExamples}/ss_exampleNodeSet.png");
+            trSamp.push( `In Node-RED\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n-builds/${tDir}/${sampleExamples}/ss_exampleNodeSet.png)` );
           }
 
-          if( this.chkDir( `${tDirFull}/sample/exampleNodeSet.json` ) == true ){
-            cl("  have own ./sample/exampleNodeSet.json");
-            let jsonExampleStr = fs.readFileSync( `${tDirFull}/sample/exampleNodeSet.json` ).toString().split("\n").join('');
+          if( this.chkDir( `${tDirFull}/${sampleExamples}/exampleNodeSet.json` ) == true ){
+            cl("  have own ./${sampleExamples}/exampleNodeSet.json");
+            let jsonExampleStr = fs.readFileSync( `${tDirFull}/${sampleExamples}/exampleNodeSet.json` ).toString().split("\n").join('');
             trSamp.push(
-              `\n*This is a json to import it as a example node set or use [link to ... ./sample/exampleNodeSet.json](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n-builds/${tDir}/sample/exampleNodeSet.json)*\n\n`+
+              `\n*This is a json to import it as a example node set or use [link to ... ./${sampleExamples}/exampleNodeSet.json](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n-builds/${tDir}/${sampleExamples}/exampleNodeSet.json)*\n\n`+
               '```json\n'+jsonExampleStr+'\n```'
               );
           }
