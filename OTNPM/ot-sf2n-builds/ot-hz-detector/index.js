@@ -8,7 +8,7 @@ module.exports = function(RED) {
    const subflowContents = fs.readFileSync(subflowFile);
    const subflowJSON = JSON.parse(subflowContents);
    RED.nodes.registerSubflow(subflowJSON);
-   console.log("ot-sf2n [ot-hz-detector] : [ot-hz-detector] - ver 0.0.2 init ....");
+   console.log("ot-sf2n [ot-hz-detector] : [ot-hz-detector] - ver 0.0.9 init ....");
 }
 
       

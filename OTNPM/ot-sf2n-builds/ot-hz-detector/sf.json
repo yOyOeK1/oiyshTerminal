@@ -2,7 +2,7 @@
     "id": "c5a8.56bcaf4c2aa",
     "type": "subflow",
     "name": "ot-hz-detector",
-    "info": "# use it\n\nTo use it fead any signal to it. It will `return`  _int_ `payload` with Hz of signal",
+    "info": "To get frequence hz of a given signal transminsions \n\n\n---\n\n# use it\n\nTo use it fead any signal to it. It will `return`  _int_ `payload` with frequence of the signal in Hz",
     "category": "sf2n-deployd",
     "in": [
         {
@@ -31,7 +31,7 @@
     "meta": {
         "module": "ot-hz-detector",
         "type": "ot-hz-detector",
-        "version": "0.0.2",
+        "version": "0.0.9",
         "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
         "desc": "To get hz of signal",
         "keywords": "node-red, oiyshTerminal",
