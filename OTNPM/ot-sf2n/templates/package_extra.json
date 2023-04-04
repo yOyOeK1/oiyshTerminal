@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+	   "otplc": ">=0.0.903"
+  },
+  "homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/otplc-notification-system-to-http-api",
+  "bugs":{
+    "url": "https://github.com/yOyOeK1/oiyshTerminal/issues?q=label%3Aotplc-notification-system-to-http-api"
+  }
+}
