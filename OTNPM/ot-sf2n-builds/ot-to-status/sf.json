@@ -1,0 +1,76 @@
+{
+    "id": "db4d.ec0affc22a9",
+    "type": "subflow",
+    "name": "ot-to-status",
+    "info": "More is comming ...\n\nSet key name in properties of node to what you want to display in status of the node from \n - msg[ _string_ ] to node status\n \n\nthis is a in progress ...\n\n",
+    "category": "sf2n-deployd",
+    "in": [
+        {
+            "x": 60,
+            "y": 80,
+            "wires": [
+                {
+                    "id": "b77a.e96bf9680a9"
+                }
+            ]
+        }
+    ],
+    "out": [],
+    "env": [
+        {
+            "name": "vKey",
+            "type": "str",
+            "value": "payload",
+            "ui": {
+                "label": {
+                    "en-US": "Key to status"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str"
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "module": "ot-to-status",
+        "type": "ot-to-status",
+        "version": "0.0.3",
+        "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+        "desc": "To display set key from msg in status of node",
+        "keywords": "oiyshTerminal, node-red",
+        "license": "GPL-3.0"
+    },
+    "color": "#cee768",
+    "status": {
+        "x": 360,
+        "y": 80,
+        "wires": [
+            {
+                "id": "b77a.e96bf9680a9",
+                "port": 0
+            }
+        ]
+    },
+    "flow": [
+        {
+            "id": "b77a.e96bf9680a9",
+            "type": "function",
+            "z": "db4d.ec0affc22a9",
+            "name": "to status",
+            "func": "let t = env.get(\"vKey\");\n\n\nreturn{\n    topic:'',\n    payload: t+\": \"+msg[ t ] \n};",
+            "outputs": 1,
+            "noerr": 0,
+            "initialize": "",
+            "finalize": "",
+            "libs": [],
+            "x": 200,
+            "y": 80,
+            "wires": [
+                []
+            ]
+        }
+    ]
+}
