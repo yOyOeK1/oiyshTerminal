@@ -2,7 +2,7 @@
     "id": "db4d.ec0affc22a9",
     "type": "subflow",
     "name": "ot-to-status",
-    "info": "More is comming ...\n\nSet key name in properties of node to what you want to display in status of the node from \n - msg[ _string_ ] to node status\n \n\nthis is a in progress ...\n\n",
+    "info": "More is comming ...\n\nSet key name in properties of node to what you want to display in status of the node from \n - msg[_string_|_json_|_int_|_boolean_] to node status\n \n\nthis is a in progress ...\n\n",
     "category": "sf2n-deployd",
     "in": [
         {
@@ -37,7 +37,7 @@
     "meta": {
         "module": "ot-to-status",
         "type": "ot-to-status",
-        "version": "0.0.3",
+        "version": "0.0.6",
         "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
         "desc": "To display set key from msg in status of node",
         "keywords": "oiyshTerminal, node-red",
@@ -60,7 +60,7 @@
             "type": "function",
             "z": "db4d.ec0affc22a9",
             "name": "to status",
-            "func": "let t = env.get(\"vKey\");\n\n\nreturn{\n    topic:'',\n    payload: t+\": \"+msg[ t ] \n};",
+            "func": "let t = env.get(\"vKey\");\nlet tr = msg[ t ];\n\nif( (typeof tr) == \"object\" )\n    tr = 'o2j: '+JSON.stringify(tr);\n\nreturn{\n    topic:'',\n    payload: t+\": \"+tr \n};",
             "outputs": 1,
             "noerr": 0,
             "initialize": "",
