@@ -1,5 +1,6 @@
 {
   "dependencies": {
-	   "node-red-contrib-ot-hz-detector": ">=0.0.9"
+	   "node-red-contrib-ot-hz-detector": ">=0.0.9",
+     "node-red-contrib-otplc": ">=0.0.903"
   }
 }

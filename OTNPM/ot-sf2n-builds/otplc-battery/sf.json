@@ -2,7 +2,7 @@
     "id": "b9c7.a87e67fd049",
     "type": "subflow",
     "name": "otplc-battery",
-    "info": "Is to do some basic battery things. Do scaling of your data to `unit` you want. Have `min`, `max` values those are use to calculate `nLevel`. Ra ports `isNormal`  _boolean_ if all is OK. Location is used in otplt structure to put in in some place for you for later.\n\n\n---\n\n## use it\n\nTo use it feed any number to it in `payload`. It will handle it as you set the values in parameters of the node.\n\n`return` _json_ {\n    \n - `\"topic\"` _string_ - where to look for mqtt updates\n - `\"volts\"` _float_ - you `payload` as _number_ * `scale` from property\n - `\"nLevel\"` _float_ - 0.0 .... 1.0 base on current `volts` and your `min` `max` brackets\n - `\"isMin\"` _boolean_ - if is less then min then `false`\n - `\"isMax\"` _boolean_ ....\n - `\"isNormal\"` _boolean_ ....\n - `\"unit\"` _string_ - from property of the `\"hz\"` _float_ - frequency of the data\n\n}",
+    "info": "Is to do some basic battery things. Do scaling of your data to `unit` you want. Have `min`, `max` values those are use to calculate `nLevel`. \nRa ports `isNormal`  _boolean_ if all is OK. Location is used in otplc structure to put in in some place for you for later.\n\n\n---\n\n## use it\n\nTo use it feed any number to it in `payload`. It will handle it as you set the values in parameters of the node.\n\n`return` _json_ {\n    \n - `\"topic\"` _string_ - where to look for mqtt updates\n - `\"volts\"` _float_ - you `payload` as _number_ * `scale` from property\n - `\"nLevel\"` _float_ - 0.0 .... 1.0 base on current `volts` and your `min` `max` brackets\n - `\"isMin\"` _boolean_ - if is less then min then `false`\n - `\"isMax\"` _boolean_ ....\n - `\"isNormal\"` _boolean_ ....\n - `\"unit\"` _string_ - from property of the `\"hz\"` _float_ - frequency of the data\n\n}",
     "category": "sf2n-deployd",
     "in": [
         {
@@ -128,7 +128,7 @@
     "meta": {
         "module": "otplc-battery",
         "type": "otplc-battery",
-        "version": "0.0.7",
+        "version": "0.0.8",
         "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
         "desc": "To plc battery easy",
         "keywords": "oiyshTerminal, node-red, otplc, iot, plc",
@@ -179,7 +179,7 @@
             "type": "function",
             "z": "b9c7.a87e67fd049",
             "name": "preprocess",
-            "func": "function mMapVal( val, minI, maxI, minO, maxO, inLimits = false){\n  var dI = maxI - minI;\n  var dO = maxO - minO;\n  var nI = ( val - minI )/dI;\n\n  if( inLimits ){\n    var tr = minO + ( nI*dO );\n    if( tr < minO )\n      return minO;\n    else if( tr > maxO )\n      return maxO;\n    else\n      return tr;\n\n  }else\n    return minO + ( nI*dO );\n\n}\n\nlet volts = msg.payload * env.get('vScale');\nlet isMin = volts < env.get(\"sMin\") ? true : false;\nlet isMax = volts > env.get(\"sMax\") ? true : false\nlet isNormal = ( isMin == isMax && isMin == false ? true : false );\n\nlet hz = flow.get('dataHz')||1;\nif( hz == Infinity ) hz = 1;\n\nlet nLev = mMapVal( volts, env.get(\"sMin\"), env.get(\"sMax\"), 0,1);\nlet tr = {\n    'topic': 'and/plcBat/'+env.get(\"batName\"),\n    'volts': volts,\n    'nLevel': nLev,\n    'isMin': isMin,\n    'isMax': isMax,\n    'isNormal': isNormal,\n    'unit': env.get(\"sUnit\"),\n    'hz': hz\n    \n};\n\n\nlet trStat = {\n    payload: env.get(\"sUnit\")+\": \"+volts.toFixed(2)+\n        \" \"+(isMin?'min':'')+(isMax?'max':'')+(isNormal?'OK':'')+\n        \" \"+parseInt(nLev*100)+\"%\"\n};\n\n\n\nreturn [\n    trStat,\n    tr\n];",
+            "func": "function mMapVal( val, minI, maxI, minO, maxO, inLimits = false){\n  var dI = maxI - minI;\n  var dO = maxO - minO;\n  var nI = ( val - minI )/dI;\n\n  if( inLimits ){\n    var tr = minO + ( nI*dO );\n    if( tr < minO )\n      return minO;\n    else if( tr > maxO )\n      return maxO;\n    else\n      return tr;\n\n  }else\n    return minO + ( nI*dO );\n\n}\n\nlet volts = msg.payload * env.get('vScale');\nlet isMin = volts < env.get(\"sMin\") ? true : false;\nlet isMax = volts > env.get(\"sMax\") ? true : false\nlet isNormal = ( isMin == isMax && isMin == false ? true : false );\n\nlet hz = flow.get('dataHz')||1;\nif( hz == Infinity ) hz = 1;\n\nlet nLev = mMapVal( volts, env.get(\"sMin\"), env.get(\"sMax\"), 0,1);\nlet mCount = flow.get(\"mCount\")||0;\nflow.set(\"mCount\", mCount+1);\n\nlet tr = {\n    'topic': 'and/plcBat/'+env.get(\"batName\"),\n    'volts': volts,\n    'nLevel': nLev,\n    'isMin': isMin,\n    'isMax': isMax,\n    'isNormal': isNormal,\n    'unit': env.get(\"sUnit\"),\n    'hz': hz,\n    'count': mCount\n    \n};\n\n\nlet trStat = {\n    payload: env.get(\"sUnit\")+\": \"+volts.toFixed(2)+\n        \" \"+(isMin?'min':'')+(isMax?'max':'')+(isNormal?'OK':'')+\n        \" \"+parseInt(nLev*100)+\"%\"\n};\n\nflow.set('mData',{\n    'trStat': trStat,\n    'tr': tr\n});\n\n\nreturn [\n    trStat,\n    tr\n];",
             "outputs": 2,
             "noerr": 0,
             "initialize": "",
@@ -316,10 +316,10 @@
             "id": "e724.7b54c490109",
             "type": "otplcEngine",
             "z": "b9c7.a87e67fd049",
-            "name": "for otplc-battery",
+            "name": "${batName}",
             "location": "subFlow",
             "otPlcSel": "6e871d0af4e31f09",
-            "x": 890,
+            "x": 870,
             "y": 40,
             "wires": [
                 []

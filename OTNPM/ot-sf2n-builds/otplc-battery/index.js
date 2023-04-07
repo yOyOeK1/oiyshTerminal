@@ -8,7 +8,7 @@ module.exports = function(RED) {
    const subflowContents = fs.readFileSync(subflowFile);
    const subflowJSON = JSON.parse(subflowContents);
    RED.nodes.registerSubflow(subflowJSON);
-   console.log("ot-sf2n [otplc-battery] : [otplc-battery] - ver 0.0.7 init ....");
+   console.log("ot-sf2n [otplc-battery] : [otplc-battery] - ver 0.0.8 init ....");
 }
 
       

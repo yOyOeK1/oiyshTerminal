@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-otplc-battery",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "To plc battery easy",
     "keywords": [
         "oiyshTerminal",
@@ -23,6 +23,7 @@
     },
     "homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n-builds/otplc-battery",
     "dependencies": {
-        "node-red-contrib-ot-hz-detector": ">=0.0.9"
+        "node-red-contrib-ot-hz-detector": ">=0.0.9",
+        "node-red-contrib-otplc": ">=0.0.903"
     }
 }
