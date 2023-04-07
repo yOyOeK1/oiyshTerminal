@@ -258,7 +258,7 @@ class OTsf2n{
             if( imgN != -1 ) imgNSufix = imgN;
             if( this.chkDir( `${tDirFull}/${sampleExamples}/ss_exampleNodeSet${imgNSufix}.png` ) == true ){
               cl("  have own ./${sampleExamples}/ss_exampleNodeSet${imgNSufix}.png");
-              trSamp.push( `In Node-RED\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n-builds/${tDir}/${sampleExamples}/ss_exampleNodeSet${imgNSufix}.png)` );
+              trSamp.push( `\n![](https://raw.githubusercontent.com/yOyOeK1/oiyshTerminal/main/OTNPM/ot-sf2n-builds/${tDir}/${sampleExamples}/ss_exampleNodeSet${imgNSufix}.png)\n---\n` );
             }
           }
 
@@ -267,7 +267,7 @@ class OTsf2n{
             cl("  have own ./${sampleExamples}/exampleNodeSet.json");
             let jsonExampleStr = fs.readFileSync( `${tDirFull}/${sampleExamples}/exampleNodeSet.json` ).toString().split("\n").join('');
             trSamp.push(
-              `\n*This is a json to import it as a example node set or use [link to ... ./${sampleExamples}/exampleNodeSet.json](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n-builds/${tDir}/${sampleExamples}/exampleNodeSet.json)*\n\n`+
+              `## .json example to import\n\n It's as a example node set or use [link to ... ./${sampleExamples}/exampleNodeSet.json](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/ot-sf2n-builds/${tDir}/${sampleExamples}/exampleNodeSet.json)*\n\n`+
               '```json\n'+jsonExampleStr+'\n```'
               );
           }
