@@ -1,6 +1,6 @@
 # otdm-tools
 
-With grate power comse grate responsibility. It's a power user tool.
+With grate power comes grate responsibility. It's a power user tool.
 
 ---
 
@@ -49,8 +49,11 @@ It's becoming your universal worker, qualiffy for the exact work you have.
 - [x] Node-red:
 
   - [x] (**-dnrfByUid**) flow(s)
+  - [ ] (**-dnrsfByUid**) subflow(s)
 
 - [x] Internal cliper
+
+- [ ] (**-serviceIt**) internal utility service system [`http`|`mqtt`|....]  (working on ....)
 
 - [x] (**-webCmdSubProcess**) Shell command wraper to mqtt / webSocket
 
@@ -109,21 +112,21 @@ By expanding otdmDriverProto.py you can have workers knowing what to do with:
 - Grafana:
 
   - annotations
-  *check family of otdm-grafana-an-*
+    *check family of otdm-grafana-an-*
 
   - dashboards by uid
-  *check family of otdm-grafana-db-*
+    *check family of otdm-grafana-db-*
 
   - datasources by uid
-  *check family of otdm-grafana-ds-*
+    *check family of otdm-grafana-ds-*
 
 - Node-red:
 
   - flow(s)
-  *check family of otdm-nrf-*
+    *check family of otdm-nrf-*
 
 - [Web (.js) <=> mqtt <=> shell (sh)](https://github.com/yOyOeK1/oiyshTerminal/wiki/xdevdoc-otdmDriverProto-web-cmd-sub-process)
-*check family of otdm-p-*  
+  *check family of otdm-p-*  
 
 ---
 
@@ -131,48 +134,65 @@ By expanding otdmDriverProto.py you can have workers knowing what to do with:
 
 * **getting** info **from dpkg** about all otdm compatible .deb's
 
-```bash
-otdmTools.py -ddpkg '*' -oFile '/tmp/debs_status.json'
-```
+  ```bash
+  otdmTools.py -ddpkg '*' -oFile '/tmp/debs_status.json'
+  ```
 
-It will ask dpkg for all .deb's in repository / current package data base maching otdm. Result go to oFile path.
+  It will ask dpkg for all .deb's in repository / current package data base maching otdm. Result go to oFile path.
 
 * **add note** to internal cliper .otdm/cliper.json
 
-```bash
-otdmTools.py -addNote "This is a example note 1."
-```
-
+  ```bash
+  otdmTools.py -addNote "This is a example note 1."
+  ```
 - it will try to **help**.
 
-```bash
-otdmTools.py -h
-```
+  ```bash
+  otdmTools.py -h
+  ```
 
 - make **backup** of all
 
-```bash
-otdmTools.py -mkbp "*"
-```
+  ```bash
+  otdmTools.py -mkbp "*"
+  ```
+* wrap bash command to mqtt or webSocket and interact with the app over websocket
 
-* wrap bash command to mqtt or webSocket
+  ```bash
+  otdmTools.py \
+  -webCmdSubProcess "[/usr/bin/pkexec,--disable-internal-agent,whoami]" \
+  -pH "pH93419_" \
+  -oFile "--"
+  ```
 
-```bash
-otdmTools.py \
- -webCmdSubProcess "[/usr/bin/pkexec,--disable-internal-agent,whoami]" \
- -pH "pH93419_" \
- -oFile "--"
-```
+  It will start system authentication proces then run "whoami". Will start mqtt topic:
 
-It will start system authentication proces then run "whoami". Will start mqtt topic:
+  - subP/pH93419_/status - will public **starting** or **done**
 
-- subP/pH93419_/status - will public **starting** or **done**
+  - subP/pH93419_/line - will give line by line from command
 
-- subP/pH93419_/line - will give line by line from command
+  - subP/pH93419_/in - it's a stdin of command so if you have prompt or something you can interact with app.
 
-- subP/pH93419_/in - it's a stdin of command so if you have prompt or something you can interact with app.
+  In action: https://www.youtube.com/watch?v=7Kc2dpNmxh4
 
-In action: https://www.youtube.com/watch?v=7Kc2dpNmxh4
+* serviceIt layer so `http` and `mqtt` communication layer
+
+  To start it use argument `-serviceIt` `serviceName` can be set as `http` or/and `mqtt` so if more then one use `http,mqtt`
+  
+  ```bash
+  otdmTools.py -serviceIt http,mqtt
+  ```
+
+  *will start http api stack and mqtt as comunication for tasks and msg's to/from otdmTools.py -serviceIt ...*
+
+  Then it can be use as ...
+  ```bash
+  curl http://192.168.43.220:1990/echo/Hello%20world/json
+  ```
+  **Returns** _json_ and http statusCode `200`
+  ```bash
+  {"code": 200, "status": "success", "msg": "Hello world"}
+  ```
 
 ---
 

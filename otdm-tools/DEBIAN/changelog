@@ -1,7 +1,24 @@
+dpkg (0.28.0) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * adding service layer
+  * now you can do this
+    # ./otdmTools.py -serviceIt http,mqtt
+    and start http api stack and mqtt stack
+
+  -- B.Ceglik <yoyoek@wp.pl  23-04-05
+
+dpkg (0.27.1) unstable; urgency=low
+
+  [ B.Ceglik ]
+  * protoDriver to get subflows from Node-RED
+
+  -- B.Ceglik <yoyoek@wp.pl  23-03-20
+
 dpkg (0.26.1) unstable; urgency=low
 
   [ B.Ceglik ]
-  * protoDriver get for listing isPackitso[bool] iKey, iUid to to auto matching 
+  * protoDriver get for listing isPackitso[bool] iKey, iUid to to auto matching
 
   -- B.Ceglik <yoyoek@wp.pl  23-02-21
 

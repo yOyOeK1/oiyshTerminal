@@ -19,7 +19,7 @@ from otdmDriverManager import *
 
 from otdmPackitso import *
 
-ver="0.25.9"
+ver="0.27.9"
 confFilePath="/data/data/com.termux/files/home/.otdm/config.json"
 deb=0
 
@@ -159,10 +159,12 @@ def clipIt( args, o, note ):
     try:
         argsToAdd.pop("addNote")
     except:
+        print("Error 98098")
         pass
     try:
         argsToAdd.pop("o")
     except:
+        print("Error 353252")
         pass
 
     clip.append( {
@@ -1405,7 +1407,7 @@ def osType( args ):
     print("\nend for now ....................\n")
     print(tr)
     addArgHandle_oFile(args, tr)
-    sys.exit(11)
+    sys.exit(0)
     a= '''
         if dYN(
             f"{fp}\n\ttarget file is existing. Overrite it?",
@@ -1436,6 +1438,75 @@ def packitsoQuery( args ):
     elif r == 2:
         return 1
 
+
+
+
+
+from otdm_serviceIt_mqtt import *
+from otdm_serviceIt_http import otdm_serviceIt_http
+from otdmApiBasics import *
+
+
+
+def serviceIt( args ):
+    global conf
+    global sapis
+    print(f"serviceIt .... precheck")
+
+    if args.get("serviceIt","") == "":
+        print("Error -serviceIt can be [mqtt] pass as string separator by coma")
+        sys.exit(1)
+
+    sisOk = True
+    sdebIters = True
+    sIter = 0
+
+    if 'mqtt' in args.get("serviceIt"):
+        print(" - Yes do mqtt ....")
+        doMqtt = True
+        s_mq = otdm_serviceIt_mqtt( otGet_sapisDef, args, conf)
+        s_mq.runIt( conf )
+    else:
+        doMqtt = False
+
+    if 'http' in args.get("serviceIt"):
+        print(" - Yes do http ....")
+        doHttp = True
+        s_ht = otdm_serviceIt_http( otGet_sapisDef, args, conf )
+        s_ht.runIt( conf )
+    else:
+        doHttp = False
+
+
+
+    print("serviceIt enter main loop ....")
+    while sisOk == True:
+        now=datetime.now()
+        tn=now.strftime("%s")
+        if sdebIters:  print(f"services are running ... OK ({sIter})")
+
+
+        if doMqtt == True:
+            print('{"s_mqttIsOk":"'+(f"{s_mq.isOk}")+'", "s_mq": '+json.dumps(s_mq.count)+'}')
+            s_mq.publish( "status/ping", tn, True );
+
+        if doHttp == True:
+            print('{"s_httpIsOk":"'+(f"{s_ht.isOk}")+'", "s_ht": '+json.dumps(s_ht.count)+'}')
+
+
+
+
+        sIter+=1
+        time.sleep(5)
+
+    return 1
+
+
+
+
+
+
+
 acts = [
     [
         "v",
@@ -1451,6 +1522,9 @@ acts = [
         "debug",
         "setDebug",
         "debuging enable disable by 1 or 0"
+    ],
+    [
+        "serviceIt",  "serviceIt", "To start it as a services more info TODO"
     ],
     [   "testSubProcAndProm",   "testSubProcAndProm", "test subprocess with args"],
     [   "testDialog", "testDialog", "Test of dialog function."],
@@ -1589,6 +1663,7 @@ acts = [
 
 def exeArray( args ):
     l=len(args)
+
     print(f"exeArray starting tastk. In total: {l}")
     for i,a in enumerate(args):
         if deb:
@@ -1716,6 +1791,17 @@ if __name__ == "__main__":
     #print( args )
     args=argsParser( args )
     print("args after parser:{0}".format(args))
+
+    '''
+    print("--- importinf driverFifo")
+    from otdmPG_driverFifo import *
+    d = otdmPG_driverFifo('','')
+    d.startIt()
+    sys.exit()
+    print("exit 19")
+    '''
+
+
 
     print( f". . o o O O  oiyshTerminal - tools  O O o o . .ver {ver}\n" )
 
