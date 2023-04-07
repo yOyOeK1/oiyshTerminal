@@ -1,0 +1,125 @@
+[
+    {
+        "id": "414a974b33061527",
+        "type": "comment",
+        "z": "6e119010f87bea35",
+        "name": "sf2n otplc-notification-to-http-api",
+        "info": "",
+        "x": 1510,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "90b8ad2efbde9d44",
+        "type": "inject",
+        "z": "6e119010f87bea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "status",
+                "v": "normal",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 ",
+        "payloadType": "str",
+        "x": 1450,
+        "y": 560,
+        "wires": [
+            [
+                "9fa9e011e3c35fa2",
+                "7cbfb2fd73cd66f9"
+            ]
+        ]
+    },
+    {
+        "id": "9fa9e011e3c35fa2",
+        "type": "delay",
+        "z": "6e119010f87bea35",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1560,
+        "y": 640,
+        "wires": [
+            [
+                "577811f1be1aa243"
+            ]
+        ]
+    },
+    {
+        "id": "577811f1be1aa243",
+        "type": "change",
+        "z": "6e119010f87bea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Is a notification from instance!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1760,
+        "y": 640,
+        "wires": [
+            [
+                "300355f7b8e2162c",
+                "473d9c79e9617d66"
+            ]
+        ]
+    },
+    {
+        "id": "473d9c79e9617d66",
+        "type": "otplc-notification-system-to-http-api",
+        "z": "6e119010f87bea35",
+        "name": "Noti example",
+        "hostIpPort": "192.168.43.220:1880",
+        "loc": "isDellExample",
+        "hostName": "dell",
+        "x": 1990,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "300355f7b8e2162c",
+        "type": "debug",
+        "z": "6e119010f87bea35",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1970,
+        "y": 700,
+        "wires": []
+    }
+]

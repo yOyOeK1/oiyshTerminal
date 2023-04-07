@@ -1,0 +1,24 @@
+{
+    "name": "otplc-notification-system-to-http-api",
+    "version": "0.0.4",
+    "description": "To have a posible notifications receivers",
+    "keywords": "oiyshTerminal, node-red, otplc, ot-sf2n",
+    "license": "GPL-3.0",
+    "author": "Bartlomiej Ceglik <yoyoek@wp.pl>",
+    "engines": {
+        "node": ">=10.19.0"
+    },
+    "node-red": {
+        "version": ">=2.1.4",
+        "nodes": {
+            "otplc-notification-system-to-http-api": "index.js"
+        }
+    },
+    "dependencies": {
+        "otplc": ">=0.0.903"
+    },
+    "homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/otplc-notification-system-to-http-api",
+    "bugs": {
+        "url": "https://github.com/yOyOeK1/oiyshTerminal/issues?q=label%3Aotplc-notification-system-to-http-api"
+    }
+}
