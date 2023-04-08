@@ -1,0 +1,18 @@
+[project]
+name = "ot_test2"
+version = "0.0.4"
+authors = [
+  { name="Bartlomiej Ceglik", email="yoyoek@wp.pl" },
+]
+description = "It's a dummy package / test. A small test of oiyshTerminal to pip."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTPIPS/ot_test2"
+"Bug Tracker" = "https://github.com/yOyOeK1/oiyshTerminal/issues"
