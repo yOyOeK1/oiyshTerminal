@@ -1,22 +1,22 @@
 # otdm-tools
 
-With grate power comes grate responsibility. It's a power-user tool.
+  With grate power comes grate responsibility. It's a power-user tool.
 
 ---
 
 ## why I need it?
 
-For me it's all the time around similar subjects. Reading files, getting data from http. O this data is json, that data is in mysql I need a driver to talk to mysql then make query then I will have some data. New project similar story.
+  For me it's all the time around similar subjects. Reading files, getting data from http. O this data is json, that data is in mysql I need a driver to talk to mysql then make query then I will have some data. New project similar story.
 
-otdm-tools is my attempt to eliminate the idea of precise work type. My understenging is. You want to do "work / task". You know what is the medium providing / holding data.
+  otdm-tools is my attempt to eliminate the idea of precise work type. My understenging is. You want to do "work / task". You know what is the medium providing / holding data.
 
-It's becoming your universal worker, qualified for the exact work you have.
+  It's becoming your universal worker, qualified for the exact work you have.
 
 
 ## dependencies
 
-It will **expect from you:** python3, pip, jq, cowsays, 
-Python: python3-apt|python-apt(optional), requests, paho-mqtt, uploadserver
+  It will **expect from you:** python3, pip, jq, cowsays, 
+  Python: python3-apt|python-apt(optional), requests, paho-mqtt, uploadserver
 
 
 ## using it
@@ -70,7 +70,8 @@ If you use otdm-tool on a different platform (I use it on Ubuntu) you do not nee
 
 **Config file:** /data/data/com.termux/files/home/.otdm/config.json
 
-Some info for drivers and what to use as a default. If you use otdm-tools by installing otdm-installer-dummy This is a place where you need to set up ip, ports and other setting to mache your system.  Setting for Node-red, grafana, mysql. If you don't have some of those services on your system ma by you have access to it on different machine? Set it up in this file.
+
+Some info for drivers and what to use as a default. If you use otdm-tools by installing otdm-installer-dummy This is a place where you need to set up ip, ports and other setting to match your system. Setting for Node-red, grafana, mysql. If you don't have some of those services on your system maybe you have access to it on different machine? Either way you can set it up in this file.
 
 ---
 
