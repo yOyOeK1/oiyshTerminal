@@ -1,95 +1,82 @@
 # otdm-tools
 
-With grate power comes grate responsibility. It's a power user tool.
+With grate power comes grate responsibility. It's a power-user tool.
 
 ---
 
-## Why I need it?
+## why I need it?
 
-It's for me all the time arround the similar subject. Reading files, getting data from http. O this data is json, that data is in mysql I need a driver to talk to mysql then make query then I will have a data. New project similar story.
+For me it's all the time around similar subjects. Reading files, getting data from http. O this data is json, that data is in mysql I need a driver to talk to mysql then make query then I will have some data. New project similar story.
 
-otdm-tools is a My attempt to eliminate a idea of precise work type. My understenging is. You wast to make "work / task". You know what is a medium providing / holding data.
+otdm-tools is my attempt to eliminate the idea of precise work type. My understenging is. You want to do "work / task". You know what is the medium providing / holding data.
 
-It's becoming your universal worker, qualiffy for the exact work you have.
+It's becoming your universal worker, qualified for the exact work you have.
 
-**knowing what to do with:**
+
+## dependencies
+
+It will **expect from you:** python3, pip, jq, cowsays, 
+Python: python3-apt|python-apt(optional), requests, paho-mqtt, uploadserver
+
+
+## using it
 
 - [ ] (**-ddpkg**) dpkg
-
   - [x] **"*"** otdm package list
-
   - [x] **"app"** get package details
-
   - [ ] install package
-
   - [ ] uninstall package
 
 - [x] (**-dfs**) file system
-
   - [x] read file / directory
-
   - [x] write to file
-
   - [x] make directory
 
 - [x] (**-osType**) recognize os
-
   - [x] termux 117
-
   - [x] ubuntu 22.04 and *.*
 
 - [x] Grafana:
-
   - [x] (**-dganById**) annotations
-
   - [x] (**-dgdbByUid**) dashboards by uid
-
   - [x] datasources by uid
 
 - [x] Node-red:
-
   - [x] (**-dnrfByUid**) flow(s)
   - [ ] (**-dnrsfByUid**) subflow(s)
 
 - [x] Internal cliper
-
-- [ ] (**-serviceIt**) internal utility service system [`http`|`mqtt`|....]  (working on ....)
+- [ ] (**-serviceIt**) internal utility service system [link...](otdm_serviceIt_README.md)(working on ....)
 
 - [x] (**-webCmdSubProcess**) Shell command wraper to mqtt / webSocket
-
   - [x] with live stdio and stdout to mqtt :)
 
 - [x] Makes backups of (**-mkbp**):
-
   - [x] ds|gdsuid|gdsid|gdsname|gdhs|gdhuid|gdhid|gdhname|*
 
 - [x] Deb files:
-
   - [x] pre deploy actions
-
   - [x] build .deb
-
   - [x] deploy .deb to repository
-
   - [x] update repository
 
 ---
 
 **Home directory:** /data/data/com.termux/files/
 
-Yes. It's there to have any chance for me to have it working on android :). If you use otdm-tool on different platform then termux it's Cool !
+The directory path looks like this so that otdm-tool could also run on android using Termux.
+If you use otdm-tool on a different platform (I use it on Ubuntu) you do not need Termux but the path will still look like this for consistency.
 
-I'm using it on ubuntu and it's fine. Main part is in python3 so it's makin not so big differenc wher it's running. But it **expect from you to have:** python3, pip, jq
 
 **Config file:** /data/data/com.termux/files/home/.otdm/config.json
 
-Some info for drivers and what to use as a defoults. If you use otdm-tools by installing otdm-installer-dummy This is a place where you need to set up ip, ports and other setting to mache your system.  Setting for Node-red, grafana, mysql. If you don't have some of those services on your system ma by you have access to it on different machine? Set it up in this file.
+Some info for drivers and what to use as a default. If you use otdm-tools by installing otdm-installer-dummy This is a place where you need to set up ip, ports and other setting to mache your system.  Setting for Node-red, grafana, mysql. If you don't have some of those services on your system ma by you have access to it on different machine? Set it up in this file.
 
 ---
 
-### Idea of otdmDriverProto.py
+### the concept of otdmDriverProto.py
 
-It's a definition of a universal driver. Can have:
+It's a definition of a universal driver. It can have:
 
 - name - keyWord
 
@@ -101,7 +88,7 @@ It's a definition of a universal driver. Can have:
 
 - DELETE - delete task
 
-By using this solution we can ignore what kind of a work we want to do. And a specially how? It's delegated to otdm-tools :)
+By using this solution we can ignore what kind of work we want to do. And especially how? It's delegated to otdm-tools :)
 
 By expanding otdmDriverProto.py you can have workers knowing what to do with:
 
@@ -130,7 +117,7 @@ By expanding otdmDriverProto.py you can have workers knowing what to do with:
 
 ---
 
-## Examples of using it:
+## examples:
 
 * **getting** info **from dpkg** about all otdm compatible .deb's
 
@@ -138,7 +125,7 @@ By expanding otdmDriverProto.py you can have workers knowing what to do with:
   otdmTools.py -ddpkg '*' -oFile '/tmp/debs_status.json'
   ```
 
-  It will ask dpkg for all .deb's in repository / current package data base maching otdm. Result go to oFile path.
+  It will ask dpkg for all .deb's in repository / current package data base matching otdm family. Result go to oFile path.
 
 * **add note** to internal cliper .otdm/cliper.json
 
@@ -175,24 +162,6 @@ By expanding otdmDriverProto.py you can have workers knowing what to do with:
 
   In action: https://www.youtube.com/watch?v=7Kc2dpNmxh4
 
-* serviceIt layer so `http` and `mqtt` communication layer
-
-  To start it use argument `-serviceIt` `serviceName` can be set as `http` or/and `mqtt` so if more then one use `http,mqtt`
-  
-  ```bash
-  otdmTools.py -serviceIt http,mqtt
-  ```
-
-  *will start http api stack and mqtt as comunication for tasks and msg's to/from otdmTools.py -serviceIt ...*
-
-  Then it can be use as ...
-  ```bash
-  curl http://192.168.43.220:1990/echo/Hello%20world/json
-  ```
-  **Returns** _json_ and http statusCode `200`
-  ```bash
-  {"code": 200, "status": "success", "msg": "Hello world"}
-  ```
 
 ---
 
