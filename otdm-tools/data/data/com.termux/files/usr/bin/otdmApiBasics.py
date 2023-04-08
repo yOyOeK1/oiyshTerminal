@@ -2,37 +2,63 @@ import subprocess
 import os
 import json
 from datetime import datetime
-
+from otdmPackitso import *
 
 def otGet_sapisDef():
-    return [
-        ['infoPipe',      0, otA_infoPipe],
+    sapis = [
+        ['help',            0, otA_help,       '**Return** _raw_/_string_ this help :)'],
+
+        ['sum',             2, otA_sum,         '**Return** sume _float_ as sum of `arg0` ,`arg1`'],
+        ['divPipe',         1, otA_divPipe,     '**Return** division _float_ incomming `pipe` by `arg0`'],
+        ['div',             2, otA_div,         '**Return** division _float of `arg0` by `arg1`'],
+
+        ['getKey',          1, otA_getKey,      '**Return** value from incomming pipe where `key` of json is =  `arg0`'],
+
+        ['packitsoQ',        1 , otA_PackitsoQ,  '?|lsWork|yes to interact with `-packitso [action]`'],
+
+        ['packitsoLsAll',    1 , otA_PackitsoLsAll,  '`arg0` _string_ _.lsWork=>keyWord_ as from where / what worker'],
+        ['packitsoGET',     2 , otA_PackitsoGET,  'as get data from worker. `arg0` _string_ _keyWord_ to set worker `arg1` _string_ ident use to identyfy work peas'],
 
 
 
-        ['ping',          0, otA_ping],
-        ['echo',          1, otA_echo],
+        ['otdmTools',       1 , otA_otdmTools,  '**Return** result from otdmTools.py `args...`'],
 
-        ['sum',          2, otA_sum],
-        ['divPipe',      1, otA_divPipe],
-        ['div',          2, otA_div],
+        ['ping',            0, otA_ping,        '**Return** `pong`'],
+        ['echo',            1, otA_echo,        '**Return** given argument back as echo' ],
 
-        ['getKey',      1, otA_getKey],
-
-        ['otdmTools',    1 , otA_otdmTools],
-
-        ['json',            0, otA_toJson],
-        ['raw',             0, otA_toRaw],
-        ['html',            0, otA_toHtml],
-
-        ['help',          0, otA_help],
-
+        ['infoPipe',        0, otA_infoPipe,    'xxxxx**Return** info about pipe'],
     ]
 
-def otA_help( fromPipe, args ):
-    return 0, '''
 
-    '''
+    sapis.append( ['.json',           0, otA_toJson,      '**Return** _json_ from `pipe`'] )
+    sapis.append( ['.raw',            0, otA_toRaw,       '**Return** _raw_/_string_ from `pipe`'] )
+    sapis.append( ['.html',           0, otA_toHtml,      '**Return** _raw_/_string_ from `pipe` to wrapt `html`'] )
+
+    return sapis
+
+def otA_help( fromPipe, args ):
+    readmeC = ''
+    with open('otdm_serviceIt_README.md', 'r') as file:
+        readmeC = file.read().rstrip()
+
+    sapisList = []
+    for a in otGet_sapisDef():
+        sapisList.append( "   - `%s` - need %s arguments. %s"%(a[0], a[1], a[3]) )
+    readmeC = '%s\n\n## list of sapis\n\n%s'%(readmeC, "\n".join( sapisList ))
+
+
+    return 0, '%s\n\n'%readmeC
+
+def otA_PackitsoLsAll( fromePipe, args ):
+    return otA_otdmTools( fromePipe, ['-packitso "ls" -work "%s" -ident "*" '%args[0]] )
+
+
+def otA_PackitsoGET( fromePipe, args ):
+    return otA_otdmTools( fromePipe, ['-packitso "ls" -work "%s" -ident "%s" '%(args[0],args[1])] )
+
+def otA_PackitsoQ( fromePipe, args ):
+    return otA_otdmTools( fromePipe, ['-packitso %s'%args[0]] )
+
 
 def otA_ping( fromPipe, args ):
     return 0, "pong"
@@ -83,6 +109,7 @@ def otA_toJson( fromPipe, args ):
 
 def otA_toRaw( fromPipe, args ):
     return fromPipe[1]
+
 
 
 

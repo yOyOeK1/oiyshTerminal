@@ -1450,7 +1450,6 @@ from otdmApiBasics import *
 
 def serviceIt( args ):
     global conf
-    global sapis
     print(f"serviceIt .... precheck")
 
     if args.get("serviceIt","") == "":
@@ -1464,7 +1463,7 @@ def serviceIt( args ):
     if 'mqtt' in args.get("serviceIt"):
         print(" - Yes do mqtt ....")
         doMqtt = True
-        s_mq = otdm_serviceIt_mqtt( otGet_sapisDef, args, conf)
+        s_mq = otdm_serviceIt_mqtt( otGet_sapisDef(), args, conf)
         s_mq.runIt( conf )
     else:
         doMqtt = False
@@ -1472,7 +1471,7 @@ def serviceIt( args ):
     if 'http' in args.get("serviceIt"):
         print(" - Yes do http ....")
         doHttp = True
-        s_ht = otdm_serviceIt_http( otGet_sapisDef, args, conf )
+        s_ht = otdm_serviceIt_http( otGet_sapisDef(), args, conf )
         s_ht.runIt( conf )
     else:
         doHttp = False

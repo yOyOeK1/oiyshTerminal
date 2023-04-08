@@ -179,7 +179,7 @@ class otdmDriverProto:
                 self.getHelp()
                 sys.exit(1)
 
-            if arg == "*":
+            if arg == "*" or arg == "a":
                 if self.args.get("oFile","") == "":
                     print("Error if * then -oFile")
                     sys.exit(1)
