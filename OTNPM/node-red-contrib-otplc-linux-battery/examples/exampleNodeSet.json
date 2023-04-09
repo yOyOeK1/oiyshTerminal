@@ -1,0 +1,72 @@
+[
+    {
+        "id": "e999d1dfdae1ac85",
+        "type": "debug",
+        "z": "712159aab39493aa",
+        "name": "linux-battery update [0]",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload.percentage",
+        "statusType": "msg",
+        "x": 680,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "9a83d29d898ac372",
+        "type": "otplcLinuxBattery",
+        "z": "712159aab39493aa",
+        "name": "otplc-linux-battery : example [0]",
+        "location": "exampleLocation",
+        "batno": "0",
+        "x": 430,
+        "y": 480,
+        "wires": [
+            [
+                "e999d1dfdae1ac85"
+            ]
+        ]
+    },
+    {
+        "id": "ecf951595eeb632c",
+        "type": "comment",
+        "z": "712159aab39493aa",
+        "name": "need to set up battery No _int_",
+        "info": "",
+        "x": 430,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "268cd83d042613bb",
+        "type": "inject",
+        "z": "712159aab39493aa",
+        "name": "read linux-battery",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 480,
+        "wires": [
+            [
+                "9a83d29d898ac372"
+            ]
+        ]
+    }
+]

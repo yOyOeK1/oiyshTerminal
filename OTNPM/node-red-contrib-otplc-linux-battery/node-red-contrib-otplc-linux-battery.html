@@ -1,0 +1,107 @@
+<script type="text/javascript">
+
+
+    RED.nodes.registerType('otplcLinuxBattery',{
+        category: 'ot',
+        color: '#ccda65',
+        defaults: {
+            name: { required: true, value: this.name ? this.name : 'otplc-linux-battery'},
+            location: { value: "" },
+            batno: { required: true, value: ""}/*,
+            ledsel: { value: "" },
+            trigger: { value: "" },
+            triggers: { value: "" },
+            optsLeds: { value: "" }*/
+        },
+        inputs:1,
+        outputs:1,
+        outputLabels:[
+        	"linux-battery"
+        	],
+        icon: "db.svg",
+        label: function() {
+            return this.name||"Otplc linux-battery";
+        }
+    });
+</script>
+
+
+
+
+<script type="text/html" data-template-name="otplcLinuxBattery">
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-location"><i class="fa fa-tag"></i> Location</label>
+      <input type="text" id="node-input-location" placeholder="Location">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-batno"><i class="fa fa-tag"></i> Battery No</label>
+        <input type="text" id="node-input-batno" placeholder="">
+    </div>
+
+
+
+
+    <!-- next version ?
+    <div class="form-row">
+        <label for="node-input-ledsel"><i class="fa fa-tag"></i> Led select it:</label>
+        <input type="text" id="node-input-ledsel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-trigger"><i class="fa fa-tag"></i> Trigger</label>
+        <input type="text" id="node-input-trigger" placeholder="Trigger">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-triggers"><i class="fa fa-tag"></i> Triggers</label>
+        <input type="text" id="node-input-triggers" placeholder="Triggers">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-optsLeds"><i class="fa fa-tag"></i> optsLeds to hold vals for options..</label>
+        <input type="text" id="node-input-optsLeds">
+    </div>
+
+    -->
+
+    <div class="form-row">
+
+        <hr>
+        On start look on status of node or what is returning.<br>
+        <br>
+
+
+    </div>
+</script>
+
+<script type="text/html" data-help-name="otplcLinuxBattery">
+    <p>ot-plc to use linux-battery</p>
+    it's wrapt linux-battery so
+    <hr>
+    You can send it topic {string}:<br>
+    to get payload with batteries in system<br>
+
+    <br>
+    <hr>
+
+    <i>
+      <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc-linux-battery" target="_blank">
+        for more info go to otplc link ....
+      </a>
+    </i><br>
+    <i>
+      <a href="https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTNPM/node-red-contrib-otplc-linux-battery/sample/exampleNodeSet.json" target="_blank">
+        example node set .json link ....
+      </a>
+    </i><br>
+
+
+
+</script>
