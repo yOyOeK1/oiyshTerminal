@@ -31,8 +31,10 @@ module.exports = function(RED) {
             topic: 'batNo/'+node['batNoSel']+'/update',
             payload: bats[ node['batNoSel'] ]
           })
+          setStatus( node, "bats update ! "+(new Date()) );
         }else{
           cl(myName+" update but not set up node :(")
+          setStatus( node, "set battery 0..."+(bats.length-1) );
         }
       };
 
@@ -40,16 +42,10 @@ module.exports = function(RED) {
       node['onBatUpdate'] = function( bats ){
         let batHaveCount = bats.length;
         node['batsLast'] = bats;
+        //cl(myName+" onBatUpdate .... batNoSel:"+node['batNoSel']);
+        //cl(myName+" so got .... "+batHaveCount);
+        //cl(myName+" ..................NICE!");
 
-        cl(myName+"onBatUpdate .... batNoSel:"+node['batNoSel']);
-        cl(myName+"so got .... "+batHaveCount);
-        cl(myName+"..................NICE!");
-
-        if( node['batNoSel'] == -1 ){
-          setStatus( node, "set battery 0..."+(batHaveCount-1) );
-        }else{
-          setStatus( node, "bats update ! "+(new Date()) );
-        }
         node.sendMsgUpdate( bats );
 
       };
@@ -57,9 +53,9 @@ module.exports = function(RED) {
       node['makeUpdateRun'] = function(){
         linuxBattery().then(bats=>{
           node['sendUpdateRun'] = false;
-          cl(myName+"got linux battery raport !");
-          cl(myName+"can see node?");cl(node);
-          cl(myName+"can see node['batLast']?");cl(node['batLast']);
+          cl(myName+" got linux battery raport !");
+          //cl(myName+" can see node?");cl(node);
+          //cl(myName+" can see node['batLast']?");cl(node['batLast']);
           node.onBatUpdate( bats );
         });
       };
@@ -89,7 +85,7 @@ module.exports = function(RED) {
           node['batNoSel'] = parseInt(config.batno);
         }catch(e){
           eMsg = " | battery No not integer? ";
-          cl(myName+"Error converting battery No to int !");
+          //cl(myName+"Error converting battery No to int !");
         }
       }
 
@@ -102,8 +98,8 @@ module.exports = function(RED) {
           otplc.add( 'linux-battery',
             config.name,
             config.location || "",
-            'otplc-linux-battery',
-            config.batNo || "",
+            'otplt-linux-battery',
+            config || "",
             node
           );
         },300);
