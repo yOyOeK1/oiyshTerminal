@@ -13,14 +13,14 @@
 ### serviceIt to start as demons in foreground are
 
   By starting `-serviceIt [args,..]` you can statart ...
-    * `mqtt.otdm_serviceIt_mqtt
-    * `http.otdm_serviceIt_http
-    * `ws.otdm_serviceIt_ws
-    * `xmlrpc.otdm_serviceIt_xmlrpc
+     * `mqtt`  - arg can by use to start ...mqtt
+     * `http`  - arg can by use to start ...http
+     * `ws`  - arg can by use to start ...ws
+     * `xmlrpc`  - arg can by use to start ...xmlrpc
 
   With all the services there is a way to use otdmSTS system by senging in
   `http` url you can build task for otdmTools look in README.md
-  
+
 ### list of `SAPIS` it otdmSTS
 
   This is a list of `sapis` it's like function / task / set / formater / parser / extractor / result
