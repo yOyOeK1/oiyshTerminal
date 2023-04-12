@@ -21,6 +21,12 @@
   With all the services there is a way to use otdmSTS system. Which will allow you to build tasks for otdmTools by sending in
   `http` url a certain structure.  For more details [otdm_sapis_README.md](otdm_sapis_README.md)
 
+<<<<<<< HEAD
+=======
+
+
+  
+>>>>>>> branch 'main' of https://github.com/yOyOeK1/oiyshTerminal.git
 
 ## using serviceIt examples
 
@@ -29,14 +35,22 @@
 
   ```shell
   otdmTools.py -serviceIt http
+<<<<<<< HEAD
   ```
   this will start http api stack on a given ip:port(from your config file) that will handle tasks given in the incoming url.  
 
 * run in full debug
   ```shell
   tdmTools.py -serviceIt http -sitDebug 1 -stsDebug 1 -sapisDebug 1
+=======
+>>>>>>> branch 'main' of https://github.com/yOyOeK1/oiyshTerminal.git
   ```
 
+<<<<<<< HEAD
+=======
+  this will start http api stack on a given ip:port(from your config file) that will handle tasks given in the incoming url.  
+
+>>>>>>> branch 'main' of https://github.com/yOyOeK1/oiyshTerminal.git
 * lets start with echo
   Example url: 
   ```bash
