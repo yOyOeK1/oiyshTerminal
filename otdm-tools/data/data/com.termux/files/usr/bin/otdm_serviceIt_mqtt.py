@@ -54,9 +54,9 @@ class otdm_serviceIt_mqtt( otdm_serviceIt_prototype ):
     count = { "in":0, "out":0, "ok":0, "err":0, "cmd":0, "cmdOk":0, "cmdErr":0 }
     ver = "0.0.2"
 
-    def __init__(self, sapis, args, conf ):
+    def __init__(self, sapis, args, conf, sDebug ):
         #print(f"${self.name} constructor ....")
-        super( otdm_serviceIt_mqtt, self ).__init__( sapis, args, conf )
+        super( otdm_serviceIt_mqtt, self ).__init__( sapis, args, conf, sDebug )
         self.mqtCli = mqtt.Client(self.mqttC['clientId'])
         self.mqtCli.on_connect = self.on_connect
         self.mqtCli.on_message = self.on_message

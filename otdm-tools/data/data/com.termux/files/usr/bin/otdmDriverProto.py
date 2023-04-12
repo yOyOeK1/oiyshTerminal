@@ -93,6 +93,8 @@ class otdmDriverProto:
     """**isPackitso**: bool - @overwriteIt important to use in packitso only if ready"""
 
 
+    pipe = -1
+
 
     def __init__( self, args, conf, name, suffix ):
         """# Arguments
@@ -125,6 +127,11 @@ class otdmDriverProto:
         ofile=self.args.get("oFile","")
         if ofile == "--":
             print( json.dumps(r, indent=4) )
+
+        elif ofile == "pipe":
+            print("put to pipe ....")
+            self.pipe = r
+
         elif ofile != "":
             f = open( ofile , "w" )
             f.write(f"{json.dumps(r)}")
@@ -353,13 +360,18 @@ class otdmDriverProto:
         return ""
 
     def chkHost( self ):
-        r=self.GET(self.chkHostSuffix())
-        print(f"otdmDriverProto.chkHost: type:[{type(r)}] r:[{str(r)[:10]}...]")
-        if isinstance( r, dict ):
-            if r != {}:
-                return True
+        tr = False
+        try:
+            r=self.GET(self.chkHostSuffix())
+            print(f"otdmDriverProto.chkHost: type:[{type(r)}] r:[{str(r)[:10]}...]")
+            if isinstance( r, int ) or isinstance( r, dict ) or isinstance( r, list ) :
+                tr = True
+        except:
+            pass
 
-        return False
+        self.saveIfArgs( tr )
+
+        return 1,tr
 
 
     def resChk( self, r ):

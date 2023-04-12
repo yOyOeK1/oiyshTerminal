@@ -1373,13 +1373,24 @@ def bashConfigToJson( args, fPath ):
     #print(fD)
     return fD
 
+
+fsDFS = -1
+
 """ Handle -oFile
 arg - passd from your script
 ts  - to save data"""
 def addArgHandle_oFile( args, tsData ):
     global conf
-    fs = otdmDriverFileSystem( args, conf )
-    fs.saveIfArgs(tsData)
+    global fsDFS
+    if fsDFS == -1:
+        fsDFS = otdmDriverFileSystem( args, conf )
+    fsDFS.saveIfArgs(tsData)
+
+
+def getPipeContent():
+    global fsDFS
+    print("fsDFS is now %s"%fsDFS)
+    return fsDFS.pipe
 
 
 def osType( args ):
@@ -1441,6 +1452,7 @@ def osType( args ):
 
 def printVersion( args ):
     print( ver )
+    addArgHandle_oFile( args, ver)
     return 1
 
 def packitsoQuery( args ):
@@ -1460,7 +1472,6 @@ def packitsoQuery( args ):
 
 
 def serviceIt( args ):
-    print(f"serviceIt .... precheck")
     global conf
     otdmServiceIt( args, conf )
 

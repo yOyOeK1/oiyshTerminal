@@ -45,9 +45,9 @@ class otdm_serviceIt_xmlrpc( otdm_serviceIt_prototype ):
     confHttp = { "ip": "0.0.0.0", "port": 33333, "path": "/otrpc1" } #TODO FIX NOT TAKING PATH
     xrpcApis = []
 
-    def __init__(self, sapis, args, conf ):
+    def __init__(self, sapis, args, conf, sDebug ):
         #print(f"${self.name} constructor ....")
-        super( otdm_serviceIt_xmlrpc, self ).__init__( sapis, args, conf )
+        super( otdm_serviceIt_xmlrpc, self ).__init__( sapis, args, conf, sDebug )
         #print("redirect it ....")
         self.otHttp = -1
         self.r = random.Random()
@@ -68,7 +68,7 @@ class otdm_serviceIt_xmlrpc( otdm_serviceIt_prototype ):
 
     def sts( self, args ):
         print("do sts ...............", args)
-        tr_sts = otdmSTS( self.sapis, args );
+        tr_sts = otdmSTS( self.sapis, args, self.debugConfig );
         print("result is ....",tr_sts)
         return tr_sts
 

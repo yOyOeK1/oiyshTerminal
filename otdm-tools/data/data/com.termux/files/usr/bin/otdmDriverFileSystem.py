@@ -27,7 +27,13 @@ class otdmDriverFileSystem( otdmDriverProto ):
         return f"{self.getSuffix()}{fPath}"
 
     def chkHost( self ):
-        return os.path.exists( self.mkPath("") )
+        if os.path.exists( '/' ) == True:
+            tr = True
+        else:
+            tr = False
+
+        self.saveIfArgs( tr )
+        return 1,False
 
     def MKTEST( self, d ):
         print(f"MKTEST -> {d}")

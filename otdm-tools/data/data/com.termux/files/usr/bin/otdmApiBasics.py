@@ -6,10 +6,13 @@ import urllib
 from datetime import datetime
 from otdmPackitso import *
 import otdmTools as ot
+import otdmServiceIt as otsi
 
 def otGet_sapisDef():
     sapis = [
         ['help',            0, otA_help,       '**Return** _raw_/_string_ this help :)'],
+        ['ver',             0, otA_ver,        '**Return** _spipe_/_json_ with versions of otdm familly'],
+        ['statusChk',       0, otA_statusChk,  '**Return** _spipe_/_json_ with status of known stuff is it have connection to otplc, yss, mysql, mqtt, grafana, ...'],
 
         ['getConfig',       0, otA_getConfig,  '**Return** _json_ current known config of otdm'],
 
@@ -66,7 +69,61 @@ def otA_help( fromPipe, args ):
     return 0, '%s\n\n'%readmeC
 
 def otA_getConfig( fromPipe, args ):
-    return ot.confLoad()
+    return 0,ot.confLoad()
+
+
+def otA_ver( fromPipe, args ):
+    sIts = []
+    for si in otsi.otdmServiceItGetServicesItList():
+        sIts.append( {
+            "name": si.name,
+            "ver": si.ver
+        })
+
+
+    return 0,{
+        "otdmTools": ot.ver,
+        "serviceIt": sIts
+    }
+
+def otA_statusChk( fromPipe, args ):
+    workers = otA_otdmTools( fromPipe, ['-packitso lsWork'] )
+    print("so have to check ...")
+    print(workers)
+    status = "OK"
+    trC = {
+        "driverProto": [],
+        "status": status
+    }
+
+    if workers[0] != 0:
+        return 1,{"Err":"no lsWork result"}
+
+    for pd in workers[1]:
+        pdName = pd['name']
+        pdKey= pd['keyWord']
+        pdPs = pd['isPackitso']
+        pdErr = []
+        print(f" doing check on {pdName} / {pdKey}... packitso ? {pdPs}")
+        if pdPs or True:
+            chkCmd = "-%s chkHost"%pdKey
+            chkRes = otA_otdmTools( fromPipe, [chkCmd] )
+            #print("got result -----------------")
+            #print(chkRes)
+            #print("------------------------end")
+            trC['driverProto'].append( {"name":pdName, "keyWord": pdKey, "status": chkRes[1] } )
+            #print("EXIT 111")
+            if chkRes[1] == False:
+                status = "not all ok"
+                pdErr.append( trC['driverProto'][-1] )
+            #sys.exit(111)
+
+    trC['status'] = status
+    trC['errors'] = pdErr
+
+    return 0,trC
+
+
 
 def otA_ClipLastNote( fromPipe, args ):
     ot.conf = ot.confLoad()
@@ -161,11 +218,10 @@ def otA_toRaw( fromPipe, args ):
 
 
 
-
 def otA_otdmTools(fromPipe, args):
     print("otAotdmTools ...")
     tr = "ok"
-    pH='ttaa%s'%datetime.now().strftime('%s')
+    pH='ttaa%s'%datetime.now().strftime('%s_%N')
     cmd =  args[0]
     print("vanilla arg %s"%cmd)
     resAs =  "json"

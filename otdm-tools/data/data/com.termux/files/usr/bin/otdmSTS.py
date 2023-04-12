@@ -11,16 +11,24 @@ def otdmGetApi( sapis, apiName ):
     return []
 
 #to convert path to task list ....
-def otdmSTS( sapis, path ):
+def otdmSTS( sapis, path, debugConfig ):
     workStack = []
     a=path.split('/')
     #print(f"so a is: {a}")
     i=0
     aLen=len(a)
     isOk = True
+    stsDeb = debugConfig['sts']
+    sapisDeb = debugConfig['sapis']
+
+
+    #print("so debug is - at STS")
+    #print(debugConfig)
+
+
     while i < aLen:
         argument = a[i]
-        print(f"looking for :   {argument}")
+        if stsDeb == True: print(f"looking for :   {argument}")
         api = otdmGetApi( sapis, argument )
         if api == []:
             print(" is no api arg Error")
@@ -37,7 +45,7 @@ def otdmSTS( sapis, path ):
                 "apiName": argument,
                 "api": apiO,
                 "args": argsPass} )
-            print( f"   will pass argument: {argsPass}" );
+            if stsDeb == True: print( f"   will pass argument: {argsPass}" );
             i+=api[1]
 
         i+=1
@@ -47,9 +55,10 @@ def otdmSTS( sapis, path ):
 
     tr = [0,'']
     for i,task in enumerate(workStack):
-        print("------tr")
-        print(tr)
-        print( type(tr) )
+        if stsDeb == True:
+            print("------tr")
+            print(tr)
+            print( type(tr) )
         tr = task['api']( tr, task['args']  )
 
     return tr

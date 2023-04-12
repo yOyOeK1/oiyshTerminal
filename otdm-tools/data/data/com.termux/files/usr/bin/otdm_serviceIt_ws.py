@@ -48,7 +48,7 @@ class otSWebSocketHandlers:
 		j=json.loads( message )
 		print("J: %s"%j)
 		print("sending args [%s] to sts"%j['payload'])
-		stsRes = otdmSTS( self.otP.sapis, j['payload'] )
+		stsRes = otdmSTS( self.otP.sapis, j['payload'], self.otP.debugConfig )
 		print("so sts return:")
 		print(stsRes)
 
@@ -77,9 +77,9 @@ class otdm_serviceIt_ws( otdm_serviceIt_prototype ):
 	otWebS = -1
 	confWS = { "ip": "192.168.43.220", "port": 9001 }
 
-	def __init__(self, sapis, args, conf ):
+	def __init__(self, sapis, args, conf, sDebug ):
 	    #print(f"${self.name} constructor ....")
-	    super( otdm_serviceIt_ws, self ).__init__( sapis, args, conf )
+	    super( otdm_serviceIt_ws, self ).__init__( sapis, args, conf, sDebug )
 	    #print("redirect it ....")
 
 	def setArgsConf(self, args, conf):

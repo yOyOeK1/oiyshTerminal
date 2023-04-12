@@ -35,7 +35,6 @@ curl http://192.168.43.220:1990/sum/1/2/divPipe/0.2/json
 class otSHTTP( BaseHTTPRequestHandler ):
 
     otWebS = -1
-    httpConf = -1
     otP = -1
     apis = -1
 
@@ -109,12 +108,13 @@ class otSHTTP( BaseHTTPRequestHandler ):
 
     def do_GET(self):
         self.otP.count['in']+=1
-        print(f"tr_sts ----------------{self.path}----")
+        tr_sts = otdmSTS( self.otP.sapis, self.path[1:], self.otP.debugConfig );
 
-        tr_sts = otdmSTS( self.otP.sapis, self.path[1:] );
-        print("--- result ----")
-        print(tr_sts)
-        print("--- result ----")
+        if self.otP.sitDebug == True:
+            print(f"tr_sts ----------------{self.path}----")
+            print("--- result ----")
+            print(tr_sts)
+            print("--- result ----")
         self.sResp( )
         self.send_header('Access-Control-Allow-Origin', 'http://192.168.43.1')
         #self.send_header("Content-type", "text/json")
@@ -124,25 +124,6 @@ class otSHTTP( BaseHTTPRequestHandler ):
         #print(f" so got GET with path [{self.path}]")
         self.otP.count['out']+=1
         return 0
-
-        '''
-        resCode, bodyStr = self.parsePath( self, self.path )
-        if resCode == 200:
-            self.otP.count['ok']+=1
-        else:
-            self.otP.count['err']+=1
-
-        self.sResp( resCode )
-        self.send_header('Access-Control-Allow-Origin', 'http://192.168.43.1')
-        self.send_header("Content-type", "text/json")
-        self.end_headers()
-        self.wr( bodyStr )
-        #self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
-        #print(f" so got GET with path [{self.path}]")
-        self.otP.count['out']+=1
-
-        '''
-
 
 
 
@@ -162,9 +143,9 @@ class otdm_serviceIt_http( otdm_serviceIt_prototype ):
     otWebS = -1
     confHttp = { "ip": "192.168.43.220", "port": 1990 }
 
-    def __init__(self, sapis, args, conf ):
+    def __init__(self, sapis, args, conf, sDebug ):
         #print(f"${self.name} constructor ....")
-        super( otdm_serviceIt_http, self ).__init__( sapis, args, conf )
+        super( otdm_serviceIt_http, self ).__init__( sapis, args, conf, sDebug )
         #print("redirect it ....")
         self.otHttp = otSHTTP
         self.r = random.Random()
@@ -175,15 +156,14 @@ class otdm_serviceIt_http( otdm_serviceIt_prototype ):
 
     def runIt( self, conf ):
         self.conf = conf
-        print(f"otSHTTP . runIt ....")
+        if self.sDebug:print(f"otSHTTP . runIt ....")
         _thread.start_new(self.intRunIt,())
 
 
     def intRunIt(self, a=0, b=0):
-        otSH = otSHTTP
-        otSH.otP = self
+        if self.sDebug: print("otSHTTP Server started http://%s:%s" % (self.confHttp['ip'], self.confHttp['port']))
+        otSHTTP.otP = self
         self.otWebS = HTTPServer( (self.confHttp['ip'], self.confHttp['port']), otSHTTP )
-        print("otSHTTP Server started http://%s:%s" % (self.confHttp['ip'], self.confHttp['port']))
         self.isOk = True
         try:
             self.otWebS.serve_forever()
@@ -193,53 +173,3 @@ class otdm_serviceIt_http( otdm_serviceIt_prototype ):
         self.otWebS.server_close()
         self.isOk = False
         print("otSHTTP Server stopped.")
-
-
-    def delIt(self):
-        a='''
-        def otAPing_delIt(self, q):
-            print("otAPing: ",q)
-            return "pong"
-
-            def otAEchoMsg_delIt(self, q):
-                print("otAEchoMsg: ",q)
-
-                return q['msg']
-
-                def otAEcho_delIt(self, q):
-                    print("otAEcho: ",q)
-                    return q
-
-
-                    def otAotdmTools_delIt(self, q):
-                        print("---------------------------------")
-                        print("otAotdmTools ...")
-                        tr = "ok"
-                        print(q)
-                        print("---------------------------------")
-                        if q.get("cmd","") != "":
-                            print("Have cmd: %s ...."%q['cmd'])
-
-                            pH=f"_{self.r.random()}_{self.r.random()}"
-                            oFileP = f"/tmp/otApTo_{pH}.res"
-                            print("Do it ..."+oFileP)
-                            subprocess.run(
-                            '/home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin/otdmTools.py '+
-                            q.get('cmd')+" -oFile "+oFileP,
-                            shell=True
-                            )
-                            print(" DONE")
-                            trp = ""
-                            if os.path.exists( oFileP ) == True:
-                                with open(oFileP, 'r') as file:
-                                    trp = file.read().rstrip()
-
-                                    print(f"S: Result for {pH}")
-                                    self.count['cmdOk']+=1
-                                    if q.get("resAs","json") == "json":
-                                        return json.loads(trp)
-                                    else:
-                                        return trp
-
-                                        return tr
-'''
