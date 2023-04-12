@@ -1,17 +1,17 @@
 # otdmTools - sapis system
 
-  To make it fast! Chain base mechanism. It pass one data to next sapi with arguments. It's some sort of programming language where by staccking sapi with argument is chains you can build data you want. Or make some action.
+  To make it fast! Chain based mechanism. It passes data to the next sapi with arguments. It's like a programming language where by chaining sapis with arguments you can build the data you want. Or do some actions.
   It's used now in `otdmTools.py -serviceIt http` it start HTTP API at :1990 port
-  By sending `url` requests on paths it's validate your request using commands piping system.
+  When your `url` requests is send it validates it using commands piping system.
 
 ## list
 
-  The newest on you can get by `otdmTools.py -serviceIt ?` it will spit all it have now at your system. Plugins will extend your list on your instance. So check it out or this is a build in set ...
+  The newest skill set you can get by otdmTools.py -serviceIt ? it will spit everything available on your system. Additional plugins will extend your instance's list so check it out. This is the build in set ...
 
-### list of `SAPIS` it otdmSTS
+### list of `SAPIS` in otdmSTS
 
-  This is a list of `sapis` it's like function / task / set / formater / parser / extractor / result
-  use in String To Sentence system. Current options:
+  TThis is a list of `sapis` they can be a function / task / set / formater / parser / extractor / result
+   in String To Sentence system. Current options:
   - `help` (0)x`/` - **Return** _raw_/_string_ this help :)
   - `getConfig` (0)x`/` - **Return** _json_ current known config of otdm
   - `clipLimit` (1)x`/` - **Return** otdm cliper last `arg0` entrys
@@ -36,19 +36,20 @@
 
 ## example
 
-  * to get help, over http I'm using `curl` as my choice ...
+Here my choice is `curl` but feel free to use anything else 
+  * get help in html format over http
     ```bash
     curl http://192.168.43.220:1990/help/.html
     ```
-    - `help` as input is getting nothing it's firs. It's generating on the fly local help of instance then return it to `pipe`
-    - `.html` gets `pipe` and wrap it in `<html><body># otdmTools.py - serviceIt...` of _raw_/_string_
+    - `help` as input is getting nothing it's firs. It's generating on the fly local instance's help then returns it to the `pipe`
+    - `.html` gets the `pipe` and wraps it in `<html><body># otdmTools.py - serviceIt...` from _raw_/_string_
 
-  * Url in http address using `curl` as my choice ...
+  * echo to json 
     ```bash
     curl http://192.168.43.220:1990/echo/Hello%20world/.json
     ```
-    - `echo` in takes one argument `Hello%20world` as a input `pipe` it
-    - `.json` gets `pipe` and wrap it in REST'ish API format of _json_
+    - `echo`  takes in one argument `Hello%20world` as input, then `pipe` it
+    - `.json` gets the `pipe` and wraps it in REST'ish API format of _json_
     **Returns** _json_ and http statusCode `200`
     ```json
     {"code": 200, "status": "success", "msg": "Hello world"}
