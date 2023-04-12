@@ -19,7 +19,7 @@
   - `xmlrpc`- arg can be used to start ...xmlrpc
 
   With all the services there is a way to use otdmSTS system. Which will allow you to build tasks for otdmTools by sending in
-  `http` url a certain structure.  For more details [otdm_sapis_README.me](otdm_sapis_README.me)
+  `http` url a certain structure.  For more details [otdm_sapis_README.md](otdm_sapis_README.md)
 
 
 
