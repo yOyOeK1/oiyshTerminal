@@ -34,19 +34,10 @@ curl http://192.168.43.220:1990/sum/1/2/divPipe/0.2/json
 
 class otSHTTP( BaseHTTPRequestHandler ):
 
-
     otWebS = -1
     httpConf = -1
-
     otP = -1
     apis = -1
-    '''[
-        {"path":"/ping", "o": self.otAPing},
-        {"path":"/echo", "o": self.otAEcho}
-    ]'''
-
-
-
 
     def sResp( self, r=200 ):
         self.send_response( r )
@@ -165,7 +156,7 @@ class otSHTTP( BaseHTTPRequestHandler ):
 class otdm_serviceIt_http( otdm_serviceIt_prototype ):
     count = { "in":0, "out":0, "ok":0, "err":0,"cmdOk":0,"cmdEr":0}
     conf = -1
-    name = "S:http"
+    name = "http"
     ver = "0.0.1"
     otHttp = -1
     otWebS = -1
@@ -174,7 +165,7 @@ class otdm_serviceIt_http( otdm_serviceIt_prototype ):
     def __init__(self, sapis, args, conf ):
         #print(f"${self.name} constructor ....")
         super( otdm_serviceIt_http, self ).__init__( sapis, args, conf )
-        print("redirect it ....")
+        #print("redirect it ....")
         self.otHttp = otSHTTP
         self.r = random.Random()
 
@@ -188,63 +179,9 @@ class otdm_serviceIt_http( otdm_serviceIt_prototype ):
         _thread.start_new(self.intRunIt,())
 
 
-    def otAPing(self, q):
-        print("otAPing: ",q)
-        return "pong"
-
-    def otAEchoMsg(self, q):
-        print("otAEchoMsg: ",q)
-
-        return q['msg']
-
-    def otAEcho(self, q):
-        print("otAEcho: ",q)
-        return q
-
-
-    def otAotdmTools(self, q):
-        print("---------------------------------")
-        print("otAotdmTools ...")
-        tr = "ok"
-        print(q)
-        print("---------------------------------")
-        if q.get("cmd","") != "":
-            print("Have cmd: %s ...."%q['cmd'])
-
-            pH=f"_{self.r.random()}_{self.r.random()}"
-            oFileP = f"/tmp/otApTo_{pH}.res"
-            print("Do it ..."+oFileP)
-            subprocess.run(
-                '/home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin/otdmTools.py '+
-                    q.get('cmd')+" -oFile "+oFileP,
-                shell=True
-                )
-            print(" DONE")
-            trp = ""
-            if os.path.exists( oFileP ) == True:
-                with open(oFileP, 'r') as file:
-                    trp = file.read().rstrip()
-
-                print(f"S: Result for {pH}")
-                self.count['cmdOk']+=1
-                if q.get("resAs","json") == "json":
-                    return json.loads(trp)
-                else:
-                    return trp
-
-
-
-        return tr
-
     def intRunIt(self, a=0, b=0):
         otSH = otSHTTP
         otSH.otP = self
-        otSH.apis = [
-            {"path":"/ping", "o": self.otAPing},
-            {"path":"/echo", "o": self.otAEcho},
-            {"path":"/echoMsg", "o": self.otAEchoMsg},
-            {"path":"/otdmTools", "o": self.otAotdmTools},
-        ]
         self.otWebS = HTTPServer( (self.confHttp['ip'], self.confHttp['port']), otSHTTP )
         print("otSHTTP Server started http://%s:%s" % (self.confHttp['ip'], self.confHttp['port']))
         self.isOk = True
@@ -254,4 +191,55 @@ class otdm_serviceIt_http( otdm_serviceIt_prototype ):
             pass
 
         self.otWebS.server_close()
+        self.isOk = False
         print("otSHTTP Server stopped.")
+
+
+    def delIt(self):
+        a='''
+        def otAPing_delIt(self, q):
+            print("otAPing: ",q)
+            return "pong"
+
+            def otAEchoMsg_delIt(self, q):
+                print("otAEchoMsg: ",q)
+
+                return q['msg']
+
+                def otAEcho_delIt(self, q):
+                    print("otAEcho: ",q)
+                    return q
+
+
+                    def otAotdmTools_delIt(self, q):
+                        print("---------------------------------")
+                        print("otAotdmTools ...")
+                        tr = "ok"
+                        print(q)
+                        print("---------------------------------")
+                        if q.get("cmd","") != "":
+                            print("Have cmd: %s ...."%q['cmd'])
+
+                            pH=f"_{self.r.random()}_{self.r.random()}"
+                            oFileP = f"/tmp/otApTo_{pH}.res"
+                            print("Do it ..."+oFileP)
+                            subprocess.run(
+                            '/home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin/otdmTools.py '+
+                            q.get('cmd')+" -oFile "+oFileP,
+                            shell=True
+                            )
+                            print(" DONE")
+                            trp = ""
+                            if os.path.exists( oFileP ) == True:
+                                with open(oFileP, 'r') as file:
+                                    trp = file.read().rstrip()
+
+                                    print(f"S: Result for {pH}")
+                                    self.count['cmdOk']+=1
+                                    if q.get("resAs","json") == "json":
+                                        return json.loads(trp)
+                                    else:
+                                        return trp
+
+                                        return tr
+'''

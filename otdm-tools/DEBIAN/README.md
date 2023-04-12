@@ -12,36 +12,36 @@ For me it's all the time around similar subjects. Reading files, getting data fr
 
 ## dependencies
 
-  It will **expect from you:** python3, pip, jq, cowsays, 
+  It will **expect from you:** python3, pip, jq, cowsays,
   Python: python3-apt|python-apt(optional), requests, paho-mqtt, uploadserver
 
 ## using it
 
-- [x] recognize os (**-osType**) 
+- [x] recognize os (**-osType**)
   - [x] termux 117
   - [x] ubuntu 22.04 and *.*
 
 - [x] Internal cliper
-- [ ] dpkg (**-ddpkg**) 
+- [ ] dpkg (**-ddpkg**)
   - [x] **"*"** otdm package list
   - [x] **"app"** get package details
   - [ ] install package
   - [ ] uninstall package
 
 - [ ] protoDriver family (**-dxxxx**) [info](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-tools/data/data/com.termux/files/usr/bin/otdm_protoDriver_README.md) or [xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/wiki/xdevdoc-otdmDriverProto)
-	- [x] file system (**-dfs**) 
+	- [x] file system (**-dfs**)
   		- [x] read file / directory
   		- [x] write to file
   		- [x] make directory
 
 	- [x] Grafana (**-dgxxxx**):
-		- [x] annotations (**-dganById**) 
-  		- [x] dashboards by uid (**-dgdbByUid**) 
+		- [x] annotations (**-dganById**)
+  		- [x] dashboards by uid (**-dgdbByUid**)
         - [ ] folders by uid (**-dgfoldersByUid**)
   		- [x] datasources by uid (**-dgdsByUid**)
 
 	- [x] Node-red (**-dnr**):
-  		- [x] flow(s) (**-dnrfByUid**) 
+  		- [x] flow(s) (**-dnrfByUid**)
   		- [ ] subflow(s) (**-dnrsfByUid**)
 
 - [x] Shell command wraper to mqtt / webSocket (**-webCmdSubProcess**) [xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/wiki/xdevdoc-otdmDriverProto-web-cmd-sub-process)
@@ -49,7 +49,7 @@ For me it's all the time around similar subjects. Reading files, getting data fr
 
 - [ ] internal utility service system (**-serviceIt**) [info/xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-tools/data/data/com.termux/files/usr/bin/otdm_serviceIt_README.md)
 	- [x] http interface
-	- [x] mqtt interface 
+	- [x] mqtt interface
     - [ ] sapis familly [info/xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-tools/data/data/com.termux/files/usr/bin/otdm_sapis_README.md)
 
 - [x] Makes backups of (**-mkbp**):  
@@ -86,7 +86,7 @@ Some info for drivers and what to use as a default. If you use otdm-tools by ins
   ```bash
   otdmTools.py -addNote "This is a example note 1."
   ```
- 
+
 * **help***
   ```bash
   otdmTools.py -h
@@ -96,7 +96,7 @@ Some info for drivers and what to use as a default. If you use otdm-tools by ins
   ```bash
   otdmTools.py -mkbp "*"
   ```
-  
+
 * **webCmdSubProcess** wrap bash command to mqtt or webSocket and interact with the app over websocket  
   ```bash
   otdmTools.py \
@@ -108,7 +108,7 @@ Some info for drivers and what to use as a default. If you use otdm-tools by ins
   - `subP/pH93419_/status` - will public **starting** or **done**
   - `subP/pH93419_/line` - will give line by line from command
   - `subP/pH93419_/in` - it's a stdin of command so if you have prompt or something you can interact with app.
-  
+
   In action: https://www.youtube.com/watch?v=7Kc2dpNmxh4
 
 ---
@@ -120,6 +120,36 @@ Some info for drivers and what to use as a default. If you use otdm-tools by ins
 ---
 
 ## NOTES
+
+  ### app stdout to TCP:127.0.0.1:9999
+
+    - to send line by line `stdout` of `app` to `TCP:127.0.0.1:9999`
+      *to start app to file*
+      ```shell
+      app="./otdmTools.py -serviceIt http"
+      $app > /tmp/ots.file
+      ```
+
+    - to get `/tmp/ots.file` (temp) to `TCP:127.0.0.1:9999`
+      ```shell
+      while (( 1 )); do
+        c=`cat /tmp/ots.file`
+        if [ "$c" != "" ]; then
+          echo "" > /tmp/ots.file
+          echo "from file to tcp .>>"
+          echo -e "$c" | nc -N 127.0.0.1 9999
+        fi
+        sleep 0.5
+      done
+      ```
+
+    - to get `TCP:127.0.0.1:9999` `raw` data to `stdout`
+      ```shell
+      while (( 1 ));do
+        echo "loop ..";
+        nc -l 127.0.0.1 9999;
+      done
+      ```
 
 - prompting system for $ auth /usr/bin/pkexec --disable-internal-agent /bin/echo 'foo'
 - list all files in .deb

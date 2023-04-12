@@ -4,6 +4,7 @@ import os
 import requests
 import json
 import importlib as il
+import urllib
 
 class otdmDriverProto:
     """
@@ -231,6 +232,19 @@ class otdmDriverProto:
                     dfs=dfsc.otdmDriverFileSystem( self.args, self.conf )
                     iJ=dfs.GET( ifile )
 
+                if ifile == -1 and self.args.get("iStrUrl","") != "":
+                    ifile = 0
+                    su = self.args.get("iStrUrl","")
+                    print("so have from iStrUrl ORG")
+                    print(su)
+                    su = urllib.parse.unquote_plus( su )
+                    print("so have from iStrUrl parsed")
+                    print(su)
+                    iJ=json.loads( su )
+
+                    #sys.exit(111)
+
+
                 if ifile == -1 and self.args.get("iStr","") == "":
                     print("Error no -iStr")
                     sys.exit(1)
@@ -388,6 +402,10 @@ class otdmDriverProto:
         # Returns
         [json] - to raport status"""
         print( f"otdmDriverProto.POST( chars of data:{len(d)} )" )
+
+        print("POST so it will pass data to it ")
+        print(f"{json.dumps(d)}")
+        print("------------------------")
         return self.CurlWResChk( "POST",
             f"http://{self.getHost()}:{self.getPort()}{self.getApiPath()}{self.getSuffix()}",
             data=f"{json.dumps(d)}"

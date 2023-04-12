@@ -9,7 +9,7 @@ class otdmDriverGrafanaDashboardByUid( otdmDriverGrafanaProto ):
 
 
     def __init__(self, args, conf ):
-        super(otdmDriverGrafanaDashboardByUid, self).__init__( args, conf, "grafana", "/dashboards/uid" )
+        super(otdmDriverGrafanaDashboardByUid, self).__init__( args, conf, "grafana", "/dashboards/db" )
 
 
     def GETAll( self ):

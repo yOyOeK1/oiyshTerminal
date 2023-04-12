@@ -32,7 +32,6 @@ class otdmPackitso:
         drv=-1
         for d in otdl.drivers:
             print(f"d: {d}")
-            print(f"d['o'].keyWord: {d['o'].keyWord}")
             if d['o'].keyWord == keyWord:
                 drv=d
                 break

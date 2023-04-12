@@ -5,7 +5,7 @@ class otdmDriverGrafanaFoldersByUid( otdmDriverGrafanaProto ):
     keyWord = "dgfoldersByUid"
 
     def __init__(self, args, conf ):
-        super(otdmDriverGrafanaFoldersByUid, self).__init__( args, conf, "grafana", "/folders/uid" )
+        super(otdmDriverGrafanaFoldersByUid, self).__init__( args, conf, "grafana", "/folders" )
 
 
     def GETAll( self ):

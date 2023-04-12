@@ -1,23 +1,34 @@
 import subprocess
 import os
 import json
+import time
+import urllib
 from datetime import datetime
 from otdmPackitso import *
+import otdmTools as ot
 
 def otGet_sapisDef():
     sapis = [
         ['help',            0, otA_help,       '**Return** _raw_/_string_ this help :)'],
+
+        ['getConfig',       0, otA_getConfig,  '**Return** _json_ current known config of otdm'],
+
+        ['clipLimit',       1, otA_ClipLastNote, '**Return** otdm cliper last `arg0` entrys'],
+        #['clipAdd',         1, otA_ClipAdd,      'TODO'],
+
 
         ['sum',             2, otA_sum,         '**Return** sume _float_ as sum of `arg0` ,`arg1`'],
         ['divPipe',         1, otA_divPipe,     '**Return** division _float_ incomming `pipe` by `arg0`'],
         ['div',             2, otA_div,         '**Return** division _float of `arg0` by `arg1`'],
 
         ['getKey',          1, otA_getKey,      '**Return** value from incomming pipe where `key` of json is =  `arg0`'],
+        ['getKeyInAr',      1, otA_getKeyInAr,  '**Return** _array_ of _values_ form array of jsons with set key to get'],
+        ['getKeyInArEq',    2, otA_getKeyInArEq,  ''],
 
         ['packitsoQ',        1 , otA_PackitsoQ,  '?|lsWork|yes to interact with `-packitso [action]`'],
-
         ['packitsoLsAll',    1 , otA_PackitsoLsAll,  '`arg0` _string_ _.lsWork=>keyWord_ as from where / what worker'],
-        ['packitsoGET',     2 , otA_PackitsoGET,  'as get data from worker. `arg0` _string_ _keyWord_ to set worker `arg1` _string_ ident use to identyfy work peas'],
+        ['packitsoGET',      2 , otA_PackitsoGET,  'as get data from worker. `arg0` _string_ _keyWord_ to set worker `arg1` _string_ ident use to identyfy work peas'],
+        ['packitsoPOST',     2 , otA_PackitsoPOST,  'TODO `arg0` _string_ keyWord, `arg1` _json_ data to POST'],
 
 
 
@@ -26,7 +37,12 @@ def otGet_sapisDef():
         ['ping',            0, otA_ping,        '**Return** `pong`'],
         ['echo',            1, otA_echo,        '**Return** given argument back as echo' ],
 
+        ['waitFor',         1, otA_waitFor,     '**Return** current otdmTools.py time but with delay in sec from `arg0`'],
+
+
         ['infoPipe',        0, otA_infoPipe,    'xxxxx**Return** info about pipe'],
+
+
     ]
 
 
@@ -49,9 +65,30 @@ def otA_help( fromPipe, args ):
 
     return 0, '%s\n\n'%readmeC
 
+def otA_getConfig( fromPipe, args ):
+    return ot.confLoad()
+
+def otA_ClipLastNote( fromPipe, args ):
+    ot.conf = ot.confLoad()
+    ot.chkClipBoard()
+    limit = 1
+    if args[0] != "":
+        limit = int( args[0] )
+
+    return ot.lastNote({"lastNote": limit,"oFile":'pipe'} )
+
 def otA_PackitsoLsAll( fromePipe, args ):
     return otA_otdmTools( fromePipe, ['-packitso "ls" -work "%s" -ident "*" '%args[0]] )
 
+def otA_PackitsoPOST( fromePipe, args ):
+    pd = args[0]
+    jd = args[1]
+    iStrUrl = urllib.parse.quote_plus(json.dumps(jd))
+    sToDo='-%s 1 -act POST -iStrUrl "%s"'%( pd, iStrUrl )
+    postRes=otA_otdmTools( fromePipe, [sToDo] )
+    print("post return -----------------")
+    print(postRes)
+    return postRes
 
 def otA_PackitsoGET( fromePipe, args ):
     return otA_otdmTools( fromePipe, ['-packitso "ls" -work "%s" -ident "%s" '%(args[0],args[1])] )
@@ -65,6 +102,10 @@ def otA_ping( fromPipe, args ):
 
 def otA_echo( fromPipe, args ):
     return 0, args[0]
+
+def otA_waitFor( fromPipe, args ):
+    time.sleep( int(args[0]) )
+    return otA_echo( [0,''], fromPipe[1])
 
 def otA_sum( fromPipe, args ):
     return 0, float(args[0])+float(args[1])
@@ -84,6 +125,14 @@ def otA_infoPipe( fromPipe, args ):
 
     return 0, tr
 
+
+#['getKeyInAr',      1, otA_getKeyInAr,  'TODO'],
+def otA_getKeyInAr( fromPipe, args ):
+    return 0, ot.JGetByKey( fromPipe, args[0])
+
+#['getKeyInArEq',    2, otA_getKeyInArEq,  'TODO'],
+def otA_getKeyInArEq( fromPipe, args ):
+    return 0, ot.JGetConWhenKeyEq( fromPipe, args[0], args[1])
 
 
 def otA_getKey( fromPipe, args ):

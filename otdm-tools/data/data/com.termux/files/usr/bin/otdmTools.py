@@ -10,6 +10,8 @@ import shutil
 import hashlib
 from subprocess import run
 
+import otdmUtils as otU
+
 from otdmDriverProto import *
 from otdmDriverManager import *
 #from otdmDriverNodeRedFlowById import *
@@ -18,6 +20,8 @@ from otdmDriverManager import *
 #from otdmDriverFileSystem import *
 
 from otdmPackitso import *
+
+from otdmServiceIt import *
 
 ver="0.27.9"
 confFilePath="/data/data/com.termux/files/home/.otdm/config.json"
@@ -141,7 +145,7 @@ def chkClipBoard():
     #print("Exit for now to do it.")
     #sys.exit(1)
 
-def tn():
+def tn_delIt():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def clipDumpToFile():
@@ -151,7 +155,7 @@ def clipDumpToFile():
 
 def clipIt( args, o, note ):
     global clip
-    tnow=tn()
+    tnow=otU.tn_nice()
     ol = "None" if o == None else len(o)
 
     print(f"[ clip ] Added note: ", end=" " )
@@ -177,7 +181,6 @@ def clipIt( args, o, note ):
     clipDumpToFile()
 
 def putToFile( fp, jtr, overrite=False ):
-
 
     if fp == "--":
         print( jtr )
@@ -315,9 +318,10 @@ def nrGetBaseUrl( args ):
 
 def JGetByKey( j, key ):
     tr=[]
-    #print( type(j) )
+    print( type(j) )
     for i,r in enumerate(j):
-        #print( "    - %s"%type(r) )
+        print( "    - %s"%type(r) )
+        print("         %s"%r)
         for k in r.keys():
             if k == key:
                 tr.append( r[k] )
@@ -1150,6 +1154,8 @@ def lastNote( args ):
     except:
         ErrDo( args, "need number.")
 
+    tr = []
+
     cl=len(clip)
     cStart=cl-cint
     if cStart < 0:
@@ -1161,10 +1167,16 @@ def lastNote( args ):
         #if e > 0:
         #    print(",")
         #print( clip[i], end=" " )
-        n=clip[i]
-        printNote(n)
+        #n=clip[i]
+        #printNote(n)
+        tr.append( clip[i] )
 
-    print()
+    if args.get("oFile",'') == "pipe":
+        return 0,tr
+    else:
+        for n in tr:
+            printNote(n)
+    #print()
 
     return 1
 
@@ -1345,7 +1357,7 @@ def testSubProcAndProm( args ):
     return 1
 
 
-def bashConfigToJson( fPath ):
+def bashConfigToJson( args, fPath ):
     global conf
     fs = otdmDriverFileSystem( args, conf )
     fLines = fs.GET('/etc/os-release').split("\n")
@@ -1382,7 +1394,7 @@ def osType( args ):
     if os.path.exists( '/etc/os-release' ):
         print("debianish \ ...", end="")
 
-        fc = bashConfigToJson( '/etc/os-release' )
+        fc = bashConfigToJson( args, '/etc/os-release' )
 
         if fc.get('NAME', '') != '':
             tr['os'] = str(fc.get('NAME'))
@@ -1407,7 +1419,9 @@ def osType( args ):
     print("\nend for now ....................\n")
     print(tr)
     addArgHandle_oFile(args, tr)
-    sys.exit(0)
+    return 1
+
+    ##sys.exit(0)
     a= '''
         if dYN(
             f"{fp}\n\ttarget file is existing. Overrite it?",
@@ -1442,68 +1456,13 @@ def packitsoQuery( args ):
 
 
 
-from otdm_serviceIt_mqtt import *
-from otdm_serviceIt_http import otdm_serviceIt_http
-from otdmApiBasics import *
 
 
 
 def serviceIt( args ):
-    global conf
     print(f"serviceIt .... precheck")
-
-    if args.get("serviceIt","") == "":
-        print("Error -serviceIt can be [mqtt] pass as string separator by coma")
-        sys.exit(1)
-
-    sisOk = True
-    sdebIters = True
-    sIter = 0
-
-    if 'mqtt' in args.get("serviceIt"):
-        print(" - Yes do mqtt ....")
-        doMqtt = True
-        s_mq = otdm_serviceIt_mqtt( otGet_sapisDef(), args, conf)
-        s_mq.runIt( conf )
-    else:
-        doMqtt = False
-
-    if 'http' in args.get("serviceIt"):
-        print(" - Yes do http ....")
-        doHttp = True
-        s_ht = otdm_serviceIt_http( otGet_sapisDef(), args, conf )
-        s_ht.runIt( conf )
-    else:
-        doHttp = False
-
-
-
-    print("serviceIt enter main loop ....")
-    while sisOk == True:
-        now=datetime.now()
-        tn=now.strftime("%s")
-        if sdebIters:  print(f"services are running ... OK ({sIter})")
-
-
-        if doMqtt == True:
-            print('{"s_mqttIsOk":"'+(f"{s_mq.isOk}")+'", "s_mq": '+json.dumps(s_mq.count)+'}')
-            s_mq.publish( "status/ping", tn, True );
-
-        if doHttp == True:
-            print('{"s_httpIsOk":"'+(f"{s_ht.isOk}")+'", "s_ht": '+json.dumps(s_ht.count)+'}')
-
-
-
-
-        sIter+=1
-        time.sleep(5)
-
-    return 1
-
-
-
-
-
+    global conf
+    otdmServiceIt( args, conf )
 
 
 acts = [

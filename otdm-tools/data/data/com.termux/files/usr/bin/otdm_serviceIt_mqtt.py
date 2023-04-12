@@ -49,7 +49,7 @@ class otdm_serviceIt_mqtt( otdm_serviceIt_prototype ):
         "ver": "0.0.1"
     }
 
-    name = 'S:mqtt'
+    name = 'mqtt'
     isOk = False
     count = { "in":0, "out":0, "ok":0, "err":0, "cmd":0, "cmdOk":0, "cmdErr":0 }
     ver = "0.0.2"
@@ -193,3 +193,7 @@ class otdm_serviceIt_mqtt( otdm_serviceIt_prototype ):
         self.conf = conf
         _thread.start_new(self.intRunIt,())
         print(f"${self.name} - runIt DONE")
+
+
+    def doPing(self, tn_unix ):
+        self.publish( "status/ping", tn_unix, True );
