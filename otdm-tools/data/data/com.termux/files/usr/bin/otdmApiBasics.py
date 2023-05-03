@@ -6,6 +6,7 @@ import urllib
 from datetime import datetime
 from otdmPackitso import *
 import otdmTools as ot
+import random
 import otdmServiceIt as otsi
 
 def otGet_sapisDef():
@@ -57,12 +58,16 @@ def otGet_sapisDef():
 
 def otA_help( fromPipe, args ):
     readmeC = ''
-    with open('otdm_serviceIt_README.md', 'r') as file:
+    with open(
+        os.path.join( os.path.dirname( os.path.realpath(__file__) ), 'otdm_serviceIt_README.md' ),
+        'r') as file:
         readmeC = file.read().rstrip()
 
     sapisList = []
     for a in otGet_sapisDef():
-        sapisList.append( "   - `%s` - need %s arguments. %s"%(a[0], a[1], a[3]) )
+        ta = "   - `%s` %s"%(a[0], " "*(10-len(a[0])) )
+        ta+= "- need %s arguments.\n\t\t\t%s"%( a[1], a[3])
+        sapisList.append( ta )
     readmeC = '%s\n\n## list of sapis\n\n%s'%(readmeC, "\n".join( sapisList ))
 
 
@@ -222,7 +227,7 @@ def otA_toRaw( fromPipe, args ):
 def otA_otdmTools(fromPipe, args):
     print("otAotdmTools ...")
     tr = "ok"
-    pH='ttaa%s'%datetime.now().strftime('%s_%N')
+    pH='ttaa%s_%s'%(datetime.now().strftime('%s'),random.randint(100000,9999999))
     cmd =  args[0]
     print("vanilla arg %s"%cmd)
     resAs =  "json"

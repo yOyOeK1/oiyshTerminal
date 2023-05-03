@@ -859,6 +859,7 @@ def mkBackUp( args ):
     w=args.get("mkbp")
     packItAtEnd=True
     hostAdd=args.get("forceHost")
+    bPrefix=args.get("bPrefix","")
     bSuffix=args.get("bSuffix","")
 
     if hostAdd == None:
@@ -915,6 +916,34 @@ def mkBackUp( args ):
 
         putToFile( jdsFn, json.dumps(jds) )
         print("\n DONE")
+
+    elif w == "fpath":
+        fullP = os.path.join( os.getcwd(), by)
+        oName = os.path.basename( fullP )
+        oPath = os.path.dirname( fullP )
+        bPrefix = args.get("bPrefix", "" )+oName
+        fsFn=f"{prefixF}{bPrefix}_{tn}{bSuffix}.tar.bz2"
+        isExist = os.path.exists(fullP)
+
+        cTd = (f"cd {oPath}; tar -jcvf {fsFn} {oName}")
+
+        print(f"fpath backup ! fullP:{fullP} isExist:{isExist} oName:{oName}\n"+
+            f"so cmd will be ... \n\n{cTd}\nDestination dir: {destDir}\n")
+
+        if isExist == False:
+            print("Error source directory to backup is not existing.... EXIT 2")
+            sys.exit(2)
+
+        print("in 2 sec it will do it .....")
+        time.sleep(2)
+        print("Running it .... ", end="")
+        subprocess.run( cTd, shell=True )
+        print("DONE")
+
+        print(f"Moving it to destination directory: {destDir} ... ", end="")
+        shutil.move( fsFn, f"{destDir}/" )
+        print("DONE")
+        sys.exit(1)
 
     elif w == "*":
         egds=argsNew( args )
@@ -1170,6 +1199,8 @@ def lastNote( args ):
         #n=clip[i]
         #printNote(n)
         tr.append( clip[i] )
+
+    addArgHandle_oFile( args, tr)
 
     if args.get("oFile",'') == "pipe":
         return 0,tr
@@ -1511,8 +1542,11 @@ acts = [
     [ "mkbp", "mkBackUp",
         '''Make backups. Have some options.
         what to backup?
-            [gds|gdsuid|gdsid|gdsname|gdhs|gdhuid|gdhid|gdhname]
+            [gds|gdsuid|gdsid|gdsname|gdhs|gdhuid|gdhid|gdhname|fpath]
             g - for grafana
+            or
+            fpath - to make file / directory backup / compression to .otdm/Backups
+              use it as: `otdmTools.py -mkbp fpath -by ./abc` to backup abc directory
             or
             [flows|fid|fname]
             for Node-red
