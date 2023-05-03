@@ -5,8 +5,11 @@ dpkg (0.28.0) unstable; urgency=low
   * now you can do this
     # ./otdmTools.py -serviceIt http,mqtt
     and start http api stack and mqtt stack
+  * -cliSapi in there now two
+    # c="echo/123/waitFor/2/.raw";otdmTools.py -cliSapi "$c" -oFile '--' ; echo $?"  ok EXIT with"
 
-  -- B.Ceglik <yoyoek@wp.pl  23-04-05
+
+  -- B.Ceglik <yoyoek@wp.pl  23-05-03
 
 dpkg (0.27.1) unstable; urgency=low
 

@@ -23,7 +23,7 @@ from otdmPackitso import *
 
 from otdmServiceIt import *
 
-ver="0.27.9"
+ver="0.27.10"
 confFilePath="/data/data/com.termux/files/home/.otdm/config.json"
 deb=0
 
@@ -1475,71 +1475,40 @@ def serviceIt( args ):
     global conf
     otdmServiceIt( args, conf )
 
+def cliSapi( args ):
+    stsRes = otdmSTS(
+        otGet_sapisDef(),
+        args.get("cliSapi", ""),
+        { 'sts': False, 'sapis': False }
+    )
+    addArgHandle_oFile( args, stsRes )
+    #print(f"cli Sapi .... \n result ----- \n {stsRes}\n-----\nExit 1")
+    return 1
+
 
 acts = [
-    [
-        "v",
-        "printVersion",
-        f"Prints version of oiyshTerminal - tools. now is ver: {ver}"
-    ],
-    [
-        "packitso",
-        "packitsoQuery",
-        "To make automatic sets of works bast on driver proto. README.otdm-tools-packitso.md"
-    ],
-    [
-        "debug",
-        "setDebug",
-        "debuging enable disable by 1 or 0"
-    ],
-    [
-        "serviceIt",  "serviceIt", "To start it as a services more info TODO"
-    ],
-    [   "testSubProcAndProm",   "testSubProcAndProm", "test subprocess with args"],
-    [   "testDialog", "testDialog", "Test of dialog function."],
-    [
-        "forceHost",
-        "",
-        "owerrits host ip address"
-    ],
-    [
-        "exitToReturn",
-        "",
-        "Overrits exit to return. Usefull in tasker!"
-    ],
-    [
-        "addNote",
-        "addNote",
-        '''It use .otdm/cliper.json'''
-    ],
-    [
-        "lastNote",
-        "lastNote",
-        "[n] Returns last notes. n = 1 by def."
-    ],
-    [
-        "tasks",
-        "execTasksFrom",
-        "[pathTo.otdm_file] Run tasks list from array list of tasks."
-    ],
-    [
-        "mkInjFil",
-        "mkInjectionFile",
+    [ "v", "printVersion", f"Prints version of oiyshTerminal - tools. now is ver: {ver}" ],
+    [ "packitso", "packitsoQuery", "To make automatic sets of works bast on driver proto. README.otdm-tools-packitso.md"],
+    [ "debug", "setDebug", "debuging enable disable by 1 or 0" ],
+    [ "cliSapi", "cliSapi", "to make sapi use from cli **Example** `otdmTools.py -cliSapi 'ver/.json' ;` - to get json"],
+    [ "serviceIt",  "serviceIt", "To start it as a services more info TODO" ],
+    [ "testSubProcAndProm",   "testSubProcAndProm", "test subprocess with args"],
+    [ "testDialog", "testDialog", "Test of dialog function."],
+    [ "forceHost", "", "owerrits host ip address" ],
+    [ "exitToReturn", "", "Overrits exit to return. Usefull in tasker!" ],
+    [ "addNote", "addNote", '''It use .otdm/cliper.json''' ],
+    [ "lastNote", "lastNote", "[n] Returns last notes. n = 1 by def."],
+    [ "tasks", "execTasksFrom", "[pathTo.otdm_file] Run tasks list from array list of tasks."],
+    [ "mkInjFil", "mkInjectionFile",
         '''It convert reagular export json files to injection ready.
         [grafana-ds|node-flow] - possible arguments for now.
         -if [inFile] - path to input file with json
         -of [outFile] - path to output file with injection ready json
-        -injToJ "{}" - inject/overrites keys and vals to main export file.'''
-    ],
-    [
-        "extract",
-        "extractDataFrom",
+        -injToJ "{}" - inject/overrites keys and vals to main export file.'''],
+    [ "extract", "extractDataFrom",
         '''[gdsInjRes] Set what to decode then different aproche will be taken to the file source.
-        -if [pathto.json] - path to file to work with.'''
-    ],
-    [
-        "mkbp",
-        "mkBackUp",
+        -if [pathto.json] - path to file to work with.'''],
+    [ "mkbp", "mkBackUp",
         '''Make backups. Have some options.
         what to backup?
             [gds|gdsuid|gdsid|gdsname|gdhs|gdhuid|gdhid|gdhname]
@@ -1551,11 +1520,8 @@ acts = [
         -by - if not (s) then value of what to backup
         -bSuffix - can use it or not. Will add bSuffic content to end of file
             in backup proces
-            '''
-    ],
-    [
-        "rm",
-        "rmIn",
+            '''],
+    [ "rm", "rmIn",
         '''Will remove something.. depends on arguments.
         -rm - remowe in what? [node-red|grafana]
         -rmW - remowe what?
@@ -1564,32 +1530,23 @@ acts = [
         -by - it's in:
             if node-red by id of a flow
             if grafana uid
-        -'''
-    ],
-    [
-        "export",
-        "exportFromTo",
+        -'''],
+    [ "export", "exportFromTo",
         '''Export data from [grafana|node-red]
     args need to set!
         -file "path" - to storage. If set to "--" will print.
         -expW "ds" - export what?
             if export is to grafana select:[ds|dsByName|hsByUid|dashs|dashByName|dashByUid]
-            if export is to node-red select:[flow|flows]'''
-    ],
-    [
-        "import",
-        "importFromTo",
+            if export is to node-red select:[flow|flows]''' ],
+    [ "import", "importFromTo",
         '''import data from file to [grafana|node-red]
-    args need to set!
+        args need to set!
         -iFile - file path to json to work with
         -iStr - string / json input to work with this or -iFile
         -impW - import what?
             if importing is to grafana select:[ds|dashs]
-            if importing is to node-red select:[flow]'''
-    ],
-    [
-        "dpkg",
-        "doDkpg",
+            if importing is to node-red select:[flow]''' ],
+    [ "dpkg", "doDkpg",
         '''"`env`" - from the process.
         Argument use in dpkg operations. Needed for automation process of
         preinst | postist | prerm | postrm and with arguments it's handle
@@ -1597,34 +1554,18 @@ acts = [
         -w [gdsByName] - Where argument sets where to do actions and with the
             sets of arguments from dpkg it will know what to do.
         -by [xxx] - is for what is the action about.
-        - '''
-    ],
-    [
-        "doQueryYN",
-        "mkDialogWithExit",
+        - ''' ],
+    [ "doQueryYN", "mkDialogWithExit",
         '''Can by used otdmTools.py -doQueryYN "Ala ma kota" -d y
-        So defoult selected Y Normally N is default'''
-    ],
-    [
-        "testCurl",
-        "tCurl",
-        "test curl get to grafana and node-red."
-    ],
-    [
-        "testEcho2",
-        'testEcho2def',
-        "test. it's a test function to echo from acts arry."
-    ],
-    [
-        "testAll",
-        "testAll",
-        "Run all test defined in test section."
-    ],
-    [
-        "osType",
-        "osType",
-        "Check system on what is running."
-    ],
+        So defoult selected Y Normally N is default''' ],
+    [ "testCurl", "tCurl",
+        "test curl get to grafana and node-red." ],
+    [ "testEcho2", 'testEcho2def',
+        "test. it's a test function to echo from acts arry." ],
+    [ "testAll", "testAll",
+        "Run all test defined in test section." ],
+    [ "osType", "osType",
+        "Check system on what is running." ],
 
 ]
 
