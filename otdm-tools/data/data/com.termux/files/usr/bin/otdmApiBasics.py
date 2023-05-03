@@ -38,6 +38,9 @@ def otGet_sapisDef():
 
         ['otdmTools',       1 , otA_otdmTools,  '**Return** result from otdmTools.py `args...`'],
 
+        ['mkbackup',        1 , otA_mkBackup,  '**Return** status and some file info at end `arg0` path to file/directory to backup'],
+
+
         ['ping',            0, otA_ping,        '**Return** `pong`'],
         ['echo',            1, otA_echo,        '**Return** given argument back as echo' ],
 
@@ -75,6 +78,11 @@ def otA_help( fromPipe, args ):
 
 def otA_getConfig( fromPipe, args ):
     return 0,ot.confLoad()
+
+
+def otA_mkBackup( fromPipe, args ):
+    workers = otA_otdmTools( fromPipe, [ '-mkbp fpath -by "%s"'%args[0] ] )
+    return workers
 
 
 def otA_ver( fromPipe, args ):

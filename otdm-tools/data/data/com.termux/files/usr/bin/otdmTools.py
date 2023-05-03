@@ -922,7 +922,8 @@ def mkBackUp( args ):
         oName = os.path.basename( fullP )
         oPath = os.path.dirname( fullP )
         bPrefix = args.get("bPrefix", "" )+oName
-        fsFn=f"{prefixF}{bPrefix}_{tn}{bSuffix}.tar.bz2"
+        fArchName = f"{bPrefix}_{tn}{bSuffix}.tar.bz2"
+        fsFn=f"{prefixF}{fArchName}"
         isExist = os.path.exists(fullP)
 
         cTd = (f"cd {oPath}; tar -jcvf {fsFn} {oName}")
@@ -943,6 +944,14 @@ def mkBackUp( args ):
         print(f"Moving it to destination directory: {destDir} ... ", end="")
         shutil.move( fsFn, f"{destDir}/" )
         print("DONE")
+        if args.get('oFile','') != "":
+            print("---- oFile is !!")
+            addArgHandle_oFile(args, {
+                "dirName": oPath,
+                "name": oName,
+                "archInfo": fileInfo( os.path.join( destDir, fArchName ) ),
+                "currPath": destDir,
+            })
         sys.exit(1)
 
     elif w == "*":
@@ -987,6 +996,16 @@ def mkBackUp( args ):
 
     print(" DONE ")
     return 1
+
+def fileInfo( filePath ):
+    return {
+        "isFile": os.path.isfile( filePath),
+        "isDir": os.path.isdir( filePath),
+        "name": os.path.basename( filePath ),
+        "dir": os.path.dirname( filePath ),
+        "size": os.path.getsize( filePath ),
+        "ctime": os.path.getctime( filePath )
+    }
 
 def execTasksFrom( args ):
     if deb: print( f"execTasksFrom .... {args}" )
