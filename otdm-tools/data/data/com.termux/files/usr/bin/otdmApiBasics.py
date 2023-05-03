@@ -162,7 +162,8 @@ def otA_echo( fromPipe, args ):
 
 def otA_waitFor( fromPipe, args ):
     time.sleep( int(args[0]) )
-    return otA_echo( [0,''], fromPipe[1])
+    #return otA_echo( [0,''], fromPipe[1])
+    return 0, fromPipe[1]
 
 def otA_sum( fromPipe, args ):
     return 0, float(args[0])+float(args[1])
