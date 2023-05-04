@@ -38,7 +38,9 @@ def otGet_sapisDef():
 
         ['otdmTools',       1 , otA_otdmTools,  '**Return** result from otdmTools.py `args...`'],
 
-        ['mkbackup',        1 , otA_mkBackup,  '**Return** status and some file info at end `arg0` path to file/directory to backup'],
+        ['mkbackup',        1 , otA_mkBackup,  '''**Return** status and some file info at end `arg0` path to file/directory to backup
+            Example: # ./otdmTools.py -cliSapi 'mkbackup/%2Ftmp%2Fabc%2F1' -oFile '--'
+            where %2F is slash'''],
 
 
         ['ping',            0, otA_ping,        '**Return** `pong`'],

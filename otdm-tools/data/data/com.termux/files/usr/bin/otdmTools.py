@@ -1003,6 +1003,7 @@ def fileInfo( filePath ):
         "isDir": os.path.isdir( filePath),
         "name": os.path.basename( filePath ),
         "dir": os.path.dirname( filePath ),
+        "fullPath": filePath,
         "size": os.path.getsize( filePath ),
         "ctime": os.path.getctime( filePath )
     }
