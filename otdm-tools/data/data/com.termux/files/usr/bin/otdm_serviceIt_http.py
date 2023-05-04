@@ -116,7 +116,7 @@ class otSHTTP( BaseHTTPRequestHandler ):
             print(tr_sts)
             print("--- result ----")
         self.sResp( )
-        self.send_header('Access-Control-Allow-Origin', 'http://192.168.43.1')
+        self.send_header('Access-Control-Allow-Origin', '*')
         #self.send_header("Content-type", "text/json")
         self.end_headers()
         self.wr( tr_sts )
