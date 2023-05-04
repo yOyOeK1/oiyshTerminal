@@ -11,7 +11,8 @@ class s_otdmPage{
     this.resRet = false;
     this.mDoCmd = new mDoCmd();
     this.app = new mApp();
-    this.fConfig = new mDynoForm("config",{
+    this.fServiceIt = -1;
+    this.fConfig = -1;/*new mDynoForm("config",{
      "otdm": {
       "prefix": "/data/data/com.termux/files/home/.otdm"
      },
@@ -38,7 +39,8 @@ class s_otdmPage{
       "host": "192.168.43.1",
       "port": 10883
      }
-    });
+   });*/
+
   }
 
   get getName(){
@@ -355,7 +357,7 @@ $( document ).ready(function() {
   }
 
 
-  otdmCallBackDoConfig( data, res ){
+  otdmCallBackDoConfig( data, res, formName='config' ){
     data = mDict( data, (k,v)=>{
       return mDict( v, ( kk, vv )=>{
             if( kk == 'passwd' )
@@ -364,6 +366,8 @@ $( document ).ready(function() {
         });
     });
 
+    cl("data for call back form from  ....");cl(data);
+    pager.getCurrentPage().fConfig = new mDynoForm(formName,data);
     let app = new mApp();
 
     let goTo = pager.getCurrentPage().getPageSelect();
@@ -488,6 +492,8 @@ setTimeout(()=>{
       <option value="dpkg" `+(urlArgs['action']=='dpkg' ? 'selected': '')+`>dpkg repository</option>
       <option value="cmd" `+(urlArgs['action']=='cmd' ? 'selected': '')+`>cmd</option>
       <option value="config" `+(urlArgs['action']=='config' ? 'selected': '')+`>config</option>
+      <option value="versions" `+(urlArgs['action']=='versions' ? 'selected': '')+`>versions</option>
+
     </select>
 
     `;
@@ -510,6 +516,9 @@ setTimeout(()=>{
             break;
           case "config":
             pager.goToByHash('pageByName=OTDM&action=config');
+            break;
+          case "versions":
+            pager.goToByHash('pageByName=OTDM&action=versions');
             break;
           case "cmd":
             pager.goToByHash('pageByName=OTDM&action=cmd');
@@ -682,6 +691,22 @@ setTimeout(()=>{
         { "dfs": "/data/data/com.termux/files/home/.otdm/config.json" },
         this.otdmCallBackDoConfig
       );
+
+    }else if( urlArgs['action'] == 'versions' ){
+      tr = this.appFrame( 'Loading .... versions' );
+      mott.sapiJ("ver/.json",(d)=>{
+        if( d == -1 )
+          cl("Error 2314");
+
+        var td = { otdmTools: {"ver.":d.msg.otdmTools},
+          serviceIt: {} };
+        d.msg.serviceIt.find((e,i)=>{
+          td.serviceIt[ e.name +" ver." ] = e.ver;
+        });
+
+        this.otdmCallBackDoConfig( td, 'success', 'versions' );
+
+      });
 
     }else{
       tr = this.pageMain();
