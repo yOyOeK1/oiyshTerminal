@@ -45,6 +45,37 @@ var module = new moduleCollector();
 //var t4y;
 </script>
 
+<script type="importmap">
+    {
+        "imports": {
+            "Three4Yss": "./libs/three4yss.js",
+            "Three4YssModule": "./libs/three4yssModule.mjs",
+            "three": "./three/three.module.js",
+            "OrbitControls": "./three/jsm/controls/OrbitControls.js",
+            "GLTFLoader": "./three/jsm/loaders/GLTFLoader.js",
+            "RGBELoader": "./three/jsm/loaders/RGBELoader.js",
+            "FontLoader": "./three/jsm/loaders/FontLoader.js",
+            "SVGLoader":  "./three/jsm/loaders/SVGLoader.js",
+            "EffectComposer": "./three/jsm/postprocessing/EffectComposer.js",
+            "RenderPass": "./three/jsm/postprocessing/RenderPass.js",
+            "GlitchPass": "./three/jsm/postprocessing/GlitchPass.js",
+            "ShaderPass": "./three/jsm/postprocessing/ShaderPass.js",
+            "OutlinePass": "./three/jsm/postprocessing/OutlinePass.js",
+
+            "T4y_putText": "./libs/t4y_putText.js",
+            "T4y_shadersDefs": "./libs/t4y_shadersDefs.js",
+            "T4y_shader": "./libs/t4y_shader.js",
+            "T4y_ani": "./libs/t4y_ani.js",
+            "T4y_console": "./libs/t4y_console.js",
+
+            "motTools": "./libs/motTools.mjs"
+
+        }
+    }
+
+</script>
+
+
 <!-- noderedinjectpoint -->
 <script src="s_nodeRedSupport.js"></script>
 <script src="index.js"></script>
@@ -103,33 +134,14 @@ var module = new moduleCollector();
 
 <script src="libs/mDbdForm.js"></script>
 <script src="libs/node_modules/otmHH/index.js"></script>
+<script src="libs/node_modules/otplc/index.js"></script>
 
-<script type="importmap">
-    {
-        "imports": {
-            "Three4Yss": "./libs/three4yss.js",
-            "Three4YssModule": "./libs/three4yssModule.mjs",
-            "three": "./three/three.module.js",
-            "OrbitControls": "./three/jsm/controls/OrbitControls.js",
-            "GLTFLoader": "./three/jsm/loaders/GLTFLoader.js",
-            "RGBELoader": "./three/jsm/loaders/RGBELoader.js",
-            "FontLoader": "./three/jsm/loaders/FontLoader.js",
-            "SVGLoader":  "./three/jsm/loaders/SVGLoader.js",
-            "EffectComposer": "./three/jsm/postprocessing/EffectComposer.js",
-            "RenderPass": "./three/jsm/postprocessing/RenderPass.js",
-            "GlitchPass": "./three/jsm/postprocessing/GlitchPass.js",
-            "ShaderPass": "./three/jsm/postprocessing/ShaderPass.js",
-            "OutlinePass": "./three/jsm/postprocessing/OutlinePass.js",
+<script src="libs/vue.global.js"></script>
+<script src="libs/marked_0.3.6_lib_marked.js"></script>
 
-            "T4y_putText": "./libs/t4y_putText.js",
-            "T4y_shadersDefs": "./libs/t4y_shadersDefs.js",
-            "T4y_shader": "./libs/t4y_shader.js",
-            "T4y_ani": "./libs/t4y_ani.js",
-            "T4y_console": "./libs/t4y_console.js"
-        }
-    }
-</script>
+
 <script type="module" src="./three4yssModule.mjs"></script>
+<script type="module" src="./libs/motTools.mjs"></script>
 
 <script src="libs/jquery.flexslider.js"></script>
 <link rel="stylesheet" href="libs/flexslider.css" type="text/css" media="all">
@@ -276,7 +288,7 @@ function makeInit(){
   svgTests();
 	wsConnectIn( pager );
 	wsConnectOut();
-	pager.getPage( -1 );
+    pager.getPage( -1 );
 
 
   // store last sean page on browser

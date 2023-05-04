@@ -188,7 +188,9 @@ class sPager {
     //cl("pager looper iter...");
     try{
       this.getCurrentPage().looperIter();
-    }catch( e ){}
+    }catch( e ){
+      cl(`ERROR no make looper iter in page [{e}]`);
+    }
   }
 
   /**
@@ -295,6 +297,7 @@ class sPager {
       var cp = this.getCurrentPage();
       $("#svgDyno").html("");
       //console.log("----------------- mobile get active page ----------------");
+      console.log("cl will be call for html", cp);
       $("#htmlDyno").html( cp.getHtml ).enhanceWithin();
       //console.log($(":mobile-pagecontainer").pagecontainer("getActivePage"));
       //$(":mobile-pagecontainer").pagecontainer("getActivePage");
@@ -305,7 +308,7 @@ class sPager {
       try{
         var abcueoa = 1213;
       }catch(e){
-        cl("sPage page "+this.currentPage+" don't have getHtmlAfterLoad() error["+e+"]");
+        cl("ERROR sPage page "+this.currentPage+" don't have getHtmlAfterLoad() error["+e+"]");
       }
       $("#svgDyno").html( cp.svgDyno );
 

@@ -2,6 +2,7 @@
 // 4 Three.js section --------------------------
 var t4y = 0;
 var ott = "not set";
+var mott = 0;
 const otcam = 0;
 const otsce = 0;
 const otren = 0;

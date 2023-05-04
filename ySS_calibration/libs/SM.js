@@ -101,7 +101,7 @@ class SM{
 
 <div class="ui-field-contain">
   <label for="smSMButtons">Screens Manager</label>
-  <fieldset name="smSMButtons" data-role="controlgroup" data-type="horizontal">
+  <fieldset id="smSMButtons" name="smSMButtons" data-role="controlgroup" data-type="horizontal">
 
 `;
     if( pager.pageHistory.length>0 ){
