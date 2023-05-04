@@ -109,7 +109,7 @@ class s_otplcPage{
     }else if( urlArgs['action'] == "topics" ){
       otPTopicsHtmlAfterLoad();
     }else{
-
+      cl("otplc.getAll()..................");cl(otplc.getAll());
     }
 
 
