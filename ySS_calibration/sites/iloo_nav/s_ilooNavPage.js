@@ -10,6 +10,15 @@ class s_ilooNavPage{
 
 
 	get getHtml(){
+		if(0){
+			cl("this experiment------------------");
+			cl("this experiment------------------");
+			cl("this,	");
+			cl([this,	]);
+			cl("this.getName: "+this.getName);
+			cl("this experiment------------------");
+			cl("this experiment------------------");
+		}
 		return ``;
 	}
 
