@@ -29,7 +29,7 @@ function wsConnectIn( onMesCallBack ){
 				text: 'WebSocket In have some problems.',
 				showHideTransition: 'slide',
 				icon: 'error'
-		})
+		});
 	}
 
 	socketIn.onerror = function(e){

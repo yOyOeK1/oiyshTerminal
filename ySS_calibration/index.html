@@ -68,7 +68,8 @@ var module = new moduleCollector();
             "T4y_ani": "./libs/t4y_ani.js",
             "T4y_console": "./libs/t4y_console.js",
 
-            "motTools": "./libs/motTools.mjs"
+            "motTools": "./libs/motTools.mjs",
+            "vueMap": "./libs/node_modules/vue/index.mjs"
 
         }
     }
@@ -138,6 +139,7 @@ var module = new moduleCollector();
 
 <script src="libs/vue.global.js"></script>
 <script src="libs/marked_0.3.6_lib_marked.js"></script>
+<script type="module" src="./components/loader.mjs"></script>
 
 
 <script type="module" src="./three4yssModule.mjs"></script>
@@ -386,6 +388,7 @@ function chkUrl( dontSetPage=false ){
 
 <div id="justGuageTmp"></div>
 
+<div id="divForVM"  style="z-index:11;position:relative;top:0;left:0;"></div>
 <div id="divForJsSrc"></div>
   <!--
 	<div style="display:none;position:absolute;top:200;">

@@ -116,6 +116,18 @@ Vue - test start <br>
 </div>
 Abc import <div id="vvforabc"></div> import done
 test END <br>
+
+<hr>
+<b>From loader as module</b>
+<button onclick="vM.Hw2.Hw2_app.mount('#vhw2')" >mount</button>
+<button onclick="vM.Hw2_this.greeting=(new Date())" >change</button>
+
+<div id="vhw2">
+  <b>Children</b><br>
+  <Hw2t :msg="greeting"></Hw2t><br>
+  <b>Rest</b><br>
+for vue module ....</div>
+
 <hr>
 <div id="vvpagsel">
   <ul>
@@ -143,7 +155,8 @@ test END <br>
     //this.vvAbc.mount("#vvforabc");
     cl('--------------------------------------------');
 
-
+    $("#divForVM").append('<div id="oths"style="z-index:12;position:absolute;top:20px;left:200px; background-color:#fdddfd; border:1px solid yellow;color:white; font-size:small;"></div>');
+    vM.OtHostStatus.OtHostStatus_app.mount("#oths");
 
 
 

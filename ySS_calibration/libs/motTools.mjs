@@ -6,13 +6,19 @@ class motTools{
   constructor(){
     console.log("motTools init .... have target? ", mott);
 
-    this.url = 'http://192.168.43.220:1990'
+    this._ip = '192.168.43.220';
+    this._port = 1990;
+    this.url = this.getUrl();
     this._status = false;
     this._pts = 0;
 
     setTimeout(()=>{
       this.chkHost();
     },1000);
+  }
+
+  getUrl(){
+    return 'http://'+this._ip+':'+this._port;
   }
 
   getStatus(){
@@ -31,14 +37,18 @@ class motTools{
 
   sapi( sapiStr, callBack ){
     this._pts = new Date().getTime();
-    $.get(
-      this.url+"/"+ sapiStr,
-      (d,s)=>{
+    $.ajax({
+      url:this.url+"/"+ sapiStr,
+      type: "GET",
+      success: function(d){
         cl("got it in ... "+ (( (new Date().getTime())-this._pts)/1000)+" sec." );
         //cl("data");cl(d);
-        callBack(d,s);
-      }
-    );
+        callBack(d,'success');
+      },
+      error:function(){ cl("Error in 2345678");
+        callBack(-1, 'notOk')},
+
+    });
   }
 
   chkHost(){
@@ -64,7 +74,7 @@ class motTools{
       }
 
     });
-    
+
   }
 
   test(){

@@ -11,6 +11,7 @@ const otframeC=0;
 const threes = {};
 var pager;
 var sm;
+var vM = {}; // vue modules loaded
 
 
 // index stuff -----------------------------------
