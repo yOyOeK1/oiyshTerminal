@@ -15,6 +15,11 @@ class mDoCmd{
 
   /** @constructor */
   constructor(){
+
+    let cc = new otCl(`mDoCmd`);
+    this.cl = function(){cc.doClFromArgs( arguments );  };
+
+
     /** @desc To know if still running. true (running..) */
     this.cmdWork = false;
     /** @desc To identify current command communication topic*/
@@ -23,13 +28,13 @@ class mDoCmd{
     this.cmdStdOut = '';
 
     this.updateObj = "";
-    cl("mDoCmd  is in constructor.... "+
+    this.cl("is in constructor.... "+
       " ph: "+this.pH);
   }
 
   genNewPh(){
    self.pH = "pH"+(Math.round( Math.random()*100000 ) )+"_"+(Math.round( Math.random()*100000 ) );
-   cl(" mDoCmd generating new pH ..... "+this.pH);
+   this.cl(" mDoCmd generating new pH ..... "+this.pH);
    return self.pH;
   };
 
@@ -40,7 +45,7 @@ class mDoCmd{
    *  this.mDoCmd.otdmArgs({
    *   "dfs": "/tmp/abc",
    *   "act": "MKDIR"
-   *   },(data,res)=>{cl("ok");});
+   *   },(data,res)=>{this.cl("ok");});
    *  ```
    *  *will console.log out "ok" on done.*
    *
@@ -48,27 +53,27 @@ class mDoCmd{
    * ```javascript
    * this.mDoCmd.otdmArgs({
    *   "dfs": "/tmp"
-   *   },(data,res)=>{cl(data);});
+   *   },(data,res)=>{this.cl(data);});
    * ```
    * *will console.log out list of files and directories*
    *
    * @param {json} args - json structure of arguments pass same way as you use `otdmTools.py` Argument is a key and value is value.
-   * @param {object} callBack - can be not set - then only dump to cl( ... ) will pass `data`, `result` as arguments
+   * @param {object} callBack - can be not set - then only dump to this.cl( ... ) will pass `data`, `result` as arguments
    */
   otdmArgs( args, callBack=-1 ){
-    //cl("mDoCmd.otdmArgs ["+JSON.stringify(args)+"]");
+    //this.cl("mDoCmd.otdmArgs ["+JSON.stringify(args)+"]");
     // url 'http://localhost:1880/yss/?otdmQ:\{"webCmdSubProcess":"\[ls,/tmp\]","pH":"66"\}'
 
     var url = "?otdmQ:URI:"+encodeURI(JSON.stringify(args));
-    cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
+    this.cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
 
     $.get( url, function( data, status ){
       let daTr = data;
       try{
         daTr = JSON.parse( data );
       }catch(e){
-        cl("In mDoCmd.otdmArgs result no json - :/ ");
-        cl(e);
+        this.cl("In mDoCmd.otdmArgs result no json - :/ ");
+        this.cl(e);
       }
         if( callBack == -1 )
           this.otdmCallBackWebCmdSubProcess( daTr , status )
@@ -80,23 +85,23 @@ class mDoCmd{
   /**
    * @param {array} cmd - array example:["ls","/tmp"] structure of arguments pass same way as you use `otdmTools.py` Argument is a key and value is value.
    * @param {string} updateObj - id of html element will update status of app stdout
-   * @param {object} callBack - can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
+   * @param {object} callBack - can be not set - then only dump to this.cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
    * @description Methode to run command from **bash layer** and get live conection with stdin / stdout. It use `pH` as a key in creating new mqtt topic to establish trafic. Running process. So you can intercact with thread.
    */
   doCmd( cmd, updateObj, cbFunc=-1 ){
     this.updateObj = updateObj;
 
     if( this.cmdWork == true ){
-      cl( 'cmd running can sand some stuff to stdin.' );
-      cl(cmd);
+      this.cl( 'cmd running can sand some stuff to stdin.' );
+      this.cl(cmd);
       sOutSend('otdmCmd:'+this.pH+':'+cmd );
       return 0;
     }else{
-      cl("new command clearing cmdStdOut .... ["+cmd+"]");
+      this.cl("new command clearing cmdStdOut .... ["+cmd+"]");
       this.cmdStdOut = '';
     }
 
-    cl("pH: ["+this.pH+"]");
+    this.cl("pH: ["+this.pH+"]");
     $("#"+this.updateObj).html("doing it.....["+cmd+"]<br>");
 
     //cmd = JSON.stringify(["ls", "/tmp"]),
@@ -117,14 +122,14 @@ class mDoCmd{
   /**
    * @param {string} cmd - example: "df -h | grep sda"
    * @param {string} updateObj - id of html element will update status of app stdout
-   * @param {object} cbFunc - can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
+   * @param {object} cbFunc - can be not set - then only dump to this.cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
    * @description Methode to run command from **bash layer** and get live conection with stdin / stdout. It use `pH` as a key in creating new mqtt topic to establish trafic. Running process. So you can intercact with thread.
    */
   doSh( cmd, updateObj, cbFunc=-1){
-    cl("doSh--------");
-    cl("cmd");
-    cl( typeof cmd );
-    cl(cmd);
+    this.cl("doSh--------");
+    this.cl("cmd");
+    this.cl( typeof cmd );
+    this.cl(cmd);
     this.doCmd(
       String("[sh,-c,"+cmd+'; echo "exitCode:"$?]').toString(),
       updateObj,
@@ -135,8 +140,8 @@ class mDoCmd{
   /**
    * @param {string} cmd - example: "df -h | grep sda"
    * @param {string} updateObj - id of html element will update status of app stdout
-   * @param {object} cbFuncOk - calledback on OK `exitCode:0` can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
-   * @param {object} cbFuncErr - calledback on Error `exitCode:!0` can be not set - then only dump to cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
+   * @param {object} cbFuncOk - calledback on OK `exitCode:0` can be not set - then only dump to this.cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
+   * @param {object} cbFuncErr - calledback on Error `exitCode:!0` can be not set - then only dump to this.cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
    * @param {bool} rAsJson - true:default if true return in json if false as it came
    * @description Methode to run command from **bash layer** and get live conection with stdin / stdout. It use `pH` as a key in creating new mqtt topic to establish trafic. Running process. So you can intercact with thread. Plast it do exitCode check for you.
    */
@@ -147,30 +152,30 @@ class mDoCmd{
       //c.cmdWork = false;
 
       let dlen = d.length;
-      cl("Data processing .... -1");
+      this.cl("Data processing .... -1");
       if( d[dlen-1] != -1 ){
-        cl("no -1 at end");
+        this.cl("no -1 at end");
         return cbFuncErr( d, res );
       }else{
-        cl("OK!");
+        this.cl("OK!");
       }
 
-      cl("Data processing .... exitCode:0 ?");
+      this.cl("Data processing .... exitCode:0 ?");
 
       if( d[dlen-2] != "exitCode:0" ){
-        cl("no correct exitCode GOT ["+d[dlen-2]+"]");
+        this.cl("no correct exitCode GOT ["+d[dlen-2]+"]");
         return cbFuncErr( d, d[dlen-2] );
       }else{
-        cl("OK!");
+        this.cl("OK!");
       }
 
-      cl("Poping first and two lasts ....")
+      this.cl("Poping first and two lasts ....")
       if( rAsJson == true ){
         d.pop();
         d.pop();
         //d.shift();
         if ( d[0] == "[" ){
-          cl("skipp shift of result ....");
+          this.cl("skipp shift of result ....");
         }else{
           d.shift();
         }
@@ -183,21 +188,21 @@ class mDoCmd{
 
       let j = {};
       if( rAsJson == true ){
-        //cl("Data array to json ...");
-        //cl(d.join(""));
-        //cl("-------------------------------");
+        //this.cl("Data array to json ...");
+        //this.cl(d.join(""));
+        //this.cl("-------------------------------");
         try{
           j = JSON.parse( d.join("") );
         }catch(e){
-            cl("Error in parsing data to json :/ ");
-            cl("Error says ");
-            cl(e);
+            this.cl("Error in parsing data to json :/ ");
+            this.cl("Error says ");
+            this.cl(e);
             return cbFuncErr( d, res );
         }
       }
 
 
-      //cl(j);
+      //this.cl(j);
 
 
       if( cbFuncOk != -1 && rAsJson == true )
@@ -219,21 +224,21 @@ class mDoCmd{
   * @param {json/string} data - json / string tipically if all is ok then get json.
   */
   cbOnCmdGetReturnDONE( data, status ){
-    cl("cbOnCmdGetReturnDONE:");
-    cl( status );
-    cl("data ------------");
-    cl(data);
+    this.cl("cbOnCmdGetReturnDONE:");
+    this.cl( status );
+    this.cl("data ------------");
+    this.cl(data);
 
-    cl('// need to call can not!! is is a default mDoCmd.cbOnCmdGetReturnDONE ');
-    cl('// this.cmdWork = true;');
+    this.cl('// need to call can not!! is is a default mDoCmd.cbOnCmdGetReturnDONE ');
+    this.cl('// this.cmdWork = true;');
   }
 
 
 
 
   CmdStdOut_addToRes( so ){
-    //cl("cmd -> stdout more by ..... ");
-    cl(""+so);
+    //this.cl("cmd -> stdout more by ..... ");
+    this.cl(""+so);
     this.cmdStdOut+= so+"\n";
   }
 
@@ -244,19 +249,19 @@ class mDoCmd{
    * @description Methode to update worker live connection is it DONE. Put it in your site **onMassageCallBack** if you want to update status or run next one. If running not starting text.
    */
   onWSMessageCallBackWork_onStatusDONE( r ){
-    //cl(r);
+    //this.cl(r);
     if( this.cmdWork &&
       r.topic == String("subP/"+this.pH+"/status") ){
 
-        cl("got status update on "+this.pH+" msg:"+r.payload);
+        this.cl("got status update on "+this.pH+" msg:"+r.payload);
 
         if( r.payload == 'done' ){
           this.cmdWork = false;
-          cl("END web sub process work -----");
+          this.cl("END web sub process work -----");
           $("#"+this.updateObj).append('DONE');
         }
     }else if( r.topic.substring(0,5+this.pH.length) == 'subP/'+this.pH){
-      //cl("have line !!!!!");
+      //this.cl("have line !!!!!");
 
       if( typeof r.payload == 'object' ){
         let tatso = [];
@@ -275,11 +280,11 @@ class mDoCmd{
   * Default callback methode for `.doCmd` methode. Will only spit to console.log the result.
   */
   otdmCallBackWebCmdSubProcess( data, res ){
-    cl("otdmCallBackWebCmdSubProcess - from mDoCmd ");
-    cl("data - from mDoCmd");
-    cl(data);
+    this.cl("otdmCallBackWebCmdSubProcess - from mDoCmd ");
+    this.cl("data - from mDoCmd");
+    this.cl(data);
     //this.cmdWork = false;
-    cl("set cmdWork false - DONE")
+    this.cl("set cmdWork false - DONE")
   }
 
 
