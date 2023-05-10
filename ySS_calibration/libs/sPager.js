@@ -17,9 +17,15 @@
  * *returns {string} - can be use in onclick="returndValue" to get proper back and change page*
  *
  */
+
+
 class sPager {
 
   constructor(){
+    let cc = new otCl(`sPager`);
+    this.cl = function(){cc.doClFromArgs( arguments );  };
+
+
     this.currentPage = -1;
     this.pages = new Array();
     cl("sPager constructor done !");
