@@ -13,7 +13,11 @@
 class mApp{
 
   constructor(){
-    cl("mApp  is in constructor....");
+    let cc = new otCl(`mApp`);
+    this.cl = function(){cc.doClFromArgs( arguments );  };
+
+
+    this.cl("mApp  is in constructor....");
   }
 
   /**
@@ -57,7 +61,7 @@ class mApp{
         Go TO
       </a> `: '' );
     if( args['goTo'] != undefined && args['goTo'].substring(0,4) == "raw:" ){
-      cl("Detect goTo as raw: ....");
+      this.cl("Detect goTo as raw: ....");
       btGoTo = args['goTo'].substring(4);
     }
 
@@ -67,7 +71,7 @@ class mApp{
         title = '<h1 data-role="heading" class="ui-title">'+title+'</h1>';
       pager.setHeader( title+btBack+btGoTo );
     }else{
-      cl(".appFrame is build without title for header!");
+      this.cl(".appFrame is build without title for header!");
       pager.setHeader( '' );
 
     }
@@ -98,8 +102,8 @@ class mApp{
   */
   makeNiceList( data ){
     var mnl = [];
-    //cl("makeNiceList of element in html -----");
-    //cl(data);
+    //this.cl("makeNiceList of element in html -----");
+    //this.cl(data);
     if( data == undefined )
       return '';
 
@@ -202,8 +206,8 @@ class mApp{
     return this.buildListView( data );
   }
   buildListView( data ){
-    //cl("buildListView calld !!!");
-    //cl(data);
+    //this.cl("buildListView calld !!!");
+    //this.cl(data);
     let lvtr = `<div class="ui-body ui-corner-all ui-body-a">
     <ul data-role="listview"`+
       ( data['searchOn'] != undefined && data['searchOn'] == false ? "" : `data-filter="true" data-filter-placeholder="Search ..."` )+
@@ -215,7 +219,7 @@ class mApp{
         `</span>
       </li>`;
 
-    cl("lvBuild got items in typeof: ... ["+(typeof data['items'])+"]")
+    this.cl("lvBuild got items in typeof: ... ["+(typeof data['items'])+"]")
     for(let d=0,dc=data['items'].length;d<dc;d++)
       lvtr+= data['items'][d];
 
