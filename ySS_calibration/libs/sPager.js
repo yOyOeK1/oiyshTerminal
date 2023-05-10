@@ -28,7 +28,7 @@ class sPager {
 
     this.currentPage = -1;
     this.pages = new Array();
-    cl("sPager constructor done !");
+    this.cl("sPager constructor done !");
     this.sm = -1;
     this.pageHistory = [];
   }
@@ -40,11 +40,11 @@ class sPager {
           id="pHeaderStr"
           >not set</h>` );*/
     }else{
-      cl("setHeader title "+title);
-      //cl("setHe len:"+title.length);
-      //cl("setHe sub ["+title.substring(0,1)+"]");
+      this.cl("setHeader title "+title);
+      //this.cl("setHe len:"+title.length);
+      //this.cl("setHe sub ["+title.substring(0,1)+"]");
       if( title.substring(0,1) == "<" ){
-        cl("setHeader detect html as header ..");
+        this.cl("setHeader detect html as header ..");
         $('#pHeader').html( title );
       }else{
         $('#pHeader').html(
@@ -57,7 +57,7 @@ class sPager {
       /*
       setTimeout(()=>{
         $('#pHeader').show();
-        cl("show it !!");
+        this.cl("show it !!");
       }, 1200);
       */
     }
@@ -107,8 +107,8 @@ class sPager {
   }
 
   wsCallbackExternal( r ){
-    //cl("wsCallbackExternal got msg");
-    //cl(r);
+    //this.cl("wsCallbackExternal got msg");
+    //this.cl(r);
     this.wsCallback( r );
   }
 
@@ -125,16 +125,16 @@ class sPager {
 
     if(r.topic && r.payload){
         if(r.topic == "SMForYou" ){
-          cl("got my screen name !"+r.payload);
-          cl(r.payload);
+          this.cl("got my screen name !"+r.payload);
+          this.cl(r.payload);
           this.sm.setMyNo( r.payload );
 
         }else if(r.topic == "SMidentifyOn"){
-          cl("got identifyOn cmd !");
+          this.cl("got identifyOn cmd !");
           this.sm.identifyYourSelf();
 
         }else if(r.topic == 'SMCmdTo' && r.No == sm.myNo ){
-          cl("got cmd to:["+r.payload+']')
+          this.cl("got cmd to:["+r.payload+']')
           if( r.payload.substring(0,8) == "setPage:" )
             klikPageNo( r.payload.substring(8) );
           else if( r.payload == "mkShader.invert" )
@@ -151,7 +151,7 @@ class sPager {
             location.reload();
 
         }else if(r.topic == "SMToAll"){
-          cl("got cmd to all ! ["+r.payload+"]");
+          this.cl("got cmd to all ! ["+r.payload+"]");
           if( r.payload == "mkShader.invert" )
             mkShader('invert');
           else if( r.payload == "mkShader.blackRed" )
@@ -170,12 +170,12 @@ class sPager {
     }
 
     if( this.currentPage == -1 ){
-      cl("pager dumm callback:");
+      this.cl("pager dumm callback:");
       if(0){
-        cl("for debug only");
-        cl(r);
-        cl("topic:["+r.topic+"]");
-        cl("payload:["+r.payload+"]");
+        this.cl("for debug only");
+        this.cl(r);
+        this.cl("topic:["+r.topic+"]");
+        this.cl("payload:["+r.payload+"]");
       }
     }else{
       this.myCallCheet().then(
@@ -186,16 +186,16 @@ class sPager {
   }
 
   addPage( obj ){
-    cl("sPager add page: ["+obj.getName+"] as "+(this.pages.length) );
+    this.cl("add page:",obj.getName," as ", this.pages.length );
     this.pages.push( obj );
   }
 
   makeLooperIter(){
-    //cl("pager looper iter...");
+    //this.cl("pager looper iter...");
     try{
       this.getCurrentPage().looperIter();
     }catch( e ){
-      cl(`ERROR no make looper iter in page [{e}]`);
+      this.cl(`ERROR no make looper iter in page [{e}]`);
     }
   }
 
@@ -205,11 +205,11 @@ class sPager {
    */
   setPage( pageNo ){
     if( this.currentPage == pageNo  ){
-      cl("DROPING setPage !!! it's now the same ?");
+      this.cl("DROPING setPage !!! it's now the same ?");
       //return 0;
     }
 
-    cl("setPage"+pageNo);
+    this.cl("setPage"+pageNo);
     this.setHeader('');
     $.mobile.panel();
     this.currentPage = pageNo;
@@ -228,7 +228,7 @@ class sPager {
       }
     });
     */
-    cl("TODO  - page selector !");
+    this.cl("TODO  - page selector !");
     //console.log("pageHistory:");
     //console.log(this.pageHistory)
 
@@ -237,7 +237,7 @@ class sPager {
     this.setCssForPage();
     mkShaderResuming = false;
 
-    cl("sPager set page to: "+pageNo);
+    this.cl("sPager set page to: "+pageNo);
 
     this.getPage();
     document.cookie="lastPage="+pageNo+";max-age=31536000;";
@@ -257,7 +257,7 @@ class sPager {
       $(this).css('text-shadow','0 0 0 #0000');//'10px 15px 5px #f3f3f366');
     });
 
-    cl("scroll to top ...");
+    this.cl("scroll to top ...");
     $(document.body).scrollTop( 0 );
 
     $( "[data-role='header'], [data-role='footer']" ).toolbar({ theme: "b" });
@@ -278,20 +278,20 @@ class sPager {
 	    "background-color", bgColor
     );
 
-    cl("default background set: "+bgColor);
+    this.cl("default background set: "+bgColor);
   }
 
   get getPageBGColor(){
     try{
       return this.getCurrentPage().getDefaultBackgroundColor;
     }catch(e){
-      cl("pageNo: "+this.currentPage+" don't have getDefaultBackgroundColor()");
+      this.cl("pageNo: "+this.currentPage+" don't have getDefaultBackgroundColor()");
       return "#ffffff";
     }
   }
 
   getPage(){
-    cl("getHtml current page: "+this.currentPage);
+    this.cl("getHtml current page: "+this.currentPage);
     lAngels = {};
     movePathStartOffset = {};
     putTextStorage = {};
@@ -314,7 +314,7 @@ class sPager {
       try{
         var abcueoa = 1213;
       }catch(e){
-        cl("ERROR sPage page "+this.currentPage+" don't have getHtmlAfterLoad() error["+e+"]");
+        this.cl("ERROR sPage page "+this.currentPage+" don't have getHtmlAfterLoad() error["+e+"]");
       }
       $("#svgDyno").html( cp.svgDyno );
 
