@@ -2,9 +2,12 @@ var socketIn = null;
 
 var wsToast = null;
 
-function wsConnectIn( onMesCallBack ){
+function wsConnectIn( onMesCallBack, wsUrl = '' ){
 	// address is replace on fly by host
-	socketIn = new  WebSocket("ws://192.168.43.1:1880/ws/accel/oriCal");
+	let doUrl = "ws://192.168.43.1:1880/ws/accel/oriCal";
+	if( wsUrl != '' ) doUrl = wsUrl
+	cl("WebSocket connect It at "+doUrl);
+	socketIn = new  WebSocket( doUrl );
 
 
 	socketIn.onopen = function(){
@@ -67,8 +70,15 @@ function wsConnectIn( onMesCallBack ){
 }
 
 var socketOut = null;
-function wsConnectOut(){
-	socketOut = new  WebSocket("ws://192.168.43.1:1880/ws/accel/oriCal_In");
+function wsConnectOut(wsUrl = '' ){
+
+	let doUrl = "ws://192.168.43.1:1880/ws/accel/oriCal_In";
+	if( wsUrl != '' ) doUrl = wsUrl
+	cl("WebSocket connect Out at "+doUrl);
+	socketIn = new  WebSocket( doUrl );
+
+
+	socketOut = new  WebSocket( doUrl );
 
 	socketOut.onopen = function(){
 		cl("WS_Out on open");
