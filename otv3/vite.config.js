@@ -19,7 +19,8 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
       "/otv3Config": fileURLToPath(new URL('./otv3.config.json', import.meta.url)),
       "/aH": aaH,
-      "@yss-libs": path.resolve(__dirname,'src/assets/ySS_calibration/libs')
+      "@yss-libs": path.resolve(__dirname,'src/assets/ySS_calibration/libs'),
+      "@Otp": path.resolve(__dirname,'./Otp')
     }
   }
 })

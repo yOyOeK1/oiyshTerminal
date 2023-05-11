@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>oiyshTerminal at vue in Vite App</title>
+  </head>
+  <body>
+    <script src="/src/assets/ySS_calibration/libs/jquery.min.js" charset="utf-8"></script>
+    <script src="/src/assets/ySS_calibration/libs/jquery.toast.min.js"></script>
+    <link rel="stylesheet" href="/src/assets/ySS_calibration/libs/jquery.toast.min.css">
+    <link rel="stylesheet" href="/src/assets/ySS_calibration/libs/jquery.mobile-1.4.5.min.css">
+
+    <script src="/src/assets/ySS_calibration/libs/mOperation.js"></script>
+    <script src="/src/assets/ySS_calibration/libs/mWebSockets.js"></script>
+
+
+    <script>
+      console.log("otHello from index.html");
+      cl("cl hello");
+
+      pager = {
+        wsCallback(p){
+          cl("pager.wsCB"); //cl(p);
+          if(p.topic == "ping"){
+            cl("got Ping !");
+          }
+        }
+      }
+
+      wsConnectIn( pager, wsUrl="ws://192.168.43.220:1880/ws/yss" );
+      wsConnectOut( wsUrl="ws://192.168.43.220:1880/ws/yss" );
+
+    </script>
+
+
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

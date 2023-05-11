@@ -132,6 +132,38 @@ TODO in progress
 | ![](/home/yoyo/Apps/oiyshTerminal/otv3/screenshots/ss_otvFastDos_ping_otdmTools_serviceIt_log.png) | Lot of logs for now                                                                  |
 |                                                                                                    |                                                                                      |
 
+
+
+## vue in otdm-yss
+
+there is a lot of this done there but not so many thing tested :/ deb file is skearry thing? otdm-yss can do vue in raw way so.
+
+- [ ] put [**otvp|otvc**] to packitso
+  
+  - [ ] make standard / prototype
+    
+    - [ ] convert some
+    
+    - [ ] automat?
+      
+      - [ ] set file .vue to load
+      
+      - [ ] return script,template,css
+      
+      - [ ] some collector
+      
+      - [ ] on yssMount it need to use all this to inject it and lala
+    
+    - [ ] OtvFastDo.vue to otdm-yss vue
+    
+    - [ ] Hello.vue to otdm-yss vue
+
+
+
+
+
+
+
 ## talking over http to otdmTools
 
 Yes this is one argument from you.`otdmTools.py -serviceIt http` this will start `serviceIt` with `http` interface and `sapis`!
