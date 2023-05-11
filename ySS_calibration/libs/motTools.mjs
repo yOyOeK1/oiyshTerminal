@@ -1,10 +1,13 @@
 console.log("motTools wild");
 
+
+//const mott = -1;
 class motTools{
 
 
   constructor(){
-    console.log("motTools init .... have target? ", mott);
+    let mott = -1;
+    console.log("mott: motTools init .... have target? ", mott);
 
     this._ip = '192.168.43.220';
     this._port = 1990;
@@ -37,15 +40,17 @@ class motTools{
 
   sapi( sapiStr, callBack ){
     this._pts = new Date().getTime();
+    var tws = this._pts;
     $.ajax({
       url:this.url+"/"+ sapiStr,
       type: "GET",
       success: function(d){
-        cl("got it in ... "+ (( (new Date().getTime())-this._pts)/1000)+" sec." );
+        let tn = new Date().getTime();
+        cl("mott: got it in ... ("+ (( tn-tws))+" ms.)" );
         //cl("data");cl(d);
         callBack(d,'success');
       },
-      error:function(){ cl("Error in 2345678");
+      error:function(){ cl("mott: Error in 2345678");
         callBack(-1, 'notOk')},
 
     });
@@ -53,7 +58,7 @@ class motTools{
 
   chkHost(){
     this.sapi( "ping", (d, s ) => {
-      //cl("got pong?-------------");cl("status ");cl(s);cl("data ");cl(d);
+      cl("mott: got pong?-------------");//cl("mott: status ");cl(s);cl("mott: data ");cl(d);
       if( s == "success" ){
         this._status = true;
         wsToast= $.toast({
@@ -78,13 +83,20 @@ class motTools{
   }
 
   test(){
-    console.log("test");
+    console.log("mott: test");
   }
 
 }
 
 let m = new motTools();
-mott = m;
+try{
+  mott = m;
+  console.log('mott: motTools is in nr-yss');
+}catch(e){
+  console.log('mott: motTools as module');
+}
+
 
 //console.log("motTools exporting","have mott",mott);
-export default { motTools };
+export default { motTools }
+export { motTools }

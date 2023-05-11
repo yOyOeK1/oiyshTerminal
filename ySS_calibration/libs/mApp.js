@@ -17,7 +17,7 @@ class mApp{
     this.cl = function(){cc.doClFromArgs( arguments );  };
 
 
-    this.cl("mApp  is in constructor....");
+    this.cl("is in constructor....");
   }
 
   /**
