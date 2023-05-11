@@ -18,6 +18,7 @@ https://github.com/fulup-bzh/GeoGate/blob/master/encoder/lib/GG-AisEncode.js
 
 
 
+
 <script>
   /*
 var mod = {};
@@ -44,7 +45,7 @@ var module = new moduleCollector();
 */
 //var t4y;
 </script>
-
+<script src="./libs/otCl.js"></script>
 <script type="importmap">
     {
         "imports": {
@@ -259,6 +260,7 @@ function makeInit(){
     cl('Pages loaded .... ERROR!');
     cl("load log ----------------------------------");
     cl(clBuf.join("\n"));
+    cl(e);
     cl("load log ----------------------------------");
 
     cl("nodeRedInjectionAddPages() not pressent running on grafana not node-red?");
