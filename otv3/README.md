@@ -129,7 +129,7 @@ TODO in progress
 | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | ![](./screenshots/ss_otv3_home.png)                                                                | Current status of Home page is a start. Router is working                            |
 | ![otvPastDos](./screenshots/ss_otvFastDos_ping_otdmTools_serviceIt_otv.png)                        | otv as view - fast do. In contact over http with otdmTools.py running serviceIt Ping |
-| ![](/home/yoyo/Apps/oiyshTerminal/otv3/screenshots/ss_otvFastDos_ping_otdmTools_serviceIt_log.png) | Lot of logs for now                                                                  |
+| ![](./screenshots/ss_otvFastDos_ping_otdmTools_serviceIt_log.png) | Lot of logs for now                                                                  |
 |                                                                                                    |                                                                                      |
 
 
