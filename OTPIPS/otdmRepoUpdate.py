@@ -17,8 +17,8 @@ def getJson():
 			fa.loadFile( "./Repo.json" )
 			)
 		)
-	print("as J")
-	print(repoJ)
+	#print("as J")
+	#print(repoJ)
 	return repoJ
 
 def copyIt( srcUrl ):
@@ -31,6 +31,7 @@ def copyIt( srcUrl ):
 	os.popen(cmd)
 	print("  DONE")
 	
+	
 def repoGlobalListUpdate():
 	global fa
 	global REPO_DIR
@@ -41,13 +42,17 @@ def repoGlobalListUpdate():
 		if fs[-1] in ["whl","gz"]:
 			files.append( fileT )
 			
-	print("have list ....")
-	print(files)
-	fa.writeFile( f"{REPO_DIR}/pips.json", json.dumps({
+	#print(f"have list .... with {len(files)}")
+	#print(files)
+	targetFile = f"{REPO_DIR}/pips.json"
+	fa.writeFile( targetFile, json.dumps({
 		"files":files,
 		"entryDate": th.getTimestamp(),
 		"last update": th.getNiceDateFromTimestamp()
 	}, indent=2) )	
+	print(f"\n- write new records do [{targetFile}]")
+	
+	return files
 
 def repoUpdate():
 	print( "Pips repository update ..." )
@@ -57,7 +62,7 @@ def repoUpdate():
 	packs = repoItems.keys()
 	totalC = len(packs)
 
-	print(f"- have repo list to do with {totalC} elements.\n\t{repoItems}")
+	print(f"- have repo list to do with {totalC} elements.\n\t{repoItems}\n----------------------------------------")
 	
 	for i,packKey in enumerate( packs ):
 		ver = repoItems[ packKey ]
@@ -66,8 +71,8 @@ def repoUpdate():
 		copyIt( path )
 		
 	print("- making new repo global list ...", end="")
-	repoGlobalListUpdate()
-	print("  DONE")
+	packsInRepo = len( repoGlobalListUpdate() )
+	print(f"({packsInRepo}) files in repo  DONE")
 	
 	#names="$( cat ./Repo.json | jq '.[].name' -r )"
 #names="$( cat ./Repo.json | jq '.[].name' -r )"
