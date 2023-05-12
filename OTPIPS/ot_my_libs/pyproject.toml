@@ -1,0 +1,22 @@
+[project]
+name = "ot_my_libs"
+version = "0.0.6"
+authors = [
+  { name="Bartlomiej Ceglik", email="yoyoek@wp.pl" },
+]
+description = "oiyshTerminal my basic libs: "
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+  'pymysql',
+  'paho-mqtt==1.5.0'
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTPIPS/ot_my_libs"
+"Bug Tracker" = "https://github.com/yOyOeK1/oiyshTerminal/labels/ot_my_libs"
