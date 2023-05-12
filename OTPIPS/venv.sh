@@ -1,0 +1,1 @@
+./otdmVenvIt.sh
