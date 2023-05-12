@@ -1,6 +1,6 @@
 # oiyshTerminal - OTPIPS
 
-  Set of function libraries tools pack using pip idea 
+  Set of function libraries tools pack using pip idea
 
 Packages on pip:
 
@@ -31,25 +31,25 @@ Packages on pip:
 
   To make otpip as deploy pip package using this we need to
 
-- [ ] **TODO ./otdmInitNew.sh ot_hello_world** - make new project `ot_hello_world` 
+- [ ] **TODO ./otdmInitNew.sh ot_hello_world** - make new project `ot_hello_world` **or** use `ot_blank` as a template
 
 - [ ] set up all variables in `ot_hello_world/pyproject.toml`
 
 - [ ] do / move your code to `ot_hello_world/src/ot_hello_wold/`
 
 - [ ] to test if it's working use
-  
+
   ```bash
-  $ ./otdmVenvIt.sh ot_hello_wold
-  $ source ./ot_hello_wold/venv/bin/activate
-  $ cd ot_my_libs/src/
+  $ ./otdmVenvIt.sh ot_hello_world
+  $ source ./ot_hello_world/venv/bin/activate
+  $ cd ot_hello_world/src/
   $ python3
   python version 0.18 on top of Python 3.8.10 /usr/bin/python3
-  >>> import ot_hello_wold
-  >>> ot_hello_wold.ot_hello_wold()
+  >>> import ot_hello_world
+  >>> ot_hello_world.ot_hello_world()
   ,,,,,......
   exit()
-  
+
   $ deactivate
   ```
 
@@ -60,7 +60,7 @@ Packages on pip:
 - [ ] **./otdmUpload2Pip.sh** - to upload it to pypip
 
 - [ ] **./otdmRepoUpdate.py** - to update / rebuild `./REPOPIPS/pips.json` with list
-  
+
 
 More will come ...
 
