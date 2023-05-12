@@ -926,17 +926,28 @@ def mkBackUp( args ):
         fsFn=f"{prefixF}{fArchName}"
         isExist = os.path.exists(fullP)
 
-        cTd = (f"cd {oPath}; tar -jcvf {fsFn} {oName}")
+        doEx = ''
+        if args.get("inm", "" ) != "":
+            print("[ i ] using -inm so exclude node_modules from backupu...")
+            doEx = '--exclude=node_modules'
 
-        print(f"fpath backup ! fullP:{fullP} isExist:{isExist} oName:{oName}\n"+
-            f"so cmd will be ... \n\n{cTd}\nDestination dir: {destDir}\n")
+        cTd = (f"cd {oPath}; tar -jcvf {fsFn} {doEx} {oName}")
+
+        print(f"[ i ]fpath backup !\n\tfullP:    {fullP}\n\tisExist: {isExist}\n\toName: {oName}\n"+
+            f"[ i ] so cmd will be ... \n\n{cTd}\n\n\t- Destination dir: {destDir}\n")
 
         if isExist == False:
             print("Error source directory to backup is not existing.... EXIT 2")
             sys.exit(2)
 
-        print("in 2 sec it will do it .....")
+        print("in 5 sec it will do it .....")
         time.sleep(2)
+        print("in 3 .....")
+        time.sleep(1)
+        print("in 2 .....")
+        time.sleep(1)
+        print("in 1 .....")
+        time.sleep(1)
         print("Running it .... ", end="")
         subprocess.run( cTd, shell=True )
         print("DONE")
@@ -1567,6 +1578,7 @@ acts = [
             or
             fpath - to make file / directory backup / compression to .otdm/Backups
               use it as: `otdmTools.py -mkbp fpath -by ./abc` to backup abc directory
+              `-inm` is to ignore node_modules directory `exclude`
             or
             [flows|fid|fname]
             for Node-red
