@@ -5,9 +5,39 @@ import os
 import time
 
 class mysql_helper:
+    """
+    Is to do mysql operation fast. Couple of lines and you can go ... 
+    ## import library 
+      ```python
+      from ot_my_libs.mysql_helper import mysql_helper as mhd
+      ```
+    """
+    
+        
+    is_connected = False
+    """**is_connected**: __boolean__ - if connected to mysql"""
 
     def __init__(self, config = None):
-
+        """
+        # Arguments
+          **client** _json_: connecting to mysql by `config`
+          
+        ## config example
+          ```json
+          config = {
+            'host': '192.168.43.1',
+            'port': 3306,
+            'user': 'ykpu',
+            'passwd': 'pimpimpampam',
+            'database': 'svoiysh',
+            'maxBuf': 1024
+          }        
+          db = mhd(config)
+          ```
+        
+        **db** __mysql_helper__ now is to your disposition with functions. After init it will `self.connect()`
+        """    
+    
         if config == None:
             config = {
                 'host': 'nex7',
@@ -30,12 +60,13 @@ class mysql_helper:
         self.struct = []
         self.con = None
         self.kur = None
-        self.is_connected = False
 
         self.connect()
 
 
     def connect(self):
+        """To connect if you lost connection"""
+        
         self.myl.i("connecting...")
         self.con = pymysql.connect(
             host = self.conf['host'],
@@ -50,6 +81,18 @@ class mysql_helper:
 
 
     def one_value(self,table_name,what,where="1"):
+        """
+        To get one value from one record.
+        # Arguments
+          **table_name** _string_: name of table to work on
+          **what** _string_: to put in place of `SELECT XXX FROM ...`
+          **where** _string_: to use it it where section 
+        *all cap with ` ... LIMIT 1;`*
+        
+        # Returns 
+          __string__ | __int__ | __float__        
+        """
+        
         tr = self.select(table_name, what, "%s LIMIT 1" % where)
         if len(tr)>0:
             return tr[0][what]
@@ -57,6 +100,19 @@ class mysql_helper:
             return None
 
     def one_row(self, table_name,where="1"):
+        """
+        To get one record.
+        
+        # Arguments
+          **table_name** _string_: name of table to work on
+          **where** _string_: to use it it where section 
+        
+        *all cap with ` ... LIMIT 1;`*
+        
+        # Returns 
+          __json__ with your data **example** `{'id': 1487658, 'msg': '34.7', 'entryDate': 1684009661}`        
+        """
+        
         tr = self.select(table_name, "*", "%s LIMIT 1"%where)
         if len(tr)>0:
             return tr[0]
@@ -64,12 +120,37 @@ class mysql_helper:
             return None
 
     def select(self, table_name, what="*", where="1"):
+        """
+        To do `SELECT` on mysql
+        
+        # Arguments
+          **table_name** _string_: name of table to work on
+          **what** _string_: to put in place of `SELECT XXX FROM ...`
+          **where** _string_: to use it it where section 
+        
+        *all cap with ` ... LIMIT 1;`*
+        
+        # Returns 
+          __cursor__.fetchall()
+        """
+    
         q = "select %s from %s where %s" % ( what, table_name, where)
         c = self.con.cursor()
         c.execute(q)
         return c.fetchall()
 
     def insert(self,table_name, values):
+        """
+        To **insert** to table
+        
+        # Arguments
+          **table_name** _string_: name of table to work on
+          **values** _json_: look format multi ..
+        
+        # Returns 
+          __int__ of inserted `id`
+        """
+        
         vNames = []
         val = []
         qu = []
@@ -89,15 +170,25 @@ class mysql_helper:
 
     def insertMulti(self, tableName, data):
         '''
-        data = {
+        To **insert** to table
+        
+        # Arguments
+          **table_name** _string_: name of table to work on
+          **data** _json_: look format multi ..
+            
+        # data example
+          ```json
+          data = {
             'head':['fName0', 'fName1, ....],
             'data':[
-                [1 , 2, ...],
-                [11, 12, ..],
-                ....
-                ]
+              [1 , 2, ...],
+              [11, 12, ..],
+              ....
+              ]
             }
+          ```                    
         '''
+        
         vals = []
         valq = []
         for v in data['head']:
@@ -162,8 +253,8 @@ AUTO_INCREMENT=1 ;
 if __name__ == "__main__":
     import random
 
-		if 0 :
-	    mysql = {
+    if 0 :
+      mysql = {
         'host': 'nex7',
         'port': 3306,
         'user': 'ykpu',
@@ -173,7 +264,7 @@ if __name__ == "__main__":
         'tableName': 'dbSpeed'
         }
     if 1 :
-    	mysql = {
+      mysql = {
         'host': 'hu',
         'port': 3306,
         'user': 'ykpu',
