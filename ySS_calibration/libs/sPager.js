@@ -214,6 +214,8 @@ class sPager {
     $.mobile.panel();
     this.currentPage = pageNo;
     this.pageHistory.push( pageNo );
+    
+    this.setMenuSiteSelected();
 
     /*
     $('.pageItemsLi').each(function(i){
@@ -342,10 +344,33 @@ class sPager {
   goToByHash( url ){
     //this.currentPage = -1;
     window.location.hash=url+`&`+(Math.random());
+    
   }
+
+	setMenuSiteSelected(){
+    this.cl(["men ss:",]);
+    this.cl(["men ss:","currentPage",pager.currentPage]);
+    this.cl(["men ss:","pages",pager.pages.length]);
+    // setting selected site in menu
+    let menuObjs = $('.y-menu-item');
+    for ( let im=0,imc=pager.pages.length; im<imc; im++ ) {
+    	this.cl(["men ss:","run over",im]);
+    	let o = $( menuObjs[im] );
+    	if( im == pager.currentPage ){
+    		o.addClass('ui-btn-b');
+    		//o.button({theme: 'a'});
+    	}else{
+    		o.removeClass('ui-btn-b');    	
+    		//o.button({theme: 'b'});
+    	}
+    }
+    
+	
+	}
 
   getMenu(){
     var ta = "";
+		//cl(["getMenu:", "invoce.."]);
 
     for(var i=0;i<this.pages.length;i++){
       /*
@@ -357,7 +382,10 @@ class sPager {
       let pName = this.pages[i].getName;
       ta+= `
 <li class="pageItemsLi">
-  <a href="" data-rel="close"`+
+  <a href="" data-rel="close" `+
+  	`class="y-menu-item" `+
+  	`ymenuitemname="`+pName+`" `+
+  	`ymiid="`+i+`" `+
     //`onclick="pager.setPage(`+i+`)"`+
     //`onclick="pager.goToByHash('page=`+i+`')"`+
     `onclick="pager.goToByHash('pageByName=`+pName+`')"`+
