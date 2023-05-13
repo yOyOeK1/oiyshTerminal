@@ -18,7 +18,21 @@
     "jsdoc2md-py1": "jsdoc2md /tmp/py2doc.py; echo ",
     "py2doc.md": "pydoc-markdown -I /tmp/py2docInput/ --render-toc > /tmp/py2docOutput.md; echo ",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "argst": "echo $1"
+    "argst": "echo $1",
+    "argst2": "echo $1 \" args c: [ $* ] 1:[ $1 ]\"",
+    "argst3": "cowsay ",
+    "cowsay": "cowsay ",
+    
+    "otsit": "otdmTools.py -serviceIt http",
+    "otsitKill": " kill \"$(ps aux | grep otdmTools | grep -v \"kill\" | grep python | awk '{print $2}')\" ",
+    
+    "nrit": "cd /home/yoyo/.node-red; node-red",
+    "nrKill": "killall node-red",
+    
+    "otSS": "npm run otsit & npm run nrit & sleep 3 && npm run cowsay 'so Node-RED and ot http is running ...' && exit 1",
+    
+    "otKill": "npm run nrKill; npm run otsitKill;"
+    
   },
   "doc": "jsdoc -c jsdocs.json",
   "repository": {
