@@ -162,8 +162,19 @@ AUTO_INCREMENT=1 ;
 if __name__ == "__main__":
     import random
 
-    mysql = {
+		if 0 :
+	    mysql = {
         'host': 'nex7',
+        'port': 3306,
+        'user': 'ykpu',
+        'passwd': 'pimpimpampam',
+        'database': 'svoiysh',
+        'maxBuf': 1024,
+        'tableName': 'dbSpeed'
+        }
+    if 1 :
+    	mysql = {
+        'host': 'hu',
         'port': 3306,
         'user': 'ykpu',
         'passwd': 'pimpimpampam',
