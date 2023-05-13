@@ -13,6 +13,9 @@
   ```bash
   python3 ot_my_libs/example.py
   ```
+	
+	**or**
+	[xdocs](https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTPIPS/ot_my_libs/README_xdoc.md)
 
 ### benchmarking
 
