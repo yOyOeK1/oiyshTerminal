@@ -35,7 +35,7 @@ Packages on pip:
 
 - [ ] set up all variables in `ot_hello_world/pyproject.toml`
 
-- [ ] do / move your code to `ot_hello_world/src/ot_hello_wold/`
+- [ ] do / move your code to `ot_hello_world/src/ot_hello_world/`
 
 - [ ] to test if it's working use
 
@@ -53,6 +53,8 @@ Packages on pip:
   $ deactivate
   ```
 
+- [ ] **./otdmMakeDocsMd.sh ot_hello_world** - to build nice docs to your readme xdoc's'is 
+
 - [ ] **./otdmBuild.sh ot_hello_world** - we know it's working in `venv` so lets  
 
 - [ ] we can test it localy `pip3 install ot_hello_world/dist/ot_hello_world-X.X.X.tar.gz` or do same thing in `otdmVenvIt.sh`
@@ -60,6 +62,7 @@ Packages on pip:
 - [ ] **./otdmUpload2Pip.sh** - to upload it to pypip
 
 - [ ] **./otdmRepoUpdate.py** - to update / rebuild `./REPOPIPS/pips.json` with list
+
 
 
 More will come ...
