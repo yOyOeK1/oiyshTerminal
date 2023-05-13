@@ -8,6 +8,11 @@
 * [ot\_my\_libs.XMLHelper](#ot_my_libs.XMLHelper)
 * [ot\_my\_libs.myFastPlot](#ot_my_libs.myFastPlot)
 * [ot\_my\_libs.FileActions](#ot_my_libs.FileActions)
+  * [FileActions](#ot_my_libs.FileActions.FileActions)
+    * [getHomeDirectoryForApp](#ot_my_libs.FileActions.FileActions.getHomeDirectoryForApp)
+    * [loadFile](#ot_my_libs.FileActions.FileActions.loadFile)
+    * [join](#ot_my_libs.FileActions.FileActions.join)
+    * [t](#ot_my_libs.FileActions.FileActions.t)
 * [ot\_my\_libs.TimeHelper](#ot_my_libs.TimeHelper)
 * [ot\_my\_libs.mysql\_helper](#ot_my_libs.mysql_helper)
   * [mysql\_helper](#ot_my_libs.mysql_helper.mysql_helper)
@@ -52,6 +57,93 @@
 <a id="ot_my_libs.FileActions"></a>
 
 # ot\_my\_libs.FileActions
+
+<a id="ot_my_libs.FileActions.FileActions"></a>
+
+## FileActions Objects
+
+```python
+class FileActions()
+```
+
+File Actions and operations helper set
+
+<a id="ot_my_libs.FileActions.FileActions.getHomeDirectoryForApp"></a>
+
+#### getHomeDirectoryForApp
+
+```python
+def getHomeDirectoryForApp(appName, platform='pc')
+```
+
+To make home directory for your app fast on pc / python-for-android. It will look and if not exist `make directory` for your app.
+
+__Arguments__
+
+- __**appName** _string___: name of your app 
+- __**values** _json___: look format multi ..
+
+__Returns __
+
+  __string__ `path` to your app directory
+  **or**
+  None on error
+
+<a id="ot_my_libs.FileActions.FileActions.loadFile"></a>
+
+#### loadFile
+
+```python
+def loadFile(filePath)
+```
+
+__Arguments__
+
+- __**filePath** _string___: path to file to load
+
+__Returns __
+
+  __array__ content of loaded file line by line
+  **or**
+  None on error
+
+<a id="ot_my_libs.FileActions.FileActions.join"></a>
+
+#### join
+
+```python
+def join(adr0, adr1)
+```
+
+path join solvs `/` **or** `\` problem using os library
+
+__Arguments__
+
+- __**adr0** _string___: more to root path 
+- __**adr1** _string___: deeper path
+
+__Returns __
+
+  __string__ `path` joind
+  **or**
+  None on error
+
+<a id="ot_my_libs.FileActions.FileActions.t"></a>
+
+#### t
+
+```python
+def t(path)
+```
+
+is to convert `~/` to full path
+__Arguments__
+
+- __**path** _string___: path to make safe
+
+__Returns __
+
+  __string__ `safe` path
 
 <a id="ot_my_libs.TimeHelper"></a>
 

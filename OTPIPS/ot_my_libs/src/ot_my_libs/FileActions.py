@@ -4,9 +4,23 @@ import sys
 import json
 
 class FileActions:
-    
+    """
+    File Actions and operations helper set
+    """
     
     def getHomeDirectoryForApp(self, appName, platform = 'pc'):
+        """
+        To make home directory for your app fast on pc / python-for-android. It will look and if not exist `make directory` for your app.
+        
+        # Arguments
+          **appName** _string_: name of your app 
+          **values** _json_: look format multi ..
+        
+        # Returns 
+          __string__ `path` to your app directory
+          **or**
+          None on error
+        """
         if platform == 'android':
             dList = [
                 "/storage/emulated/0",
@@ -71,7 +85,16 @@ class FileActions:
         print("    DONE")
         return tr
     
-    def loadFile(self, filePath):        
+    def loadFile(self, filePath):
+        """
+        # Arguments
+          **filePath** _string_: path to file to load
+                  
+        # Returns 
+          __array__ content of loaded file line by line
+          **or**
+          None on error
+        """        
         try:
             f = open(self.t(filePath))
         except:
@@ -100,9 +123,28 @@ class FileActions:
         return self.t(path)
     
     def join(self,adr0, adr1):
+        """
+        path join solvs `/` **or** `\` problem using os library
+        
+        # Arguments
+          **adr0** _string_: more to root path 
+          **adr1** _string_: deeper path
+        
+        # Returns 
+          __string__ `path` joind
+          **or**
+          None on error
+        """
         return self.t(os.path.join(adr0,adr1))
-    
+        
     def t(self,path):
+        """is to convert `~/` to full path
+        # Arguments
+          **path** _string_: path to make safe
+        
+        # Returns 
+          __string__ `safe` path
+        """
         return os.path.expanduser(path)
 
     def md5str(self,s):
