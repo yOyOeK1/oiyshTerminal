@@ -354,11 +354,13 @@ class sPager {
       ta+= 'onclick="pager.setPage('+i+')"/>';
       ta+= '<br>';
       */
+      let pName = this.pages[i].getName;
       ta+= `
 <li class="pageItemsLi">
   <a href="" data-rel="close"`+
     //`onclick="pager.setPage(`+i+`)"`+
-    `onclick="pager.goToByHash('page=`+i+`')"`+
+    //`onclick="pager.goToByHash('page=`+i+`')"`+
+    `onclick="pager.goToByHash('pageByName=`+pName+`')"`+
     `>`+this.pages[i].getName+`</a>
 </li>`;
     }
