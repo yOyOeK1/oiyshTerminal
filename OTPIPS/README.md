@@ -38,7 +38,7 @@ Packages on pip:
 - [ ] do / move your code to `ot_hello_world/src/ot_hello_world/`
 
 - [ ] to test if it's working use
-
+  
   ```bash
   $ ./otdmVenvIt.sh ot_hello_world
   $ source ./ot_hello_world/venv/bin/activate
@@ -49,7 +49,7 @@ Packages on pip:
   >>> ot_hello_world.ot_hello_world()
   ,,,,,......
   exit()
-
+  
   $ deactivate
   ```
 
@@ -62,6 +62,74 @@ Packages on pip:
 - [ ] **./otdmUpload2Pip.sh** - to upload it to pypip
 
 - [ ] **./otdmRepoUpdate.py** - to update / rebuild `./REPOPIPS/pips.json` with list
+
+## otpips.py
+
+### return example
+
+* **chkIt** is to aggregate all known data for to know what is going on with not only pyproject.toml, but repo related, build, venv, ....
+  in python by running in my case for project `ot_my_libs` is
+  
+  ```python
+  import TODO
+  o = otpip('ot_my_libs')
+  res = o.chkIt()
+  print(res)
+  ```
+  
+  **return** result of chkIt in form of __json__
+  
+  ```json
+  {
+    "exists": true,
+    "venv": {   "exists": true    },
+    "src": {    "exists": true    },
+    "readme": { "exists": true    },
+    "xdoc": {   "exists": true    },
+    "repo": {   "inRepo": false, "ver": "0.0.7" },
+    "dist": {
+      "exists": true,
+      "build": {
+        "whl": { "exists": false, "name": "ot_my_libs-0.0.9-py3-none-any.whl" },
+        "tar": { "exists": false, "name": "ot_my_libs-0.0.9.tar.gz" }
+      }
+    },
+    "pyproject": {
+      "exists": true,
+      "data": {
+        "project": {
+          "name": "ot_my_libs",
+          "version": "0.0.9",
+          "authors": [{  "name": "Bartlomiej Ceglik", "email": "yoyoek@wp.pl" } ],
+          "description": "oiyshTerminal my basic libs: myLoger | FileActions | MyCalculate | db_helper | mysql_helper | ...",
+          "readme": "README.md",
+          "requires-python": ">=3.7",
+          "dependencies": [
+            "pymysql",
+            "paho-mqtt==1.5.0"
+          ],
+          "classifiers": [
+            "Development Status :: 3 - Alpha",
+            "Programming Language :: Python :: 3",
+            "License :: OSI Approved :: MIT License"
+          ],
+          "urls": {
+            "Homepage": "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTPIPS/ot_my_libs",
+            "Bug Tracker": "https://github.com/yOyOeK1/oiyshTerminal/labels/ot_my_libs"
+          }
+        }
+      }
+    }
+  }
+  ```
+  
+  Thing wrong / TODO:  
+  
+  - [x] Nice
+  - [ ] otpips not existing as pypi
+  - [ ] solver to know what can we do with current status
+
+
 
 
 
