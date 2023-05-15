@@ -917,21 +917,38 @@ def mkBackUp( args ):
         putToFile( jdsFn, json.dumps(jds) )
         print("\n DONE")
 
-    elif w == "fpath":
+    elif w in [ "fpath", "sqfs" ] :
+        tExt = "NaN"
+        useMethode = "NaN"
         fullP = os.path.join( os.getcwd(), by)
         oName = os.path.basename( fullP )
         oPath = os.path.dirname( fullP )
+
+        if w == "fpath":
+            tExt = "tar.bz2"
+            useMethode = "tar to bz2"
+        elif w == "sqfs":
+            tExt = "sqsh"
+            useMethode = "mksquashfs"
+            destDir = oPath
+
         bPrefix = args.get("bPrefix", "" )+oName
-        fArchName = f"{bPrefix}_{tn}{bSuffix}.tar.bz2"
+        fArchName = f"{bPrefix}_{tn}{bSuffix}.{tExt}"
         fsFn=f"{prefixF}{fArchName}"
         isExist = os.path.exists(fullP)
 
         doEx = ''
         if args.get("inm", "" ) != "":
-            print("[ i ] using -inm so exclude node_modules from backupu...")
-            doEx = '--exclude=node_modules'
+            print(f"[ i ] using -inm so exclude node_modules from backupu [{useMethode}]...")
+            if w == "fpath":
+                doEx = '--exclude=node_modules'
+            elif w == "sqfs":
+                doEx = '-ef node_modules'
 
-        cTd = (f"cd {oPath}; tar -jcvf {fsFn} {doEx} {oName}")
+        if w == "fpath":
+            cTd = (f"cd {oPath}; tar -jcvf {fsFn} {doEx} {oName}")
+        elif w == "sqfs":
+            cTd = (f"cd {oPath}; mksquashfs {oName} {fArchName} {doEx}")
 
         print(f"[ i ]fpath backup !\n\tfullP:    {fullP}\n\tisExist: {isExist}\n\toName: {oName}\n"+
             f"[ i ] so cmd will be ... \n\n{cTd}\n\n\t- Destination dir: {destDir}\n")
@@ -940,6 +957,7 @@ def mkBackUp( args ):
             print("Error source directory to backup is not existing.... EXIT 2")
             sys.exit(2)
 
+        #sys.exit(5)
         print("in 5 sec it will do it .....")
         time.sleep(2)
         print("in 3 .....")
@@ -949,21 +967,31 @@ def mkBackUp( args ):
         print("in 1 .....")
         time.sleep(1)
         print("Running it .... ", end="")
-        subprocess.run( cTd, shell=True )
-        print("DONE")
 
-        print(f"Moving it to destination directory: {destDir} ... ", end="")
-        shutil.move( fsFn, f"{destDir}/" )
-        print("DONE")
+        subprocess.run( cTd, shell=True )
+        print("DONE\n")
+
+        destFullPath = fileInfo( os.path.join( destDir, fArchName ) )
+        
+        if w == "sqfs":
+            print("No moving for sqfs it's staing in spot")
+            destFullPath = fileInfo( os.path.join( oPath, fArchName ) )
+        elif w == "fpath":
+            print(f"Moving it to destination directory: {destDir} ... \n\tWill be as: ... {destFullPath}", end="")
+            shutil.move( fsFn, f"{destDir}/" )
+            print("DONE")
+
+
         if args.get('oFile','') != "":
             print("---- oFile is !!")
             addArgHandle_oFile(args, {
                 "dirName": oPath,
                 "name": oName,
-                "archInfo": fileInfo( os.path.join( destDir, fArchName ) ),
+                "archInfo": destFullPath,
                 "currPath": destDir,
             })
         sys.exit(1)
+    
 
     elif w == "*":
         egds=argsNew( args )
