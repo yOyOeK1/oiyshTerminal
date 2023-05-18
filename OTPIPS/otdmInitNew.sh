@@ -2,8 +2,10 @@
 
 OTPIPS_VER="0.0.1-v1"
 OTPIPS_DIR="/OT/OTPIPS"
-# playground overrite 
-OTPIPS_DIR="/home/yoyo/Apps/oiyshTerminal/OTPIPS/playgaund/v1"
+# playground overwrite
+OTPIPS_DIR="/home/yoyo/Apps/oiyshTerminal/OTPIPS/playground/v1"
+OTPIPS_DIR="/home/yoyo/Apps/oiyshTerminal/OTPIPS"
+
 OTPIPS_BLANK="ot_blank"
 OTPIPS_TNAME="$1"
 
@@ -131,13 +133,13 @@ case $OTPIPS_TNAME in
 
     dirBlankChk
     dirChk
-    mkNew $OTPIPS_TNAME
+    mkNew "$OTPIPS_TNAME"
     echo "----------- DONE"
 
     ;;
 '-delIt')
     if [ "$argC" = "2" ]; then
-        delIt $arg2
+        delIt "$arg2"
     else
         echo "Error wrong args ... EXIT 5"
         exit 5
@@ -146,7 +148,7 @@ case $OTPIPS_TNAME in
 '-mkNew')
     #for test TODO remove this
     OTPIPS_TNAME="test2_1"
-    mkNew $OTPIPS_TNAME
+    mkNew "$OTPIPS_TNAME"
     echo "after wizard name is: [$OTPIPS_TNAME]"
     ;;
 '-wNew')
@@ -155,7 +157,7 @@ case $OTPIPS_TNAME in
     ;;
 '-chkDir')
     if [ "$argC" = "2" ]; then
-        dirChk $arg2
+        dirChk "$arg2"
     else
         echo "Error wrong args ... EXIT 5"
         exit 5
@@ -168,7 +170,7 @@ case $OTPIPS_TNAME in
     doHelp
     ;;
 *)
-    echo " ok lec go ..."
+    echo " ok lec go ... exit0 try -h"
     ;;
 esac
 
