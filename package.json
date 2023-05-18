@@ -23,18 +23,23 @@
     "argst3": "cowsay ",
     "cowsay": "cowsay ",
     
+    "psIt": "ps aux | grep -v grep | grep -v 'run psIt' | grep -v 'sh -c' | grep ",
+    
+    
     "otsit": "otdmTools.py -serviceIt http",
     "otsitKill": " kill \"$(ps aux | grep otdmTools | grep -v \"kill\" | grep python | awk '{print $2}')\" ",
-    "otsPs": "ps aux | grep -v grep | grep -v 'sh -c' | grep 'otdmTools\\.py'",
+    "otsPs": "npm run psIt 'otdmTools\\.py'",
     
     "nrit": "cd /home/yoyo/.node-red; node-red",
     "nritKill": "killall node-red",
-    "nrPs": "ps aux | grep -v grep | grep -v 'sh -c' | grep node-red",
+    "nrPs": "npm run psIt node-red",
     
     "otPs": "npm run otsPs; npm run nrPs; exit 1",
     "otSS": "npm run otsit & npm run nrit & sleep 5 && npm run otPs; npm run cowsay 'so Node-RED and ot http is running ...'; echo '----------------------------';date; exit 1",
     
-    "otKill": "npm run nritKill; npm run otsitKill;"
+    "otKill": "npm run nritKill; npm run otsitKill;",
+
+    "t_ottSqfs": "python3 otdmTools.py -mkbp sqfs -by /tmp/tt -oFile '--'; echo \"$?\" && echo '   so exit with :)' && exit 1;"
     
   },
   "doc": "jsdoc -c jsdocs.json",
