@@ -31,7 +31,7 @@ Packages on pip:
 
   To make otpip as deploy pip package using this we need to
 
-- [ ] **TODO ./otdmInitNew.sh ot_hello_world** - make new project `ot_hello_world` **or** use `ot_blank` as a template
+- [x] **./otdmInitNew.sh ot_hello_world** - make new project `ot_hello_world` **or** use `ot_blank` as a template
 
 - [ ] set up all variables in `ot_hello_world/pyproject.toml`
 
@@ -53,17 +53,21 @@ Packages on pip:
   $ deactivate
   ```
 
-- [ ] **./otdmMakeDocsMd.sh ot_hello_world** - to build nice docs to your readme xdoc's'is 
+- [x] **./otdmMakeDocsMd.sh ot_hello_world** - to build nice docs to your readme xdoc's'is 
 
-- [ ] **./otdmBuild.sh ot_hello_world** - we know it's working in `venv` so lets  
+- [x] **./otdmBuild.sh ot_hello_world** - we know it's working in `venv` so lets  
 
 - [ ] we can test it localy `pip3 install ot_hello_world/dist/ot_hello_world-X.X.X.tar.gz` or do same thing in `otdmVenvIt.sh`
 
-- [ ] **./otdmUpload2Pip.sh** - to upload it to pypip
+- [x] **./otdmUpload2Pip.sh** - to upload it to pypip
 
-- [ ] **./otdmRepoUpdate.py** - to update / rebuild `./REPOPIPS/pips.json` with list
+- [x] **./otdmRepoUpdate.py** - to update / rebuild `./REPOPIPS/pips.json` with list
+
+*so .sh / .py tool chain for pip bilding*
 
 ## otpips.py
+
+
 
 ### return example
 

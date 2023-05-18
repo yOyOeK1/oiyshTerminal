@@ -20,7 +20,6 @@ note_target='
 - [x] pName input dialog :)
 - [x] copy to target
 - [x] replace some data
-
 '
 
 
