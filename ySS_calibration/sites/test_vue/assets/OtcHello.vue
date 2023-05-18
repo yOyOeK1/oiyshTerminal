@@ -1,6 +1,7 @@
 <script setup>
 function OtcHello(){
   return Vue.createApp({
+
     data(){
       let cc = new otCl('vvaHello');
       const cl = function(){cc.doClFromArgs( arguments );  };
@@ -16,6 +17,7 @@ function OtcHello(){
       pager.getCurrentPage().vvaHello_obj = this;
     }
   });
+  
 }
 
 </script>

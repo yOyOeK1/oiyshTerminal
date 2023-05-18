@@ -16,9 +16,9 @@ class vueOT{
 		this.callBack = -1;
 	}
 
-	load( fPath, callBackOnDone ){
+	load( fPath, targetIdObj, callBackOnDone ){
 
-		this.cl("load",fPath);
+		this.cl("load",fPath, "to id DOM",targetIdObj);
 		this.callBack = callBackOnDone;
 		let mC = new mDoCmd();
 
@@ -32,13 +32,13 @@ class vueOT{
 	      //this.cl("got ls !!!");
 	      //this.cl(d);
 	      this.cl(`dfs`, "DONE","path", fPath);
-	      let otO = this.vueSplit(loadName, d);
+	      let otO = this.vueSplit(loadName, targetIdObj, d);
 	      //cp.vvPageViewObj.pageContent = cp.mdToHtml( d );
 	    }
 	  )
 	}
 
-	vueSplit( name, vueRaw ){
+	vueSplit( name, targetIdObj, vueRaw ){
 		let tr = {
 			'name': name,
 			'o': -1,
@@ -129,10 +129,10 @@ class vueOT{
 
 		let vohw = tr['o']();
 		setTimeout(()=>{
-			$("#vDiv").html(`<div id="${name}">${tr['template']}</div>`);
+			$(`#${targetIdObj}`).html(`<div id="${name}">${tr['template']}</div>`);
 
 			vohw.mount(`#${name}`);
-
+			this.callBack("mounted");
 		},1000);
 
 	}
@@ -161,11 +161,13 @@ class s_testVuePage{
 		cv("make new uveOT() ...");
 		let vueL = new vueOT();
 		cv("starting load ...");
-		let vRaw = vueL.load(`assets/OtcHello.vue`);
+		vueL.load(`assets/OtcHello.vue`,"divotch",(r)=>{ console.log("OtcHello loader callback handler","vue","status",r); });
+		vueL.load(`assets/OtcFastDo2.vue`,"divotcfd2",(r)=>{ console.log("OtcFastDo2 loader callback handler","vue","status",r); });
+
 		//let vRaw = vueL.load(`assets/HelloWorld.vue`);
 		//let vRaw = vueL.load(`assets/OtvNotFound.vue`);
 
-		cv("load DONE","res:", vRaw);
+		cv("load DONE");
 
 
     //cl(" load OtcFastDo -----------------------");
@@ -227,6 +229,7 @@ class s_testVuePage{
 
         return {
           pagSel: [
+						{name:"vueOT", file: "README.md"},
             {name:"One", file: "assets/p1.md"},
             {name:"Two", file: "assets/p0.md"},
             {name:"About otplc", file: "../otplc/README.md"},
@@ -313,12 +316,22 @@ class s_testVuePage{
 
   getHtml(){
     return `
+<h4>vM - vector</h4>
+<div id="dotcVMVectorView"></div>
 <h2>vue injection area start </h2>
+OtcHello.vue - from loader to div by id
+<div id="divotch"></div>
+
+OtcFastDo2
+<div id="dfd2">
+	<OtcFastDo2 id="divotcfd2" titleit="FastDo in yss - nice" />
+</div>
+
 vHello:
 <div id="vHello"></div>
 OtcHello.vue:
 <div id="otchello"></div>
-vDiv:
+vDiv: (<a href="javascript:void(0)" onclick="vM.OtMy404.mount('#vDiv');">++</a>)
 <div id="vDiv"></div>
 <h2>vue injection area end </h2>
 <hr>
@@ -335,7 +348,7 @@ test END <br>
 
 
 <b>From loader as module</b>
-<button onclick="vM.Hw2.Hw2_app.mount('#vhw2')" >mount</button>
+<button onclick="vM.Hw2.HwF2_app.mount('#vhw2')" >mount</button>
 <button onclick="vM.Hw2_this.greeting=(new Date())" >change</button>
 
 <div id="vhw2">
@@ -371,10 +384,20 @@ for vue module ....</div>
     //this.vvAbc.mount("#vvforabc");
     this.cl('--------------------------------------------');
 
-    $("#divForVM").append('<div id="oths"style="z-index:12;position:absolute;top:20px;left:200px; background-color:#fdddfd; border:1px solid yellow;color:white; font-size:small;"></div>');
-    vM.OtHostStatus.OtHostStatus_app.mount("#oths");
+    $("#divForVM").append(`<div id="oths"style="z-index:12;position:absolute;top:20px;left:200px; background-color:#fdddfd; border:1px solid yellow;color:white; font-size:small;">
 
-		this.vvaHello.mount("#vHello");
+			<Mylost />
+			</div>`);
+
+		// using module loader
+		// ./components/loader.mjs
+		vM.OtHostStatus.mount("#oths");
+
+		vM.OtcVMVectorView.mount("#dotcVMVectorView");
+		vM.OtcVMVectorView_this.setVector(Object.keys(vM));
+
+
+		//this.vvaHello.mount("#vHello");
 
 
 
