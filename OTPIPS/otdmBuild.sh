@@ -1,5 +1,5 @@
 p=$1
-echo "Will do project ... $p"
+echo "Will do build the project ... $p"
 
 if [ -d "$p" ]; then
     echo "- target directory is ok"

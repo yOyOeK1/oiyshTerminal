@@ -1,10 +1,10 @@
 [project]
-name = "ot_test2"
-version = "0.0.4"
+name = "ot_blank"
+version = "0.0.7"
 authors = [
-  { name="Bartlomiej Ceglik", email="yoyoek@wp.pl" },
+  { name="Name LastName", email="email@res.com" },
 ]
-description = "It's a dummy package / test. A small test of oiyshTerminal to pip."
+description = "It's a ot_blank package / test. A small test of oiyshTerminal to pip."
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
@@ -14,5 +14,5 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTPIPS/ot_test2"
-"Bug Tracker" = "https://github.com/yOyOeK1/oiyshTerminal/issues"
+"Homepage" = "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTPIPS/ot_blank"
+"Bug Tracker" = "https://github.com/yOyOeK1/oiyshTerminal/issues/ot_blank"
