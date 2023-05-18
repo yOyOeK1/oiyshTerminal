@@ -68,17 +68,16 @@ class pmTasks{
     if( this.deb ) cl("task.dbQ: "+url);
     $.get( url, function( data, status ){
       if( this.deb ){
-        cl("dbQ data");
-        cl(data);
-        cl("dbQ status");
-        cl(status);
+        cl("dbQ data"); cl(data);
+        cl("dbQ status"); cl(status);
       }
+      
       callBack( data, status );
 
     } );
   }
 
-
+  
 
   getHtmlFastDependTask( idTaskParent, step = 0 ){
     cl("getHtmlFastDependTask .... idTaskParent: "+idTaskParent+" .... step: "+step);
@@ -158,17 +157,18 @@ class pmTasks{
       $('#fFastDepsAdd').controlgroup();
 
     } else if( step == 5 ){ // from form task selected to be insert do pm_binds
+      cl("Got request to add sub task .....");
       let idTaskParent = cp.task['fdt_idTaskParent'];
       let idSubTask = $("#subTaskSelection  option:selected").val();
-      cl("Got request to add sub task .....");
-      cl("Parent id: "+idTaskParent);
-      cl("Subtask id: "+idSubTask);
-
       let ed = parseInt( (new Date().getTime())/1000 );
       let sql = `insert into pm_binds `+
         `(idTaskParent,idTask,entryDate) VALUES `+
         `(`+idTaskParent+`,`+idSubTask+`,`+ed+`);`;
-      cl("Inserting to db ....");
+      if( this.deb ) {
+          cl("Parent id: "+idTaskParent);
+          cl("Subtask id: "+idSubTask);
+          cl("Inserting to db ....");
+      }
       cp.task.dbQ(
         sql,
         (d,r)=>{
@@ -215,20 +215,27 @@ class pmTasks{
             showHideTransition: 'slide',
             icon: 'info'
         });
+        
         pager.getCurrentPage().task.loadTaskList(1);
       }
     }
   }
 
-  lookForDataWithParent( trA, dI, idParent ){
+  lookForDataWithParent( trA, dI, idParent, level = undefined ){
+    if( level == undefined )
+        level = 0;
+        
+    if( level > 20 || dI.length == 0 || dI[0]['firstParent'] == undefined )
+        return trA;
+  
     if( idParent == 0 )
       idParent = null;
 
     for(let i=0,ic=dI.length; i<ic; i++ ){
-      //cl("looking ...."+dI[i]['firstParent']);
-      if( dI[i]['firstParent'] == idParent ){
+      if( this.deb ) cl("looking ...."+dI[i]['firstParent']);
+      if( dI[i]['firstParent'] == idParent  ){
         let d = dI[i];
-        d['sub'] = this.lookForDataWithParent( [], dI, dI[i]['id'] );
+        d['sub'] = this.lookForDataWithParent( [], dI, dI[i]['id'], level+1 );
         trA.push( d );
 
       }
@@ -237,9 +244,9 @@ class pmTasks{
   }
 
   rebuildDataForImage( dI ){
-    cl("Looking at level ... 0");
+    if( this.deb ) cl("Looking at level ... 0");
     tr = this.lookForDataWithParent( [], dI, 0 );
-    cl("in level 0 got ... "+tr.length);
+    if( this.deb ) cl("in level 0 got ... "+tr.length);
 
     return tr;
 
@@ -256,9 +263,11 @@ class pmTasks{
 
 
   buildBlocksImgGant( objT, dI, wFrom, wTo, level ){
-    cl("buildBlocksImgGant ...."+level);
-    cl(" wFrom, wTo, level");
-    cl([wFrom, wTo, level]);
+    if( this.deb ) {
+        cl("buildBlocksImgGant ...."+level);
+        cl(" wFrom, wTo, level");
+        cl([wFrom, wTo, level]);
+    }
     let cx=wFrom,cy=70,lh=25,ew=wTo-wFrom;
 
     if( level == 0 ){
@@ -476,13 +485,17 @@ class pmTasks{
 
   buildImage( d ){
   //projSVG
-    cl("build Image .....");
-    cl("data in ...");
-    cl(d);
+    if( this.deb ) {
+        cl("build Image .....");
+        cl("data in ...");
+        cl(d);
+    }
 
     let dToI = this.rebuildDataForImage( d );
-    cl("img data ");
-    cl(dToI);
+    if( this.deb ) { 
+        cl("img data ");
+        cl(dToI);
+    }
 
     let iw=900,ih=300;
     let icx=parseInt(iw/2), icy=parseInt(ih/2);
@@ -495,7 +508,7 @@ class pmTasks{
     $('#projSVG').html(tr);
     var bip = SVG("#pImg");
     let hImg = this.buildLevelImg( bip, dToI, 30, 9 );
-    cl("build levels image have elements: "+hImg);
+    if( this.deb ) cl("build levels image have elements: "+hImg);
     $("#pImg").attr('height',hImg*10+50);
 
 
@@ -546,7 +559,7 @@ class pmTasks{
         FROM pm_tasks as pt order by status, childrens, entryDate desc;`,
         (d,r)=>{
           if( r == 'success' ){
-            cl("make tasks list .....");
+            if( this.deb ) cl("make tasks list .....");
 
 
             cp.task.buildImage( d );
@@ -805,10 +818,12 @@ class pmTasks{
   }
 
   onAddIt( action = 'Add', id = -1 ){
-    cl("onAddIt "+action);
+    if( this.deb ) {
+        cl("onAddIt "+action);
+        cl("Have data in serialize array ....");
+        cl(fData);
+    }
     let fData = $('#fNew').serializeArray();
-    cl("Have data in serialize array ....");
-    cl(fData);
     let sql = '';
     if( action == "Add" ){
       cl("ADD sql");
@@ -836,6 +851,7 @@ class pmTasks{
     if( d['status'] == undefined ){
       d['status'] = '0';
     }
+
 
     cl("sql is now ");
     cl(sql);
