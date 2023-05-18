@@ -57,12 +57,13 @@ function xr( query, callback ){
 	});
 }
 
+/* TODO xmlrpc ... DISABLED
 setTimeout((_)=>{
 	xr( 'ping', (d)=>{ 
 		cl(["xr","dry run ping","result",d]);	
 	} );
 },1000);
-
+*/
 
 
 
