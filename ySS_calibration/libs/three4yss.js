@@ -399,7 +399,7 @@ fitCanvasToScreenDelay(){
 
 fitCanvasToScreen(){
   var c = $("#otThreeLogo").children()[0];
-  $(c).attr('style',"width:100vw;height:99.2vh;");
+  $(c).attr('style',"width:99.8vw;height:99.1vh;");
 }
 
  onWindowResize( renderAfter=true ) {
