@@ -14,6 +14,58 @@ var sm;
 var vM = {}; // vue modules loaded
 
 
+
+// xmlrpc ----------------------------------------
+
+function filledString( strW, coun ){
+	//cl(['xr','filledString','args c',arguments.length,arguments]);
+	let tr = '';
+	for ( let i=0; i<coun; i++ ) {
+		tr+=strW;
+	}
+	return tr;	
+}
+
+
+function encodeXml(){
+	//cl(['xr','encodeXml','args c',arguments.length,arguments]);
+	return arguments[0];
+	
+}
+function xr( query, callback ){
+	cl(["xr","query start....", { "query":query } ]);
+	let urlEndpoint = "http://192.168.43.220:33333/otrpc1";
+	let format = "xml";
+	var bXrpcTs = new Date().getTime();
+	
+	xmlRpcClient (urlEndpoint, query, undefined, format, function (err, data) {
+		if (err) {
+			cl(["xr","res error","err.message == " + err.message]);
+			callback( -1 );
+		
+		}else {
+			//cl(["xr","res ok",JSON.stringify (data)] );
+		}
+		
+		let bTDelta = (new Date().getTime())-bXrpcTs;
+		cl(["xr","benchmark", "did in",bTDelta,"ms.","data",data]);
+
+		if (callback !== undefined) {
+			cl(["xr","DONE callback is set!"]);
+			callback( data );	
+		}
+	});
+}
+
+setTimeout((_)=>{
+	xr( 'ping', (d)=>{ 
+		cl(["xr","dry run ping","result",d]);	
+	} );
+},1000);
+
+
+
+
 // index stuff -----------------------------------
 
 var doneFlag = 0;
