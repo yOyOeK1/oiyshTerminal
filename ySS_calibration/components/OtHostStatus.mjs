@@ -2,15 +2,24 @@ function otcl( m ) {
 	console.log("otHS : ",m);
 }
 
+import Mylost from './My404.mjs'
+
+
+
 otcl("init ...");
+otcl(["Mylost",Mylost]);
 
 otcl("template / components ... DONE");
 
-const OtHostStatus_app = Vue.createApp({
+export default Vue.createApp({
+	components:{
+		Mylost
+	},
 	template: `<p :style="{ color }" >http://{{ host }}:{{ port }}<br>
 	 	status( {{ status }} ) / {{ running }} / ({{ iterNo }}) </p>
 		<button @click="startIt()" v-if="!running">start</button>
-		<button @click="stopIt()"  v-if="running">stop</button>`,
+		<button @click="stopIt()"  v-if="running">stop</button><hr>
+		<Mylost />`,
 	data(){
 		return {
 			host: '192.168.43.-',
@@ -60,5 +69,3 @@ const OtHostStatus_app = Vue.createApp({
 });
 
 otcl("OtHostStatus_app ... DONE");
-
-export default { OtHostStatus_app }
