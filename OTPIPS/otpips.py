@@ -3,11 +3,18 @@
 from ot_my_libs.myLoger import myLoger as mlog
 from ot_my_libs.FileActions import FileActions as fad
 from ot_my_libs.TimeHelper import TimeHelper as thd
-import json,sys,os
+import json
+import sys
+import os
 import toml
+
+
 
 import otdmRepoUpdate as repo
 
+print("using eclipt adding some...")
+t = thd()
+print( t.getNiceShortDate(timeStamp) )
 
 def smallTestOneSet( dName ):
     print( f"#   {dName}" )
