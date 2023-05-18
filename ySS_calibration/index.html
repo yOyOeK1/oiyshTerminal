@@ -121,6 +121,7 @@ var module = new moduleCollector();
 <script src="libs/mDF2.js"></script>
 <script src="libs/mDoCmd.js"></script>
 <script src="libs/mWebSockets.js"></script>
+<script src="libs/xmlrpc.js"></script>
 
 <script src="libs/mOperation.js"></script>
 
@@ -292,7 +293,7 @@ function makeInit(){
   svgTests();
 	wsConnectIn( pager );
 	wsConnectOut();
-    pager.getPage( -1 );
+  pager.getPage( -1 );
 
 
   // store last sean page on browser
