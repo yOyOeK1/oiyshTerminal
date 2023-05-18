@@ -1,0 +1,21 @@
+[project]
+name = "ot_test_scrip1"
+version = "0.1.4"
+authors = [
+  { name="Name LastName", email="email@res.com" },
+]
+description = "It's a ot_test_scrip1 package / test. A small test of oiyshTerminal to pip. Now with runner."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+
+[project.scripts]
+ot_test_scrip1_runner = "ot_test_scrip1:runner.runIt"
+
+[project.urls]
+"Homepage" = "https://github.com/yOyOeK1/oiyshTerminal/tree/main/OTPIPS/ot_test_scrip1"
+"Bug Tracker" = "https://github.com/yOyOeK1/oiyshTerminal/issues/ot_test_scrip1"
