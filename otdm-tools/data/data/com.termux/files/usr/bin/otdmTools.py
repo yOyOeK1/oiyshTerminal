@@ -10,6 +10,9 @@ import shutil
 import hashlib
 from subprocess import run
 
+from ot_my_libs.FileActions import FileActions as fad
+from ot_my_libs.TimeHelper import TimeHelper as thd
+
 import otdmUtils as otU
 
 from otdmDriverProto import *
@@ -33,6 +36,9 @@ deb=0
 conf={}
 clip=[]
 otdl=[]
+
+faH = fad()
+thH = thd()
 
 def argsParser( args ):
     tr={}
@@ -1036,7 +1042,13 @@ def mkBackUp( args ):
     print(" DONE ")
     return 1
 
+
+
+
 def fileInfo( filePath ):
+    global faH
+    global thH 
+    ctime = os.path.getctime( filePath )
     return {
         "isFile": os.path.isfile( filePath),
         "isDir": os.path.isdir( filePath),
@@ -1044,7 +1056,11 @@ def fileInfo( filePath ):
         "dir": os.path.dirname( filePath ),
         "fullPath": filePath,
         "size": os.path.getsize( filePath ),
-        "ctime": os.path.getctime( filePath )
+        "sizeStr": faH.getSizeNice( filePath ),
+        "ctime": ctime,
+        "ctimeStr": thH.getNiceDateFromTimestamp( ctime 
+                                                 )
+        #"md5sum": faH.md5file( filePath )
     }
 
 def execTasksFrom( args ):
