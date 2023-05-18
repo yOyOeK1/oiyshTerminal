@@ -977,14 +977,15 @@ def mkBackUp( args ):
         subprocess.run( cTd, shell=True )
         print("DONE\n")
 
-        destFullPath = fileInfo( os.path.join( destDir, fArchName ) )
-        
+        destFullPath = -1
+
         if w == "sqfs":
             print("No moving for sqfs it's staing in spot")
             destFullPath = fileInfo( os.path.join( oPath, fArchName ) )
         elif w == "fpath":
             print(f"Moving it to destination directory: {destDir} ... \n\tWill be as: ... {destFullPath}", end="")
             shutil.move( fsFn, f"{destDir}/" )
+            destFullPath = fileInfo( os.path.join( destDir, fArchName ) )
             print("DONE")
 
 
