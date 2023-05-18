@@ -61,7 +61,16 @@ Packages on pip:
 
 - [x] **./otdmUpload2Pip.sh** - to upload it to pypip
 
-- [x] **./otdmRepoUpdate.py** - to update / rebuild `./REPOPIPS/pips.json` with list
+- [x] **abond plan** **./otdmRepoUpdate.py** - to update / rebuild `./REPOPIPS/pips.json` with list
+  
+  - [ ] local pypi hosting / indexing / deploing system
+  
+    - [x] to upload ready package to repository
+      **./otdmRepoUpdate.sh [pack/dist/pack-x.x.x-.....whl]** 
+
+    - [x] to reindex repository run
+      **/otdmRepoCreate.sh**
+
 
 *so .sh / .py tool chain for pip bilding*
 
