@@ -347,6 +347,9 @@ class sPager {
     
   }
 
+	/**
+	 * Set / updates current menu to site is in currentPage
+	 */
 	setMenuSiteSelected(){
     this.cl(["men ss:",]);
     this.cl(["men ss:","currentPage",pager.currentPage]);
