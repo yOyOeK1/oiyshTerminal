@@ -25,6 +25,7 @@ class vueOT{
 		let nTmp = fPath.split("/");
 		let loadName= nTmp[ nTmp.length-1 ].split(".")[0];
 		this.cl("extract ","loadName",loadName);
+		//this.vu
 
 		mC.otdmArgs(
 	    {'dfs':`/home/yoyo/Apps/oiyshTerminal/ySS_calibration/sites/test_vue/${fPath}`},
