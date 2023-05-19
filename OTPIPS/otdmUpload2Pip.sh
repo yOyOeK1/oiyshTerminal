@@ -3,9 +3,11 @@ p="$1"
 echo "Will upload to pip ... $p"
 puPath="$p"
 
+echo -n "* file looks ok ... "
 if [ -f "$puPath"".tar.gz" ]; then
-    echo "- file looks ok ...."
+    echo "OK"
 else
+    echo ""
     echo "Error wrong path? no file at ""$puPath"".tar.gz EXIT 11"
     exit 11
 fi
@@ -23,3 +25,4 @@ export ALL_PROXY="$mP"
 
 echo "- twine upload ...."
 python3 -m twine upload --repository testpypi "$puPath*"
+echo "DONE
