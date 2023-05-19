@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-OTPIPS_VER="0.0.1-v1"
+OTPIPS_VER="0.0.2"
 OTPIPS_DIR="/OT/OTPIPS"
 # playground overwrite
-OTPIPS_DIR="/home/yoyo/Apps/oiyshTerminal/OTPIPS/playground/v1"
-OTPIPS_DIR="/home/yoyo/Apps/oiyshTerminal/OTPIPS"
+#OTPIPS_DIR="/OT/OTPIPS/playground/v1"
+
 
 OTPIPS_BLANK="ot_blank"
 OTPIPS_TNAME="$1"
@@ -66,20 +66,20 @@ wizardNew(){
 }
 
 doHelp(){
-    echo "Help ! argC:$argC"'
-
+    echo "Help ! argC:$argC        ver: $OTPIPS_VER"'
+                         '"$(date)"'       
 -init [projectName]
--delIt [projectName]  - to delete it
+-delIt [projectName]     - to delete it
 
 -h | h  - is for help.
 -v      - version
 ## test section
--wNew                 - do wizard new
--mkNew 
--chkDir [projectName] - directory check if target is ok
--chkBlank             - b|lank directory check fast 
+-wNew                    - do wizard new
+-mkNew         ...       - make new directory steps
+-chkDir [projectName]    - directory check if target is ok
+-chkBlank      ...       - blank directory check fast 
 ---
-*current version: '"$OTPIPS_VER"''
+*current version: '"$OTPIPS_VER"' '
 }
 
 mkNew(){
