@@ -41,8 +41,8 @@ class db_helper:
     
     # shoud be overrite    
     def set_struct(self):
-    	print("db_helper is def overrit it !")
-        """
+        print("db_helper is def overrit it !")
+        exampleCanBe="""
         self.struct = {
             'wiki' : {
                       'lat':     "float",
@@ -53,8 +53,8 @@ class db_helper:
                       'rank':    "int"                      
                       }
             }
-        
-        """
+
+    """
     
     
     
