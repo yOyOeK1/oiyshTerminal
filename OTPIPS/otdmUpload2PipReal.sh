@@ -1,6 +1,6 @@
 p="$1"
 
-echo "Will upload to pip ... $p"
+echo "Will upload to pip REAL... $p"
 puPath="$p"
 
 echo -n "* file looks ok ... "
@@ -23,8 +23,11 @@ echo "OK"
 #echo "$puPath* exit 3 for now "
 #exit 3
 
-echo -n "* twine upload ... "
-python3 -m twine upload --repository testpypi "$puPath*"
+echo -n "* twine upload ... in 5 sec"
+sleep 5
+
+echo "GOGOGO ..."
+python3 -m twine upload "$puPath*"
 echo "OK"
 
 echo "DONE"
