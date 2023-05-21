@@ -1,6 +1,6 @@
 [project]
 name = "ot_my_libs"
-version = "0.0.9"
+version = "0.0.10"
 authors = [
   { name="Bartlomiej Ceglik", email="yoyoek@wp.pl" },
 ]

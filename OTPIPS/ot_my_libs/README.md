@@ -4,7 +4,7 @@
 
   in example.py
   [benchmarking](#benchmarking) | sqlite3 
-  can do: myLoger | FileActions | MyCalculate | myFastPlot | myMqttClient | ...
+  can do: myLoger | ArgsParse | FileActions | MyCalculate | myFastPlot | myMqttClient | ...
 
 ## check example
 
@@ -45,6 +45,7 @@ def benchmarkTimer():
 ot_my_libs
 ├── db_helper.py
 ├── example.py
+├── ArgsParse.py
 ├── FileActions.py
 ├── __init__.py
 ├── MyCalculate.py
@@ -61,6 +62,15 @@ ot_my_libs
 ```shell
 pip3 uninstall ot_my_libs
 ```
+
+### change log
+
+ * 0.0.10
+    - ArgsParse to parse argument comming at start of app
+    - myLoger have more colors to select and new `defColor` argument
+    - add `change log` in README :)
+    
+    
 
 ---
 
