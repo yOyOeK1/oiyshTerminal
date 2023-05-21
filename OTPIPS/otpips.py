@@ -9,12 +9,13 @@ import os
 import toml
 
 
+#import otdmRepoUpdate as repo
 
-import otdmRepoUpdate as repo
+
 
 print("using eclipt adding some...")
 t = thd()
-print( t.getNiceShortDate(timeStamp) )
+print( t.getNiceShortDate() )
 
 def smallTestOneSet( dName ):
     print( f"#   {dName}" )
@@ -24,17 +25,19 @@ def smallTestOneSet( dName ):
     print( "\n- chkIt ... \n")
     ren = o.chkIt()
     
+    #breakpoint()
+    
     print( f"\n{dName}---------------------------")
     print( "##  result of chkIt:\n" ) 
-    print( json.dumps( ren ) )
+    print( json.dumps( ren,indent=2 ) )
     
     print( f"\n{dName}---------------------------")
     print( "##  dist info:\n" ) 
-    print( ren['dist'] )
+    print( json.dumps( ren['dist'], indent=2 ) )
     
     print( f"\n{dName}---------------------------")
     print( "##  repository info:\n" ) 
-    print( ren['repo'] )
+    print( json.dumps( ren['repo'], indent=2 ) )
     
     print( f"\n{dName}- DONE --------------------------\n")
 
@@ -57,7 +60,7 @@ class otpip:
                 'debug': True,
                 'error': True,
                 'critical': True
-                })
+                },)
     
         self.fa = fad()
         self.th = thd()
@@ -113,8 +116,8 @@ class otpip:
                 tr['pyproject']['data'] = toml.load( self.pyprojPath )
                 self.ver = tr['pyproject']['data']['project']['version']
                 self.l(['from','pyproject','got','version',self.ver])
-                tr['repo']['ver'] = repo.getJson().get( self.dName, -1 )
-                tr['repo']['inRepo'] = True if self.ver == tr['repo']['ver'] else False
+                #tr['repo']['ver'] = repo.getJson().get( self.dName, -1 )
+                #tr['repo']['inRepo'] = True if self.ver == tr['repo']['ver'] else False
                 
                 fWhl = f"{self.dName}-{self.ver}-py3-none-any.whl" 
                 fTar = f"{self.dName}-{self.ver}.tar.gz" 

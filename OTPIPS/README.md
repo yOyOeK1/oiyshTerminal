@@ -37,45 +37,59 @@ Packages on pip:
 
 - [ ] do / move your code to `ot_hello_world/src/ot_hello_world/`
 
-- [ ] to test if it's working use
+- [ ] to test in `venv` run **./otdmVenvIt.sh ot_hello_world** if it's working use
   
-  ```bash
-  $ ./otdmVenvIt.sh ot_hello_world
-  $ source ./ot_hello_world/venv/bin/activate
-  $ cd ot_hello_world/src/
-  $ python3
-  python version 0.18 on top of Python 3.8.10 /usr/bin/python3
-  >>> import ot_hello_world
-  >>> ot_hello_world.ot_hello_world()
-  ,,,,,......
-  exit()
-  
-  $ deactivate
-  ```
+    ```bash
+    $ ./otdmVenvIt.sh ot_hello_world
+    $ source ./ot_hello_world/venv/bin/activate
+    $ cd ot_hello_world/src/
+    $ python3
+    python version 0.18 on top of Python 3.8.10 /usr/bin/python3
+    >>> import ot_hello_world
+    >>> ot_hello_world.ot_hello_world()
+    ,,,,,......
+    exit()
+    
+    $ deactivate
+    ```
 
 - [x] **./otdmMakeDocsMd.sh ot_hello_world** - to build nice docs to your readme xdoc's'is 
 
 - [x] **./otdmBuild.sh ot_hello_world** - we know it's working in `venv` so lets  
 
-- [ ] we can test it localy `pip3 install ot_hello_world/dist/ot_hello_world-X.X.X.tar.gz` or do same thing in `otdmVenvIt.sh`
+- [ ] we can test it localy by
+
+  `pip3 install ot_hello_world/dist/ot_hello_world-X.X.X.tar.gz` or do same thing in `otdmVenvIt.sh`
+
+  **or**
+
+  *in `ot_hello_world` directory run*
+  `pip3 install .`
+
 
 - [x] **./otdmUpload2Pip.sh** - to upload it to pypip
 
-- [x] **abond plan** **./otdmRepoUpdate.py** - to update / rebuild `./REPOPIPS/pips.json` with list
+- [x] update / download to local repo / reindex`./REPOPIPS/pips.json` with list
   
-  - [ ] local pypi hosting / indexing / deploing system
-  
-    - [x] to upload ready package to repository
-      **./otdmRepoUpdate.sh [pack/dist/pack-x.x.x-.....whl]** 
+  - [x] to upload ready package to repository
+    **./otdmRepoDown_byWhl.sh [pack/dist/pack-x.x.x-.....whl]** 
 
-    - [x] to reindex repository run
-      **/otdmRepoCreate.sh**
-
+  - [x] to reindex repository run
+    **/otdmRepoCreateIndex.sh**
 
 *so .sh / .py tool chain for pip bilding*
 
+---
+
 ## otpips.py
 
+
+## offline python package build 
+  
+  Use `pip3` as having files in directory:
+  ```bash
+  pip3 install --no-index --find-links /path/to/download/dir/ -r requirements.txt
+  ```
 
 
 ### return example
