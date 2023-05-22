@@ -90,6 +90,10 @@ Packages on pip:
   ```bash
   pip3 install --no-index --find-links /path/to/download/dir/ -r requirements.txt
   ```
+  **or**
+  ```bash
+  pip3 wheel --no-cache-dir -r requirements.txt -w /path/to/download/dir
+  ```
 
 
 ### return example
