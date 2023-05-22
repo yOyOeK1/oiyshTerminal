@@ -25,8 +25,25 @@ else
     exit 11    
 fi
 
+
+## running main attraction downolading to local repo ...
 pypi-mirror download -d "$REPO_DIR" "$p"
+
 
 echo "* add to ./RepoActions.log"
 echo "{ \"entryDate\": $(date +%s), \"action\": \"download\", \"name\": \"$p\" }" >> ./RepoActions.log
 echo "DONE"
+echo -n "[ Q ]: Rebuild index of repo? [Y/n]:"
+read -r yes
+case $yes in
+''|'y'|'Y')
+    echo "YES ! GO GO go ..."
+    ./otdmRepoCreateIndex.sh
+    
+    ;;
+*)
+    echo "no then no DONE" 
+    ;;
+esac
+
+
