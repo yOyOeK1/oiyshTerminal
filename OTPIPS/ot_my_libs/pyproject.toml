@@ -1,10 +1,10 @@
 [project]
 name = "ot_my_libs"
-version = "0.0.11"
+version = "0.0.12"
 authors = [
   { name="Bartlomiej Ceglik", email="yoyoek@wp.pl" },
 ]
-description = "oiyshTerminal my basic libs: myLoger | FileActions | MyCalculate | db_helper | mysql_helper | ..."
+description = "oiyshTerminal my basic libs: myLoger | FileActions | PlugsHelper | MyCalculate | db_helper | mysql_helper | ..."
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
