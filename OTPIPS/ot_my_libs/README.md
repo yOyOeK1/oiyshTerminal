@@ -10,9 +10,9 @@
 
 * myFastPlot - fast plot data with kivy
 
-* TimeHelper - to do operation on time 
+* TimeHelper - to do operation on time
 
-* myLoger - logging unifide 
+* myLoger - logging unifide
 
 * XMLHelper
 
@@ -22,12 +22,14 @@
 
 * mysql_helper - mysql helper
 
+* PlugsHelper - to help with plugins loading and exploration
+
 * example - use case of:
-  
+
   * benchmarking - from TimeHelper
-  
+
   * sqlite3 - from db_helper
-  
+
   **important** - some of subs will want more dependencies then default so look for logs if there is any pip missing ( myFastPlot )
 
 
@@ -60,8 +62,8 @@ def benchmarkTimer():
     time.sleep(1)
     th.benDone(
         bKey,
-        f"Result of benStart / benDone [run at:{th.getNiceShortDate()}]", 
-        printIt=True 
+        f"Result of benStart / benDone [run at:{th.getNiceShortDate()}]",
+        printIt=True
         )
 ```
 
@@ -92,7 +94,7 @@ class mdb ( dbh ):
 
   db.insert( 'tableA', {"lat":2.1,"lon":1.1} )
   print("select id,lat,lon from tableA where id=2 .....")
-  # yes `id` column autoincremental is added automaticly 
+  # yes `id` column autoincremental is added automaticly
   resB = db.select('tableA','id,lat,lon', 'id=2')
   print( resB )
 
@@ -120,6 +122,8 @@ ot_my_libs
 ├── myMqttClient.py
 ├── mysql_helper.py
 ├── TimeHelper.py
+├── PlugsHelper.py
+├── PlugsHelperTest_plugXXX_a.py
 └── XMLHelper.py
 ```
 
@@ -136,12 +140,16 @@ pip3 uninstall ot_my_libs
 
 ### change log
 
+* 0.0.12
+
+  - PlugsHelper
+
 * 0.0.11
-  
-  - fix some README errors parsing and ... 
+
+  - fix some README errors parsing and ...
 
 * 0.0.10
-  
+
   - ArgsParse to parse argument comming at start of app
   - myLoger have more colors to select and new `defColor` argument
   - add `change log` in README :)
