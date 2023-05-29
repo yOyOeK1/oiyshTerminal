@@ -12,11 +12,12 @@ from subprocess import run
 
 from ot_my_libs.FileActions import FileActions as fad
 from ot_my_libs.TimeHelper import TimeHelper as thd
+from ot_my_libs.ArgsParse import ArgsParse
 
 import otdmUtils as otU
 
 from otdmDriverProto import *
-from otdmDriverManager import *
+#depricated from otdmDriverManager import *
 #from otdmDriverNodeRedFlowById import *
 #from otdmDriverGrafanaDashboardByUid import *
 #from otdmDriverGrafanaDatasourceByUid import *
@@ -40,30 +41,6 @@ otdl=[]
 faH = fad()
 thH = thd()
 
-def argsParser( args ):
-    tr={}
-
-    #print( "arg count {0}".format(
-    #    len(args)
-    #))
-
-    vS = 0
-    aName=""
-    for i,a in enumerate(args):
-        if i > 0:
-            #print("arg nr {0} arg({1})".format(i,a))
-            if vS == 1:
-                if aName != "":
-                    tr[aName]=a
-                    aName=""
-                    vS=0
-                else:
-                    print("error")
-            elif a[0] == "-":
-                vS=1
-                aName=a[1:]
-
-    return tr
 
 class pcols:
     HEADER = '\033[95m'
@@ -998,7 +975,7 @@ def mkBackUp( args ):
                 "currPath": destDir,
             })
         sys.exit(1)
-    
+
 
     elif w == "*":
         egds=argsNew( args )
@@ -1048,7 +1025,7 @@ def mkBackUp( args ):
 
 def fileInfo( filePath ):
     global faH
-    global thH 
+    global thH
     ctime = os.path.getctime( filePath )
     return {
         "isFile": os.path.isfile( filePath),
@@ -1059,7 +1036,7 @@ def fileInfo( filePath ):
         "size": os.path.getsize( filePath ),
         "sizeStr": faH.getSizeNice( filePath ),
         "ctime": ctime,
-        "ctimeStr": thH.getNiceDateFromTimestamp( ctime 
+        "ctimeStr": thH.getNiceDateFromTimestamp( ctime
                                                  )
         #"md5sum": faH.md5file( filePath )
     }
@@ -1699,6 +1676,9 @@ def exeArray( args ):
             ErrDo( args, "ERROR - in otdm if not 1 not good")
     return 1
 
+
+from ot_my_libs.PlugsHelper import PlugsHelper
+
 def exeIt( args ):
     if deb: print( "exeIt args:[{0}]".format(args) )
 
@@ -1708,9 +1688,45 @@ def exeIt( args ):
     global acts
     conf=confLoad()
     chkClipBoard()
+
     # injecting drivers to acts list
-    otdl = otdmDriverManager( args, conf )
-    acts=otdl.injectDrivers( acts )
+    print("[ i ] injecting otdmDriver ... protos ", end="")
+    if 0: #old methode
+        otdl = otdmDriverManager( args, conf )
+        acts=otdl.injectDrivers( acts )
+        """
+        {
+            'o': <otdmDriverGrafanaDashboardByUid.otdmDriverGrafanaDashboardByUid object at 0x7fd52eda0d60>,
+            'type': 'driver',
+            'cname': 'otdmDriverGrafanaDashboardByUid',
+            'name': 'grafana'
+            }
+
+         {
+            'o': <module 'otdmDriverGrafanaDashboardByUid' from '/home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin/otdmDriverGrafanaDashboardByUid.py'>,
+            'type': 'driver',
+            'cname': 'otdmDriverGrafanaDashboardByUid',
+            'name': <module 'otdmDriverGrafanaDashboardByUid' from '/home/yoyo/Apps/oiyshTerminal/otdm-tools/data/data/com.termux/files/usr/bin/otdmDriverGrafanaDashboardByUid.py'>}
+        """
+        print("--------------------");print(acts)
+    def phYesNo( nameTest ):
+        if nameTest == "otdmDriverManager.py":
+            return False
+        elif nameTest[-8:] == "Proto.py":
+            return False
+        else:
+            return True
+    ph = PlugsHelper( oAsInitObject = True )
+    for p in ph.lookForDrivers( "otdmDriver", ".py", phYesNo ):
+        print("+",end="")
+        acts.append(p)
+    print("")
+    #print("--------------------"); print(acts)
+
+    #sys.exit(11)
+    #for d in phRes:
+    #    print(d['cname'])
+
     #print("For now ....")
     #sys.exit(1)
 
@@ -1810,7 +1826,7 @@ if __name__ == "__main__":
 
     args=sys.argv
     #print( args )
-    args=argsParser( args )
+    args=ArgsParse( args )
     print("args after parser:{0}".format(args))
 
     '''

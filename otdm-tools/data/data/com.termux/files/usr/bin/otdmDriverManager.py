@@ -1,6 +1,7 @@
 import sys
 from otdmDriverFileSystem import *
 
+# 4del / depricated to ot_my_libs.PlugsHelper
 class otdmDriverManager:
 
     args={}
@@ -27,6 +28,10 @@ class otdmDriverManager:
         #self.deb = 1
         if self.deb:print("[ i ] looking for drivers ....", end=" ")
         tr = []
+        ##print("----------------")
+        #for p in sys.path:
+        #    print(p)
+        #print("----------------")
         for p in sys.path:
             if self.deb:print(f" looking in [{p}]")
             dfs=otdmDriverFileSystem( self.args, self.conf, prefixFS=p )
@@ -48,6 +53,9 @@ class otdmDriverManager:
 
                                 #eval( f"import {cname}" )
                                 #print("importing")
+                                #print("-----------------------------------")
+                                #print("il")
+                                #print(il)
                                 d=il.import_module( cname )
                                 d=eval(f"d.{cname}( self.args, self.conf ) ")
                                 #d=f"{cname}"( args, conf )

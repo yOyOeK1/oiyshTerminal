@@ -7,6 +7,9 @@ import time
 
 
 def benchmarkTimer():
+    """
+    **TimeHelper** as benchmark timer ...
+    """
 
     th = thd()
 
@@ -23,6 +26,9 @@ def benchmarkTimer():
 # using db_helper
 from ot_my_libs.db_helper import db_helper as dbh
 class mdb ( dbh ):
+    """
+    **db_helper** needs - overiting ours data structure and types
+    """
     ## set your structure of db / table
     def set_struct(self):
         self.struct = {
@@ -31,7 +37,13 @@ class mdb ( dbh ):
                       'lon':     "float",
                       }
             }
+
+
 def dbHelperExample():
+    """
+    **db_helper** example use case: from init, to inser, more inserts, some selections ...
+    """
+
     db = mdb('/tmp/mdbTest1.db')
 
     print("select tableA ... ")
@@ -53,13 +65,42 @@ def dbHelperExample():
     print("after delete ... select tableA")
     print(db.select('tableA'))
 
+# using PlugsHelper
+from ot_my_libs.PlugsHelper import *
+def PlugsHelperExampleTest():
+    """
+    **PlugsHelperExample** example use look up for files / dirs to load as plugins ...
+
+    ## with filter
+      To have custom filter on what not to ...
+      ```python3
+      def phYesNo( nameTest ):
+          if nameTest == "otdmDriverManager.py":
+              return False
+          elif nameTest[-8:] == "Proto.py":
+              return False
+          else:
+              return True
+
+      ph = PlugsHelper()
+      plugs = ph.lookForDrivers( "otdmDriver", ".py", phYesNo ):
+      ```
+    """
+    PlugsHelperExample()
+
 
 def testRunAll():
+    """
+    will run them all so you can see it in action
+    """
+
     print("can show some examples .....")
     print("- benchmarkTimer")
     benchmarkTimer()
     print("- db_helper making instance of db ...")
-    dbHelperExample()
+    PlugsHelperExampleTest()
+    print("- PlugsHelper test run ...")
+    PlugsHelperExample()
 
 if __name__ == "__main__":
     testRunAll()

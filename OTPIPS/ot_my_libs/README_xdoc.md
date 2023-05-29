@@ -5,6 +5,11 @@
 * [ot\_my\_libs.PlugsHelperTest\_plug2\_a](#ot_my_libs.PlugsHelperTest_plug2_a)
 * [ot\_my\_libs.PlugsHelperTest\_plug1\_a](#ot_my_libs.PlugsHelperTest_plug1_a)
 * [ot\_my\_libs.example](#ot_my_libs.example)
+  * [benchmarkTimer](#ot_my_libs.example.benchmarkTimer)
+  * [mdb](#ot_my_libs.example.mdb)
+  * [dbHelperExample](#ot_my_libs.example.dbHelperExample)
+  * [PlugsHelperExampleTest](#ot_my_libs.example.PlugsHelperExampleTest)
+  * [testRunAll](#ot_my_libs.example.testRunAll)
 * [ot\_my\_libs.myMqttClient](#ot_my_libs.myMqttClient)
 * [ot\_my\_libs.myLoger](#ot_my_libs.myLoger)
 * [ot\_my\_libs.MyCalculate](#ot_my_libs.MyCalculate)
@@ -28,6 +33,11 @@
     * [insert](#ot_my_libs.mysql_helper.mysql_helper.insert)
     * [insertMulti](#ot_my_libs.mysql_helper.mysql_helper.insertMulti)
 * [ot\_my\_libs.PlugsHelper](#ot_my_libs.PlugsHelper)
+  * [PlugsHelper](#ot_my_libs.PlugsHelper.PlugsHelper)
+    * [\_\_init\_\_](#ot_my_libs.PlugsHelper.PlugsHelper.__init__)
+    * [dirPlugs](#ot_my_libs.PlugsHelper.PlugsHelper.dirPlugs)
+    * [lookForDrivers](#ot_my_libs.PlugsHelper.PlugsHelper.lookForDrivers)
+  * [PlugsHelperExample](#ot_my_libs.PlugsHelper.PlugsHelperExample)
 * [ot\_my\_libs.PlugsHelperTest\_plug3\_a](#ot_my_libs.PlugsHelperTest_plug3_a)
 * [ot\_my\_libs.db\_helper](#ot_my_libs.db_helper)
 
@@ -50,6 +60,71 @@
 <a id="ot_my_libs.example"></a>
 
 # ot\_my\_libs.example
+
+<a id="ot_my_libs.example.benchmarkTimer"></a>
+
+#### benchmarkTimer
+
+```python
+def benchmarkTimer()
+```
+
+**TimeHelper** as benchmark timer ...
+
+<a id="ot_my_libs.example.mdb"></a>
+
+## mdb Objects
+
+```python
+class mdb(dbh)
+```
+
+**db_helper** needs - overiting ours data structure and types
+
+<a id="ot_my_libs.example.dbHelperExample"></a>
+
+#### dbHelperExample
+
+```python
+def dbHelperExample()
+```
+
+**db_helper** example use case: from init, to inser, more inserts, some selections ...
+
+<a id="ot_my_libs.example.PlugsHelperExampleTest"></a>
+
+#### PlugsHelperExampleTest
+
+```python
+def PlugsHelperExampleTest()
+```
+
+**PlugsHelperExample** example use look up for files / dirs to load as plugins ...
+
+## with filter
+  To have custom filter on what not to ...
+  ```python3
+  def phYesNo( nameTest ):
+      if nameTest == "otdmDriverManager.py":
+          return False
+      elif nameTest[-8:] == "Proto.py":
+          return False
+      else:
+          return True
+
+  ph = PlugsHelper()
+  plugs = ph.lookForDrivers( "otdmDriver", ".py", phYesNo ):
+  ```
+
+<a id="ot_my_libs.example.testRunAll"></a>
+
+#### testRunAll
+
+```python
+def testRunAll()
+```
+
+will run them all so you can see it in action
 
 <a id="ot_my_libs.myMqttClient"></a>
 
@@ -340,6 +415,77 @@ __data example__
 <a id="ot_my_libs.PlugsHelper"></a>
 
 # ot\_my\_libs.PlugsHelper
+
+<a id="ot_my_libs.PlugsHelper.PlugsHelper"></a>
+
+## PlugsHelper Objects
+
+```python
+class PlugsHelper()
+```
+
+To play with plugins idea fast ...
+
+__returns__ by default _array_ of _json_
+```json
+[
+    {
+        "o": `_def_` or _object_,
+        "type": "driver",
+        "cname": `_str_` string,
+        "name": `_str_` string name
+    }, ...
+]
+```
+
+<a id="ot_my_libs.PlugsHelper.PlugsHelper.__init__"></a>
+
+#### \_\_init\_\_
+
+```python
+def __init__(oAsInitObject=False, args=None, conf=None)
+```
+
+**oAsInitObject** _bool_ _default_ False - return ['o'] as init object with args,conf as argument or as definition to init
+**args** - to pass to your plugin
+**conf** - to pass to your plugin
+
+<a id="ot_my_libs.PlugsHelper.PlugsHelper.dirPlugs"></a>
+
+#### dirPlugs
+
+```python
+def dirPlugs(pPrefix, pDiffThen, extraPaths=None)
+```
+
+To look for library like by mache prefix and different then ...
+**pPrefix** _str_ - need to mache to go to list
+**pDiffThen** _str_|_filter_function - string is exact mache then no. If filter function arg as `name` is pass and your function need to return _bool_ on add it
+**extraPaths** _array_ of _str_ - to add extra paths to look for
+
+<a id="ot_my_libs.PlugsHelper.PlugsHelper.lookForDrivers"></a>
+
+#### lookForDrivers
+
+```python
+def lookForDrivers(pPrefix, pSufix, pDiffThen, extraPaths=None)
+```
+
+To look for files in current library or paths by maching ...
+**pPrefix** _str_ - need to mache to go to list
+**pSufix** _str_ - need to mache to go to list
+**pDiffThen** _str_|_filter_function - string is exact mache then no. If filter function arg as `name` is pass and your function need to return _bool_ on add it
+**extraPaths** _array_ of _str_ - to add extra paths to look for
+
+<a id="ot_my_libs.PlugsHelper.PlugsHelperExample"></a>
+
+#### PlugsHelperExample
+
+```python
+def PlugsHelperExample()
+```
+
+**PlugsHelperExample** example use look up for files / dirs to load as plugins ...
 
 <a id="ot_my_libs.PlugsHelperTest_plug3_a"></a>
 
