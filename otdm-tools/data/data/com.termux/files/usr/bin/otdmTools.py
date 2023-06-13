@@ -13,6 +13,7 @@ from subprocess import run
 from ot_my_libs.FileActions import FileActions as fad
 from ot_my_libs.TimeHelper import TimeHelper as thd
 from ot_my_libs.ArgsParse import ArgsParse
+from ot_my_libs.PlugsHelper import PlugsHelper
 
 import otdmUtils as otU
 
@@ -21,7 +22,7 @@ from otdmDriverProto import *
 #from otdmDriverNodeRedFlowById import *
 #from otdmDriverGrafanaDashboardByUid import *
 #from otdmDriverGrafanaDatasourceByUid import *
-#from otdmDriverFileSystem import *
+from otdmDriverFileSystem import *
 
 from otdmPackitso import *
 
@@ -1677,7 +1678,7 @@ def exeArray( args ):
     return 1
 
 
-from ot_my_libs.PlugsHelper import PlugsHelper
+
 
 def exeIt( args ):
     if deb: print( "exeIt args:[{0}]".format(args) )
@@ -1720,8 +1721,17 @@ def exeIt( args ):
     for p in ph.lookForDrivers( "otdmDriver", ".py", phYesNo ):
         print("+",end="")
         acts.append(p)
-    print("")
     #print("--------------------"); print(acts)
+
+    # more plugins ....
+    # otdmDriver_dummyPlug1
+    ph2 = PlugsHelper()
+    for p in ph2.dirPlugs("otdmDriver","abc.py"):
+        #print(f"* external plugin \n\t {p}\n\n")
+        print(f" e[{p['cname']}] ",end="")
+        acts.append(p)
+    print("")
+    #
 
     #sys.exit(11)
     #for d in phRes:
