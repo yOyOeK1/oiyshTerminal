@@ -30,14 +30,15 @@ class myMqttClient:
         self.host = host
         self.port = port
         self.subscripbeTo = subscribe
+        self.client = -1
 
         self.makeClient(self.clientId,
-            on_connect if on_connect else self.on_connect,
-            on_message if on_message else self.on_message
+            on_connect if on_connect != None else self.on_connect,
+            on_message if on_message != None else self.on_message
             )
 
     def connect(self):
-        self.cli.connect(self.host, self.port)
+        self.cli.connect(self.host, self.port,60)
 
 
     def makeClient(self, clientId, on_connect, on_message):
@@ -49,13 +50,15 @@ class myMqttClient:
 
     def on_connect(self, client, userdata, flags, rc):
         self.l.i("on_connected with result code [{}]".format(rc) )
+        self.client = client
         for topic in self.subscripbeTo:
+            self.l.i("- subscribing to [{}]".format(topic))
             self.client.subscribe(topic)
         self.ready = True
         return 0
 
     def on_message(self, client, userdata, msg):
-        self.l.i("on_message topic:[{}]    msg:[{}]".formet(
+        self.l.i("on_message topic:[{}]    msg:[{}]".format(
             msg.topic,
             msg.payload
             ))

@@ -140,6 +140,9 @@ pip3 uninstall ot_my_libs
 
 ### change log
 
+* 0.0.15
+  - fix myMqttClient :) 
+
 * 0.0.14
   - PlugsHelper in examples
   - Refine PlugsHelper can do custom filter and return preinit object if set so
