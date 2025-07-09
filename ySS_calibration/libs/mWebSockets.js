@@ -40,9 +40,9 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 	}
 
 	socketIn.onmessage = async function(m){
-		//cl("on message:"+m);
+		cl("on message:"+m);cl(m);
 		r = JSON.parse(m.data);
-		//cl("on message r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
+		cl("on message r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
 
 		if( r.topic == "otdmRes" ){
 			cl("got otdmRes !!");
@@ -59,6 +59,18 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 
 
 
+		} else if( r.topic == 'ws/event' ){
+		    if( r.payload == 'server going down'){
+		        $.toast({
+			        heading: 'Server is going down',
+			        text: 'Got info about server is going down ...',
+			        //showHideTransition: 'slide',
+			        hideAfter: 3000,
+			        icon: 'info'
+		        });
+		        setTimeout( window.location.reload(), 2000 );
+		    }
+		
 		}
 
     await onMesCallBack.wsCallback( r );

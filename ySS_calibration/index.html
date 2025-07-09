@@ -97,6 +97,7 @@ var module = new moduleCollector();
 <script src="apVBrain2.js"></script>
 -->
 <!-- ap playground area END -->
+
 <script src="libs/brain.js"></script>
 <script src="libs/raphael-2.1.4.min.js"></script>
 <script src="libs/justgage.js"></script>
@@ -146,7 +147,14 @@ var module = new moduleCollector();
 
 <script type="module" src="./three4yssModule.mjs"></script>
 <script type="module" src="./libs/motTools.mjs"></script>
-
+<!--<script>
+var mqtt = undefined;
+connect.log('set mqtt var');
+</script>
+<script type="module" src="./libs/mqtt.min.js">
+connect.log(`mqtt in module is: ${mqtt}`);
+</script>
+-->
 <script src="libs/jquery.flexslider.js"></script>
 <link rel="stylesheet" href="libs/flexslider.css" type="text/css" media="all">
 
@@ -294,6 +302,18 @@ function makeInit(){
 	wsConnectIn( pager );
 	wsConnectOut();
   pager.getPage( -1 );
+    
+    const isAndroid = navigator.userAgent.toLowerCase().includes('android');
+    if (isAndroid==true) {
+      // Code to execute if the device is Android
+      console.log("This is an Android device.");
+      $('#popupBasic').html(`<input type="button" style="border:10;"onclick="mkfullscreen();$('#popupBasic').popup('close');" value="fullscreen">`);
+      $('#popupBasic').popup();
+      $('#popupBasic').popup('open');
+    } else {
+      // Code to execute if the device is not Android
+      console.log("This is not an Android device.");
+    }
 
 
   // store last sean page on browser
@@ -380,6 +400,7 @@ function chkUrl( dontSetPage=false ){
 
 </script>
 </head>
+<div data-role="popup" id="popupBasic"></div>
 <body id="mainBodyOfySS">
 <!--
   ontouchstart="getTagname('start', event)"
