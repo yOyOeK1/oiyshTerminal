@@ -1,53 +1,60 @@
 var socketIn = null;
 
 var wsToast = null;
+var wsTConInErr = null;
+var wsTConOutErr = null;
+var wsReconnectTime = 1000;
 
 function wsConnectIn( onMesCallBack, wsUrl = '' ){
 	// address is replace on fly by host
 	let doUrl = "ws://192.168.43.1:1880/ws/accel/oriCal";
 	if( wsUrl != '' ) doUrl = wsUrl
-	cl("WebSocket connect It at "+doUrl);
+	cl("wsConnectIn connect It at "+doUrl);
 	socketIn = new  WebSocket( doUrl );
 
 
 	socketIn.onopen = function(){
-		cl("WS_In on open");
+		cl("wsConnectIn onopen");
 		$("#wsInStat").text("OK");
-		wsToast= $.toast({
+		if( wsTConInErr != null ){
+			wsTConInErr = null;
+			wsToast = $.toast({
 				heading: 'Success',
 				text: 'WebSocket In is OK!',
 				//showHideTransition: 'slide',
-				hideAfter: 800,
+				//hideAfter: 800,
 				icon: 'success'
-		});
+			});
+		}
 	}
 
 	socketIn.onclose = function(){
-		cl("WS_In on close");
-		cl("WS_In will try to recconnect...");
-		setTimeout( wsConnectIn( onMesCallBack ), 1000 );
+		cl("wsConnectIn onclose recconnect in ... "+parseInt(wsReconnectTime/1000)+"sec.");
+		setTimeout( function () {wsConnectIn( onMesCallBack );}, wsReconnectTime );
 		$("#wsInStat").text("X");
-		wsToast= $.toast({
+	}
+	
+	socketIn.onerror = function(e){
+		cl("wsConnectIn onerror:");cl(e);
+		if( wsTConInErr == null ){
+			wsTConInErr = $.toast({
 				heading: 'Error',
 				text: 'WebSocket In have some problems.',
-				showHideTransition: 'slide',
+				//showHideTransition: 'slide',
 				icon: 'error'
-		});
-	}
-
-	socketIn.onerror = function(e){
-		cl("WS_In on error:"+e);
+			});
+		}
 	}
 
 	socketIn.onmessage = async function(m){
-		cl("on message:"+m);cl(m);
+		//cl("wsConnectIn onmessage:"+m);cl(m);
 		r = JSON.parse(m.data);
-		cl("on message r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
+		//cl("	r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
 
 		if( r.topic == "otdmRes" ){
-			cl("got otdmRes !!");
+			cl("wsConnectIn got otdmRes !!");
 
-			cl("res:");
+			cl("	res:");
 			cl( JSON.stringify( r.payload) );
 
 			var al = r.payload;
@@ -65,10 +72,10 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 			        heading: 'Server is going down',
 			        text: 'Got info about server is going down ...',
 			        //showHideTransition: 'slide',
-			        hideAfter: 3000,
+			        hideAfter: 5000,
 			        icon: 'info'
 		        });
-		        setTimeout( window.location.reload(), 2000 );
+		        setTimeout( window.location.reload(), wsReconnectTime );
 		    }
 		
 		}
@@ -86,41 +93,44 @@ function wsConnectOut(wsUrl = '' ){
 
 	let doUrl = "ws://192.168.43.1:1880/ws/accel/oriCal_In";
 	if( wsUrl != '' ) doUrl = wsUrl
-	cl("WebSocket connect Out at "+doUrl);
+	cl("wsConnectOut connect Out at "+doUrl);
 	socketIn = new  WebSocket( doUrl );
 
 
 	socketOut = new  WebSocket( doUrl );
 
 	socketOut.onopen = function(){
-		cl("WS_Out on open");
+		cl("wsConnectOut onopen");
 		$("#wsOutStat").text("OK");
-		wsToast= $.toast({
+		if( wsTConOutErr != null ){
+			wsTConOutErr = null;
+			wsToast = $.toast({
 				heading: 'Success',
 				text: 'WebSocket Out is OK!',
 				//showHideTransition: 'slide',
-				hideAfter: 800,
+				//hideAfter: 800,
 				icon: 'success'
-		})
+				});
+		}
 	}
 
 	socketOut.onclose = function(){
-		cl("WS_Out on close");
+		cl("wsConnectOut onclose reconnect in .... "+parseInt(wsReconnectTime/1000)+"sec.");
 		$("#wsOutStat").text("x");
-		setTimeout( wsConnectOut(), 1000 );
+		setTimeout( wsConnectOut, wsReconnectTime );
 	}
 
 	socketOut.onerror = function(e){
-		cl("WS_Out on error:"+e);
-		wsToast= $.toast({
+		cl("wsConnectOut onerror:");cl(e);
+		if( wsTConOutErr == null ){
+			wsTConOutErr = $.toast({
 				heading: 'Error',
-				text: [
-					'WebSocket Out hove some problems',
-					e
-				],
-				showHideTransition: 'slide',
+				text: 'WebSocket Out hove some problems',
+				//showHideTransition: 'slide',
 				icon: 'error'
-		})
+			});
+		}
+
 	}
 
 }

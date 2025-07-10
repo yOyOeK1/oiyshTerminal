@@ -1,0 +1,13 @@
+{
+    "oName": "s_nodeyssTest",
+    "o": null,
+    "dir": "nodeysstest",
+    "jssrc":["s_nodeysstestPage.js"],
+    "enable": true,
+    "author": "Name Last <email@adres.com>",
+    "ver": "0.0.1",
+    "desc": "Description...",
+    "otdm":{
+        "playground": false
+    }
+}

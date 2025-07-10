@@ -1,0 +1,13 @@
+{
+    "oName": "s_windEffordPage",
+    "o": null,
+    "dir": "windEfford",
+    "jssrc":["s_windEffordPage.js", "s_windEffordDebug.js"],
+    "enable": true,
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "Description...",
+    "otdm":{
+        "playground": false
+    }
+}
