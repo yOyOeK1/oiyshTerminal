@@ -4,6 +4,8 @@ var wsToast = null;
 var wsTConInErr = null;
 var wsTConOutErr = null;
 var wsReconnectTime = 1000;
+var wsInIsOk = false;
+var wsOutIsOk = false;
 
 function wsConnectIn( onMesCallBack, wsUrl = '' ){
 	// address is replace on fly by host
@@ -15,6 +17,7 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 
 	socketIn.onopen = function(){
 		cl("wsConnectIn onopen");
+		wsInIsOk = true;
 		$("#wsInStat").text("OK");
 		if( wsTConInErr != null ){
 			wsTConInErr = null;
@@ -30,6 +33,7 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 
 	socketIn.onclose = function(){
 		cl("wsConnectIn onclose recconnect in ... "+parseInt(wsReconnectTime/1000)+"sec.");
+		wsInIsOk = false;
 		setTimeout( function () {wsConnectIn( onMesCallBack );}, wsReconnectTime );
 		$("#wsInStat").text("X");
 	}
@@ -94,13 +98,14 @@ function wsConnectOut(wsUrl = '' ){
 	let doUrl = "ws://192.168.43.1:1880/ws/accel/oriCal_In";
 	if( wsUrl != '' ) doUrl = wsUrl
 	cl("wsConnectOut connect Out at "+doUrl);
-	socketIn = new  WebSocket( doUrl );
+	//socketIn = new  WebSocket( doUrl );
 
 
 	socketOut = new  WebSocket( doUrl );
 
 	socketOut.onopen = function(){
 		cl("wsConnectOut onopen");
+		wsOutIsOk = true;
 		$("#wsOutStat").text("OK");
 		if( wsTConOutErr != null ){
 			wsTConOutErr = null;
@@ -116,6 +121,7 @@ function wsConnectOut(wsUrl = '' ){
 
 	socketOut.onclose = function(){
 		cl("wsConnectOut onclose reconnect in .... "+parseInt(wsReconnectTime/1000)+"sec.");
+		wsOutIsOk = false;
 		$("#wsOutStat").text("x");
 		setTimeout( wsConnectOut, wsReconnectTime );
 	}
@@ -137,5 +143,13 @@ function wsConnectOut(wsUrl = '' ){
 
 function sOutSend( msg ){
 	//socketOut.send(JSON.stringify(msg));
-	socketOut.send(msg);
+	//cl("sOutSend now doing it ...");
+	//cl("is connected ? "+wsOutIsOk);
+	if( wsOutIsOk )
+		socketOut.send(msg);
+	else {
+		cl("s[e] wsConnectOut sOutSend but there is no ws out connection yet !");
+		cl("----------------------");
+		cl(msg);
+	}
 }

@@ -211,13 +211,15 @@ frameborder="0"></iframe>
 
 
   onMessageCallBack( r ){
-    console.log("s_blankPage got msg ");
+    console.log("s_testFuncsPage got msg ");
     if( r.topic == 'e01Mux/adc0' ){
       putText("houBatVol", (""+(r.payload*(0.02771809)) ).substring(0,5) );
 
 
     }else if( r.topic == 'thisDevice/bat/perc' ){
       putText("batPercent", r.payload+"%");
+    }else if( r.topic == 'ping' ){
+      console.log("s_testFuncsPage got ping");
     }
   }
 
