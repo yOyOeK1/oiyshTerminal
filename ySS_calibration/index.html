@@ -375,6 +375,10 @@ function chkUrl( dontSetPage=false ){
   if( urlArgs['page'] != undefined ){
     pager.setPage( urlArgs['page'] );
     return 0;
+  }else if( urlArgs['resizeTo'] != undefined ){
+    let wh = urlArgs['resizeTo'].split(',');
+    cl("resize To wh:"+wh[0]+"x"+wh[1]);
+    window.resizeTo(parseInt(wh[0]),parseInt(wh[1]));
 
   }else if( urlArgs['pageByName'] != undefined ){
 

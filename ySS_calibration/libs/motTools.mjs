@@ -93,6 +93,8 @@ try{
   mott = m;
   console.log('mott: motTools is in nr-yss');
 }catch(e){
+  //var oss = require('os');
+  //console.log('oss',os);
   console.log('mott: motTools as module');
 }
 

@@ -72,8 +72,8 @@ class mDoCmd{
       try{
         daTr = JSON.parse( data );
       }catch(e){
-        this.cl("In mDoCmd.otdmArgs result no json - :/ ");
-        this.cl(e);
+        console.log('mDoCmd',"In mDoCmd.otdmArgs result no json - :/ ");
+        console.log('mDoCmd',e);
       }
         if( callBack == -1 )
           this.otdmCallBackWebCmdSubProcess( daTr , status )
