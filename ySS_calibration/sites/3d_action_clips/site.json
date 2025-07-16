@@ -1,0 +1,14 @@
+{
+    "oName": "s_3d_action_clips",
+    "o": null,
+    "dir": "3d_action_clips",
+    "jssrc":["s_3d_action_clips.js"],
+    "files": ["test1_cubes.glb"],
+    "enable": true,
+    "ver": "0.0.1",
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "desc": "Site testing three.js options. Geting clips animation from glb file to msg. Shadows and rotations.",
+    "otdm":{
+        "playground": false
+    }
+}

@@ -51,7 +51,7 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 	}
 
 	socketIn.onmessage = async function(m){
-		//cl("wsConnectIn onmessage:"+m);cl(m);
+		cl("wsConnectIn onmessage:"+m.data);
 		r = JSON.parse(m.data);
 		//cl("	r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
 
@@ -99,10 +99,11 @@ function wsConnectOut(wsUrl = '' ){
 	if( wsUrl != '' ) doUrl = wsUrl
 	cl("wsConnectOut connect Out at "+doUrl);
 	//socketIn = new  WebSocket( doUrl );
+	
+	cl('wsConnectOut cheeetting ....');
 
-
-	socketOut = new  WebSocket( doUrl );
-
+	socketOut = socketIn;//new  WebSocket( doUrl );
+	/*
 	socketOut.onopen = function(){
 		cl("wsConnectOut onopen");
 		wsOutIsOk = true;
@@ -117,6 +118,9 @@ function wsConnectOut(wsUrl = '' ){
 				icon: 'success'
 				});
 		}
+	}
+	socketOut.onmessage = async function(m){
+		cl("wsConnectOut onmessage: data"+m.data);cl(m.data);
 	}
 
 	socketOut.onclose = function(){
@@ -139,14 +143,15 @@ function wsConnectOut(wsUrl = '' ){
 
 	}
 
+	*/
 }
 
 function sOutSend( msg ){
 	//socketOut.send(JSON.stringify(msg));
 	//cl("sOutSend now doing it ...");
 	//cl("is connected ? "+wsOutIsOk);
-	if( wsOutIsOk )
-		socketOut.send(msg);
+	if( wsInIsOk != null )
+		socketIn.send(msg);
 	else {
 		cl("s[e] wsConnectOut sOutSend but there is no ws out connection yet !");
 		cl("----------------------");

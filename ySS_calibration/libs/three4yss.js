@@ -33,6 +33,8 @@ class Three4Yss extends aggregation(
   T4y_putText
   )  {
 
+  libTHREE = THREE;
+  
 
   constructor( ){
     super();
@@ -66,6 +68,9 @@ class Three4Yss extends aggregation(
     this.tn;
     this.tn2;
     this.renderingNow = false;
+    this.gltfLoaded = undefined;
+    this.cMixer;
+    this.cActions;
 
 
     cl("Three4Yss  is in constructor.... ");
@@ -168,6 +173,7 @@ class Three4Yss extends aggregation(
     cl("----- doing renderer...");
     t4y.otren = new THREE.WebGLRenderer( { antialias: false } );
     t4y.otren.shadowMap.enabled = true;
+    //t4y.otren.toneMapping = THREE.ReinhardToneMapping;
     //t4y.otren.shadowMap.type = THREE.PCFSoftShadowMap;
     //t4y.otren.shadowMap.type = THREE.PCFShadowMap;
     t4y.otren.shadowMap.type = THREE.BasicShadowMap;
@@ -184,6 +190,28 @@ class Three4Yss extends aggregation(
     cl("----- loading glb ");
     const loader = new GLTFLoader().setPath( './' );
     loader.load( glbFileModel, function ( gltf ) {
+      t4y.gltfLoaded = gltf;
+
+      
+      cl(`----------------------Extracting clipActions ${gltf.animations.length}\n\n\n`);
+      //cl(gltf);
+      t4y.cMixer = new THREE.AnimationMixer( gltf.scene );
+      t4y.cActions = {};
+      for( let i=0,il=gltf.animations.length; i<il; i++ ){
+        let nClip = gltf.animations[i];
+        cl(`* animation [${nClip.name}]`);
+        let nAction = t4y.cMixer.clipAction( nClip );
+        t4y.cActions[ nClip.name ] = nAction;
+
+        nAction.clampWhenFinished = true;
+				nAction.loop = THREE.LoopOnce;
+        nAction.play();
+        nAction.paused = true;
+
+      }
+      cl(`----------------------Extracting clipActions DONE with ${Object.keys( t4y.cActions ).length } clips\n\n\n`);
+
+
       //cl("--------------- add shadows");
       cl( "objs in scene:" );
       var c = gltf.scene.children;
@@ -196,7 +224,7 @@ class Three4Yss extends aggregation(
 
           cl("Lamp in scene !");
           cl(it);
-          cl("  - with shadow.")
+          cl("  Lamp ["+ci+"] - with shadow. with power:"+it.children[0].power)
           it.children[0].castShadow = true;
       		it.children[0].shadow.camera.near = 0.00001;
       		//light.shadow.camera.far = 200;
@@ -204,6 +232,7 @@ class Three4Yss extends aggregation(
           it.children[0].shadow.bias = -0.000018;
       		it.children[0].shadow.mapSize.width = 1024*2;
       		it.children[0].shadow.mapSize.height = 1024*2;
+          //it.children[0].
 
           t4y.doLightNoLightInScene = false;
           t4y.sceneLights.push( it.children[0] );
@@ -294,6 +323,7 @@ class Three4Yss extends aggregation(
     if( t4y.extras['lightPos'] || t4y.doLightNoLightInScene == true ){
       cl("no found or request light.....");
       var light = new THREE.SpotLight( 0xffffff );
+      //light.intensity = 0.1;
       light.name = "SpotLight";
       if( t4y.extras['lightPos'] && t4y.extras['lightPos'].length == 3 )
         light.position.set( t4y.extras['lightPos'][0], t4y.extras['lightPos'][1], t4y.extras['lightPos'][2] );
@@ -589,12 +619,14 @@ fitCanvasToScreen(){
   }
 
 
+  
 
   renderIt( force=false ) {
     //cl("initPageNo:"+t4y.initPageNo+" Current"+pager.currentPage+" onRenderFromPage"+t4y.onRenderFromPage);
     if(t4y.initPageNo != pager.currentPage)
       return 1;
 
+    
     if( force == true || String(force).indexOf("Object") != -1 )
       t4y.textOsdUpdate();
 
@@ -613,10 +645,12 @@ fitCanvasToScreen(){
     //cl("t4y.otcom");
     //cl(t4y.otcom);
     t4y.tn = new Date().getTime();
+    let ndt = t4y.tn - t4y.sLastRender;
     if( t4y.sLastRender == 0 ){
       t4y.sLastRender = t4y.tn;
       t4y.lLastRender = t4y.tn;
     }
+
 
     // every sec
     // fps info
@@ -644,6 +678,19 @@ fitCanvasToScreen(){
     //cl("      rendering..");
     //cl("renderIt force:"+force);
     //cl(force);
+
+
+
+    // include clips mixer 
+    //
+    //t4y.clock.getDelta();
+    if( t4y.cMixer ){
+      t4y.cMixer.update( t4y.delta );
+      //force = true;
+      //t4y.cMixer.
+
+    } 
+
 
     if( force == true || force.type == "change" )
       t4y.textOsdUpdate();

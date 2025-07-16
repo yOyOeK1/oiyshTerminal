@@ -208,6 +208,12 @@ class sPager {
       this.cl("DROPING setPage !!! it's now the same ?");
       //return 0;
     }
+    
+    if( pageNo > this.pages.length ){
+      this.cl(`[e] setPage to No out of sites count .... ${pageNo} / ${this.pages.length}`);
+      this.setPage(-1);
+      return 0;
+    }
 
     this.cl("setPage"+pageNo);
     this.setHeader('');
@@ -293,7 +299,7 @@ class sPager {
   }
 
   getPage(){
-    this.cl("getHtml current page: "+this.currentPage);
+    this.cl(`getHtml current page [${this.currentPage} ]: `+this.currentPage);
     lAngels = {};
     movePathStartOffset = {};
     putTextStorage = {};
@@ -302,7 +308,14 @@ class sPager {
       this.getMenu();
       $("#svgDyno").html("");
     }else{
+
       var cp = this.getCurrentPage();
+      if( cp == undefined ){
+        //$("#svgDyno").html("");
+        return 0;
+      }
+      var cp = this.getCurrentPage();
+
       $("#svgDyno").html("");
       //console.log("----------------- mobile get active page ----------------");
       console.log("cl will be call for html", cp);
@@ -371,10 +384,16 @@ class sPager {
 	
 	}
 
-  getMenu(){
+  getMenu( ){
+    
+    if( this.menuBuildStat == true ){
+      cl('[e] getMenu request one more time !');
+      return 0;
+    }
     var ta = "";
-		//cl(["getMenu:", "invoce.."]);
+		cl(["getMenu:", "invoce.."]);
 
+    let av = [];
     for(var i=0;i<this.pages.length;i++){
       /*
       ta+= '<input type="button" class="menu-button"';
@@ -382,10 +401,11 @@ class sPager {
       ta+= 'onclick="pager.setPage('+i+')"/>';
       ta+= '<br>';
       */
-      let pName = this.pages[i].getName;
+     let pName = this.pages[i].getName;
+     av.push(['yssMenuItem'+i, pName]);
       ta+= `
 <li class="pageItemsLi">
-  <a href="" data-rel="close" `+
+  <a href="" data-rel="close" id="yssMenuItem${i}" `+
   	`class="y-menu-item" `+
   	`ymenuitemname="`+pName+`" `+
   	`ymiid="`+i+`" `+
@@ -400,11 +420,21 @@ class sPager {
 
     $( ta ).insertBefore( ".innerMenuList" );
     $("#menuListView").listview('refresh');
+
+    /*
+    for( let a=0,ac = av.length; a<ac; a++){
+      cl(`this is menu event add `+av[a][0]+'  '+av[a][1]);
+      cl(["menu  obj ",$("#"+av[a][0])] );
+      $("#"+av[a][0]).onclick = function(){ this.goToByHash('page='+av[a][1]); };
+    }
+      */
     //console.log("------ menuListView content ----------");
     //console.log($("#menuListView").html());
 
     //$("#menuListView").html().enhanceWithin();
 
+
+    this.menuBuildStat = true;
   }
 
 }
