@@ -19,6 +19,8 @@ import { T4y_shadersDefs } from "../libs/t4y_shadersDefs.js";
 import { T4y_shader } from "../libs/t4y_shader.js";
 import { T4y_ani } from "../libs/t4y_ani.js";
 import { T4y_console } from "../libs/t4y_console.js";
+import { T4y_clips } from "../libs/t4y_clips.js";
+import { T4y_click } from "./t4y_click.js";
 
 
 /**
@@ -30,7 +32,9 @@ class Three4Yss extends aggregation(
   T4y_shadersDefs,
   T4y_shader,
   T4y_ani,
-  T4y_putText
+  T4y_putText,
+  T4y_clips,
+  T4y_click
   )  {
 
   libTHREE = THREE;
@@ -133,6 +137,8 @@ class Three4Yss extends aggregation(
     //document.body.appendChild( container );
     t4y.con_printCameraPos = t4y.extras['camDeb'] ? t4y.extras['camDeb'] : t4y.con_printCameraPos;
     t4y.onRenderFromPage = t4y.extras['onRender'] != undefined ? t4y.extras['onRender'] : -1;
+    t4y.lightMultiplyer = t4y.extras['lightMultiplyer'] != undefined ? t4y.extras['lightMultiplyer'] : 1.0;
+    t4y.addHdr = t4y.extras['addHdr'] == undefined ? true : t4y.extras['addHdr'];
 
     t4y.otusecam = null;
     t4y.otren=null;
@@ -193,24 +199,8 @@ class Three4Yss extends aggregation(
       t4y.gltfLoaded = gltf;
 
       
-      cl(`----------------------Extracting clipActions ${gltf.animations.length}\n\n\n`);
-      //cl(gltf);
-      t4y.cMixer = new THREE.AnimationMixer( gltf.scene );
-      t4y.cActions = {};
-      for( let i=0,il=gltf.animations.length; i<il; i++ ){
-        let nClip = gltf.animations[i];
-        cl(`* animation [${nClip.name}]`);
-        let nAction = t4y.cMixer.clipAction( nClip );
-        t4y.cActions[ nClip.name ] = nAction;
-
-        nAction.clampWhenFinished = true;
-				nAction.loop = THREE.LoopOnce;
-        nAction.play();
-        nAction.paused = true;
-
-      }
-      cl(`----------------------Extracting clipActions DONE with ${Object.keys( t4y.cActions ).length } clips\n\n\n`);
-
+      t4y.initMixerAndActions( gltf );
+      
 
       //cl("--------------- add shadows");
       cl( "objs in scene:" );
@@ -224,7 +214,10 @@ class Three4Yss extends aggregation(
 
           cl("Lamp in scene !");
           cl(it);
-          cl("  Lamp ["+ci+"] - with shadow. with power:"+it.children[0].power)
+          cl("  Lamp ["+ci+"] - with shadow. ["+t4y.lightMultiplyer+"] with power:"+it.children[0].power)
+          it.children[0].power = it.children[0].power*t4y.lightMultiplyer;
+          cl("  Lamp ["+ci+"] - with shadow. with power after:"+it.children[0].power)
+          
           it.children[0].castShadow = true;
       		it.children[0].shadow.camera.near = 0.00001;
       		//light.shadow.camera.far = 200;
@@ -283,19 +276,22 @@ class Three4Yss extends aggregation(
     cl("----- loading glb DONE ");
 
 
-    cl("----- loading hdr ");
-    var rgbe = new RGBELoader().setPath( '' );
-    rgbe.load( 'libs/s_hdr_quarry_01_1k.hdr', function ( texture ) {
-      cl("-- from hdr loader ");
-      //cl( texture );
-      texture.mapping = THREE.EquirectangularReflectionMapping;
-      //texture.mapping = t4y.postMaterial;
-      //otsce.background = texture;
-      t4y.otsce.background = new THREE.Color( {color: "#ffffff"} );
-      t4y.otsce.environment = texture;
-      t4y.renderIt( true );
-    } );
-    cl("----- loading hdr DONE");
+    if( t4y.addHdr == true ){
+      cl("----- loading hdr ");
+
+      var rgbe = new RGBELoader().setPath( '' );
+      rgbe.load( 'libs/s_hdr_quarry_01_1k.hdr', function ( texture ) {
+        cl("-- from hdr loader ");
+        //cl( texture );
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        //texture.mapping = t4y.postMaterial;
+        //otsce.background = texture;
+        t4y.otsce.background = new THREE.Color( {color: "#555555"} );
+        t4y.otsce.environment = texture;
+        t4y.renderIt( true );
+      } );
+      cl("----- loading hdr DONE");
+    }
 
 
 

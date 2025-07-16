@@ -158,3 +158,15 @@ function sOutSend( msg ){
 		cl(msg);
 	}
 }
+
+function sOutMqttSend( topic, msg ){
+	let ntopic = topic;
+    let nmsg = 'toMqttPub:topic='+ntopic+',payload='+msg;
+    //cl(msg);
+
+    pager.wsCallbackExternal({
+      "topic": ntopic, "payload":nmsg
+    });
+
+    sOutSend( nmsg );
+}

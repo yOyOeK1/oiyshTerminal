@@ -76,13 +76,13 @@ class s_3d_action_clips{
 				'controls': false,
 				//'lightPos': [0,80,-80],
 				'camDeb': false,
+				'lightMultiplyer': 0.0007,
+				'addHdr': true,
 				//'autoRotate': true,
 			}
 		);
 		
-		this.mixer;
-		this.clock = new t4y.libTHREE.Clock();
-
+		
 		setTimeout( ()=>{
 			let grid = new t4y.libTHREE.GridHelper( 20, 20, 0x000000, 0x000000 );
 			grid.material.opacity = 0.2;
@@ -93,20 +93,22 @@ class s_3d_action_clips{
 			//t4y.otren.toneMappingExposure = 10;
 
 			//t4y.otren.toneMappingExposure = 0.01;
-			t4y.cActions['Act1R.002'].paused = false;
-			t4y.cActions['Act1R.002'].loop = t4y.libTHREE.LoopRepeat;
+			//t4y.cActions['Act1R.002'].paused = false;
+			//t4y.cActions['Act1R.002'].loop = t4y.libTHREE.LoopRepeat;
 			
 
+			t4y.init_click();
 
 		}, 500);
 		
-		//let siteNameToLook = pager.pages[pager.currentPage].getName;
-		//let currentPageLook = parseInt(pager.currentPage);
-		this.intervalLoop = setInterval( ( )=>{ 
-			t4y.setDelaydRender("clip in the loop request");
-			//cl(`forst render `);		
-
-		 }, 1000/12 ); // 12 fps
+		this.intervalLoop;
+		if(1){
+			this.intervalLoop = setInterval( ( )=>{ 
+				t4y.setDelaydRender("clip in the loop request");
+				//cl(`forst render `);		
+				
+			}, 1000/12 ); // 12 fps
+		}
 
 
 	}
@@ -120,15 +122,44 @@ class s_3d_action_clips{
 	}
 
 
-
-
 	onMessageCallBack( r ){
+		//cl('got msg.topic: ['+r.topic+']');
 
-		if( r.topic == 'and/mag' ){
+
+		if( r.topic == 'sites/3d action clips/CubeL' ||
+			r.topic == 'sites/3d action clips/CubeR'
+		 ){
+			if( r.topic == 'sites/3d action clips/CubeR'){
+
+				t4y.cActions['CuR'].reset()
+						.setEffectiveTimeScale( 1 )
+						.setEffectiveWeight( 1 )
+						.fadeIn( 5 )
+						.play();
+			}
+
+
+			cl('put click');
+			t4y.putText( "\n\n\n\nRTC"+String(r.topic).substring(26),{
+					OSD: true,
+					name :"HDGTextRTC",
+					color: 0xff0000,
+					size: .25,
+					replace: "HDGTextRTC",
+					handle: 'rt',
+					x:1,
+					y:1,
+					rx:-10,
+					//extrude: .1
+			});
+
+
+		} else if( r.topic == 'and/mag' ){
 			var mag = parseFloat( r.payload );
 
 			// run mixer on CuR
-			t4y.cActions['CuR'].time = (mag/360.00) * t4y.cActions.CuR.getClip().duration;
+			//t4y.cActions['CuR'].time = (mag/360.00) * t4y.cActions.CuR.getClip().duration;
+			t4y.actionSeek( t4y.cActions['CuR'], (mag/360.00) );
 			//t4y.cActions['CuR'].reset()
 			//		.setEffectiveTimeScale( 1 )
 			//		.setEffectiveWeight( 1 )

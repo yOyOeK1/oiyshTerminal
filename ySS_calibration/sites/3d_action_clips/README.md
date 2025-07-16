@@ -22,11 +22,27 @@ Using **naming sceem** of actions (clips) you can have access to them in **yss s
 
 * play in loop defined clip
 
-* seek
+* actionSeek
 
 * manually force render (I don't want loop with infinite render. It render only on change!)
 
-Slider are for debug only but if you feed it with:
+* have **t4y.init_click()** use case so your object after click are sending click event to mqtt. *more options coming TODO*
+  
+  sending **msg**
+  
+  ```json
+  { "topic": "sites/3d action clips/CubeR", "payload": "click" }
+  ```
+  
+  Where 
+  
+  * *3d action clip* is comming from site nome
+  
+  * *CubeR* - object interaction
+
+
+
+Sliders on site are for debug only but if you change it will emit:
 
 **msg** type: json **example** 
 
@@ -36,11 +52,7 @@ Slider are for debug only but if you feed it with:
 
 **where int** - 0...100
 
-
-
 or
-
-
 
 **msg** type: json **example**
 
@@ -49,10 +61,6 @@ or
 ```
 
 **where int** - 0...100
-
-
-
-
 
 
 
