@@ -221,8 +221,11 @@ class sPager {
     this.currentPage = pageNo;
     this.pageHistory.push( pageNo );
     
-    this.setMenuSiteSelected();
+    /*** current page instance of site */
+    this._page = this.pages[pageNo];
 
+    this.setMenuSiteSelected();
+    
     /*
     $('.pageItemsLi').each(function(i){
       if( i == pager.currentPage ){
@@ -391,7 +394,7 @@ class sPager {
       return 0;
     }
     var ta = "";
-		cl(["getMenu:", "invoce.."]);
+		//cl(["getMenu:", "invoce.."]);
 
     let av = [];
     for(var i=0;i<this.pages.length;i++){

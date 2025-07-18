@@ -53,6 +53,7 @@ class Three4Yss extends aggregation(
 
     this.subPixel = 1;
     this.maxFps = 12;
+    this.msForFrame = Math.round( 1000 / this.maxFps );
 
     this.doLightNoLightInScene;
     this.initPageNo = -1;
@@ -63,7 +64,7 @@ class Three4Yss extends aggregation(
     this.lastRender = 0;
     this.loadRender = 0;
 
-    this.delaydRender;
+    this.delaydRender = -1;
     this.delaydAnimation;
 
     this.sLastRender = 0;
@@ -526,14 +527,10 @@ fitCanvasToScreen(){
 
   }
 
-  msOfTik(){
-    // fps of t4y
-    var fpsLimit = t4y.maxFps;
-    return Math.round(1000/fpsLimit);
-  }
+  
   msToNextFrame(){
-    t4y.tn2 = new Date().getTime();
-    return (t4y.msOfTik()-(t4y.tn2-t4y.lLastRender));
+    //let dgtn = new Date().getTime();
+    return ( t4y.msForFrame - ( (new Date().getTime()) - t4y.lLastRender ) );
   }
 
   /*
@@ -565,31 +562,37 @@ fitCanvasToScreen(){
 
 
   setDelaydRender( args ){
+    if( t4y.delaydRender == 0 )
+      return 1;
+
     //cl("setDelaydRender ");
     //cl("args");
     //cl(args);
-    if( args['type'] != undefined && args['type'] =='change' ){
+    //if( args['type'] != undefined && args['type'] =='change' ){
 
       //cl(args);
       //cl("callback from orbit?")
       //return 1;
-    }
+    //}
 
     //cl("clear before");
     //cl(t4y.delaydRender);
     //cl("clear after");
     //cl(t4y.delaydRender);
-    var msDelay = t4y.msToNextFrame();
+    let msDelay = t4y.msToNextFrame();
     //cl("msDelay from last frame: "+msDelay);
     if( msDelay > 0 ){
       clearTimeout( t4y.delaydRender );
+      t4y.delaydRender = 0;
       t4y.delaydRender = setTimeout( ()=>{
           t4y.renderIt( "setDelaydRender ["+args+"]" );
-      },msDelay);
+        }, msDelay );
       return 1;
+
     }else{
       //cl("do direct renderIt");
       return t4y.renderIt( "setDelaydRender after time ["+args+"]" );
+
     }
     //cl("return 1");
     return 1;
@@ -628,11 +631,12 @@ fitCanvasToScreen(){
 
     // set one to make when it will be less load..
     //if( t4y.renderingNow ){
-    var msDelay = t4y.msToNextFrame();
-    if( msDelay>0 ){
+    
+    if( t4y.msToNextFrame() > 0 ){
       t4y.setDelaydRender( force );
       return 0;
     }
+
     //}
     t4y.renderingNow = true;
     t4y.timerForSubRenderIsSet = false;
@@ -641,7 +645,7 @@ fitCanvasToScreen(){
     //cl("t4y.otcom");
     //cl(t4y.otcom);
     t4y.tn = new Date().getTime();
-    let ndt = t4y.tn - t4y.sLastRender;
+    //let ndt = t4y.tn - t4y.sLastRender;
     if( t4y.sLastRender == 0 ){
       t4y.sLastRender = t4y.tn;
       t4y.lLastRender = t4y.tn;

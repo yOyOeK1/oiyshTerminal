@@ -12,26 +12,50 @@ class s_3d_action_clips{
 
 	getHtml(){
 		cl("----- get html");
-		let tr=`<div style="z-index:9;display:inline;position:absolute;top:0;width:100%;">
-		  <label for="sli3DTTest">Move slider to test [and/mag]:</label>
-		  <input type="range" id="sli3DTTest" name="sli3DTTest"
-		    min="-100" max="360" value="0"
+		let tr=`
+		<div style="z-index:9;display:inline;position:absolute;top:0;width:100%;">
+			
+			<label for="sli3DTTest">Move slider to test [and/mag]:</label>
+			<input type="range" id="sli3DTTest" name="sli3DTTest"
+				min="-100" max="360" value="0"
+				data-theme="b" data-track-theme="b">
+				
+			<label for="sli3DTTest2">Move slider to test [and/heel]:</label>
+			<input type="range" id="sli3DTTest2" name="sli3DTTest2"
+				min="-100" max="100" value="0"
+				data-theme="b" data-track-theme="b">
 
-		    data-theme="b" data-track-theme="b">
-
-				<label for="sli3DTTest2">Move slider to test [and/heel]:</label>
-			  <input type="range" id="sli3DTTest2" name="sli3DTTest2"
-			    min="-100" max="100" value="0"
-
-			    data-theme="b" data-track-theme="b">
-
-
+			<label for="switchJump">Jump:</label>
+			<select name="switchJump" id="switchJump" data-role="slider">
+				<option value="off">Off</option>
+				<option value="on">On</option>
+			</select>
+		
 		</div>`;
 
 		cl("- tr is ");
 		cl(tr);
 		cl("t4y is ");
 		cl(t4y);
+		setTimeout(()=>{
+
+			$('#switchJump').change( function(){
+				let v = $(this).val();
+				cl(`on change jump switch `+v);
+			
+				if( v == 'on' ){
+					t4y.cActions['Act1R.002'].paused = false;
+					t4y.cActions['Act1R.002'].loop = t4y.libTHREE.LoopRepeat;
+					pager.pages[pager.currentPage].startRenderAllTime();	
+				}else{
+					t4y.cActions['Act1R.002'].paused = true;
+					pager.pages[pager.currentPage].stopRenderAllTime();
+				}
+			
+			});
+
+
+		},300);
 
 		return tr+t4y.getHtml();
 	}
@@ -102,15 +126,22 @@ class s_3d_action_clips{
 		}, 500);
 		
 		this.intervalLoop;
-		if(1){
-			this.intervalLoop = setInterval( ( )=>{ 
-				t4y.setDelaydRender("clip in the loop request");
-				//cl(`forst render `);		
-				
-			}, 1000/12 ); // 12 fps
+		if(0){
+			this.startRenderAllTime();
 		}
 
 
+	}
+
+	startRenderAllTime(){
+		this.intervalLoop = setInterval( ( )=>{ 
+			t4y.setDelaydRender("clip in the loop request");
+			//cl(`forst render `);		
+			
+		}, 1000/12 ); // 12 fps
+	}
+	stopRenderAllTime(){
+		clearInterval( this.intervalLoop );
 	}
 
 	get svgDyno(){
@@ -131,6 +162,8 @@ class s_3d_action_clips{
 		 ){
 			if( r.topic == 'sites/3d action clips/CubeR'){
 
+				// to force rendering for 6 sec
+				t4y.aniOnlyRender( t4y.cActions['CuR'], 6 );
 				t4y.cActions['CuR'].reset()
 						.setEffectiveTimeScale( 1 )
 						.setEffectiveWeight( 1 )

@@ -1,0 +1,14 @@
+{
+    "oName": "s_modsitPage",
+    "o": null,
+    "dir": "test_module_site",
+    "asModule": true,
+    "jssrc":["a_modsitPage.js"],
+    "enable": true,
+    "author": "Name Last <email@adres.com>",
+    "ver": "0.0.1",
+    "desc": "Description...",
+    "otdm":{
+        "playground": false
+    }
+}

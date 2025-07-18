@@ -12,6 +12,9 @@ const threes = {};
 var pager;
 var sm;
 var vM = {}; // vue modules loaded
+var ajs = undefined;
+var aujs = undefined;
+var aajs = undefined;
 
 
 

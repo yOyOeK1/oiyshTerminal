@@ -86,6 +86,37 @@ class T4y_ani{
     obj[mixerNameKey] = mixer;
   }
 
+
+  aniOnlyRender( obj, forSec ){
+    console.log('aniOnlyRender '+forSec);
+    if( obj.onlyAniRuns == undefined ){
+      obj.onlyAniStart = Date.now();
+      obj.onlyAniRuns = obj.onlyAniStart+(forSec*1000);
+      
+      obj.onlyAniInterval = setInterval( ()=>{
+        //console.log('aniOnlyRender loop');
+        this.setDelaydRender('aniOnlyRender_'+obj.name);
+      }, 1000 / t4y.maxFps);
+
+      obj.onlyAniSetTime = setTimeout(()=>{ 
+        clearInterval(obj.onlyAniInterval); 
+        console.log('aniOnlyRender kill');
+        obj.onlyAniRuns = undefined;
+      }, forSec*1002 );
+
+
+    } else {
+      
+      console.log('aniOnlyRender clear');
+      clearInterval( obj.onlyAniInterval );
+      clearTimeout( obj.onlyAniSetTime );
+      obj.onlyAniRuns = undefined;
+      this.aniOnlyRender( obj, forSec );
+
+    }
+
+  }
+
   aniOncePosition(obj, action='x',val=0){
     var mixerNameKey = 'mix_pos_'+action;
     var icp = obj.position;
@@ -99,6 +130,7 @@ class T4y_ani{
     const clip = new THREE.AnimationClip("slowmove", -1, tracks);
 
     var mixer = undefined;
+
     if( obj[mixerNameKey] ){
       // loking for clip with this action of object have in arg
       mixer = t4y.mixers.find( mix => {
@@ -115,8 +147,9 @@ class T4y_ani{
     //var seek = 0.0;
     //cl("got mixer");
     //cl(mixer);
+    var ca;
     if( mixer != undefined ){
-      var ca = mixer[1];
+      ca = mixer[1];
       mixer = mixer[0];
       mixer._actionsByClip = t4y.removeElementFromArray( mixer._actionsByClip, mixer._actionsByClip.indexOf( ca )  );
       ca.stop();
@@ -128,7 +161,7 @@ class T4y_ani{
       //mixer.update( t4y.delta );
     }else{
       mixer = new THREE.AnimationMixer( obj );
-      var ca = mixer.clipAction(clip);
+      ca = mixer.clipAction(clip);
       t4y.mixers.push( mixer );
     }
 
