@@ -1,0 +1,14 @@
+{
+    "oName": "s_modvuePage",
+    "o": null,
+    "dir": "test_module_vue",
+    "asModule": true,
+    "jssrc":["a_modvuePage.js"],
+    "enable": true,
+    "author": "Name Last <email@adres.com>",
+    "ver": "0.0.1",
+    "desc": "Description...",
+    "otdm":{
+        "playground": false
+    }
+}
