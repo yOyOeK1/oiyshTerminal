@@ -9,37 +9,37 @@ https://github.com/fulup-bzh/GeoGate/blob/master/encoder/lib/GG-AisEncode.js
 -->
 
 <html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ySS</title>
+    <link rel="icon" type="image/x-icon" href="icons/favicon.png">
+    
+    
+    
+    
+    <script>
+      /*
+      var mod = {};
+      class moduleCollector{
+        
+      conntructor (){
+        
+    }
+    
+    set exports( a ){
+      console.log("moduleCollector gos some");
+      console.log(a.name);
+      mod[ a.name ] = a;
 
-<head>
-  <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>ySS</title>
-  <link rel="icon" type="image/x-icon" href="icons/favicon.png">
-
-
-
-
-<script>
-  /*
-var mod = {};
-class moduleCollector{
-
-  conntructor (){
-
-  }
-
-  set exports( a ){
-    console.log("moduleCollector gos some");
-    console.log(a.name);
-    mod[ a.name ] = a;
-
-  }
-
+    }
+    
   getModule( name ){
     //console.log(" getModule ! - name "+name);
     return mod[name];
   }
-
+  
 }
 var module = new moduleCollector();
 */
@@ -141,30 +141,34 @@ var module = new moduleCollector();
 <script src="libs/node_modules/otmHH/index.js"></script>
 <script src="libs/node_modules/otplc/index.js"></script>
 
-<script src="libs/vue.global.js"></script>
+<script src="libs/vue.global_v3.js"></script>
+<script src="libs/vue-router.global.js"></script>
 <script src="libs/marked_0.3.6_lib_marked.js"></script>
 <script type="module" src="./components/loader.mjs"></script>
 <script type="module">
-    import { animate, utils } from './libs/anime.esm.min.js';
-    ajs = animate;
-    aujs = utils;
-    import * as naajs from "./libs/anime.esm.min.js";
-    aajs = naajs; 
-
+  import { animate, utils } from './libs/anime.esm.min.js';
+  ajs = animate;
+  aujs = utils;
+  import * as naajs from "./libs/anime.esm.min.js";
+  aajs = naajs; 
+  
   console.log('animate',animate);
 </script>
 
 <script type="module" src="./three4yssModule.mjs"></script>
 <script type="module" src="./libs/motTools.mjs"></script>
+"
+
 <!--<script>
-var mqtt = undefined;
-connect.log('set mqtt var');
+  var mqtt = undefined;
+  connect.log('set mqtt var');
 </script>
 <script type="module" src="./libs/mqtt.min.js">
-connect.log(`mqtt in module is: ${mqtt}`);
+  connect.log(`mqtt in module is: ${mqtt}`);
 </script>
 -->
 <script src="libs/jquery.flexslider.js"></script>
+<script src="libs/httpVueLoader.js"></script>
 <link rel="stylesheet" href="libs/flexslider.css" type="text/css" media="all">
 
 <link rel="stylesheet" href="libs/jquery.mobile-1.4.5.min.css">
@@ -173,13 +177,13 @@ connect.log(`mqtt in module is: ${mqtt}`);
 
 
 <!--
-<script>
-  console.log("pre module exec test 1... :)");
-</script>
-<script type="module">
-console.log("module exec test 1... :)");
-</script>
-<script>
+  <script>
+    console.log("pre module exec test 1... :)");
+  </script>
+  <script type="module">
+    console.log("module exec test 1... :)");
+  </script>
+  <script>
   console.log("pre module exec test 1... :)");
 </script>
 
@@ -199,6 +203,7 @@ if( t4y == 0 ){
 <script>
   console.log('animate test');
 var urlArgs = {};
+
 var waitCount = 0;
 var thisDevice = 0;
 function waitForT4y(){
@@ -241,9 +246,11 @@ $( document ).ready(function() {
   //makeInit();
   waitForT4y();
 
+  
+    
+
 });
 function makeInit(){
-
   /*
   console.log("loading .... mOperation");
   jQuery.ajax({

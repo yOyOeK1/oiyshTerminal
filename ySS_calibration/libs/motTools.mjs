@@ -42,7 +42,7 @@ class motTools{
     this._pts = new Date().getTime();
     var tws = this._pts;
     $.ajax({
-      url:this.url+"/"+ sapiStr,
+      url:this.getUrl()+"/"+ sapiStr,
       type: "GET",
       success: function(d){
         let tn = new Date().getTime();

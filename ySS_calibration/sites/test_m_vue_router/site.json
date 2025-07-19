@@ -1,0 +1,14 @@
+{
+    "oName": "s_mvueroutPage",
+    "o": null,
+    "dir": "test_m_vue_router",
+    "asModule": true,
+    "jssrc":["s_mvueroutPage.js"],
+    "enable": true,
+    "author": "Name Last <email@adres.com>",
+    "ver": "0.0.1",
+    "desc": "Description...",
+    "otdm":{
+        "playground": false
+    }
+}

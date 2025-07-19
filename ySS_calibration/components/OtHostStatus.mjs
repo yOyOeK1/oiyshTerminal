@@ -11,7 +11,7 @@ otcl(["Mylost",Mylost]);
 
 otcl("template / components ... DONE");
 
-export default Vue.createApp({
+export default Vue.defineComponent({
 	components:{
 		Mylost
 	},
@@ -47,9 +47,16 @@ export default Vue.createApp({
 				otcl("loop ....");
 				this.iterNo++;
 
+				mott._ip = this.host;
+				mott._port = this.port;
+				
 				mott.sapiJ('ping/.json',(d)=>{
-					//cl("got data !");cl(d);
-					if( d.code == 200 ){
+					cl("got data !");cl(d);
+					if( d = -1 ){
+						this.status = "wrong res";
+						this.color = 'orange';
+
+					}else if( d.code == 200 ){
 						this.status = "ok";
 						this.color = 'green';
 					}else{
