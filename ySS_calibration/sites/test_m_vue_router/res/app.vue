@@ -1,6 +1,6 @@
 <template>
   <h1>Hello App!</h1>
-  <p>it use vue-router</p>
+  <p>it use vue-router vite test 2</p>
   <p>
     <strong>Current route path:</strong> {{ $route.fullPath }}
   </p>

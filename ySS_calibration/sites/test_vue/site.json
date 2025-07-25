@@ -3,7 +3,7 @@
     "o": null,
     "dir": "test_vue",
     "jssrc":["s_testVuePage.js"],
-    "enable": true,
+    "enable": false,
     "ver": "0.0.1",
     "author": "B.Ceglik <yoyoek@wp.pl>",
     "desc": "Site to check all vue.js",

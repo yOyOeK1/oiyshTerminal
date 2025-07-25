@@ -51,8 +51,8 @@ class vueOT{
 
 		this.cl("looking for template ...");
 		let tTmp = vueRaw.split("<template>");
-		tTmp = tTmp[1].split("</template>");
 		if( tTmp.length == 2 ){
+			tTmp = tTmp[1].split("</template>");
 			this.cl("have IT!", tTmp[0]);
 			tr['template'] = tTmp[0];
 		}else{

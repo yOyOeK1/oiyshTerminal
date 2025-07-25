@@ -1,0 +1,14 @@
+{
+    "oName": "s_testvitePage",
+    "o": null,
+    "dir": "test_vite",
+    "asModule": true,
+    "jssrc":["a_testvitePage.js"],
+    "enable": true,
+    "author": "Name Last <email@adres.com>",
+    "ver": "0.0.1",
+    "desc": "Description...",
+    "otdm":{
+        "playground": false
+    }
+}

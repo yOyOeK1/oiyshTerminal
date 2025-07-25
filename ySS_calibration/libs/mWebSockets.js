@@ -51,7 +51,7 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 	}
 
 	socketIn.onmessage = async function(m){
-		cl("wsConnectIn onmessage:"+m.data);
+		//cl("wsConnectIn onmessage:"+m.data);
 		r = JSON.parse(m.data);
 		//cl("	r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
 
@@ -150,7 +150,8 @@ function sOutSend( msg ){
 	//socketOut.send(JSON.stringify(msg));
 	//cl("sOutSend now doing it ...");
 	//cl("is connected ? "+wsOutIsOk);
-	if( wsInIsOk != null )
+	//console.log('wsInIsOk now :',wsInIsOk);
+	if( wsInIsOk == true )
 		socketIn.send(msg);
 	else {
 		cl("s[e] wsConnectOut sOutSend but there is no ws out connection yet !");
