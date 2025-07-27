@@ -30,6 +30,12 @@ class s_3d_action_clips{
 				<option value="off">Off</option>
 				<option value="on">On</option>
 			</select>
+
+			<label for="switchMainTimeLine">Main timeline:</label>
+			<select name="switchMainTimeLine" id="switchMainTimeLine" data-role="slider">
+				<option value="off">Off</option>
+				<option value="on">On</option>
+			</select>
 		
 		</div>`;
 
@@ -51,6 +57,21 @@ class s_3d_action_clips{
 					t4y.cActions['Act1R.002'].paused = true;
 					pager.pages[pager.currentPage].stopRenderAllTime();
 				}
+			
+			});
+
+			$('#switchMainTimeLine').change( function(){
+				let v = $(this).val();
+				cl(`on change switchMainTimeLine `+v);
+				if( v == 'on' ){
+					t4y.cActions['CameraAction'].paused = false;
+					t4y.cActions['CameraAction'].loop = t4y.libTHREE.LoopRepeat;
+					pager.pages[pager.currentPage].startRenderAllTime();	
+				}else{
+					t4y.cActions['CameraAction'].paused = true;
+					pager.pages[pager.currentPage].stopRenderAllTime();
+				}
+				
 			
 			});
 
@@ -93,7 +114,7 @@ class s_3d_action_clips{
 
 		
 
-		t4y.getHtmlAfterLoad( 'sites/3d_action_clips/test1_cubes.glb',
+		t4y.getHtmlAfterLoad( 'sites/3d_action_clips/test1_cubes3.glb',
 		 	{
 				//'camPos': [12.530088021598306, 62.72307047093599, 26.921712853935578],
 				//'camRot': [-0.945604247598529, 0.16391450066952107, 0.22234511182624667],

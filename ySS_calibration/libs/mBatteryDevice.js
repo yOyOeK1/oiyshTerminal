@@ -3,10 +3,12 @@ function navBatteryPercentSignUp( pager ){
 	try{
 		navigator.getBattery().then(battery => {
 		battery.onlevelchange = () => {
-			pager.wsCallbackExternal({
-				'topic': 'thisDevice/bat/perc',
-				'payload': Math.round( battery.level*100 ).toString()
+			setTimeout(function(){
+				pager.wsCallbackExternal({
+					'topic': 'thisDevice/bat/perc',
+					'payload': Math.round( battery.level*100 ).toString()
 				});
+			},5000);
 
       thisDevice.pushUpdateSens('bat/perc', Math.round( battery.level*100 ).toString() );
 

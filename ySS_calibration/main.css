@@ -37,6 +37,11 @@ body{
 }
 
 
+#menuListView{
+	 overflow-y: auto;
+	 height: 100vh;
+}
+
 #svgDyno{
 	width:100%;
 	height:100%;
