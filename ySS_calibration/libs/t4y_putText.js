@@ -190,9 +190,29 @@ class T4y_putText{
 
   }
 
+
+  fontLoadedObj = null;
+
   putTextInThene2( msg, args = {} ){
-  const loader = new FontLoader();
-  loader.load( 'three/fonts/helvetiker_regular.typeface.json', function ( font ) {
+    if( t4y.fontLoadedObj != null ){
+       t4y.putTextInThene2WithFont( msg, args, t4y.fontLoadedObj );
+
+    } else {
+
+      const loader = new FontLoader();
+      loader.load( 'three/fonts/helvetiker_regular.typeface.json', function ( font ) {
+        if( t4y.fontLoadedObj == null ){
+          t4y.fontLoadedObj = font;
+          t4y.putTextInThene2WithFont( msg, args, font );
+        }
+        
+        
+      });
+      
+    }
+  }
+  
+  putTextInThene2WithFont( msg, args , font ){
     var asp =  window.innerHeight/window.innerWidth;
     const color = new THREE.Color( args['color'] != undefined ? args['color'] : 0x006699 );
     const matDark = new THREE.MeshBasicMaterial( {
@@ -332,9 +352,9 @@ class T4y_putText{
       });
       //return text;
 
-    } ); //end load function
+  } //end load function
 
-  }
+  
 }
 
 

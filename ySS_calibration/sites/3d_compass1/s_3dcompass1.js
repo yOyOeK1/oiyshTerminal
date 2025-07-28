@@ -27,10 +27,10 @@ class s_3dcompass1{
 
 		</div>`;
 
-		cl("- tr is ");
-		cl(tr);
-		cl("t4y is ");
-		cl(t4y);
+		//cl("- tr is ");
+		//cl(tr);
+		//cl("t4y is ");
+		//cl(t4y);
 
 		return tr+t4y.getHtml();
 	}

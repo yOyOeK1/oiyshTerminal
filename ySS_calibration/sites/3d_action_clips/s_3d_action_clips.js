@@ -89,7 +89,7 @@ class s_3d_action_clips{
 
 
 
-
+		
 
 		$( "#sli3DTTest" ).change(function(event, ui){
 				var v = parseInt($(this).val());
@@ -114,14 +114,15 @@ class s_3d_action_clips{
 
 		
 
-		t4y.getHtmlAfterLoad( 'sites/3d_action_clips/test1_cubes3.glb',
+		t4y.getHtmlAfterLoad( 'sites/3d_action_clips/test1_cubes3_4.5.glb',
+		//t4y.getHtmlAfterLoad( 'sites/3d_action_clips/test1_cubes3.glb',
 		 	{
 				//'camPos': [12.530088021598306, 62.72307047093599, 26.921712853935578],
 				//'camRot': [-0.945604247598529, 0.16391450066952107, 0.22234511182624667],
 				'controls': false,
 				//'lightPos': [0,80,-80],
 				'camDeb': false,
-				'lightMultiplyer': 0.0007,
+				'lightMultiplyer': 0.000015,
 				'addHdr': true,
 				//'autoRotate': true,
 			}
@@ -315,9 +316,21 @@ class s_3d_action_clips{
 		}else if( r.topic == 'and/orient/heel'){
 			
 			
-			t4y.gltfLoaded.scene.children[1].children[0].power = (parseFloat(r.payload)*0.5);
-			cl('light power to: '+t4y.gltfLoaded.scene.children[1].children[0].power);	
+			try{
+				t4y.gltfLoaded.scene.children[1].children[0].power = (parseFloat(r.payload)*0.5);
+				cl('light power to: '+t4y.gltfLoaded.scene.children[1].children[0].power);	
+
+			}catch(e){
+	
+				try{
+					t4y.gltfLoaded.scene.children[3].power = (parseFloat(r.payload)*0.5);
+					cl('light power to: '+t4y.gltfLoaded.scene.children[3].power);	
+	
+				}catch(e){}
+
+			}
 			
+
 			/*
 			var emp = t4y.otsce.getObjectByName("PointLight");
 			$( emp ).attr('positionX', 'setIt');

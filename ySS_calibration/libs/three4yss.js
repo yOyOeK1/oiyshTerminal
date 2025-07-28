@@ -201,15 +201,20 @@ class Three4Yss extends aggregation(
 
       
       t4y.initMixerAndActions( gltf );
-      
+     /*
+      t4y.gltfLoaded.asset.generator
+19:56:48.806 "Khronos glTF Blender I/O v4.5.47"
+      t4y.gltfLoaded.asset.version
+19:57:16.878 "2.0"
+     */
 
       //cl("--------------- add shadows");
       cl( "objs in scene:" );
       var c = gltf.scene.children;
       for( var ci=0,cic=c.length; ci<cic; ci++ ){
         var it = c[ci];
-        //cl("it: ");
-        //cl(it);
+        cl("it: -------------------------------------");
+        cl(it);
         if( it.children && it.children[0] &&
           it.children[0].constructor.name == "PointLight" ){
 
@@ -231,12 +236,38 @@ class Three4Yss extends aggregation(
           t4y.doLightNoLightInScene = false;
           t4y.sceneLights.push( it.children[0] );
 
-        }else if( it.name == "Camera" ){
+        // point light in 4.5 blender
+        } else if( it.children && it.children.length == 0 &&
+          it.constructor.name == "PointLight" ){
+          
+
+          cl("Lamp in scene !");
+          cl(it);
+          cl("  Lamp ["+ci+"] - with shadow. ["+t4y.lightMultiplyer+"] with power:"+it.power)
+          it.power = it.power*t4y.lightMultiplyer;
+          cl("  Lamp ["+ci+"] - with shadow. with power after:"+it.power)
+          
+          it.castShadow = true;
+      		it.shadow.camera.near = 0.00001;
+      		//light.shadow.camera.far = 200;
+      		//light.shadow.bias = 0.00002;
+          it.shadow.bias = -0.000018;
+      		it.shadow.mapSize.width = 1024*2;
+      		it.shadow.mapSize.height = 1024*2;
+          //it.children[0].
+
+          t4y.doLightNoLightInScene = false;
+          t4y.sceneLights.push( it );
+
+        } else if( it.name == "Camera" ){
           cl("found camera!\n\ttrying to use it....");
           cl("t4y.otcam");
           cl(t4y.otcam);
           var sc = it;
-          t4y.otscam = sc.children[0];
+          if( sc.children.length > 0 )
+            t4y.otscam = sc.children[0];
+          else
+            t4y.otscam = sc;
           t4y.otscam.receiveShadow = false;
           t4y.otscam.castShadow = false;
           t4y.otscam.far = 100000;
