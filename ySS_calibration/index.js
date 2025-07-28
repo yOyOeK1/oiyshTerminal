@@ -105,11 +105,6 @@ function svgTests(  ){
 			});
 }
 
-function looperIter(){
-  cl("looper iter ....");
-  pager.makeLooperIter();
-  setTimeout( looperIter, 5000 );
-}
 
 // for testing not use
 function doMqtt(){

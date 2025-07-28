@@ -157,7 +157,6 @@ var module = new moduleCollector();
   
   console.log('animate',animate);
 </script>
-
 <script type="module" src="./three4yssModule.mjs"></script>
 <script type="module" src="./libs/motTools.mjs"></script>
 "
@@ -231,7 +230,7 @@ function waitForT4y(){
       cl(Three4Yss);
 
     }catch(e){
-      cl("no Three4Yss");
+      console.error("no Three4Yss",e);
     }
   }
 
@@ -286,7 +285,7 @@ function makeInit(){
   }catch(e){
     //pager.addPage( new s_basicSailPage() );
     clOut = 'console.log';
-    cl('Pages loaded .... ERROR!');
+    console.error('Pages loaded .... ERROR!');
     cl("load log ----------------------------------");
     cl(clBuf.join("\n"));
     console.error(e);
@@ -323,17 +322,17 @@ function makeInit(){
 	wsConnectOut();
   pager.getPage( -1 );
     
-    const isAndroid = navigator.userAgent.toLowerCase().includes('android');
-    if (isAndroid==true) {
-      // Code to execute if the device is Android
-      console.log("This is an Android device.");
-      $('#popupBasic').html(`<input type="button" style="border:10;"onclick="mkfullscreen();$('#popupBasic').popup('close');" value="fullscreen">`);
-      $('#popupBasic').popup();
-      $('#popupBasic').popup('open');
-    } else {
-      // Code to execute if the device is not Android
-      console.log("This is not an Android device.");
-    }
+  const isAndroid = navigator.userAgent.toLowerCase().includes('android');
+  if (isAndroid==true) {
+    // Code to execute if the device is Android
+    console.log("This is an Android device.");
+    $('#popupBasic').html(`<br><input type="button" style="border:10; padding:20px;"onclick="mkfullscreen();$('#popupBasic').popup('close');" value="fullscreen"><br><br>`);
+    $('#popupBasic').popup();
+    $('#popupBasic').popup('open');
+  } else {
+    // Code to execute if the device is not Android
+    console.log("This is not an Android device.");
+  }
 
 
   // store last sean page on browser
@@ -350,7 +349,6 @@ function makeInit(){
     cl("Page set as -1 first visit no plan ...");
     pager.setPage(-1);
   }
-  looperIter();
   navBatteryPercentSignUp( pager );
 
   //console.log("mouseup set times");
@@ -372,8 +370,8 @@ function makeInit(){
 }
 
 function chkUrl( dontSetPage=false ){
+  //cl("chkUrl ["+dontSetPage+"]");
   var has = window.location.href;
-  //cl("chkUrl ["+has+"]");
   urlArgs = {};
   //cl("looking for hash -------------------------");
   has = has.split("#")[1];
@@ -395,6 +393,7 @@ function chkUrl( dontSetPage=false ){
   if( urlArgs['page'] != undefined ){
     pager.setPage( urlArgs['page'] );
     return 0;
+
   }else if( urlArgs['resizeTo'] != undefined ){
     let wh = urlArgs['resizeTo'].split(',');
     cl("resize To wh:"+wh[0]+"x"+wh[1]);
@@ -479,9 +478,9 @@ function chkUrl( dontSetPage=false ){
   More about on: <a href="https://github.com/yOyOeK1/oiyshTerminal">github</a>
   <br>
   <br>
-  use bottom menu to start...
-
-  <footer>ver: 2301091425</footer>
+  use bottom menu on the bottom to start ...
+  <br>
+  <footer>ver: 2507280843</footer>
 
 </div>
 

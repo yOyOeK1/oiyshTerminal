@@ -100,7 +100,7 @@ class Three4Yss extends aggregation(
 
 
   getHtml(){
-    return `<div id="otThreeLogo" style="z-index:2;position:absolute;top:0;left:0;"></div>
+    return `<div id="otThreeLogo" style="z-index:2;position:absolute;top:0;left:0;padding:0px;margin:0px;"></div>
     `;
   }
 
@@ -331,7 +331,7 @@ class Three4Yss extends aggregation(
 
     cl("----- doing render to canvas...");
 
-    $(dre).attr('style',"width:100vw;height:100vh;");
+    $(dre).attr('style',"width:99.8vw;height:95vh;");
     container.appendChild( t4y.otren.domElement );
     cl("----- doing render to canvas...DONE");
 
@@ -457,7 +457,7 @@ fitCanvasToScreenDelay(){
 
 fitCanvasToScreen(){
   var c = $("#otThreeLogo").children()[0];
-  $(c).attr('style',"width:99.8vw;height:99.1vh;");
+  $(c).attr('style',"width:100vw;height:100vh;");
 }
 
  onWindowResize( renderAfter=true ) {

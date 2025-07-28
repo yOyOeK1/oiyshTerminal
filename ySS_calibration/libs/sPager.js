@@ -23,7 +23,10 @@ class sPager {
 
   constructor(){
     let cc = new otCl(`sPager`);
-    this.cl = function(){cc.doClFromArgs( arguments );  };
+    this.cl = function(){
+      //console.log( 'sPager',arguments );
+      cc.doClFromArgs( arguments );  
+    };
 
 
     this.currentPage = -1;
@@ -31,7 +34,11 @@ class sPager {
     this.cl("sPager constructor done !");
     this.sm = -1;
     this.pageHistory = [];
+    this.looperIterInst = undefined;
+
   }
+
+  
 
   setHeader( title ){
     if( title == '' ){
@@ -64,7 +71,7 @@ class sPager {
   }
 
 
-
+  /*** get user agent machine OS */
   getUA(){
     let device = "Unknown";
     const ua = {
@@ -102,7 +109,7 @@ class sPager {
   }
 
 
-  getCurrentPage(){
+  getCurrentPage= () => {
     return this.pages[ this.currentPage ];
   }
 
@@ -190,90 +197,108 @@ class sPager {
     this.pages.push( obj );
   }
 
-  makeLooperIter(){
-    //this.cl("pager looper iter...");
-    try{
-      this.getCurrentPage().looperIter();
-    }catch( e ){
-      this.cl(`ERROR no make looper iter in page [{e}]`);
-    }
+  looperIter = () => {
+    cl("looper iter ....");
+    this.looperIterInst = setTimeout( ()=>{
+      this._page.o.looperIter();
+      this.looperIter();
+
+    }, 5000 );
   }
 
   /**
    * @param {integer} pageNo - will sec curent site from `this.pages[pageNo]` to set now
    * @description Methode - **not recomendet** shortest way to set now a different site but not the best. Check `.goToByHash()`
    */
-  setPage( pageNo ){
+  setPage = ( pageNo ) => {
+    //this.cl("setPage"+pageNo);
+    console.log('setPage '+pageNo);
     if( this.currentPage == pageNo  ){
-      this.cl("DROPING setPage !!! it's now the same ?");
+      this.cl("DROPING setPage !!! it's now not the same ?");
       //return 0;
     }
     
-    if( pageNo > this.pages.length ){
+    if( pageNo > this.pages.length  ){
       this.cl(`[e] setPage to No out of sites count .... ${pageNo} / ${this.pages.length}`);
       this.setPage(-1);
       return 0;
     }
 
-    this.cl("setPage"+pageNo);
     this.setHeader('');
     $.mobile.panel();
     this.currentPage = pageNo;
     this.pageHistory.push( pageNo );
     
-    /*** current page instance of site */
-    this._page = this.pages[pageNo];
+    if( pageNo == -1 ){
+      // no page
+      this.currentPage == -1;
+      this.getPage();
 
-    this.setMenuSiteSelected();
-    
-    /*
-    $('.pageItemsLi').each(function(i){
-      if( i == pager.currentPage ){
-        $(this).attr({
-          'class':"pageItemsLi ui-bar ui-bar-b"
-        });
-      }else{
-        $(this).attr({
-          'class':"pageItemsLi ui-bar ui-bar-a"
-        });
+    }else{
+  
+      if( this.looperIterInst != undefined ){
+        clearTimeout( this.looperIterInst );
       }
-    });
-    */
-    this.cl("TODO  - page selector !");
-    //console.log("pageHistory:");
-    //console.log(this.pageHistory)
-
-    mkShaderResuming = true;
-    mkShader('normal');
-    this.setCssForPage();
-    mkShaderResuming = false;
-
-    this.cl("sPager set page to: "+pageNo);
-
-    this.getPage();
-    document.cookie="lastPage="+pageNo+";max-age=31536000;";
-    mkShaderStoreResume();
-
-    navBatteryPercent( this );
-    $('#panelMenu').panel('close');
-
-
-    setSvgFit();
-
-
-    console.log("---- ts5 --- disable text-shadows");
-    $("tspan").each(function( i ){
-      //console.log("ts5 "+i+": "+$(this).html()+" -- >" );
-      //console.log( $(this) );
-      $(this).css('text-shadow','0 0 0 #0000');//'10px 15px 5px #f3f3f366');
-    });
-
-    this.cl("scroll to top ...");
-    $(document.body).scrollTop( 0 );
-
-    $( "[data-role='header'], [data-role='footer']" ).toolbar({ theme: "b" });
-
-
+      
+      
+      
+      /*** current page instance of site */
+      this._page = this.pages[pageNo];
+      
+      this.setMenuSiteSelected();
+      
+      /*
+      $('.pageItemsLi').each(function(i){
+        if( i == pager.currentPage ){
+          $(this).attr({
+            'class':"pageItemsLi ui-bar ui-bar-b"
+            });
+            }else{
+              $(this).attr({
+            'class':"pageItemsLi ui-bar ui-bar-a"
+            });
+            }
+            });
+            */
+        this.cl("TODO  - page selector !");
+        //console.log("pageHistory:");
+        //console.log(this.pageHistory)
+        
+        mkShaderResuming = true;
+        mkShader('normal');
+        this.setCssForPage();
+        mkShaderResuming = false;
+        
+        this.cl("sPager set page to: "+pageNo);
+        
+        this.getPage();
+        document.cookie="lastPage="+pageNo+";max-age=31536000;";
+        mkShaderStoreResume();
+        
+        navBatteryPercent( this );
+        $('#panelMenu').panel('close');
+        
+        
+        setSvgFit();
+        
+        
+        console.log("---- ts5 --- disable text-shadows");
+        $("tspan").each(function( i ){
+        //console.log("ts5 "+i+": "+$(this).html()+" -- >" );
+        //console.log( $(this) );
+        $(this).css('text-shadow','0 0 0 #0000');//'10px 15px 5px #f3f3f366');
+      });
+      
+      this.cl("scroll to top ...");
+      $(document.body).scrollTop( 0 );
+      
+      $( "[data-role='header'], [data-role='footer']" ).toolbar({ theme: "b" });
+      
+    }
+    if( this._page && this._page.o && this._page.o.looperIter != undefined ){
+      pager.looperIter();
+    }
+    
   }
 
   setCssForPage(){
@@ -301,7 +326,7 @@ class sPager {
     }
   }
 
-  getPage(){
+  getPage = () => {
     this.cl(`getHtml current page [${this.currentPage} ]: `+this.currentPage);
     lAngels = {};
     movePathStartOffset = {};
@@ -310,6 +335,9 @@ class sPager {
     if( this.currentPage == -1 ){
       this.getMenu();
       $("#svgDyno").html("");
+      //$("#htmlDyno").html(
+      console.info("getPage: Oiysh currentPage -1 first time or error?");
+
     }else{
 
       var cp = this.getCurrentPage();
