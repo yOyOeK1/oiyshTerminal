@@ -100,7 +100,7 @@ class Three4Yss extends aggregation(
 
 
   getHtml(){
-    return `<div id="otThreeLogo" style="z-index:2;position:absolute;top:0;left:0;padding:0px;margin:0px;"></div>
+    return `<div id="otThreeLogo" style="max-height:100vh;overflow-y:hidden;z-index:2;position:absolute;top:0px;left:0px;padding:0px;margin:0px;"></div>
     `;
   }
 

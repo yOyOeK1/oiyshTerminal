@@ -347,24 +347,88 @@ class sPager {
       }
       var cp = this.getCurrentPage();
 
-      $("#svgDyno").html("");
-      //console.log("----------------- mobile get active page ----------------");
-      console.log("cl will be call for html", cp);
-      $("#htmlDyno").html( cp.getHtml ).enhanceWithin();
-      //console.log($(":mobile-pagecontainer").pagecontainer("getActivePage"));
-      //$(":mobile-pagecontainer").pagecontainer("getActivePage");
-      //$('#htmlDyno').enhanceWithin();
-      //$("#htmlDyno").enhanceWithin();
-      //console.log("----------------- mobile get active page ---------DONE");
-      cp.getHtmlAfterLoad();
+
+      console.info('history: '+this.pageHistory);
+      if( this.pageHistory.length == 1 ){
+        console.info('make vanilla clone of svg html Dyno');
+
+        this.divOrg_svgDyno = $("#svgDyno").clone();
+        this.divOrg_svgDyno.html('');
+        this.divOrg_htmlDyno = $("#htmlDyno").clone();
+        this.divOrg_htmlDyno.html('');
+      }
+
+      if( this.pageHistory.length > 1 ){
+        console.info('history ok so make divs backup to owner');
+
+        // store last page 
+        let lastP = this.pages[ this.pageHistory[ this.pageHistory.length-2 ] ];
+        if( lastP.divs_svgDyno == undefined ){
+          console.info('history ok so make divs backup to owner First Time');
+          // first store process
+          lastP['divs_svgDyno'] = document.createElement('div');
+          lastP['divs_svgDyno'].appendChild( document.getElementById('svgDyno') );
+          lastP['divs_htmlDyno'] = document.createElement('div');
+          lastP['divs_htmlDyno'].appendChild( document.getElementById('htmlDyno') );
+          lastP['t4ySave'] = {
+            'cActions': t4y
+          };
+
+
+        }else{
+          console.info('history ok so make divs backup to owner Save');
+          // was open so store to old
+          lastP['divs_svgDyno'].appendChild( document.getElementById('svgDyno') );
+          lastP['divs_htmlDyno'].appendChild( document.getElementById('htmlDyno') );
+
+        }
+
+      }
+
+
+
+
+      let currentP = cp;
+      if( currentP['divs_svgDyno'] == undefined ){        
+        console.log('getPage new page first time ');
+
+        $('#svgDynoHandler').html('');
+        $('#htmlDynoHandler').html('');
+        $('#svgDynoHandler').append( this.divOrg_svgDyno.clone() );
+        $('#htmlDynoHandler').append( this.divOrg_htmlDyno.clone() );
+        
+        $("#svgDyno").html("");
+        //console.log("----------------- mobile get active page ----------------");
+        console.log("cl will be call for html", cp);
+        $("#htmlDyno").html( cp.getHtml );//.enhanceWithin();
+        $("#svgDyno").html( cp.svgDyno );
+        //console.log($(":mobile-pagecontainer").pagecontainer("getActivePage"));
+        //$(":mobile-pagecontainer").pagecontainer("getActivePage");
+        //$('#htmlDyno').enhanceWithin();
+        //$("#htmlDyno").enhanceWithin();
+        //console.log("----------------- mobile get active page ---------DONE");
+  
+        cp.getHtmlAfterLoad();
+        cp.svgDynoAfterLoad();
+        
+      }else{
+        console.log('getPage new page come back Restore');
+        $('#svgDynoHandler').html('');
+        $('#htmlDynoHandler').html('');
+        $('#svgDynoHandler').append( cp.divs_svgDyno );
+        $('#htmlDynoHandler').append( cp.divs_htmlDyno );
+
+        //t4y = cp.t4ySave.cActions;
+        
+        //$("#htmlDyno").refresh();
+      }
+
+
       try{
         var abcueoa = 1213;
       }catch(e){
         this.cl("ERROR sPage page "+this.currentPage+" don't have getHtmlAfterLoad() error["+e+"]");
       }
-      $("#svgDyno").html( cp.svgDyno );
-
-      cp.svgDynoAfterLoad();
     }
 
   }
