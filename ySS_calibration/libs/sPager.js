@@ -256,7 +256,8 @@ class sPager {
       }
       
       // call old one that it's going down
-      if( this._page && this._page.onPageLeft ) this._page.onPageLeft();
+      if( this._page && this._page.onPageLeft ) 
+        this._page.onPageLeft();
       
       
       /*** current page instance of site */
@@ -425,7 +426,8 @@ class sPager {
         //$('#htmlDyno').enhanceWithin();
         //$("#htmlDyno").enhanceWithin();
         //console.log("----------------- mobile get active page ---------DONE");
-  
+        document.title = cp.getName;
+
         cp.getHtmlAfterLoad();
         cp.svgDynoAfterLoad();
         
