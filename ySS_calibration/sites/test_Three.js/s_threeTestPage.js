@@ -61,7 +61,7 @@ class s_threeTestPage{
 
 	}
 
-	getHtmlAfterLoad(){
+	getHtmlAfterLoad=()=>{
 		cl("------- getHtmlAfterLoad");
 		cl(ott);
 		t4y.getHtmlAfterLoad( 'sites/test_Three.js/3dmodel_welcomeLogo4.glb',
@@ -71,7 +71,7 @@ class s_threeTestPage{
 				'autoRotate': true,
 				'controls': true,
 				'camDeb': false,
-				'onRender': ()=>{pager.getCurrentPage().updateLightToCamera();}
+				'onRender': ()=>{this.updateLightToCamera();}
 			}
 		);
 

@@ -1,0 +1,14 @@
+{
+    "oName": "s_sitManPage",
+    "o": null,
+    "dir": "sites_manager",
+    "asModule": true,
+    "jssrc":["a_sitManPage.js"],
+    "enable": true,
+    "author": "Bartłomiej Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "To build sites-compositor",
+    "otdm":{
+        "playground": false
+    }
+}

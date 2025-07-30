@@ -36,9 +36,23 @@ class sPager {
     this.pageHistory = [];
     this.looperIterInst = undefined;
 
+    window.addEventListener('resize', this.handleWindowResize);
+
+
   }
 
-  
+  handleWindowResize = () => {
+    console.log('sPage on window resize ....');
+    this.pages.forEach((p)=>{
+      if( p.onWindowResize != undefined )
+        p.onWindowResize( 
+          window.innerWidth,
+          window.innerHeight
+        );
+
+    });
+
+  }
 
   setHeader( title ){
     if( title == '' ){
@@ -110,6 +124,7 @@ class sPager {
 
 
   getCurrentPage= () => {
+    //let a = arguments.
     return this.pages[ this.currentPage ];
   }
 
@@ -233,13 +248,15 @@ class sPager {
       // no page
       this.currentPage == -1;
       this.getPage();
-
+      
     }else{
-  
+      
       if( this.looperIterInst != undefined ){
         clearTimeout( this.looperIterInst );
       }
       
+      // call old one that it's going down
+      if( this._page && this._page.onPageLeft ) this._page.onPageLeft();
       
       
       /*** current page instance of site */
@@ -349,7 +366,7 @@ class sPager {
 
 
       console.info('history: '+this.pageHistory);
-      if( this.pageHistory.length == 1 ){
+      if( 0 && this.pageHistory.length == 1 ){
         console.info('make vanilla clone of svg html Dyno');
 
         this.divOrg_svgDyno = $("#svgDyno").clone();
@@ -358,7 +375,7 @@ class sPager {
         this.divOrg_htmlDyno.html('');
       }
 
-      if( this.pageHistory.length > 1 ){
+      if(0 && this.pageHistory.length > 1 ){
         console.info('history ok so make divs backup to owner');
 
         // store last page 
@@ -392,16 +409,17 @@ class sPager {
       if( currentP['divs_svgDyno'] == undefined ){        
         console.log('getPage new page first time ');
 
-        $('#svgDynoHandler').html('');
+        /*$('#svgDynoHandler').html('');
         $('#htmlDynoHandler').html('');
         $('#svgDynoHandler').append( this.divOrg_svgDyno.clone() );
         $('#htmlDynoHandler').append( this.divOrg_htmlDyno.clone() );
-        
+        */
+
         $("#svgDyno").html("");
         //console.log("----------------- mobile get active page ----------------");
         console.log("cl will be call for html", cp);
-        $("#htmlDyno").html( cp.getHtml );//.enhanceWithin();
-        $("#svgDyno").html( cp.svgDyno );
+        $("#htmlDyno").html( cp.getHtml ).enhanceWithin();
+        $("#svgDyno").html( cp.svgDyno );//.enhanceWithin();
         //console.log($(":mobile-pagecontainer").pagecontainer("getActivePage"));
         //$(":mobile-pagecontainer").pagecontainer("getActivePage");
         //$('#htmlDyno').enhanceWithin();

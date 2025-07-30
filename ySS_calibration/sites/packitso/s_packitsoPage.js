@@ -34,10 +34,10 @@ class s_packitsoPage{
 
 
 
-  loadPackitsoList( cbAtEnd ){
+  loadPackitsoList = ( cbAtEnd ) =>{
     let hDir = this.instanceOf['fDir'];
     cl("loadPackitsoList from home directory ./p-* .... "+hDir);
-    let cp = pager.getCurrentPage();
+    let cp = this;//pager.getCurrentPage();
 
 
     cp.toastOnStartLoading = $.toast({
@@ -722,7 +722,7 @@ class s_packitsoPage{
     `;
   }
 
-  cbOnlsHomeDirDONE( data, res ){
+  cbOnlsHomeDirDONE = ( data, res )=>{
       cl(".cbOnlsHomeDirDONE god ");
       /*
       cl("data");
@@ -730,18 +730,18 @@ class s_packitsoPage{
       cl("res");
       cl(res);
       */
-      pager.getCurrentPage().packs = [];
-      pager.getCurrentPage().packsDirs = [];
+      this.packs = [];
+      this.packsDirs = [];
       for(let i=0,ic=data.length;i<ic;i++){
         //cl("pack dir ");
         //cl(data[i]);
         if( data[i].isFile == false && data[i].name.substring(0,2) == "p-" ){
-          pager.getCurrentPage().packsDirs.push( data[i] );
-          pager.getCurrentPage().packs.push(data[i]);
+          this.packsDirs.push( data[i] );
+          this.packs.push(data[i]);
         }
       }
       $("#plDiv").html("DONE")
-      pager.getCurrentPage().packsListRebuild();
+      this.packsListRebuild();
 
   }
 
@@ -846,15 +846,15 @@ class s_packitsoPage{
   }
 
 
-  packLoadDataFormFile( file ){
+  packLoadDataFormFile = ( file )=>{
 
     this.mDoCmd.otdmArgs(
       { "dfs": file },
       (data,res)=>{
         let upDatePackId = parseInt(this.loadingPacknow);
-        pager.getCurrentPage().packs[upDatePackId]['packitso.json'] = data;
+        this.packs[upDatePackId]['packitso.json'] = data;
         //callBack();
-        pager.getCurrentPage().packsInsertItem( data );
+        this.packsInsertItem( data );
       }
     );
   }
@@ -1183,10 +1183,10 @@ class s_packitsoPage{
 
 
 
-  getHtml(){
+  getHtml =() =>{
 
     var tr = '';
-    let cp = pager.getCurrentPage();
+    let cp = this;//pager.getCurrentPage();
 
     if( urlArgs['action'] == 'startNew' ){
       cl("startNew");

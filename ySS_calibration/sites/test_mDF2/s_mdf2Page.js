@@ -161,14 +161,8 @@ class s_mdf2Page{
     },500);
   }
 
-  getHtmlAfterLoad(){
-    let cp = pager.getCurrentPage();
-    cl(
-      pager.getCurrentPage().getName+
-      " - getHtmlAfterLoad()"
-    );
-
-    cp.makeAddFormLoop();
+  getHtmlAfterLoad =() =>{
+    this.makeAddFormLoop();
 
   }
 

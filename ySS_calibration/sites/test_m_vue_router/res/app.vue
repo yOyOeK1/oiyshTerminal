@@ -4,7 +4,7 @@
   <p>
     <strong>Current route path:</strong> {{ $route.fullPath }}
   </p>
-  <nav>
+  <nav id="menuRouteT">
     <RouterLink to="/">Go to Home</RouterLink> | 
     <RouterLink to="/about">Go to About</RouterLink>
   </nav>
@@ -12,3 +12,11 @@
     <RouterView />
   </main>
 </template>
+
+<style>
+#menuRouteT .router-link-active{
+  color: orange;
+  font-weight: bold;
+}
+
+</style>

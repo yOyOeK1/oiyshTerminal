@@ -16,7 +16,8 @@ class motTools{
     this._pts = 0;
 
     setTimeout(()=>{
-      this.chkHost();
+      //this.chkHost();
+      console.error('temporary disabled !! FIXIT!!');
     },1000);
   }
 

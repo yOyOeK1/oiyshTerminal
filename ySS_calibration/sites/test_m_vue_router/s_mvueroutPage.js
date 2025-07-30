@@ -28,11 +28,6 @@ class s_mvueroutPage{
   }
 
   getHtmlAfterLoad = () => {
-    cl(
-      this.getName+
-      " - getHtmlAfterLoad()"
-    );
-
     this.vapp = Vue.createApp( App1 )
       .use( router )
       .mount( '#routtest1' );

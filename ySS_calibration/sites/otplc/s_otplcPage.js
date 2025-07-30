@@ -69,7 +69,7 @@ class s_otplcPage{
   }
 
 
-  get getHtml(){
+  getHtml = () => {
     let tr = '';
     let cont = '';
     let goTo = this.getPageSelect();
@@ -90,7 +90,7 @@ class s_otplcPage{
 
 
     tr+= this.app.appFrame({
-      title: pager.getCurrentPage().getName,
+      title: this.getName,
       content: cont,
       goTo:'raw:<div id="mSelGoTo">'+goTo+'</div>'
     });
