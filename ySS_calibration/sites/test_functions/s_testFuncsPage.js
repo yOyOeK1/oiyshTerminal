@@ -53,13 +53,15 @@ class s_testFuncsPage{
 -->
 
 <!-- grafana config need set allow_embedding = true -->
-<iframe src="http://192.168.43.220:3000/d/TXSTREZ/yoyoek1-stuff?orgId=1&from=now-10s&to=now&kiosk&refresh=5s&otgOnly=2"
+<!--
+<iframe src="http://192.168.43.1:3000/d/TXSTREZ/yoyoek1-stuff?orgId=1&from=now-10s&to=now&kiosk&refresh=5s&otgOnly=2"
 style="height:50vh;width:50vw;"
 frameborder="0"></iframe>
-    `;
+-->
+`;
   }
 
-  pushDataToPlot( no, val ){
+  pushDataToPlot = ( no, val ) => {
     this.d3plot01data.push({'x':no,'y':val});
 
     if( this.d3plot01data.length > 20 )
@@ -71,6 +73,7 @@ frameborder="0"></iframe>
 
 
   getHtmlAfterLoad(){
+    var tthis = siteByKey.s_testFuncsPage.o;
     //$( "#sliTTest" ).slider({
     //  theme:"b",
     //  trackTheme: "b"
@@ -80,9 +83,8 @@ frameborder="0"></iframe>
   	   var v = parseInt($(this).val());
 			//console.log("val of v:"+v+" , ");
 
-
-      pager.pages[ pager.currentPage ].pushDataToPlot(
-        pager.pages[ pager.currentPage ].iterCounter++,v
+      tthis.pushDataToPlot(
+        tthis.iterCounter++,v
       );
 
 
@@ -122,8 +124,8 @@ frameborder="0"></iframe>
       moveOnPath( "cirPathObj", "cirPath", deg360ToNorm(parseFloat(v)) );
 
 
-      pager.getCurrentPage().justGage1.refresh( parseInt( v) );
-      pager.getCurrentPage().justGage2.refresh( deg360Pos(parseInt( v)) );
+      tthis.justGage1.refresh( parseInt( v) );
+      tthis.justGage2.refresh( deg360Pos(parseInt( v)) );
 
 
 
@@ -155,7 +157,7 @@ frameborder="0"></iframe>
 
 
 
-  svgDynoAfterLoad(){
+  svgDynoAfterLoad = () => {
     this.d3plot01 = m_d3PlotInit("d3PlotLine",{
       'direction': 'upDown',
 

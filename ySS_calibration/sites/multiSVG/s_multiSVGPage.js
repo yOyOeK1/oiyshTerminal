@@ -114,10 +114,10 @@ class s_multiSVGPage{
       });
     }
 
-    return this.app.appFrame({
+    return '<div id="multiSVGPage">'+this.app.appFrame({
       "title": "multi SVG",
       "content": tr
-    });
+    })+'</div>';
 
   }
 
@@ -145,7 +145,7 @@ class s_multiSVGPage{
   }
 
   getHtmlAfterLoad(){
-
+    $('#multiSVGPage').enhanceWithin();
   }
 
   get svgDyno(){

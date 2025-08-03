@@ -49,6 +49,33 @@ class compositorInLine{
 
     }
     
+
+    moveGrid( moveFrom = 0 ){
+        const $squares = aajs.utils.$('.siteTitle');
+
+        function animateGrid() {
+            aajs.animate($squares, {
+                scale: [
+                    { to: [1, 1.1] },
+                    { to: 1 }
+                ],
+                boxShadow: [
+                    { to: '0 0 1rem 0 currentColor' },
+                    { to: '0 0 0rem 0 currentColor' }
+                ],
+                delay: aajs.stagger(200, {
+                    grid: [7, 6],
+                    from: moveFrom
+                }),
+                //onComplete: animateGrid,
+                loop: false,
+                //reversed: true
+            });
+        }
+
+        animateGrid();
+    }
+
     buildBaseTails = () => {
         let pages = this.parent.pages; 
         let dr = this.parent.divRoot;
@@ -62,11 +89,15 @@ class compositorInLine{
  
         setTimeout(function(){
             $('#pHeader').hide();
-        },2000);
+        },1000);
+        
+        
+        setTimeout(()=>{
+            this.moveGrid(0);
+
+        }, 2000 );
  
- 
-        for( let y=0; y<intIsBy; y++ ){
- 
+        for( let y=0; y<intIsBy; y++ ){ 
             for( let x=0; x<(intIsBy-1); x++ ){
                 if( p >= this.parent.pages.length ){
                     return 0;
@@ -76,8 +107,9 @@ class compositorInLine{
                     this.getTail( p, x*(tikScreen.w*1.1), y*(tikScreen.h*1.1) )
                 );
 
+                
                 //if( [ 'iloo nav', 'basic sail', 'Wiki','blank','test module site' ].indexOf( pages[p].getName ) > -1){
-                if( p == 15 || p == 23 || p == 16){
+                if(  pages[p].getName == 'Sites manager' ){
                      console.log("p skipp:"+p+" "+pages[p].getName);
                 }else{
                     console.log("p:"+p+" "+pages[p].getName);
@@ -114,6 +146,7 @@ class compositorInLine{
         console.log('tailClick '+pNo+` in scale now: ${scaleNow}`);
 
 
+        // put down useNow 
         for( let t=0,tc=this.parent.pages.length; t<tc; t++ ){
             if( $(`#siteTile${t}`).attr('useNow') == '1' ){
                 $(`#siteTile${t}`).attr({ 'useNow': '0'});
@@ -126,14 +159,18 @@ class compositorInLine{
                     top:$(`#siteTile${t}`).attr('orgTop'),
                     left:$(`#siteTile${t}`).attr('orgLeft'),
                     'z-index':8000,
+                    duration: 200,
                     easing: 'easeInOutQuad' // Easing function
                 });
 
+                setTimeout(()=>{this.moveGrid( t );}, 250);
                 
             }
         }
 
         if( 1 ){
+            // selected one comming front 
+
             console.log('tail resize to 100%');
             //$(`#siteTile${pNo}`).css('transform','scale(1.0)');
             //$(`#siteTile${pNo}`).css({
@@ -147,17 +184,18 @@ class compositorInLine{
                 'orgTop': $(`#siteTile${pNo}`).css('top'),
                 'orgLeft': $(`#siteTile${pNo}`).css('left'),
             });
+            $(`#siteTile${pNo}`).css('z-index', 8001);
 
             ajs( aajs.utils.$(`#siteTile${pNo}`), {
                 scale: 1.0/scaleNow,
                 top:0,
                 left:0,
-                'z-index':8001,
+                duration: 300,
                 easing: 'easeInOutQuad' // Easing function
             });
 
             ajs( aajs.utils.$(`#siteMask${pNo}`), {
-                duration: 800,        // Animation duration of 800ms
+                duration: 300,        // Animation duration of 800ms
                 opacity: 0, // Animate opacity to 0
                 complete: function(anim) {
                     // Optional: Set display to 'none' after animation completes to fully remove from layout
@@ -198,11 +236,12 @@ class compositorInLine{
                     siteMask
                 </div>
                 <div id="htmlDyno${Id}" style="
-                    
+                    position:absolute;
+                     z-index:1;
+                     min-width:100vw;
                 "></div>
                 <div id="svgDyno${Id}" style="
                     display: inline; 
-                    z-index: -100; 
                     transform: rotate(0deg);
 
                     

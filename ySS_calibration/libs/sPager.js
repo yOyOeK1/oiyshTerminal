@@ -37,6 +37,7 @@ class sPager {
     this.looperIterInst = undefined;
 
     window.addEventListener('resize', this.handleWindowResize);
+    document.addEventListener('keypress', (e)=>{this.handleKeypress(e);});
 
 
   }
@@ -53,6 +54,15 @@ class sPager {
     });
 
   }
+
+  handleKeypress( event ){
+    console.log('sPage on Keypress ....',event);
+    this.pages.forEach((p)=>{
+      if( p.onKeypress != undefined )
+        p.onKeypress( event );
+    });
+  }
+
 
   setHeader( title ){
     if( title == '' ){
@@ -345,6 +355,8 @@ class sPager {
   }
 
   getPage = () => {
+    var DoSiteOnSwapDivs = false;
+
     this.cl(`getHtml current page [${this.currentPage} ]: `+this.currentPage);
     lAngels = {};
     movePathStartOffset = {};
@@ -367,7 +379,7 @@ class sPager {
 
 
       console.info('history: '+this.pageHistory);
-      if( 0 && this.pageHistory.length == 1 ){
+      if( DoSiteOnSwapDivs && this.pageHistory.length == 1 ){
         console.info('make vanilla clone of svg html Dyno');
 
         this.divOrg_svgDyno = $("#svgDyno").clone();
@@ -376,7 +388,7 @@ class sPager {
         this.divOrg_htmlDyno.html('');
       }
 
-      if(0 && this.pageHistory.length > 1 ){
+      if(DoSiteOnSwapDivs && this.pageHistory.length > 1 ){
         console.info('history ok so make divs backup to owner');
 
         // store last page 
@@ -410,16 +422,18 @@ class sPager {
       if( currentP['divs_svgDyno'] == undefined ){        
         console.log('getPage new page first time ');
 
-        /*$('#svgDynoHandler').html('');
-        $('#htmlDynoHandler').html('');
-        $('#svgDynoHandler').append( this.divOrg_svgDyno.clone() );
-        $('#htmlDynoHandler').append( this.divOrg_htmlDyno.clone() );
-        */
-
+        if( DoSiteOnSwapDivs ){
+          $('#svgDynoHandler').html('');
+          $('#htmlDynoHandler').html('');
+          $('#svgDynoHandler').append( this.divOrg_svgDyno.clone() );
+          $('#htmlDynoHandler').append( this.divOrg_htmlDyno.clone() );
+        }
+        
         $("#svgDyno").html("");
         //console.log("----------------- mobile get active page ----------------");
         console.log("cl will be call for html", cp);
-        $("#htmlDyno").html( cp.getHtml ).enhanceWithin();
+        $("#htmlDyno").html( cp.getHtml );
+        if( DoSiteOnSwapDivs != true ) $("#htmlDyno").enhanceWithin();
         $("#svgDyno").html( cp.svgDyno );//.enhanceWithin();
         //console.log($(":mobile-pagecontainer").pagecontainer("getActivePage"));
         //$(":mobile-pagecontainer").pagecontainer("getActivePage");

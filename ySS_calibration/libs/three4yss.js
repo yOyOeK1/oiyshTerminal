@@ -213,8 +213,8 @@ class Three4Yss extends aggregation(
       var c = gltf.scene.children;
       for( var ci=0,cic=c.length; ci<cic; ci++ ){
         var it = c[ci];
-        cl("it: -------------------------------------");
-        cl(it);
+        //cl("it: -------------------------------------");
+        //cl(it);
         if( it.children && it.children[0] &&
           it.children[0].constructor.name == "PointLight" ){
 

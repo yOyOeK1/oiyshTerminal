@@ -16,15 +16,15 @@ function MyJustGage( args ){
 
   var g = $("#justGuageTmp");
   var defs = g.find("filter");
-  var s = $("#svgDyno");
-  var sDefs = s.find("defs").append(defs);
-  var l1 = d3.select("#layer1")
-    .append("g")
+  //var s = $("#svgDyno");
+  //var sDefs = s.find("defs").append(defs);
+  var l1 = d3.select(d3.select('#'+idObj).node().parentNode)//d3.select("#layer1")
+  .append("g")
     .attr("width", width)
     .attr("height", height)
     .attr("transform",
       "translate(" +(tObj.x())+ "," + (tObj.y()) + ")")
-    .append("g")
+  .append("g")
     .attr("transform","scale("+(1/scale)+")")
     .attr("id","jg0000001"+idObj);
 
@@ -35,7 +35,7 @@ function MyJustGage( args ){
   //$("#justGuageTmp").html('');
 
   tObj.hide();
-
+  
   console.log('MyJustGage constructor .....DONE');
   return tmp;
 

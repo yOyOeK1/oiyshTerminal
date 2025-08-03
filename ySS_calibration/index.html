@@ -456,9 +456,9 @@ function chkUrl( dontSetPage=false ){
   <!--<div data-role="popup" id="SMIdentPop" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
     <div id="SMIdentDiv" style="z-index:10;position:relative;top:0;left:0;font-size:70vw;text-shadow: 5px 5px 10px #777777;display:none;"></div>
   </div>-->
-
-
-
+  
+  
+  
   <div date-role="header" class="ui-bar-a ui-header"
   id="pHeader">
   <h1 data-role="heading" class="ui-title"
@@ -467,8 +467,21 @@ function chkUrl( dontSetPage=false ){
 </div>
 
 <div id="htmlDynoHandler">
+  
+  
+  <div id="svgDynoHandler">
+    <div id="svgDyno" data-enhance="false" data-role="none" 
+      style="
+        display:inline;
+        z-index:0;
+        "></div>
+  </div>
 
   <div data-role="main"
+  style="
+    display:inline;
+    z-index:1;
+   "
   id="htmlDyno"
   >
   <!-- style="z-index:3;position:absolute;top:0;left:0;" -->
@@ -556,9 +569,6 @@ function chkUrl( dontSetPage=false ){
   </div>
   <!-- end of data-role="panel" -->
 
-  <div id="svgDynoHandler">
-    <div id="svgDyno" data-enhance="false" data-role="none" style="display:inline;z-index:-100;"></div>
-  </div>
 
   <div data-role="footer" data-theme="a" style="display:none;">in foot</div>
 

@@ -9,10 +9,20 @@ function m_d3PlotInit( objName, settings ){
   cl("tObj x, y:"+tObj.x()+" , "+tObj.y());
   cl("tObj width x height:"+tObj.width()+" , "+tObj.height());
 
-
+  /*
+  let objPa = d3.select(d3.select('#'+objName).node().parentNode);
+  objPa.append("circle")
+        .attr('id','abc12345')
+        .attr("cx", 50)
+        .attr("cy", 50)
+        .attr("r", 20)
+        .attr("fill", "blue");
+  */
   var gWidth = tObj.width();
   var gHeight = tObj.height();
     var scale = settings['plotSubPix'] ? settings['plotSubPix'] : 3; //divide by
+
+  //return 1;
 
   var dataIn = [
     {'x':0,'y':0},
@@ -27,7 +37,7 @@ function m_d3PlotInit( objName, settings ){
   // append the svg object to the body of the page
 
   SVG("#"+objName).hide();
-  var svg = d3.select("#layer1")
+  var svg = d3.select(d3.select('#'+objName).node().parentNode)//d3.select("#layer1")
   .append("g")
     .attr("id","d3Plot0000001"+objName)
     .attr("width", width)

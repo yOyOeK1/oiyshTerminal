@@ -46,7 +46,11 @@ class s_sitManPage{
   getHtml = () => {
     return `<style>${this.getCss}</style>
       <div id="SiCRoot">/root</div>
-      <div id="SiCMenu" class="bottomPanel" onclick="siteByKey.s_sitManPage.o.goHome();">menu</div>`;
+      <div id="SiCMenu" class="bottomPanel" 
+        style="
+          left:-100px;
+        "
+        onclick="siteByKey.s_sitManPage.o.goHome();">menu</div>`;
   }
 
   getHtmlAfterLoad(){
@@ -64,7 +68,7 @@ class s_sitManPage{
 
   svgDynoAfterLoad(){}
 
-  onKeyPress(){
+  onKeypress( event ){
 
   }
 

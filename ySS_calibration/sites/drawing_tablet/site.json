@@ -1,0 +1,14 @@
+{
+    "oName": "s_draTabPage",
+    "o": null,
+    "dir": "drawing_tablet",
+    "jssrc":["s_draTabPage.js"],
+    "modsrc":["m_draTabSS.js"],
+    "enable": true,
+    "author": "Bartłomiej Ceglik <yoyoek@wp.pl>",
+    "ver": "0.0.1",
+    "desc": "To harwest touch screens on devices to be use as drawing tablet's for your laptop or desktop ...",
+    "otdm":{
+        "playground": false
+    }
+}
