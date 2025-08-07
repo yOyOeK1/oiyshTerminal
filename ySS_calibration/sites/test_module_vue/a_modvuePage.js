@@ -2,9 +2,9 @@
 import { mt1 } from "./moduleTest1.js";
 import { FoodItem } from "./comps/FoodItem.js";
 import fi1 from "./comps/FoodItem.vue";
-import  HostStatus  from "/yss/components/OtHostStatus.mjs";
+import  HostStatus  from "../../components/OtHostStatus.mjs";
 
-import FoodItem3 from "./comps/FoodItem3.vue";
+//import FoodItem3 from "./comps/FoodItem3.vue";
 
 import FoodItem2 from "./comps/FoodItem2.vue";
 
@@ -25,7 +25,7 @@ class s_modvuePage{
     this.fs = FS;
     this.HostS = HostStatus;
     
-    cl(["*.vue",FoodItem3, FoodItem2]);
+    cl(["*.vue", FoodItem2]);
   }
   
   get getName(){

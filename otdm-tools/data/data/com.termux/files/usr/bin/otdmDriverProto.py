@@ -123,9 +123,19 @@ class otdmDriverProto:
                 -oFile [pathToFile|--] when "--" trow to console.''')
 
 
+    def ifNoArgExit( self, arg, msgOnErr ):
+        if self.args.get( arg, "" ) == "":
+            print(f"No argument [-{arg}] found in argument. {msgOnErr}")
+            sys.exit(1)
+        else:
+            return self.args.get( arg )
+
     def saveIfArgs( self, r ):
         ofile=self.args.get("oFile","")
         if ofile == "--":
+            print(f"type: {type(r)}")
+            print(f"len: {len(r)}")
+            #print(r)
             print( json.dumps(r, indent=4) )
 
         elif ofile == "pipe":

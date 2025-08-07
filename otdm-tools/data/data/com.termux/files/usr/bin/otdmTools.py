@@ -28,7 +28,7 @@ from otdmPackitso import *
 
 from otdmServiceIt import *
 
-ver="0.27.10"
+ver="0.27.901"
 confFilePath="/data/data/com.termux/files/home/.otdm/config.json"
 deb=0
 
@@ -37,7 +37,7 @@ deb=0
 
 conf={}
 clip=[]
-otdl=[]
+#otdl=[]
 
 faH = fad()
 thH = thd()
@@ -1467,6 +1467,7 @@ ts  - to save data"""
 def addArgHandle_oFile( args, tsData ):
     global conf
     global fsDFS
+    print(f"addArgHandle_oFile: {args}")
     if fsDFS == -1:
         fsDFS = otdmDriverFileSystem( args, conf )
     fsDFS.saveIfArgs(tsData)
@@ -1542,8 +1543,9 @@ def printVersion( args ):
 
 def packitsoQuery( args ):
     pis = otdmPackitso()
-    global otdl
-    r = pis.query( args, otdl, conf )
+    #global otdl
+    global acts
+    r = pis.query( args, acts, conf )
     if r == 1:
         return pis.packitso( args, conf )
     elif r == 2:
@@ -1570,11 +1572,35 @@ def cliSapi( args ):
     #print(f"cli Sapi .... \n result ----- \n {stsRes}\n-----\nExit 1")
     return 1
 
+def promptMe( args ):
+    print(f"Prompt me ingage ----------\\",args)
+    promptNo = 0
+
+    while True:
+        q = input(f"[{promptNo}] enter sapi query: ")
+        #print(f"Got arguments [{q}]")
+        if q == 'q':
+            break
+        a={'cliSapi':q}
+        stsRes = otdmSTS(
+            otGet_sapisDef(),
+            a.get("cliSapi", ""),
+            { 'sts': False, 'sapis': False }
+        )
+        addArgHandle_oFile( a, stsRes )
+        print(f"\n##result{promptNo}",json.dumps(stsRes),f"{promptNo}##endResult")
+        promptNo = promptNo+1
+        
+    return 1
+
+
 
 acts = [
     [ "v", "printVersion", f"Prints version of oiyshTerminal - tools. now is ver: {ver}" ],
     [ "packitso", "packitsoQuery", "To make automatic sets of works bast on driver proto. README.otdm-tools-packitso.md"],
     [ "debug", "setDebug", "debuging enable disable by 1 or 0" ],
+    [ "promptMe", "promptMe", "interact with otdmTools by prompt" ],
+    
     [ "cliSapi", "cliSapi", "to make sapi use from cli **Example** `otdmTools.py -cliSapi 'ver/.json' ;` - to get json"],
     [ "serviceIt",  "serviceIt", "To start it as a services more info TODO" ],
     [ "testSubProcAndProm",   "testSubProcAndProm", "test subprocess with args"],
@@ -1679,17 +1705,18 @@ def exeArray( args ):
 
 
 
-
 def exeIt( args ):
+    deb = True;
     if deb: print( "exeIt args:[{0}]".format(args) )
 
     global conf
     global clip
-    global otdl
+    #global otdl
     global acts
     conf=confLoad()
     chkClipBoard()
-
+    #otdl = {"drivers":[]}
+    
     # injecting drivers to acts list
     print("[ i ] injecting otdmDriver ... protos ", end="")
     if 0: #old methode
@@ -1721,6 +1748,9 @@ def exeIt( args ):
     for p in ph.lookForDrivers( "otdmDriver", ".py", phYesNo ):
         print("+",end="")
         acts.append(p)
+        #print("-------------")
+        #print(p)
+        
     #print("--------------------"); print(acts)
 
     # more plugins ....

@@ -7,8 +7,8 @@ class otdmDriverGrafanaProto( otdmDriverProto, otdmMakeProto ):
 
     def getHost( self ):
         tr="{0}:{1}@{2}".format(
-            self.conf[ self.getName() ].get("user"),
-            self.conf[ self.getName() ].get("passwd"),
+            self.conf[ self.getName() ].get("user","NotSETNAN"),
+            self.conf[ self.getName() ].get("passwd","NotSETNAN"),
             super().getHost()
             )
         return tr

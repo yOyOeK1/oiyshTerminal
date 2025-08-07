@@ -6,13 +6,13 @@ With grate power comes grate responsibility. It's a power-user tool.
 
 For me it's all the time around similar subjects. Reading files, getting data from http. O this data is json, that data is in mysql I need a driver to talk to mysql then make query then I will have some data. New project similar story.
 
-  otdm-tools is my attempt to eliminate the idea of precise work type. My understenging is. You want to do "work / task". You know what is the medium providing / holding data.
+  otdm-tools is my attempt to eliminate the idea of precise work type. My understanding is. You want to do "work / task". You know what is the medium providing / holding data.
 
   It's becoming your universal worker, qualified for the exact work you have.
 
 ## dependencies
 
-  It will **expect from you:** python3, pip, jq, cowsays,
+  It will **expect from you:** python3, pip, jq, cowsay,
   Python: python3-apt|python-apt(optional), requests, paho-mqtt, uploadserver
 
 ## using it
@@ -44,13 +44,13 @@ For me it's all the time around similar subjects. Reading files, getting data fr
   		- [x] flow(s) (**-dnrfByUid**)
   		- [ ] subflow(s) (**-dnrsfByUid**)
 
-- [x] Shell command wraper to mqtt / webSocket (**-webCmdSubProcess**) [xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/wiki/xdevdoc-otdmDriverProto-web-cmd-sub-process)
+- [x] Shell command wrapper to mqtt / webSocket (**-webCmdSubProcess**) [xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/wiki/xdevdoc-otdmDriverProto-web-cmd-sub-process)
   - [x] with live stdio and stdout to mqtt :)
 
 - [ ] internal utility service system (**-serviceIt**) [info/xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-tools/data/data/com.termux/files/usr/bin/otdm_serviceIt_README.md)
 	- [x] http interface
 	- [x] mqtt interface
-    - [ ] sapis familly [info/xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-tools/data/data/com.termux/files/usr/bin/otdm_sapis_README.md)
+    - [ ] sapis family [info/xdevdoc](https://github.com/yOyOeK1/oiyshTerminal/blob/main/otdm-tools/data/data/com.termux/files/usr/bin/otdm_sapis_README.md)
 
 - [x] Makes backups of (**-mkbp**):  
   - [x] ds|gdsuid|gdsid|gdsname|gdhs|gdhuid|gdhid|gdhname|*

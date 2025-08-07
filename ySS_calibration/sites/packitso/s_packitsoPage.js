@@ -53,7 +53,7 @@ class s_packitsoPage{
     cl("cp.mDoCmd");
     cl(cp.mDoCmd);
     cp.mDoCmd.otdmArgs(
-      { "dfs": hDir.substring(1) },
+      { "dfs": hDir },
       (data,r)=>{
         cl("  got data about ./p-* .....")
         cp.packs = [];
@@ -201,6 +201,7 @@ class s_packitsoPage{
       );
     }
 
+    
     if( 0 ){ // q to otdmtools
       this.mDoCmd.otdmArgs(
         {'dfs':'/tmp'},
@@ -911,7 +912,7 @@ class s_packitsoPage{
   packsList(){
     let hDir = this.instanceOf['fDir'];
     this.mDoCmd.otdmArgs(
-      { "dfs": hDir.substring(1) },
+      { "dfs": hDir },
       this.cbOnlsHomeDirDONE
     );
 

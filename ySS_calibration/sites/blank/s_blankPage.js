@@ -6,7 +6,7 @@ class s_blankPage{
   }
 
   get getName(){
-    return "blank";
+    return "Blank - template";
   }
 
   get getDefaultBackgroundColor(){

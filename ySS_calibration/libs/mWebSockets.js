@@ -51,37 +51,42 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 	}
 
 	socketIn.onmessage = async function(m){
-		//cl("wsConnectIn onmessage:"+m.data);
+		//console.log("wsConnectIn onmessage:",m);
 		r = JSON.parse(m.data);
 		//cl("	r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
 
-		if( r.topic == "otdmRes" ){
-			cl("wsConnectIn got otdmRes !!");
+		if( r.otj ){
+      		ottO.onWsMsg( r );		
 
-			cl("	res:");
-			cl( JSON.stringify( r.payload) );
+		}else if( r.topic ){
+			if( r.topic == "otdmRes" ){
+				cl("wsConnectIn got otdmRes !!");
 
-			var al = r.payload;
-			tr=[];
-			for( var i=0,ic=al.length; i<ic; i++ ){
-				tr.push( "- "+al[i]['text'] );
+				cl("	res:");
+				cl( JSON.stringify( r.payload) );
+
+				var al = r.payload;
+				tr=[];
+				for( var i=0,ic=al.length; i<ic; i++ ){
+					tr.push( "- "+al[i]['text'] );
+				}
+				$("#otdmResDyno").html(tr.join("<br>"));
+
+
+
+			} else if( r.topic == 'ws/event' ){
+				if( r.payload == 'server going down'){
+					$.toast({
+						heading: 'Server is going down',
+						text: 'Got info about server is going down ...',
+						//showHideTransition: 'slide',
+						hideAfter: 5000,
+						icon: 'info'
+					});
+					setTimeout( window.location.reload(), wsReconnectTime );
+				}
+
 			}
-			$("#otdmResDyno").html(tr.join("<br>"));
-
-
-
-		} else if( r.topic == 'ws/event' ){
-		    if( r.payload == 'server going down'){
-		        $.toast({
-			        heading: 'Server is going down',
-			        text: 'Got info about server is going down ...',
-			        //showHideTransition: 'slide',
-			        hideAfter: 5000,
-			        icon: 'info'
-		        });
-		        setTimeout( window.location.reload(), wsReconnectTime );
-		    }
-		
 		}
 
     await onMesCallBack.wsCallback( r );
@@ -151,6 +156,7 @@ function sOutSend( msg ){
 	//cl("sOutSend now doing it ...");
 	//cl("is connected ? "+wsOutIsOk);
 	//console.log('wsInIsOk now :',wsInIsOk);
+	//console.log(`sOutSend: msg[ `+msg+' ]');
 	if( wsInIsOk == true )
 		socketIn.send(msg);
 	else {

@@ -22,7 +22,7 @@ class m_draTabSS extends hotHelperServer{
     // try to invoce thisone by `sOutSend('xraTab: [aadde');`
     onWsByPrefix=(ws,event,msg)=>{
       
-      this.cl(` onWsByPrefix regived !!!! ${msg} `);
+      this.cl(` onWsByPrefix regived in m_draTabSS.js ${msg} `);
       return 1;
     }
 

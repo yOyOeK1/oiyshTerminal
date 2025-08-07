@@ -42,11 +42,13 @@ class otSHTTP( BaseHTTPRequestHandler ):
         self.send_response( r )
 
     def parsePath(self, cquery, path ): # look in apis paths
+        print("parsePath .....","got cquery ...",cquery)
         trStatsCode = 201
         bodyStr = "No Api"
         dataSrc = 'path'
 
         for i,h in enumerate( cquery.headers ) :
+            print("chk headers ->",h)
             if h == "q":
                 #print("got Q")
                 qArgs = json.loads(cquery.headers[ 'q' ])
@@ -108,7 +110,25 @@ class otSHTTP( BaseHTTPRequestHandler ):
 
     def do_GET(self):
         self.otP.count['in']+=1
-        tr_sts = otdmSTS( self.otP.sapis, self.path[1:], self.otP.debugConfig );
+        #print(" EXIt exit  ")
+        print("-----------------------------------")
+        qArgs = 0;
+        for i,h in enumerate( self.headers ) :
+            print("chk headers ->",h)
+            if h == "q":
+                print("got Q")
+                qArgs = json.loads(self.headers[ 'q' ])
+                print (qArgs)
+            #    dataSrc = "headerQ"
+            #    break
+        print("-----------------------------------")
+        print("path")
+        print(self.path)
+        #exit(2);
+        if qArgs == 0:
+            tr_sts = otdmSTS( self.otP.sapis, self.path[1:], self.otP.debugConfig )
+        else:
+            tr_sts = otdmSTS( self.otP.sapis, self.path[1:], self.otP.debugConfig, qArgs )
 
         if self.otP.sitDebug == True:
             print(f"tr_sts ----------------{self.path}----")
@@ -154,14 +174,25 @@ class otdm_serviceIt_http( otdm_serviceIt_prototype ):
         self.args = args
         self.conf = conf
 
+
     def runIt( self, conf ):
         self.conf = conf
         if self.sDebug:print(f"otSHTTP . runIt ....")
         _thread.start_new(self.intRunIt,())
 
 
+    def chkForForceArgs( self ):
+        if self.args.get('forceHttpIp') : 
+            self.confHttp['ip'] = self.args.get('forceHttpIp')
+        if self.args.get('forceHttpPort') : 
+            self.confHttp['port'] = int(self.args.get('forceHttpPort'))
+
+
     def intRunIt(self, a=0, b=0):
-        if self.sDebug: print("otSHTTP Server started http://%s:%s" % (self.confHttp['ip'], self.confHttp['port']))
+        self.chkForForceArgs()
+        print("intRunIt     setArgsConf\n\n",self.args,"\n\n","\nconf\n\n",self.conf)
+        #if self.sDebug: print("otSHTTP Server started http://%s:%s" % (self.confHttp['ip'], self.confHttp['port']))
+        print("otSHTTP Server started http://%s:%s" % (self.confHttp['ip'], self.confHttp['port']))
         otSHTTP.otP = self
         self.otWebS = HTTPServer( (self.confHttp['ip'], self.confHttp['port']), otSHTTP )
         self.isOk = True

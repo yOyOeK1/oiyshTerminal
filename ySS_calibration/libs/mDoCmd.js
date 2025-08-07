@@ -64,33 +64,51 @@ class mDoCmd{
     //this.cl("mDoCmd.otdmArgs ["+JSON.stringify(args)+"]");
     // url 'http://localhost:1880/yss/?otdmQ:\{"webCmdSubProcess":"\[ls,/tmp\]","pH":"66"\}'
 
-    var url = "?otdmQ:URI:"+encodeURI(JSON.stringify(args));
-    this.cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
-
-    $.get( url, function( data, status ){
-      let daTr = data;
-      try{
-        daTr = JSON.parse( data );
-      }catch(e){
-        console.log('mDoCmd',"In mDoCmd.otdmArgs result no json - :/ ");
-        console.log('mDoCmd',e);
+    if( ottO ){
+      let argsq = 'exeIt';
+      for( let k of Object.keys(args) ){
+        argsq+=`/{"${k}":"`+encodeURIComponent(args[k])+'"}';
       }
+      //console.log("mDoCmd -----",args, argsq);
+      let p = ottO.newTask({'q':argsq});
+      p.then((res)=>{
+        let jr = JSON.parse(res);
+        //console.log(`got it!!`);
+        //console.log(jr,res);
+        
+        callBack( jr[1] , 200 );
+      });
+      
+    }else{
+      
+      var url = "?otdmQ:URI:"+encodeURI(JSON.stringify(args));
+      this.cl("mDoCmd.otdmArgs -> url: ["+encodeURI(url)+"]---------------------");
+      
+      $.get( url, function( data, status ){
+        let daTr = data;
+        try{
+          daTr = JSON.parse( data );
+        }catch(e){
+          console.log('mDoCmd',"In mDoCmd.otdmArgs result no json - :/ ");
+          console.log('mDoCmd',e);
+        }
         if( callBack == -1 )
           this.otdmCallBackWebCmdSubProcess( daTr , status )
         else
-          callBack( daTr , status );
+        callBack( daTr , status );
     } );
+    }
   }
-
+  
   /**
    * @param {array} cmd - array example:["ls","/tmp"] structure of arguments pass same way as you use `otdmTools.py` Argument is a key and value is value.
    * @param {string} updateObj - id of html element will update status of app stdout
    * @param {object} callBack - can be not set - then only dump to this.cl( ... ). Will pass data, result arguments if callBack is set then pass (`data` ,`result`) arguments
    * @description Methode to run command from **bash layer** and get live conection with stdin / stdout. It use `pH` as a key in creating new mqtt topic to establish trafic. Running process. So you can intercact with thread.
-   */
+  */
   doCmd( cmd, updateObj, cbFunc=-1 ){
     this.updateObj = updateObj;
-
+    
     if( this.cmdWork == true ){
       this.cl( 'cmd running can sand some stuff to stdin.' );
       this.cl(cmd);
@@ -249,7 +267,8 @@ class mDoCmd{
    * @description Methode to update worker live connection is it DONE. Put it in your site **onMassageCallBack** if you want to update status or run next one. If running not starting text.
    */
   onWSMessageCallBackWork_onStatusDONE( r ){
-    //this.cl(r);
+    this.cl(r);
+    if( r.topic == undefined ) return;
     if( this.cmdWork &&
       r.topic == String("subP/"+this.pH+"/status") ){
 

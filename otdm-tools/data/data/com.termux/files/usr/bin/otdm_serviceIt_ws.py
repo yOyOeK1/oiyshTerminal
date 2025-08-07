@@ -53,13 +53,13 @@ class otSWebSocketHandlers:
 		print(stsRes)
 
 		print("is type [%s]"%type(stsRes))
-
-
-		server.send_message( client, str( json.dumps( {
+		toSendStr = str( json.dumps( {
 			"topip": j['topic'],
 			'payload': stsRes
-		} ) ) )
+		} ) )
 
+		server.send_message( client, toSendStr )
+		print("msg send_message DONE\n",toSendStr)
 		'''
 		if isinstance( stsRes, tuple ):
 			#print("return %s"%stsRes[1])
@@ -88,6 +88,7 @@ class otdm_serviceIt_ws( otdm_serviceIt_prototype ):
 
 	def runIt( self, conf ):
 		self.conf = conf
+		self.chkForForceArgs()
 		print(f"otSWS . runIt ....")
 		self.otSWS = otSWebSocketHandlers( self )
 		self.otWebS = WebsocketServer(port = self.confWS['port'], loglevel=logging.DEBUG)
@@ -96,6 +97,12 @@ class otdm_serviceIt_ws( otdm_serviceIt_prototype ):
 		self.otWebS.set_fn_message_received( self.otSWS.message_received )
 
 		_thread.start_new(self.intRunIt,())
+
+	def chkForForceArgs( self ):
+		if self.args.get('forceWSIp') :
+			self.confWS['ip'] = self.args.get('forceWSIp')
+		if self.args.get('forceWSPort') : 
+			self.confWS['port'] = int(self.args.get('forceWSPort'))
 
 
 	def intRunIt(self, a=0, b=0):

@@ -145,6 +145,11 @@ var module = new moduleCollector();
 <script src="libs/vue-router.global.js"></script>
 <script src="libs/marked_0.3.6_lib_marked.js"></script>
 
+<script>
+var ottO = -1;
+</script>
+<script type="module" src="libs/ottTasker.js"></script>
+
 <script type="module" src="/src/main.js"></script>
 
 <script type="module" src="./components/loader.mjs"></script>
@@ -156,6 +161,12 @@ var module = new moduleCollector();
   aajs = naajs; 
   
   console.log('animate',animate);
+
+  import { ottTasker } from './libs/ottTasker.js'
+  ottO = new ottTasker();
+  console.log('ottTasker as ottO ',ottO);
+
+
 </script>
 <script type="module" src="./three4yssModule.mjs"></script>
 <script type="module" src="./libs/motTools.mjs"></script>

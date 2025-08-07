@@ -5,6 +5,7 @@ from otdm_serviceIt_mqtt import *
 from otdm_serviceIt_http import otdm_serviceIt_http
 from otdm_serviceIt_ws import *
 from otdm_serviceIt_xmlrpc import *
+from otdm_serviceIt_yss import *
 from otdmApiBasics import *
 import otdmUtils as otU
 
@@ -14,7 +15,8 @@ def otdmServiceItGetServicesItList():
         otdm_serviceIt_mqtt,
         otdm_serviceIt_http,
         otdm_serviceIt_ws,
-        otdm_serviceIt_xmlrpc
+        otdm_serviceIt_xmlrpc,
+        otdm_serviceIt_yss
     ]
 
 
@@ -25,9 +27,8 @@ def otdmServiceIt( args, conf ):
     tStart = otU.tn_unix()
     print(f"serviceIt .... starting %s"%tStart)
     debugConfig = {
-        "serviceIt": False,
-        "sts":False,
-        "sapis":False
+        #"serviceIt": False, "sts":False, "sapis":False
+        "serviceIt": False, "sts":True, "sapis":True
     }
 
     if args.get("sitDebug","") != "":

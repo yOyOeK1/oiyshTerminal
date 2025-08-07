@@ -27,15 +27,27 @@ class s_draTabPage{
       */
   }
 
-  dataBuitifier( data ){
+  dataBuitifier=( data )=>{
     //return JSON.stringify( data );
     
     let tr = data;
     Object.keys(tr).forEach(k => {
-      let tNo = tr[k];
-      tNo.x = Math.round( tNo.x );
-      tNo.y = Math.round( tNo.y );
 
+      
+      let tNo = tr[k];
+      
+      if( this.viewportsize.x > 360 ){
+       
+        tNo.x = Math.round( tNo.x*this.sSize.x );
+        tNo.y = Math.round( tNo.y*this.sSize.y );
+        tNo['ws'] = this.viewportsize;
+
+      }else{
+        tNo.x = Math.round( tNo.x );
+        tNo.y = Math.round( tNo.y );
+        tNo['ws'] = {};
+      }
+        
       /*
       if( k == '0' ){
         $('#dtt0').css({
@@ -50,14 +62,20 @@ class s_draTabPage{
       */
       
     });
-
-
     return JSON.stringify( tr );
     
   }
 
+  onWindowResize=(w,h)=>{
+    this.viewportsize = {'x':w,'y':h};
+    this.sSize = {
+      'x': 360.00/w,
+      'y': 280.00/h
+    };
+  }
+
   getHtmlAfterLoad=()=>{
-    
+    this.onWindowResize(window.innerWidth,window.innerHeight);
     
     var touchInf = {};
     document.getElementById('myDrawingTabletArea').addEventListener("touchstart",function(e){

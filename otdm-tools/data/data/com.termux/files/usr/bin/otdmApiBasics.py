@@ -37,6 +37,7 @@ def otGet_sapisDef():
 
 
         ['otdmTools',       1 , otA_otdmTools,  '**Return** result from otdmTools.py `args...`'],
+        ['exeIt',           1 , otA_exeIt,      '**Return** result from otdmTools.py `args... but without execution make it internaly` using it example `ott -cliSapi \'exeIt/{"v":"1"}\' -oFile \'--\'` Sectian with `json` you can do url encoding to prevent string escaping.'],
 
         ['mkbackup',        1 , otA_mkBackup,  '''**Return** status and some file info at end `arg0` path to file/directory to backup
             Example: # ./otdmTools.py -cliSapi 'mkbackup/%2Ftmp%2Fabc%2F1' -oFile '--'
@@ -58,6 +59,7 @@ def otGet_sapisDef():
     sapis.append( ['.json',           0, otA_toJson,      '**Return** _json_ from `pipe`'] )
     sapis.append( ['.raw',            0, otA_toRaw,       '**Return** _raw_/_string_ from `pipe`'] )
     sapis.append( ['.html',           0, otA_toHtml,      '**Return** _raw_/_string_ from `pipe` to wrapt `html`'] )
+    
 
     return sapis
 
@@ -221,7 +223,7 @@ def otA_getKey( fromPipe, args ):
 
 
 def otA_toHtml( fromPipe, args ):
-    return f"<html><body>{fromPipe[1]}</body></html>"
+    return f"<html><body><pre>{fromPipe[1]}</pre></body></html>"
 
 def otA_toJson( fromPipe, args ):
     return {
@@ -232,7 +234,38 @@ def otA_toJson( fromPipe, args ):
 def otA_toRaw( fromPipe, args ):
     return fromPipe[1]
 
+def otA_exeIt( fromePipe, args ):
+    a = json.loads(args[0])
+    oFileP = "/tmp/otSTS%s_exeIt.res"%datetime.now()
+        
+    a['oFile'] = oFileP
+    #print(f"got args [{a}]")
+    #a = json.loads(args)
+    #print(f" exeIt nice ! {a}\n a:[]")
+    
+    #exRes = ot.exeIt({'v':"1", "oFile": "pipe"})
+    #argsP = ot.ArgsParse( args[0] )
+    
+    argsOld = args.copy()
+    if ot.fsDFS == -1:
+        exRes = ot.exeIt(a)
+    else:
+        #print(f"fsDFS.args now {ot.fsDFS.args}")
+        oFileOld = ot.fsDFS.args['oFile']
+        ot.fsDFS.args['oFile'] = oFileP
+        exRes = ot.exeIt(a)
+        ot.fsDFS.args['oFile'] = oFileOld
 
+    trp = ""
+    if os.path.exists( a['oFile'] ) == True:
+        with open( a['oFile'], 'r') as file:
+            trp = file.read().rstrip()
+    
+    #print(f"exRes:  _ {exRes}")
+    #print(f"\n##result",ot.fsDFS.pipe,f"##endResult")
+    args = argsOld
+
+    return 0,json.loads(trp)
 
 def otA_otdmTools(fromPipe, args):
     print("otAotdmTools ...")

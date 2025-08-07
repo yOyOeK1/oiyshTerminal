@@ -63,10 +63,10 @@ def main(args):
     dev.enable(libevdev.EV_KEY.BTN_STYLUS2)
     # Send absolute X coordinate
     dev.enable(libevdev.EV_ABS.ABS_X,
-               libevdev.InputAbsInfo(minimum=0, maximum=320, resolution=100))
+               libevdev.InputAbsInfo(minimum=0, maximum=360, resolution=100))
     # Send absolute Y coordinate
     dev.enable(libevdev.EV_ABS.ABS_Y,
-               libevdev.InputAbsInfo(minimum=0, maximum=240, resolution=100))
+               libevdev.InputAbsInfo(minimum=0, maximum=280, resolution=100))
     # Send absolute pressure
     dev.enable(libevdev.EV_ABS.ABS_PRESSURE,
                libevdev.InputAbsInfo(minimum=0, maximum=512))
@@ -152,7 +152,7 @@ def main(args):
                     forceToSend = int( (force-edgeIs)*3 )
                 
                 #if lastForce != forceToSend:
-                #print(j['e'], force, forceToSend)
+                print(j['e'], force, forceToSend)
                 #   lastForce = forceToSend
                 if j['e'] == 'm':
                     uinput.send_events([
