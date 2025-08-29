@@ -133,14 +133,15 @@ class s_shareitso{
       let item = items[i];
       let pathSplit = item['file'].split('/');
       let fName = pathSplit[ pathSplit.length-1 ];
-      let urlToFile = item['file'].split( '/data/data/com.termux/files/home/.otdm/yss-shareitso/').join('sites/shareitso/');
+      let urlToFile = '/uploads/'+fName;
+      //item['file'].split( '/data/data/com.termux/files/home/.otdm/yss-shareitso/').join('sites/shareitso/');
       let items4Conten = {"name": fName };
       item["mime"] = this.getMimeType( urlToFile );
       item["icon"] = this.getIconFromPath(  urlToFile );
       //cl(item);
       item['modTime'] = item['modTime'].substring(0,17);
       item['size'] = this.getNiceSize( item['size'] );
-      item['file'] = '<a href="'+urlToFile+'" target="_blank">'+item['file']+'</a>';
+      item['file'] = '<a href="/uploads/'+fName+'" target="_blank">'+item['file']+'</a>';
       items4Conten = this.app.makeNiceList( item );
       let cont = {
         "content": items4Conten
@@ -198,6 +199,19 @@ class s_shareitso{
   rebuildListInShareitso(){
     //$("#lvOfShareitso").html("New files are comming ....");
     setTimeout(()=>{
+      ottO.newSh(
+        //"jsK=\"\\n| .+=[{\\\"modTime\\\":\\\"%Ay-%Am-%Ad %AT\\\", \\\"size\\\":\\\"%s\\\", \\\"file\\\":\\\"%p\\\"}]\";a=$(find -L /data/data/com.termux/files/home/.otdm/yss-shareitso -type f -printf \"$jsK\" | sort -r); echo \"[]\" | jq \". $a\""
+        "jsK=\"\\n| .+=[{\\\"modTime\\\":\\\"%Ay-%Am-%Ad %AT\\\", \\\"size\\\":\\\"%s\\\", \\\"file\\\":\\\"%p\\\"}]\";a=$(find -L /home/yoyo/Apps/viteyss/uploads -type f -printf \"$jsK\" | sort -r); echo \"[]\" | jq \". $a\""
+        //JSON.stringify(@'jsK="| .+=[{\"modTime\":\"%Ay-%Am-%Ad %AT\", \"size\":\"%s\", \"file\":\"%p\"}]";a=$(find -L /data/data/com.termux/files/home/.otdm/yss-shareitso -type f -printf "$jsK" | sort -r); echo "[]" | jq ". $a"')
+      )
+        .then((res)=>{
+          //let j = '['+res.join(" ").substring(68,res.join(" ").length-3)+']';
+          //j = JSON.parse(j);
+          console.log('ok --------',res);
+          res = JSON.parse( res[1].slice(0,-1).join(' ') );
+          pager.getCurrentPage().lvOfShareitso(res);
+        });
+      /* 
       pager.getCurrentPage().mDoCmd.doShExitCodeChk(
         'jsK="\\n| .+=[{\\"modTime\\":\\"%Ay-%Am-%Ad %AT\\", \\"size\\":\\"%s\\", \\"file\\":\\"%p\\"}]";echo $jsK;a=$(find -L /data/data/com.termux/files/home/.otdm/yss-shareitso -type f -printf "$jsK" | sort -r); echo "[]" | jq ". $a"',
         '',
@@ -215,6 +229,7 @@ class s_shareitso{
 
         }
       );
+      */
     }, 1);
   }
 
@@ -252,7 +267,7 @@ class s_shareitso{
     <div id="dQr"></div>
     <form
       id="fileForm" name="fileForm"
-      action="`+cp.hostPortOfFiles+`/upload"
+      action="/apis/upload"
       method="POST"
       enctype="multipart/form-data" target="upTargetFrame"
       >
@@ -266,12 +281,13 @@ class s_shareitso{
         <!--<label for="msg">message</label>-->
         <input name="msg" id="msg" type="text"
           placeholder="Past message ..."
-          onchange="pager.getCurrentPage().getQr( $(this).val() )"/>
+          />
+          <!--onchange="pager.getCurrentPage().getQr( $(this).val() )"--> 
       </li>
 
       <li class="ui-field-contain">
-        <label for="files">or / and file / (s) to ...</label>
-        <input type="file" name="files" id="files" multiple
+        <label for="myFile">or / and file / (s) to ...</label>
+        <input type="file" name="myFile" id="myFile" multiple
           placeholder="Or past msg to ..."/>
       </li>
 
@@ -295,6 +311,39 @@ class s_shareitso{
         $('#upTargetFrame').fadeOut();
 
       },2000);
+
+      //setTimeout(()=>{
+      //  pager.getCurrentPage().rebuildListInShareitso();
+      //},500);
+
+      /*
+      var formData = new FormData();
+      
+      var fileInput = document.getElementById('files');
+      var file = fileInput.files[0]; // Get the first selected file
+      formData.append('myFile', file); // 'file_field_name' is the name the server expects
+      formData.append('msg', $('#msg').val());
+
+      fetch('/apis/upload', { 
+        method: 'POST',
+        body: formData // The FormData object is directly passed as the body
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json(); // Or response.text() depending on server response
+      })
+      .then(data => {
+          console.log('Upload successful:', data);
+      })
+      .catch(error => {
+          console.error('Upload failed:', error);
+      });
+      */
+
+
+
     });
     </script>
 

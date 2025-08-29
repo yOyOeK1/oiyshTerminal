@@ -1,0 +1,14 @@
+{
+    "oName": "s_3ddziDebPage",
+    "o": null,
+    "dir": "3d_dziDebug",
+    "jssrc":["s_3ddziDeb.js"],
+    "files": ["test1_cubes.glb"],
+    "enable": true,
+    "ver": "0.0.1",
+    "author": "B.Ceglik <yoyoek@wp.pl>",
+    "desc": "Site testing three.js options. Comunicate with dziabong harvester",
+    "otdm":{
+        "playground": false
+    }
+}

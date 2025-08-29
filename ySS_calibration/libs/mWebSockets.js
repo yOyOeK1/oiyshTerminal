@@ -52,7 +52,12 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 
 	socketIn.onmessage = async function(m){
 		//console.log("wsConnectIn onmessage:",m);
-		r = JSON.parse(m.data);
+		try{
+			r = JSON.parse(m.data);
+		}catch(e){
+			console.error('got msg from ws not json\n',m.data);
+			return 1;
+		}
 		//cl("	r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
 
 		if( r.otj ){

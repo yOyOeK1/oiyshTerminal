@@ -65,11 +65,13 @@ class mDoCmd{
     // url 'http://localhost:1880/yss/?otdmQ:\{"webCmdSubProcess":"\[ls,/tmp\]","pH":"66"\}'
 
     if( ottO ){
-      let argsq = 'exeIt';
+      let argsq = 'exeIt/{';
       for( let k of Object.keys(args) ){
-        argsq+=`/{"${k}":"`+encodeURIComponent(args[k])+'"}';
+        argsq+=`"${k}":"`+encodeURIComponent(args[k])+'"}';
+        args[k] = encodeURIComponent(args[k]);
       }
-      //console.log("mDoCmd -----",args, argsq);
+      argsq+='}';
+      console.log("mDoCmd -----",args, argsq);
       let p = ottO.newTask({'q':argsq});
       p.then((res)=>{
         let jr = JSON.parse(res);

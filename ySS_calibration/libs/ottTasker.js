@@ -7,6 +7,31 @@ class ottTasker{
     return Math.round(Math.random()*10000);
   }
 
+  /**
+   * example of use
+   * execute on host command `uptime` getting results
+   * ```js
+   * ottO.newSh("uptime").then((r)=>{ console.log("sukcesssssss",r); })
+   * ```
+   */
+  newSh( shCmd ){
+    //.newTask().then((r)=>{console.log(r);});
+    let bCmd = btoa(shCmd);
+    //console.log(bCmd);
+    let task = this.newTask({
+      "q":`exeIt/{"webCmdSubProcess":"b64[${bCmd}]","mqtt":0, "pH":2 }` 
+    } );
+
+    return task.then((r)=>{
+      console.log('ok so have it as ',r);
+      let j = JSON.parse(r);
+     
+      return new Promise((res,rej)=>{
+        setTimeout(()=>{res(j);},10);
+      });
+    });
+
+  }
 
   newTask( qj ){
     //console.log('ottTasker new Task',qj);
