@@ -1,5 +1,6 @@
 import subprocess as sp
 from otdmWcspMqtt import *
+import base64
 
 class otdmSubProc:
 
@@ -189,6 +190,7 @@ class otdmSubProc:
 
     def SubProcGET( self, name, fromQ = '' ):
         ph = self.args.get("pH","")
+        mqDo = self.args.get("mqtt", True)
         #cmd = self.args.get("webCmdSubProcess")[1:-1].split(',')
         cmd = name[1:-1].split(',')
 
@@ -196,24 +198,44 @@ class otdmSubProc:
             print("Error no -pH argument for destincting prefix handler for communication.")
             sys.exit(1)
 
-        print("cmd will do :%s"%" ".join(cmd))
+        print("cmd will do :%s" % " ".join(cmd))
 
-        print("starting mqtt topic communication channel.....")
-        s = otdmWcspMqtt()
-        s.makeCli( ph, self.conf['mqtt'] )
-        s.runIt()
-        time.sleep(.0001)
-        s.pub("status", "starting")
-        time.sleep(.5)
+        if mqDo == True:
+            print("starting mqtt topic communication channel.....")
+            s = otdmWcspMqtt()
+            s.makeCli( ph, self.conf['mqtt'] )
+            s.runIt()
+            time.sleep(.0001)
+            s.pub("status", "starting")
+            time.sleep(.5)
 
-        self.testSubProcAndProm( cmd, s )
+            self.testSubProcAndProm( cmd, s )
 
-        s.pub("status", "done")
-        time.sleep(.5)
+            s.pub("status", "done")
+            time.sleep(.5)
 
-        #sys.exit(1)
-        if self.args.get("stdout",'') == '':
-            return 'SubProcesss DONE'
+            #sys.exit(1)
+            if self.args.get("stdout",'') == '':
+                return 'SubProcesss DONE'
+            else:
+                print("")
+                return self.subOut
+        
         else:
-            print("")
-            return self.subOut
+
+            # can do
+            # curl -x POST http://localhost:8080/apis/ott -d 'q=exeIt/{"webCmdSubProcess":"[ls . | grep ab]","pH":"2","mqtt":0}'  | jq .
+            s = None
+            
+            toCmd = " ".join(cmd)
+            print(f"toCmd [{toCmd}]  len: {len(toCmd)}  tail:[{toCmd[:3]}]")
+            if len(toCmd) > 6 and toCmd[:3] == '64[':
+                toCmd = base64.b64decode( toCmd[3:] ).decode('utf-8')
+                print(f'convert b64 to ascii ...\n\t command: $ {toCmd}')
+
+            proc=subprocess.Popen(toCmd, shell=True, stdout=subprocess.PIPE, )
+            output=proc.communicate()[0]
+            #print(f"{output}") 
+            #return 'SubProcesss DONE' 
+            return output.decode('utf-8').split("\n")
+
