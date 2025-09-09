@@ -1,0 +1,287 @@
+[
+    {
+        "id": "3827d352eb628c7c",
+        "type": "tab",
+        "label": "esp32BoxIO test",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "096b78a43a59c7fb",
+        "type": "group",
+        "z": "3827d352eb628c7c",
+        "name": "Setup mqtt",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "fe2729c921c94e5b",
+            "3bc9fb03755cb712"
+        ],
+        "x": 314,
+        "y": 219,
+        "w": 392,
+        "h": 102
+    },
+    {
+        "id": "5b58af716ad19ea6",
+        "type": "debug",
+        "z": "3827d352eb628c7c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "043a2a59b24cdea1",
+        "type": "inject",
+        "z": "3827d352eb628c7c",
+        "name": "test mqtt",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "and/boxio/1/pass",
+        "payload": "over mqtt test",
+        "payloadType": "str",
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "3bc9fb03755cb712",
+                "514105dfde05d45c"
+            ]
+        ]
+    },
+    {
+        "id": "fe2729c921c94e5b",
+        "type": "mqtt in",
+        "z": "3827d352eb628c7c",
+        "g": "096b78a43a59c7fb",
+        "name": "",
+        "topic": "and/boxio/#",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9a6725d98fe2735b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 610,
+        "y": 260,
+        "wires": [
+            [
+                "5b58af716ad19ea6",
+                "965168d63462d167",
+                "4d20f9dca052885f",
+                "79b757805e4c459b"
+            ]
+        ]
+    },
+    {
+        "id": "3bc9fb03755cb712",
+        "type": "mqtt out",
+        "z": "3827d352eb628c7c",
+        "g": "096b78a43a59c7fb",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9a6725d98fe2735b",
+        "x": 390,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "514105dfde05d45c",
+        "type": "function",
+        "z": "3827d352eb628c7c",
+        "name": "msg.payload to status",
+        "func": "node.status({text:`${msg.topic} : ${msg.payload}`});",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "965168d63462d167",
+        "type": "switch",
+        "z": "3827d352eb628c7c",
+        "name": "../in",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "and/boxio/1/in",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 360,
+        "wires": [
+            [
+                "a1378d8b80b717e2"
+            ]
+        ]
+    },
+    {
+        "id": "a1378d8b80b717e2",
+        "type": "function",
+        "z": "3827d352eb628c7c",
+        "name": "msg.payload to status",
+        "func": "node.status({text:`${msg.topic} : ${msg.payload}`});",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4d20f9dca052885f",
+        "type": "switch",
+        "z": "3827d352eb628c7c",
+        "name": "../adc/..",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "and/boxio/1/adc/",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 820,
+        "y": 420,
+        "wires": [
+            [
+                "dd79253b7741b6a2"
+            ]
+        ]
+    },
+    {
+        "id": "79b757805e4c459b",
+        "type": "switch",
+        "z": "3827d352eb628c7c",
+        "name": "../led",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "and/boxio/1/led",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 480,
+        "wires": [
+            [
+                "ff2037337117270e"
+            ]
+        ]
+    },
+    {
+        "id": "dd79253b7741b6a2",
+        "type": "function",
+        "z": "3827d352eb628c7c",
+        "name": "msg.payload to status",
+        "func": "node.status({text:`${msg.topic} : ${msg.payload}`});",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ff2037337117270e",
+        "type": "function",
+        "z": "3827d352eb628c7c",
+        "name": "msg.payload to status",
+        "func": "node.status({text:`${msg.topic} : ${msg.payload}`});",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9a6725d98fe2735b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.43.1",
+        "port": "10883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]

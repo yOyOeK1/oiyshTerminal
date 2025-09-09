@@ -1,6 +1,7 @@
 # esp32 box io v1
 
 Arduino-ide part.
+Center of the party is esp32 - n4 with 30 pin dev board.
 Box is going over list of essid's. Then connect to ip and port of mqtt broker start publish states of GPIO's.
 
 
@@ -27,3 +28,13 @@ int boxioNo = 1;
     * `and/boxio/**boxioNo**/adc/..` - adc readouts of GPIO 36, 39, 34, 35
     * `and/boxio/**boxioNo**/in` - `payload` jsstr of GPIO `{23:[1|0],22:[1|0],21:[1|0],19:[1|0]}`
 
+
+## node-red boxio1 test flow
+
+So there is a flow for Node-RED to include. [boxio1_boxio1_testFlow.json](./examples/boxio1_testFlow.json)
+
+![](./examples/boxio1_testFlow.png)
+
+* can test mqtt pass and connection
+* showing incomming raports from boxio1 from input: ADC, GPIO's
+* TODO inject to set pin state
