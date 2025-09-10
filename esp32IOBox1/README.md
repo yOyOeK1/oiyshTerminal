@@ -26,10 +26,15 @@ Universal concept to have ready to use modules to do:
 * multimiter
 
 ![](./assets/schematic_module_multimiter_12v.png)
+Want different walue 
+[online calculator](https://ohmslawcalculator.com/voltage-divider-calculator)
+
 
 * termometer sensor read out
 
 ![](./assets/schematic_module_multimiter_12v.png)
+Calculation of ?R walue can be done using  
+[online calculator](https://ohmslawcalculator.com/voltage-divider-calculator)
 
 
 * rotary potentiometer position
