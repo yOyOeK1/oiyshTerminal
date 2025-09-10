@@ -5,41 +5,15 @@ Center of the party is esp32 - n4 with 30 pin dev board.
 Box is going over list of essid's. Then connect to ip and port of mqtt broker start publish states of GPIO's.
 
 
-
 ## schematics 
 
 To build it from hardware point of view we need to connect some wires with components.
 
-#### power supply 12v to 5v
 
-![](./assets/schematic_powerSupply12_to_5.png)
-
-
-#### esp32 - N4 30 pin version
+### esp32 - N4 30 pin version
 
 TODO
 
-#### modules
-
-Universal concept to have ready to use modules to do:
-
-* multimiter
-
-![](./assets/schematic_module_multimiter_12v.png)
-Want different walue 
-[online calculator](https://ohmslawcalculator.com/voltage-divider-calculator)
-
-
-* termometer sensor read out
-
-![](./assets/schematic_module_termometer.png)
-Calculation of ?R walue can be done using  
-[online calculator](https://ohmslawcalculator.com/voltage-divider-calculator)
-
-
-* rotary potentiometer position
-
-TODO
 
 
 ## configuration
@@ -86,22 +60,22 @@ Client mosq-zq88SrLuBPZgPDmUn4 received PUBLISH (d0, q0, r0, m0, 'and/boxio/1/ad
 "boxio1/p" "GPIONO:[0|1]" - to set state 
 
 
-## debuging on yss
+## debuging 
 
-**node-yss** is comming with some preinstalled **site**'s to play with. One of theme is **multiSvg**. On this site you can find `boxio1Debug.svg` 
+* on yss
+    **node-yss** is comming with some preinstalled **site**'s to play with. One of theme is **multiSvg**. On this site you can find `boxio1Debug.svg` 
 
-![](./assets/multiSvg_debugingPage.png)
+    ![](./assets/multiSvg_debugingPage.png)
 
 
-## node-red boxio1 test flow
+* node-red boxio1 test flow
+    So there is a flow for Node-RED to include. [boxio1_boxio1_testFlow.json](./examples/boxio1_testFlow.json)
 
-So there is a flow for Node-RED to include. [boxio1_boxio1_testFlow.json](./examples/boxio1_testFlow.json)
+    ![](./examples/boxio1_testFlow.png)
 
-![](./examples/boxio1_testFlow.png)
-
-* can test mqtt pass and connection
-* showing incomming raports from boxio1 from input: ADC, GPIO's
-* TODO inject to set pin state
+    * can test mqtt pass and connection
+    * showing incomming raports from boxio1 from input: ADC, GPIO's
+    * TODO inject to set pin state
 
 
 ### links
