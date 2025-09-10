@@ -8,7 +8,7 @@ Box is going over list of essid's. Then connect to ip and port of mqtt broker st
 
 ## schematics 
 
-To build it from hardware point of wiev we need to connect some wires with components.
+To build it from hardware point of view we need to connect some wires with components.
 
 #### power supply 12v to 5v
 
@@ -32,7 +32,7 @@ Want different walue
 
 * termometer sensor read out
 
-![](./assets/schematic_module_multimiter_12v.png)
+![](./assets/schematic_module_termometer.png)
 Calculation of ?R walue can be done using  
 [online calculator](https://ohmslawcalculator.com/voltage-divider-calculator)
 
