@@ -1,6 +1,7 @@
 
 
-#include <ESP8266WiFi.h>
+//#include <ESP8266WiFi.h>
+#include <WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoOTA.h>
 
@@ -11,7 +12,7 @@ char apCount = 2; // count of Access points starting from 0
 char *mqClient = "boxio11";
 int boxioNo = 1;
 
-char apAt = 1;
+char apAt = 2; // start from 0 !!! for debug force 
 char mqAt = 1;
 bool apOk = false;
 int mq_port = 10883;
@@ -22,6 +23,8 @@ bool ledStatus = false;
 int apReconnects = 0;
 int mqReconnects = 0;
 int uaErr = 0;
+long adcHz = 1;
+
 
 long iter = 0;
 
@@ -51,12 +54,12 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
   tmpPayload = (char*)payload;
   tmpPayload[length] = 0;
   String str = String(tmpPayload);
+  ph("\ngot topic:["+String(topic)+"] msg:["+str+"]");
+  //ph( str );
   /*
   ph("Message arrived [");
-  ph(topic);
   ph("] payload:");
   ph("[");
-  ph( str );
   ph("] len:");
   phnl(String(length));
   */
@@ -77,18 +80,23 @@ void mqcallback(char* topic, byte* payload, unsigned int length){
       swUpTo = ticker - swFor;
       
     }
-    
-  }else if(String( topic ) == "iobox/p" ){
-    int pi = atoi( String('a').substring(0,1).c_str() );
-    ph("iobox/p");
-    ph(String(pi));
-    if( String('a').substring(1,2).equals( "1" ) ){
-      ph("HI");
+  
+  }else if(String( topic ).equals("iobox/adcHz") ){
+    adcHz = atoi( str.c_str() );
+
+  }else if(String( topic ).equals("iobox/p") ){
+    String piStr = str.substring(0, str.indexOf(':') );
+    int pi = atoi( piStr.c_str() );
+    String stateT = str.substring(str.indexOf(':')+1);
+    if( stateT.equals( "1" ) ){
+      ph("\nGPIO"+String(pi)+" to HI\n");
+      digitalWrite( pi, HIGH);
     }else{
-      ph("LOW");
+      ph("\nGPIO"+String(pi)+" to LOW\n");
+      digitalWrite( pi, LOW);
     }
 
-  }else if( String( topic ) == "espAPDri/cmd" ){
+  }else if( String( topic ) == "boxio1/cmd" ){
     if( str == "led:On" )
       ledOn();
     else if( str == "led:Off" )
@@ -125,12 +133,12 @@ void setMqtt(){
 }
 
 void ledOff(){
-  digitalWrite( LED_BUILTIN, HIGH);
+  digitalWrite( 2, HIGH);
   ledStatus = false;
 }
 
 void ledOn(){
-  digitalWrite( LED_BUILTIN, LOW);
+  digitalWrite( 2, LOW);
   ledStatus = true;
 }
 
@@ -149,9 +157,9 @@ void setup() {
   // put your setup code here, to run once:
 
   delay(1000);
-  // out  LED_BUILTIN,   4,  5,  12, 14
+  // out  ledPin,   4,  5,  12, 14
   // stTO H              H   H   H   H
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(2, OUTPUT);
   ledOff();
   pinMode(4, OUTPUT);       // PIN 20
   digitalWrite( 4, HIGH);
@@ -168,12 +176,14 @@ void setup() {
   pinMode( 21 , INPUT);     // PING 26
   pinMode( 19 , INPUT);     // PING 25
 
+  /*
   // ADC  36, 39, 34, 35
   pinMode(36, INPUT);      // PIN 2
   pinMode(39, INPUT);      // PIN 3
   pinMode(34, INPUT);      // PIN 4
   pinMode(35, INPUT);      // PIN 5
   // int potValue = analogRead(potPin);
+  */
   
   
   Serial.begin(115200);
@@ -183,7 +193,7 @@ void setup() {
   delay(1000);
 
   ArduinoOTA.setHostname(mqClient);
-  ArduinoOTA.setPassword("pimpimpampam");
+  ArduinoOTA.setPassword("box");
   ArduinoOTA.onStart([]() {
     String type;
     if (ArduinoOTA.getCommand() == U_FLASH) {
@@ -264,6 +274,8 @@ bool mqReconnect() {
       String topic = String(mqClient)+"/cmd";
       client.subscribe( topic.c_str() );
       client.subscribe( "NR/ap/tillerBy" );
+      client.subscribe( "iobox/p" );
+      client.subscribe( "boxio1/#" );
 
       client.publish( 
         String( String(mqClient)+"/status/apReconnects" ).c_str(), 
@@ -326,6 +338,21 @@ void doUart(){
   
 }
 
+/*
+Client mosq-zq88SrLuBPZgPDmUn4 received PUBLISH (d0, q0, r0, m0, 'and/boxio/1/in', ... (21 bytes))
+{23:0,22:0,21:0,19:0}
+Client mosq-zq88SrLuBPZgPDmUn4 received PUBLISH (d0, q0, r0, m0, 'and/boxio/1/adc/36', ... (1 bytes))
+0
+Client mosq-zq88SrLuBPZgPDmUn4 received PUBLISH (d0, q0, r0, m0, 'and/boxio/1/adc/39', ... (1 bytes))
+0
+Client mosq-zq88SrLuBPZgPDmUn4 received PUBLISH (d0, q0, r0, m0, 'and/boxio/1/adc/34', ... (1 bytes))
+0
+Client mosq-zq88SrLuBPZgPDmUn4 received PUBLISH (d0, q0, r0, m0, 'and/boxio/1/adc/35', ... (1 bytes))
+
+
+*/
+
+
 int pushIter = 0;
 void loop() {
   ArduinoOTA.handle();
@@ -333,7 +360,7 @@ void loop() {
   if( doWifi() ){
     if( doMqtt() ){
 
-      if( (iter%400000) == 0 ){
+      if( (iter%(10000/adcHz)) == 0 ){
         // ADC  36, 39, 34, 35
         client.publish( String("and/boxio/"+String(boxioNo)+"/adc/36").c_str(), String( analogRead( 36 ) ).c_str() );
         client.publish( String("and/boxio/"+String(boxioNo)+"/adc/39").c_str(), String( analogRead( 39 ) ).c_str() );

@@ -35,7 +35,7 @@ class s_shareitso{
     let l = sp.length-1;
     let ext = sp[l];
     //cl("ext "+ext+" for path:"+path);
-    let pref= this.prefixSite;
+    let pref= this.prefixSite+'assets/';
     if( sp.length == 1 )
       return pref+'icon_folder-svgrepo-com.svg';
 
@@ -269,7 +269,8 @@ class s_shareitso{
       id="fileForm" name="fileForm"
       action="/apis/upload"
       method="POST"
-      enctype="multipart/form-data" target="upTargetFrame"
+      enctype="multipart/form-data" 
+      target="upTargetFrame"
       >
 
       <ul data-role="listview" data-inset="true" class="ui-body-a">
@@ -304,7 +305,39 @@ class s_shareitso{
       style="height:10vh;display:none;"
     ></iframe>
 
-    <script>
+    
+    `;
+    // upload form
+
+
+    htmlTr+=`<div id="lvOfShareitso">Loading ... </div>`;
+
+
+    return cp.app.appFrame({
+      "content": htmlTr
+    });
+
+
+  }
+
+  getHtmlAfterLoad=()=>{
+    cl(
+      this.getName+
+      " - getHtmlAfterLoad()"
+    );
+
+    $("#htmlDyno").enhanceWithin();
+    //sisFormSubmitArm( this.hostPortOfFiles );
+    setTimeout(()=>{
+      this.rebuildListInShareitso();
+    },500);
+
+    $('#upTargetFrame').on('load',(e)=>{
+      console.log('iframe load done');
+        $('#fileForm')[0].reset();
+        this.rebuildListInShareitso();
+    });
+
     document.forms['fileForm'].addEventListener('submit', (event) => {
       $('#upTargetFrame').fadeIn();
       setTimeout(()=>{
@@ -313,7 +346,7 @@ class s_shareitso{
       },2000);
 
       //setTimeout(()=>{
-      //  pager.getCurrentPage().rebuildListInShareitso();
+      //  this.rebuildListInShareitso();
       //},500);
 
       /*
@@ -343,35 +376,8 @@ class s_shareitso{
       */
 
 
-
-    });
-    </script>
-
-    `;
-    // upload form
-
-
-    htmlTr+=`<div id="lvOfShareitso">Loading ... </div>`;
-
-
-    return cp.app.appFrame({
-      "content": htmlTr
     });
 
-
-  }
-
-  getHtmlAfterLoad(){
-    cl(
-      pager.getCurrentPage().getName+
-      " - getHtmlAfterLoad()"
-    );
-
-    $("#htmlDyno").enhanceWithin();
-    //sisFormSubmitArm( this.hostPortOfFiles );
-    setTimeout(()=>{
-      pager.getCurrentPage().rebuildListInShareitso();
-    },500);
 
 
 

@@ -141,17 +141,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="435.55745"
-     inkscape:cy="602.75297"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="181.54638"
+     inkscape:cy="638.44426"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="704"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="810"
+     inkscape:window-height="676"
+     inkscape:window-x="15"
+     inkscape:window-y="36"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata921">
     <rdf:RDF>
@@ -213,7 +213,7 @@
          style="stroke-width:0.69563818">000</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:58.13788986px;line-height:1.25;font-family:'FFX LCD';-inkscape-font-specification:'FFX LCD';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.68130332"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:58.13788986px;line-height:1.25;font-family:'FFX LCD';-inkscape-font-specification:'FFX LCD';letter-spacing:0px;word-spacing:0px;fill:#460000;fill-opacity:1;stroke:none;stroke-width:0.68130332;"
        x="-3.9225211"
        y="140.54381"
        id="and_zRot"
@@ -223,7 +223,7 @@
          id="tspan1469-3"
          x="-3.9225211"
          y="140.54381"
-         style="stroke-width:0.68130332">000</tspan></text>
+         style="stroke-width:0.68130332;fill:#460000;fill-opacity:1;">000</tspan></text>
     <rect
        style="display:none;opacity:0.66000001;fill:#95ff00;fill-opacity:1;stroke:#a1a1a1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect826"
@@ -240,14 +240,13 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:#ff000c;fill-opacity:1;stroke:#d3ff2d;stroke-width:0.46910957;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#DotL);marker-mid:url(#marker9089);marker-end:url(#Arrow1Lend)"
-       d="m 104.9613,133.57132 c 0.0565,-6.16328 -0.20635,-7.36624 0.0605,-16.63354"
+       d="m 105.05892,134.47348 c 0.0565,-6.16328 -0.20635,-7.36624 0.0605,-16.63354"
        id="and_yRot"
        inkscape:connector-curvature="0"
        inkscape:label="#path832"
        sodipodi:nodetypes="cc">
       <desc
-         id="desc1393"
-         style="marker-start:url(#DotL);marker-mid:url(#marker9089);marker-end:url(#Arrow1Lend)">{
+         id="desc1393">{
 &quot;use&quot;:&quot;rotateSvgSetRC( this, 'gDotCenter',mMapVal( valRaw, 0, 360, -90,90 )  )&quot;
 }</desc>
     </path>
@@ -268,8 +267,8 @@
        id="rect828"
        width="13.268802"
        height="33.68652"
-       x="98.370178"
-       y="-121.891"
+       x="98.904724"
+       y="-121.0892"
        rx="0.81503081"
        onclick="mulSvgOnClick('mqtt=1,topic=and/yRot,payload=180')"
        transform="rotate(90)" />

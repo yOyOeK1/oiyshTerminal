@@ -7,6 +7,8 @@ class s_multiSVGPage{
 
   constructor(){
     this.svgsList = [
+      "boxio1Debug.svg",
+      "osdMapTest1.svg",
       "multiSvg01.svg",
       "multiSvg02Big.svg",
       "multiSvgFastScreen.svg",
@@ -37,14 +39,14 @@ class s_multiSVGPage{
   }
 
 
-  mulSvgParseGet( data, status ){
+  mulSvgParseGet( data, status, cleanDyno=true, targetDiv='#svgDyno' ){
     cl("mul svg parse get --------");
-    $("#htmlDyno").html('');
+    if( cleanDyno ) $("#htmlDyno").html('');
     pager.setHeader('');
 
     pager.getCurrentPage().muSvMa = {};
 
-    $("#svgDyno").html( data.childNodes[1] );
+    $(targetDiv).html( data.childNodes[1] );
     pager.getCurrentPage().svgDynoAfterLoad();
 
   }
@@ -87,7 +89,7 @@ class s_multiSVGPage{
       // selected svg
       this.msOid = urlArgs['i'];
 
-      cl('requesting for svg.....');
+      cl('requesting for svg.....'+this.svgsList[ this.msOid ]);
       $.get( 'sites/multiSVG/'+this.svgsList[ this.msOid ] , function( data, status ){
           pager.getCurrentPage().mulSvgParseGet( data  , status );
       } );
@@ -146,6 +148,10 @@ class s_multiSVGPage{
 
   getHtmlAfterLoad(){
     $('#multiSVGPage').enhanceWithin();
+
+    setTimeout(()=>{
+      sOutSend('wsClientIdent:mapio');
+    },1000);
   }
 
   get svgDyno(){
@@ -210,7 +216,7 @@ class s_multiSVGPage{
 
 
   onMessageCallBack( r ){
-    //cl("s_multiSVGPage onMessageCallBack ----------------------");
+    cl("s_multiSVGPage onMessageCallBack ----------------------\n"+JSON.stringify(r,null,2));
 
 
     if( this.muSvMa[ r.topic ] == undefined ){
