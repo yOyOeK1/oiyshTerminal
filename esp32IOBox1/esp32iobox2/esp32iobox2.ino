@@ -10,16 +10,27 @@ struct bGPIO{
 #include <PubSubClient.h>
 #include <ArduinoOTA.h>
 
+char *boardModel = "esp32_30pin";
+int boxioNo = 1; 
+char *OTAPass = "bob"; // OTA password
 char *ap_ssid[] = {  "apHome",        "DIRECT-7u-SecureTether-svOiysh7" , "HUAWEI Y7a"           };
 char *ap_pass[] = {  "123456789",     "9egHgaWh",                        "srytyfrytybangbang"  };
 char *mq_server[] = { "192.168.1.1",  "192.168.49.1",                   "192.168.43.1"  };
 char apCount = 2; // count of Access points starting from 0 
-bool apOk = false;
-char *OTAPass = "bob";
-int boxioNo = 1;
+
+int mq_port = 10883;
+
 String mqClient = String("and/boxio/"+String(boxioNo) );
 String mqClientIn = String("and/boxio/cmd/"+String(boxioNo) );
 
+char apAt = 2; // 0 to start from accesspoint 2 for debug force 
+long adcHz = 1;
+int touchRound = 10; // round touch readings to make network less noisy
+
+
+
+
+bool apOk = false;
 
 // 32, 33 interupt puls counter
 // OUTPUTS 15, 4, 16, 17, 5
@@ -55,9 +66,7 @@ struct bGPIO bGPIOS[22] = {
 };
 
 
-char apAt = 2; // 0 to start from accesspoint 2 for debug force 
 char mqAt = 1;
-int mq_port = 10883;
 #define MQMSG_BUFFER_SIZE  (50)
 char mqmsg[MQMSG_BUFFER_SIZE];
 bool ledStatus = false;
@@ -65,8 +74,6 @@ bool ledStatus = false;
 int apReconnects = 0;
 int mqReconnects = 0;
 int uaErr = 0;
-long adcHz = 1;
-int touchRound = 10; // round touch readings to make network less noisy
 
 long iter = 0;
 
@@ -521,6 +528,19 @@ void loop() {
       //WiFi.localIP()
       if( (iter%90000) == 0 ){
 
+        
+        client.publish( 
+          String( mqClient+"/box").c_str(), 
+          String(String("{")+
+            "\"ip\":\""+WiFi.localIP().toString()+"\","+ 
+            "\"dbm\":"+String( WiFi.RSSI() )+","+ 
+            "\"chipTemp\":"+String( temperatureRead() )+","+ 
+            "\"boardModel\":\""+boardModel+"\","+ 
+            "\"adcHz\":"+String(adcHz)+","+\ 
+            "\"touchRou\":"+String(touchRound)+\ 
+            "}").c_str()
+        );
+        /*
         client.publish( 
           String( mqClient+"/ip").c_str(), 
           WiFi.localIP().toString().c_str() 
@@ -533,7 +553,12 @@ void loop() {
           String( mqClient+"/chipTemp").c_str(),
           String( temperatureRead() ).c_str()
         );
-
+        
+        client.publish(
+          String( mqClient+"/boardModel").c_str(),
+          boardModel
+        );
+        */
 
         setbGPIO( 32, pulsCount32 );// rpm / interrupt counter
         pulsCount32 = 0;
