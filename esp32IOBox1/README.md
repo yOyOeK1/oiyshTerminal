@@ -65,7 +65,7 @@ Client mosq-zq88SrLuBPZgPDmUn4 received PUBLISH (d0, q0, r0, m0, 'and/boxio/1/ad
 * on yss
     **node-yss** is comming with some preinstalled **site**'s to play with. One of theme is **multiSvg**. On this site you can find `boxio1Debug.svg` 
 
-    ![](./assets/multiSvg_debugingPage.png)
+    ![](./examples/multiSvg_debugingPage.png)
 
 
 * node-red boxio1 test flow
