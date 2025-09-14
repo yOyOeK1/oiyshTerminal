@@ -76,6 +76,7 @@ Sending command's to io-box is over mqtt to topic's:
 "and/boxio/1/adcHz" int[1...10] - to set Hz of refresh
 "and/boxio/1/p" "GPIONO:[0|1]" - to set state (Digital pin out)
 "and/boxio/1/d" "GPIONO:[0..255]" - to set state (DAC)
+"and/boxio/1/la" [0|1] - turn on/off logic analizer on GPIO18. Can do up to 39400bits sampling no error's more on **id-box** / **logic analizer**
 
 
 ## debuging 

@@ -29,6 +29,25 @@ int touchRound = 10; // round touch readings to make network less noisy
 
 
 
+bool logicAnalizer = false;
+int laPin = 18;
+int laIndex = 0;
+int laLenght = 500;
+int laBuffFrom = 0;
+struct laItem{
+  uint32_t tTime;
+  bool pState;
+};
+struct laItem laItems[500];
+
+void IRAM_ATTR myLAChange(){
+
+  laItems[ laIndex++ ] = { micros(), digitalRead( laPin ) };
+  laIndex = laIndex%laLenght;
+
+}
+
+
 
 bool apOk = false;
 
@@ -67,7 +86,7 @@ struct bGPIO bGPIOS[22] = {
 
 
 char mqAt = 1;
-#define MQMSG_BUFFER_SIZE  (50)
+#define MQMSG_BUFFER_SIZE  (1024)
 char mqmsg[MQMSG_BUFFER_SIZE];
 bool ledStatus = false;
 
@@ -78,7 +97,6 @@ int uaErr = 0;
 long iter = 0;
 
 long swUpTo = 0;
-long ticker = 0;
 int pulsCount32 = 0;
 int pulsCount33 = 0;
 
@@ -101,10 +119,10 @@ void setbGPIO( int pNo, int nState){
     if( bGPIOS[gsb].pinNo == pNo ){
       if( bGPIOS[gsb].pinState != nState ){
         bGPIOS[gsb].pinState = nState;
-         client.publish( 
-          String( mqClient+"/s/"+String(bGPIOS[gsb].pinNo ) ).c_str(), 
-          String( nState ).c_str()
-          );
+         //client.publish( 
+         // String( mqClient+"/s/"+String(bGPIOS[gsb].pinNo ) ).c_str(), 
+         // String( nState ).c_str()
+         // );
         break;
 
       }
@@ -136,6 +154,19 @@ void mqcallback(char* topic, byte* payloadB, unsigned int length){
   
   if( subTopic == "adcHz" ){
     adcHz = payload.toInt();
+  
+  }else if( subTopic == "la" ){
+
+    if( payload == "1" ){
+      logicAnalizer = true;
+      laIndex = 0;
+      laBuffFrom = 0;
+      attachInterrupt( digitalPinToInterrupt( laPin ), myLAChange, CHANGE );
+
+    }else{
+      logicAnalizer = false;
+      detachInterrupt( laPin );
+    }
 
 
   // dac 25 26
@@ -166,34 +197,7 @@ void mqcallback(char* topic, byte* payloadB, unsigned int length){
     }
 
   }
-  /*else if( String( topic ) == "boxio1/cmd" ){
-    if( str == "led:On" )
-      ledOn();
-    else if( str == "led:Off" )
-      ledOff();
-
-    else if( str == "p5:On" )
-      digitalWrite( 5, HIGH);
-    else if( str == "p5:Off" )
-      digitalWrite( 5, LOW);
-    
-    else if( str == "p4:On" )
-      digitalWrite( 4, HIGH);
-    else if( str == "p4:Off" )
-      digitalWrite( 4, LOW);
-    
-    else if( str == "p14:On" )
-      digitalWrite( 14, HIGH);
-    else if( str == "p14:Off" )
-      digitalWrite( 14, LOW);
-    
-    else if( str == "p12:On" )
-      digitalWrite( 12, HIGH);
-    else if( str == "p12:Off" )
-      digitalWrite( 12, LOW);
-      
-  }
-  */
+ 
   
 }
 
@@ -234,8 +238,7 @@ void setup() {
   delay(1000);
   pinMode(2, OUTPUT);
   ledOff();
-
-  
+ 
   
   for( int i=0,ic=gpiosPins; i<ic; i++ ){
     //bGPIOS[i].pinNo bGPIOS[i].pinType bGPIOS[i].pinState 
@@ -254,38 +257,10 @@ void setup() {
     }
     
   }
-  /*
-  pinMode(15, OUTPUT);    
-  pinMode(4, OUTPUT);       
-  //digitalWrite( 4, HIGH);
-  pinMode(16, OUTPUT);       
-  //digitalWrite( 5, HIGH);   
-  pinMode(17, OUTPUT);      
-  //digitalWrite( 12, HIGH);  
-  pinMode(5, OUTPUT);      
-  //digitalWrite( 14, HIGH); 
-  // OUTPUTS 15, 4, 16, 17, 5
-  // dac 25, 26
   
   
-  // INPUTS 23, 22, 21, 19, 18
-  pinMode( 23 , INPUT);     // PING 30
-  pinMode( 22 , INPUT);     // PING 29
-  pinMode( 21 , INPUT);     // PING 26
-  pinMode( 19 , INPUT);     // PING 25
-  pinMode( 18 , INPUT);     
-  */
-  /*
-  // ADC  36, 39, 34, 35
-  pinMode(36, INPUT);      // PIN 2
-  pinMode(39, INPUT);      // PIN 3
-  pinMode(34, INPUT);      // PIN 4
-  pinMode(35, INPUT);      // PIN 5
-  // int potValue = analogRead(potPin);
-  */
   
-  
-  Serial.begin(115200);
+  Serial.begin(38400);
   
   WiFi.mode(WIFI_STA);
   
@@ -458,60 +433,80 @@ Client mosq-zq88SrLuBPZgPDmUn4 received PUBLISH (d0, q0, r0, m0, 'and/boxio/1/ad
 int pushIter = 0;
 
 int gpioi = 1;
+String pl = String("");
+String abcx = String("");
+int abci = 1;
 
 void loop() {
   ArduinoOTA.handle();
-
+  
   if( doWifi() ){
     if( doMqtt() ){
 
-      if( 0 && (iter%(100000/adcHz)) == 0 ){
-        // ADC  36, 39, 34, 35
-        client.publish( String("and/boxio/"+String(boxioNo)+"/adc/36").c_str(), String( analogRead( 36 ) ).c_str() );
-        client.publish( String("and/boxio/"+String(boxioNo)+"/adc/39").c_str(), String( analogRead( 39 ) ).c_str() );
-        client.publish( String("and/boxio/"+String(boxioNo)+"/adc/34").c_str(), String( analogRead( 34 ) ).c_str() );
-        client.publish( String("and/boxio/"+String(boxioNo)+"/adc/35").c_str(), String( analogRead( 35 ) ).c_str() );
       
-        //digitalRead( gpio );
-        // INPUTS 23, 22, 21, 19, 18
-        client.publish(
-          String("and/boxio/"+String(boxioNo)+"/in").c_str(),
-          String("{23:"+String( digitalRead(23) )+","+
-            "22:"+String( digitalRead(22) )+","+
-            "21:"+String( digitalRead(21) )+","+
-            "19:"+String( digitalRead(19) )+","+
-            "18:"+String( digitalRead(18) )+"}").c_str()
-        );
-
-      }
-
+      /*if( (iter%(10000/adcHz)) == 0 ){
+        abcx.concat( String(abci++) );
+        ph( abcx+",\n"  );
+      }*/
 
       if( (iter%300) == 0 ){
-        //for(int gpioi=0;gpioi<gpiosPins;gpioi++){
-        //ph(String("\nGPIO IN  "+String(bGPIOS[gpioi].pinNo)+" : "));
         if( bGPIOS[gpioi].pinType == 'I' ){
-          //ph("I "+String(digitalRead( bGPIOS[gpioi].pinNo) ));
           setbGPIO( bGPIOS[gpioi].pinNo, digitalRead( bGPIOS[gpioi].pinNo ) );
         
         }else if( bGPIOS[gpioi].pinType == 'A' ){
-          //ph("A "+String(analogRead( bGPIOS[gpioi].pinNo) ));
           setbGPIO( bGPIOS[gpioi].pinNo, analogRead( bGPIOS[gpioi].pinNo ) );
 
         }else if( bGPIOS[gpioi].pinType == 'T' ){
-          //ph("T "+String(touchRead( bGPIOS[gpioi].pinNo) ));
           setbGPIO( bGPIOS[gpioi].pinNo, touchRead( bGPIOS[gpioi].pinNo )/touchRound );
-
         }
-        
-        
+                
         gpioi++;
         if( gpioi > gpiosPins ){
-          //ph(".");
           gpioi = 2;
+        }
+      }
 
+
+
+      // if logicAnalizer is on and ther is some in buffer send
+      if( logicAnalizer == true && (iter%500) == 0 && laIndex != laBuffFrom ){
+        pl = "";
+        int doSteps = 0;
+        if( laBuffFrom > laIndex ){
+          doSteps = laLenght-laBuffFrom+laIndex;
+          //pl.concat("buf>inx ");
+        }else{
+          doSteps = laIndex-laBuffFrom;
+          //pl.concat("buf<inx ");
+        }
+        //doSteps--;
+        //pl.concat("steps:"+String(doSteps)+"\t\n");
+
+        for(int lai=0; lai<doSteps; lai++ ){
+          if( (lai%10)==1 ){
+            client.publish( 
+              String( mqClient+"/la").c_str(), 
+              pl.c_str() 
+            );
+            pl = "";
+          }
+          pl.concat( 
+            String( laItems[ laBuffFrom ].tTime )+":"+
+            String( laItems[ laBuffFrom ].pState )+"\n" 
+          );
+
+          laBuffFrom = ( laBuffFrom+1 )%laLenght;
         }
 
-        //}
+        //pl.concat("\nnow laBuf: "+String(laBuffFrom)+" index:"+String(laIndex));
+
+        if( pl != "" ){
+          client.publish( 
+            String( mqClient+"/la").c_str(), 
+            pl.c_str() 
+          );
+          pl = "";
+        }
       }
 
 
@@ -522,13 +517,12 @@ void loop() {
          String( mqClient+"/cpu/percent").c_str(), 
          String(pushIter++).c_str() 
          );
+         
       }
 
 
       //WiFi.localIP()
-      if( (iter%90000) == 0 ){
-
-        
+      if( (iter%90000) == 0 ){        
         client.publish( 
           String( mqClient+"/box").c_str(), 
           String(String("{")+
@@ -536,45 +530,28 @@ void loop() {
             "\"dbm\":"+String( WiFi.RSSI() )+","+ 
             "\"chipTemp\":"+String( temperatureRead() )+","+ 
             "\"boardModel\":\""+boardModel+"\","+ 
-            "\"adcHz\":"+String(adcHz)+","+\ 
-            "\"touchRou\":"+String(touchRound)+\ 
+            "\"adcHz\":"+String(adcHz)+","+
+            "\"laPin\":"+String(logicAnalizer?laPin:-1)+","+
+            "\"touchRou\":"+String(touchRound)+
             "}").c_str()
         );
-        /*
-        client.publish( 
-          String( mqClient+"/ip").c_str(), 
-          WiFi.localIP().toString().c_str() 
-        );
-        client.publish(
-          String( mqClient+"/wifi/dbm").c_str(),
-          String( WiFi.RSSI() ).c_str()
-        );
-        client.publish(
-          String( mqClient+"/chipTemp").c_str(),
-          String( temperatureRead() ).c_str()
-        );
-        
-        client.publish(
-          String( mqClient+"/boardModel").c_str(),
-          boardModel
-        );
-        */
+       
 
         setbGPIO( 32, pulsCount32 );// rpm / interrupt counter
         pulsCount32 = 0;
         setbGPIO( 33, pulsCount33 );// rpm / interrupt counter
         pulsCount33 = 0;
         
-        String pl = String("");
+        pl = "";
         for( int i=0,ic=gpiosPins; i<ic; i++ ){
-          pl = String( pl+
-            bGPIOS[i].pinNo+":"+bGPIOS[i].pinType+":"+bGPIOS[i].pinState+"," 
-          );
+          pl.concat(String(bGPIOS[i].pinNo)+":"+bGPIOS[i].pinType+":"+bGPIOS[i].pinState+",");
         }
+
         client.publish(
           String( mqClient+"/settings" ).c_str(),
           pl.c_str()
         );
+        pl = "";
         
       }
         
@@ -586,13 +563,6 @@ void loop() {
     
   }  
 
-  ticker = millis();
-
-  if( ticker > swUpTo ){
-   // digitalWrite( 5, HIGH );
-    //digitalWrite( 4, HIGH );
-    ledOff();
-  }
   
   iter++;
   //delay(1);
