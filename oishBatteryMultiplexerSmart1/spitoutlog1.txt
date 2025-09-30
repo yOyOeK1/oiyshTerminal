@@ -1,0 +1,707 @@
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':0,'b01':0,'b1p':0}}
+
+  -------------------------------
+
+- reading adc values for reference ...
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':0,'b1p':0}}
+
+  -------------------------------
+
+  readings are: 
+507
+535
+554
+- goind waint now for 60
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':531,'correct':532,'volts':23.44},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':531,'correct':532,'volts':23.44},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':531,'correct':532,'volts':23.44},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':536,'correct':532,'volts':23.44},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':531,'correct':532,'volts':23.44},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':506,'correct':508,'volts':-4.69},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':531,'correct':532,'volts':23.44},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':554,'correct':553,'volts':48.05},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':531,'correct':532,'volts':23.44},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':536,'correct':532,'volts':23.44},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':531,'correct':532,'volts':23.44},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+ -------------------------
+ --------  niceRaport ------
+
+   
+Relay set to battery No:0
+Stage 2 relay output is:On
+
+
+
+{adcNice:{'b 0 Gnd':  {'raw':507,'correct':509,'volts':-3.52},'b 0 +  ':  {'raw':535,'correct':531,'volts':22.27},'b 1 +':  {'raw':555,'correct':554,'volts':49.22},'outStage 1':  {'raw':530,'correct':531,'volts':22.27},'outStage 2':  {'raw':527,'correct':531,'volts':22.27}}}
+{batMux:{'battery selected':0,'output relay':1,'b0g':507,'b01':535,'b1p':554}}
+
+  -------------------------------
+
+
