@@ -1,0 +1,1 @@
+gcc -Wformat-security main.c -o tcpServerC1
