@@ -8,7 +8,7 @@ import random
 import wsHelper
 
 
-wsHostUrl = "ws://localhost:2999/"
+wsHostUrl = "wss://192.168.43.220:8080/fooWSS"
 
 
 dev = 0

@@ -1,6 +1,7 @@
 import websocket
 import sys
 import time
+import ssl
 from threading import Thread
 
 
@@ -43,6 +44,8 @@ def wsStart( callOnMsg, wsCI='NotSetIdentDef', host = "ws://localhost:2999/" ):
     global clientIdent
     clientIdent = wsCI
     websocket.enableTrace(False)
+    #websocket.enableVerify( False )
+    #websocket.enableTrace(False)
     ws = websocket.WebSocketApp(
         host, on_message=callOnMsg, on_error=on_error, on_close=on_close
     )
@@ -54,7 +57,7 @@ def wsStart( callOnMsg, wsCI='NotSetIdentDef', host = "ws://localhost:2999/" ):
         print("Started WS client ... {}\n\twsClientIdent: {}".format(
             host, wsCI
         ))
-        ws.run_forever()
+        ws.run_forever( ws.run_forever( sslopt={"cert_reqs": ssl.CERT_NONE} ) )
         print("Thread terminating...")
 
     Thread(target=run).start()

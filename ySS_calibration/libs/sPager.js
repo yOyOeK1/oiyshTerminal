@@ -153,7 +153,7 @@ class sPager {
     return 1;
   }
 
-  wsCallback( r ){
+  wsCallback=( r )=>{
 
     if(r.topic && r.payload){
         if(r.topic == "SMForYou" ){
@@ -210,12 +210,18 @@ class sPager {
         this.cl("payload:["+r.payload+"]");
       }
     }else{
-      this.myCallCheet().then(
-        pager.getCurrentPage().onMessageCallBack(r)
-      );
-
+      this.callCurrentPage_onMessageCallBack(r);    
     }
   }
+  
+
+  // this is for proxy / overwrite
+  callCurrentPage_onMessageCallBack=(r)=>{
+    this.myCallCheet().then(
+      pager.getCurrentPage().onMessageCallBack(r)
+    );
+  }
+
 
   addPage( obj ){
     this.cl("add page:",obj.getName," as ", this.pages.length );

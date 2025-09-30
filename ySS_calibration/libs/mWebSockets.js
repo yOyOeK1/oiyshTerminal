@@ -60,10 +60,11 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 		}
 		//cl("	r.topic: ["+r.topic+"] r.payload: ["+r.payload+"]");
 
-		if( r.otj ){
+		if( 'otj' in r ){
       		ottO.onWsMsg( r );		
 
-		}else if( r.topic ){
+		}else if( 'topic' in r ){
+
 			if( r.topic == "otdmRes" ){
 				cl("wsConnectIn got otdmRes !!");
 
@@ -94,7 +95,7 @@ function wsConnectIn( onMesCallBack, wsUrl = '' ){
 			}
 		}
 
-    await onMesCallBack.wsCallback( r );
+    	await onMesCallBack.wsCallback( r );
 
 		//cl("on message .data:"+m.data);
 

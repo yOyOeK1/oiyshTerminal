@@ -225,6 +225,24 @@ function moveOnPath( objToMove, objPath, posNormal ){
 	//obj.move( p.x, p.y );
 }
 
+/** returns pin state from gpio box-io msg */
+function msgGPIOGetPin( msg, pinNo ){
+	//{23:0,22:0,21:0,19:0}
+	msg = msg.payload.substring(1, msg.payload.length-2).split(',');
+	let gpios = {};
+	for( let g of msg ){
+		let tmM = g.split(':');
+		gpios[tmM[0]] = tmM[1];
+	}
+
+	if( pinNo in gpios ){
+		return gpios[ pinNo ];
+
+	}
+	return '--';
+}
+
+
 var putTextStorage = {};
 // putText("textCen", "test"+ui.value, 'c', 11);
 /**
