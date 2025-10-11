@@ -374,6 +374,18 @@ class sPager {
       //$("#htmlDyno").html(
       console.info("getPage: Oiysh currentPage -1 first time or error?");
 
+      // look if settings1 is install
+      if( 'setOpts' in window ){
+
+        // run prompt to go to clean index.html 
+        setOpts.methods.openPanelWithConfig([
+          {
+            name: 'Wrong currentPage :(',
+            html: `<button onclick="window.document.location.hash='#page='+(pager.pages.length-1);">Try go to first...</button>`
+          }], 'For mobile');
+          
+      }
+
     }else{
 
       var cp = this.getCurrentPage();
