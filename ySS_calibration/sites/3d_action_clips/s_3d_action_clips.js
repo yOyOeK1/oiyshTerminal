@@ -114,7 +114,9 @@ class s_3d_action_clips{
 
 		
 
-		t4y.getHtmlAfterLoad( 'sites/3d_action_clips/test1_cubes3_4.5.glb',
+		//t4y.getHtmlAfterLoad( 'sites/3d_action_clips/test1_cubes3_4.5.glb',
+		t4y.getHtmlAfterLoad( `${this.homeUrl}/test1_cubes3_4.5.glb`,
+		//${this.homeUrl}/s_ilooNav3D.glb
 		//t4y.getHtmlAfterLoad( 'sites/3d_action_clips/test1_cubes3.glb',
 		 	{
 				//'camPos': [12.530088021598306, 62.72307047093599, 26.921712853935578],
