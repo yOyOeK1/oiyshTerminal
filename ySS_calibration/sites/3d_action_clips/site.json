@@ -5,9 +5,15 @@
     "jssrc":["s_3d_action_clips.js"],
     "files": ["test1_cubes.glb"],
     "enable": true,
-    "ver": "0.0.1",
+    "ver": "0.1.0",
     "author": "B.Ceglik <yoyoek@wp.pl>",
     "desc": "Site testing three.js options. Geting clips animation from glb file to msg. Shadows and rotations.",
+    "yssDeps": ["t4y"],
+    "channels":{
+        "ws_in":[ "sites/3d action clips/CubeL", "sites/3d action clips/CubeR", "and/mag", "and/orient/heel" ],
+        
+    },
+    
     "otdm":{
         "playground": false
     }
