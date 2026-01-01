@@ -64,7 +64,8 @@ class s_threeTestPage{
 	getHtmlAfterLoad=()=>{
 		cl("------- getHtmlAfterLoad");
 		cl(ott);
-		t4y.getHtmlAfterLoad( 'sites/test_Three.js/3dmodel_welcomeLogo4.glb',
+		//t4y.getHtmlAfterLoad( 'sites/test_Three.js/3dmodel_welcomeLogo4.glb',
+		t4y.getHtmlAfterLoad( `${this.homeUrl}/3dmodel_welcomeLogo4.glb`,
 			{
 				'camPos':[1.8033587121116157,0.9660278493757173,0.500080913159443],
 				'lookAt':[0.49273556568666854, 0.7646287213865852, -0.31380791831988264],

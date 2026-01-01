@@ -67,7 +67,8 @@ class s_3dcompass1{
 		});
 
 
-		t4y.getHtmlAfterLoad( 'sites/3d_compass1/s_3dcompass_blender4.glb',
+		//t4y.getHtmlAfterLoad( 'sites/3d_compass1/s_3dcompass_blender4.glb',
+		t4y.getHtmlAfterLoad( `${this.homeUrl}/s_3dcompass_blender4.glb`,
 		// /yss/external/
 		//t4y.getHtmlAfterLoad( '/yss/external/3d_compass1/s_3dcompass_blender4.glb',
 		 	{

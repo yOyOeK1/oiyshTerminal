@@ -60,7 +60,9 @@ class s_ilooNav3D{
 		});
 
 
-		t4y.getHtmlAfterLoad( 'sites/iloo_nav_3d/s_ilooNav3D.glb',
+		//t4y.getHtmlAfterLoad( `${this.homeUrl}sites/iloo_nav_3d/s_ilooNav3D.glb`,
+		t4y.getHtmlAfterLoad( `${this.homeUrl}/s_ilooNav3D.glb`,
+		
 		 	{
 				'camPos': [0.028763731041237167, 103.44550962401865, -93.74328394639551],
 				'camRot': [-1.909218085730232, -0.0015954765259057495, -0.0],
