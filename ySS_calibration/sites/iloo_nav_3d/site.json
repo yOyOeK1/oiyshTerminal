@@ -9,7 +9,7 @@
     "desc": "yss Site cloning otdm-yss-iloo-nav but in Three.js :)",
     "yssDeps": ["t4y"],
     "channels":{
-        "ws_in":[ "and/mag", "and/orient/heel", "and/orient/pitch"  ],
+        "ws_in":[ "and/mag", "and/orient/heel", "and/orient/pitch"  ]
         
     },
     "otdm":{

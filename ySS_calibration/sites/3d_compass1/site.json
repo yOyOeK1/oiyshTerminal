@@ -10,7 +10,7 @@
     "desc": "Site testing three.js options. Shadows and rotations.",
     "yssDeps": ["t4y"],
     "channels":{
-        "ws_in":[ "ang/mag", "and/orient/heel", "and/orient/pitch" ],
+        "ws_in":[ "ang/mag", "and/orient/heel", "and/orient/pitch" ]
         
     },
     "otdm":{

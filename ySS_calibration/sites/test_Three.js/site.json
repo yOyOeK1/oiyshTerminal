@@ -9,7 +9,7 @@
     "desc": "Site testing three.js functions in yss. Orbit and osd",
     "yssDeps": ["t4y"],
     "channels":{
-        "ws_in":[ "and/mag", "and/orient/heel", "and/orient/pitch"  ],
+        "ws_in":[ "and/mag", "and/orient/heel", "and/orient/pitch"  ]
         
     },
     "otdm":{
