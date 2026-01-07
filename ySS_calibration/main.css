@@ -92,6 +92,8 @@ body{
 div.bottomPanelHandle{
 	padding:2vh 0;
 	margin:0 auto;
+}
+#bottomPanelMenuImg{
 	cursor:pointer;
 }
 
