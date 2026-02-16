@@ -274,7 +274,7 @@ try{
     avgItKalman
 
   };
-  console.log(" ... OK");
+  console.log("mMath.js  ... OK");
 }catch(e){
-  console.log(" ... No module");
+  console.log("mMath.js  ... No module");
 }

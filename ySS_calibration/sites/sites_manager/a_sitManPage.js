@@ -4,7 +4,7 @@ class s_sitManPage{
 
   constructor(){
     cl(`${this.getName} init ....`);
-    cl(`${this.getName} using imports from modules ecosystem ....mt1`+mt1);
+    //cl(`${this.getName} using imports from modules ecosystem ....mt1`+mt1);
     this.SiC = sitCom;
 
     this.msc = new this.SiC.sitesCompositor(

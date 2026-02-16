@@ -217,8 +217,10 @@ class sPager {
 
   // this is for proxy / overwrite
   callCurrentPage_onMessageCallBack=(r)=>{
-    this.myCallCheet().then(
-      pager.getCurrentPage().onMessageCallBack(r)
+    this.myCallCheet().then(()=>{
+      if( pager.currentPage != -1 )
+        pager.getCurrentPage().onMessageCallBack(r)
+    }
     );
   }
 

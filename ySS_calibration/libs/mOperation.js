@@ -59,7 +59,8 @@ function timeStampNow(){
   return parseInt( new Date().getTime() / 1000 );
 }
 
-function timestampToNiceTime( ts ){
+function timestampToNiceTime( ts = undefined ){
+  if( ts == undefined ) ts = timeStampNow();
   var date = new Date(ts*1000);
   return date.getFullYear()+
     "/"+(date.getMonth()+1)+
@@ -67,6 +68,29 @@ function timestampToNiceTime( ts ){
     " "+date.getHours()+
     ":"+date.getMinutes()+
     ":"+date.getSeconds();
+}
+function timestampToNiceTime_DomSafe( ts = undefined ){
+	if( ts == undefined ) ts = timeStampNow();
+  	var date = new Date(ts*1000);
+
+	return String(''+date.getFullYear()).substring(2)+
+		''+((date.getMonth()+1)<10?'0'+(date.getMonth()+1):(date.getMonth()+1 ))+
+		''+( date.getDate() < 10 ? '0'+date.getDate() : date.getDate() )+
+		'tt'+( date.getHours() < 10 ? '0'+date.getHours() : date.getHours() )+
+		( date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes() )+
+		( date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds() );
+	/*
+	return timestampToNiceTime( ts )
+		.replaceAll('/','')
+		.replaceAll(':','')
+		.replaceAll(' ','t');
+		*//*
+  return date.getFullYear()+
+    "/"+(date.getMonth()+1)+
+    "/"+date.getDate()+
+    " "+date.getHours()+
+    ":"+date.getMinutes()+
+    ":"+date.getSeconds();*/
 }
 
 //rotateSvgSetRC( "objRot2Shadow", "objRot2RC", ui.value );
@@ -335,4 +359,25 @@ function mDict( inDic, operation ){
 	}
 	*/
 	return inDic;
+}
+
+function makeStrFirstLeterBig( msg ){
+	
+	if( msg === '' ) return '';
+	else if( msg.length == 1 ) return String(msg).toUpperCase();
+	else return String(msg).substring(0,1).toUpperCase()+String(msg).substring(1);
+}
+
+function makeNiceTimeFromUnixTime( ms ){
+	let mss = parseInt(ms) % 1000;
+	let seccs = parseInt( ms / 1000 );
+	let sec = TODO;
+
+
+	return `${sec}.${mss}`
+
+}
+
+function JSONcopy( jso ){
+	return JSON.parse( JSON.stringify( jso ) );
 }
